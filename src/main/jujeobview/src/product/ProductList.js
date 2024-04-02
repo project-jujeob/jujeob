@@ -5,7 +5,7 @@ function ProductList() {
     return (
         <div className="ProductList">
             <Header />
-            <h2>오늘의 추천 주류 DDDDDDDDDDDDDDDDDDDD</h2>
+            <h2>오늘의 추천 주류</h2>
         </div>
     );
 }
