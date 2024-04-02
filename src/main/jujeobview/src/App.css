@@ -1,3 +1,71 @@
+* {
+  padding:0;
+  margin:0;
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
 }
+
+.MainContainer {
+  height: 900px;
+  width: 100%;
+  background-size: cover;
+  background-image: url("./img/MainImg.jpg");
+}
+
+.MainHeader {
+  width: 100%;
+  height: 50PX;
+  padding-top: 15px;
+}
+
+.MainMenu {
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.MainHeader button {
+  background-color: transparent;
+  border: transparent;
+  font-size: 15px;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  margin-left: 20px;
+}
+
+.MainContent {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+}
+
+.MainTitle {
+  color:white;
+  font-size: 75px;
+  font-family: Verdana;
+  text-decoration:line-through;
+}
+
+.MainBtn button {
+  background-color: rgba(253, 98, 57, 0.60);
+  border: none;
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 20px 30px;
+  border-radius: 10px;
+  margin-top: 20px;
+  outline: none;
+}
+
+.MainBtn button:hover{
+  background-color: #FD4818;
+  cursor: pointer;
+}
+
+

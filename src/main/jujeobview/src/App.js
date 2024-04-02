@@ -1,21 +1,33 @@
 import './App.css';
-import {useEffect, useState} from "react";
-import axios from "axios";
+import MainImg from './img/MainImg.jpg';
+import MainLogo from './img/MainLogo.png';
+import Footer from "./common/Footer";
 
 function App() {
-  const [hello, setHello] = useState('');
-
-  useEffect(() => {
-    axios.get('/api/reactTest')
-        .then((result) => {
-          setHello(result.data);
-        })
-  }, []);
-  return (
-      <div className="App">
-        서버에서 들어온 값 확인하기 : {hello}
-      </div>
-  );
+    return (
+        <div className="Main">
+            <div className="MainContainer">
+                <div className="MainHeader">
+                    <div className="MainMenu">
+                        <button>술 정보</button>
+                        <button>커뮤니티</button>
+                        <button>공지사항</button>
+                        <button>장바구니</button>
+                        <button>로그인/회원가입</button>
+                    </div>
+                </div>
+                <div className="MainContent">
+                    <div className="MainTitle">
+                        <h1>JU JEOB</h1>
+                    </div>
+                    <div className="MainBtn">
+                        <button>오늘의 추천 주류</button>
+                    </div>
+                </div>
+            </div>
+            <Footer/>
+        </div>
+    );
 }
 
 export default App;
