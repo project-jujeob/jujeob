@@ -14,20 +14,13 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-//    public List<Product> showAllProductList( ) {
-//        List<Product> pList =  productRepository.findAll();
-//        System.out.println(pList.size());
-//        System.out.println(pList.get(0));
-//        return pList;
-//    }
-
     public List<ProductListDto> showAllProductList( ) {
-        // List<Product> productList = productRepository.findAll();
-        List<Product> entities = productRepository.findAll();
+        List<Product> products = productRepository.findAll();
         List<ProductListDto> dtos = new ArrayList<>();
 
-        for (Product entity : entities) {
+        for (Product entity : products) {
             ProductListDto dto = new ProductListDto();
+            dto.setImg(entity.getImg());
             dto.setName(entity.getName());
             dto.setDescription(entity.getDescription());
             dto.setAlcohol(entity.getAlcohol());

@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class ProductListDto {
+    private String img;
     private String name;
     private String description;
     private String alcohol;

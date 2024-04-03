@@ -1,3 +1,49 @@
 .ProductList {
     display: flex;
 }
+
+.ProductListTitle {
+    background-color: lightyellow;
+}
+
+.ProductListCategory {
+    background-color: lightgray;
+}
+
+.ProductListSidebar {
+    width: 20%;
+    background-color: lightblue;
+}
+
+.ProductListShow {
+    width: 80%;
+    background-color: lightgreen;
+
+}
+
+/*----------productListShow.js----------*/
+
+.ProductListShowContainer {
+    margin: 30px;
+}
+.ProductItems {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ProductItem {
+    width: 30%;
+    margin-right: 2%;
+    margin-bottom: 20px;
+}
+
+.ProductImg img {
+    border-radius: 10px;
+    width: 250px;
+    height: 260px;
+}
+
+.ProductName {
+    font-weight: bold;
+    font-size: large;
+}
