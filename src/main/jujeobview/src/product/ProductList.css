@@ -2,8 +2,8 @@
     display: flex;
 }
 
-.ProductListTitle {
-    background-color: lightyellow;
+.ProductListRecommend {
+
 }
 
 .ProductListCategory {
@@ -12,12 +12,12 @@
 
 .ProductListSidebar {
     width: 20%;
-    background-color: lightblue;
+    background-color: lightgreen;
 }
 
 .ProductListShow {
     width: 80%;
-    background-color: lightgreen;
+    background-color: lightgoldenrodyellow;
 
 }
 
@@ -35,15 +35,48 @@
     width: 30%;
     margin-right: 2%;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .ProductImg img {
     border-radius: 10px;
     width: 250px;
     height: 260px;
+    margin-bottom: 10px;
 }
 
 .ProductName {
     font-weight: bold;
     font-size: large;
+}
+
+/*----------productRecommendList.js----------*/
+.ProductRecommendContainer{
+    text-align: left;
+    padding-top: 20px;
+}
+
+.ProductRecommendContainer h2{
+    margin-left: 100px;
+}
+
+.ProductListRecommendItems {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+    text-align: center;
+}
+
+.ProductRecommendImg img {
+    width: 180px;
+    height: 190px;
+    border-radius: 50px;
+    border: solid #FF7E5C;
+    margin-bottom: 10px;
+}
+
+.ProductRecommendName {
+    width: 200px;
+    font-size: 18px;
+    font-weight: bold;
 }

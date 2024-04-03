@@ -21,4 +21,9 @@ public class ProductController {
 
         return productService.showAllProductList();
     }
+
+    @GetMapping("/api/todayRecommend")
+    public List<ProductListDto> showTodayRecommend() {
+        return productService.showTodayRecommend();
+    }
 }

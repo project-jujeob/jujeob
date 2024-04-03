@@ -23,7 +23,8 @@ function ProductListShow() {
                     <div className="ProductItem" key={product.productNo}>
                         <div className="ProductImg"><img src={product.img}/></div>
                         <div className="ProductName">{product.name}</div>
-                        <div className="ProductDescription">{product.description.length > 15 ? `${product.description.substring(0, 15)}...` : product.description}</div>
+                        <div
+                            className="ProductDescription">{product.description.length > 18 ? `${product.description.substring(0, 18)}...` : product.description}</div>
                         <div className="ProductAlchol">{product.alcohol}</div>
                         <div className="ProductPrice">{product.price}</div>
                     </div>
