@@ -11,7 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Table(name="PRODUCT")
+@Table(name="product")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
@@ -21,7 +21,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="productno", updatable = false)
-    private int productNo;
+    private Integer productNo;
 
     @Column(name = "productid", nullable = false)
     private String productId;
