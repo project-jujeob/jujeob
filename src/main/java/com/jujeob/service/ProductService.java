@@ -30,4 +30,20 @@ public class ProductService {
 
         return dtos;
     }
+
+    public List<ProductListDto> showTodayRecommend() {
+        List<Product> products = productRepository.findRandom5();
+        List<ProductListDto> dtos2 = new ArrayList<>();
+
+        for (Product entity : products) {
+            ProductListDto dto = new ProductListDto();
+            dto.setImg(entity.getImg());
+            dto.setName(entity.getName());
+            dto.setDescription(entity.getDescription());
+            dto.setAlcohol(entity.getAlcohol());
+            dto.setPrice(entity.getPrice());
+            dtos2.add(dto);
+        }
+        return dtos2;
+    }
 }
