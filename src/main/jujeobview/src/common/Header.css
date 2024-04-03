@@ -1,0 +1,35 @@
+.Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FF7E5C;
+    padding: 10px 30px;
+}
+
+img {
+    height: 50px;
+    margin-right: 8px;
+}
+
+.HeaderLink{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+.HeaderLogo p {
+    font-size: 30px;
+    font-weight: bold;
+    font-family: Verdana;
+    text-decoration: line-through;
+}
+
+.HeaderMenu button {
+    background-color: transparent;
+    border: transparent;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 10px;
+    margin-left: 20px;
+}
