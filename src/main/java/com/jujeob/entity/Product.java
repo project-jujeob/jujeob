@@ -141,6 +141,41 @@ public class Product {
                 "productNo=" + productNo +
                 ", productId='" + productId + '\'' +
                 ", name='" + name + '\'' +
+                ", img='" + img + '\'' +
+                ", price='" + price + '\'' +
+                ", alcohol='" + alcohol + '\'' +
+                ", volume='" + volume + '\'' +
+                ", type='" + type + '\'' +
+                ", description='" + description + '\'' +
+                ", company='" + company + '\'' +
+                ", packageType='" + packageType + '\'' +
+                ", unit='" + unit + '\'' +
+                ", expDate='" + expDate + '\'' +
+                ", detailImg='" + detailImg + '\'' +
+                ", tastingImg='" + tastingImg + '\'' +
+                ", colorAndHomogeneity='" + colorAndHomogeneity + '\'' +
+                ", incense='" + incense + '\'' +
+                ", tasting='" + tasting + '\'' +
+                ", mouthfeel='" + mouthfeel + '\'' +
+                ", brandImg='" + brandImg + '\'' +
+                ", winery='" + winery + '\'' +
+                ", kind='" + kind + '\'' +
+                ", color='" + color + '\'' +
+                ", openType='" + openType + '\'' +
+                ", aroma='" + aroma + '\'' +
+                ", foodPairing='" + foodPairing + '\'' +
+                ", breeding='" + breeding + '\'' +
+                ", recommendGlass='" + recommendGlass + '\'' +
+                ", country='" + country + '\'' +
+                ", countryDescription='" + countryDescription + '\'' +
+                ", brand='" + brand + '\'' +
+                ", crate='" + crate + '\'' +
+                ", howToDrink='" + howToDrink + '\'' +
+                ", flavor='" + flavor + '\'' +
+                ", finish='" + finish + '\'' +
+                ", keyword='" + keyword + '\'' +
+                ", createdAt=" + createdAt +
+                ", modifiedAt=" + modifiedAt +
                 '}';
     }
 }
