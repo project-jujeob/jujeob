@@ -71,12 +71,30 @@
     width: 180px;
     height: 190px;
     border-radius: 50px;
-    border: solid #FF7E5C;
+    border: solid 0.8px #FF7E5C;
     margin-bottom: 10px;
 }
 
 .ProductRecommendName {
     width: 200px;
-    font-size: 18px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/*----------ProductCategory.js----------*/
+.CategoryItems {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+.CategoryItem button {
+    border: solid 0.5px;
+    border-radius: 5px;
+    background-color: white;
+    padding: 10px;
+    margin: 0 10px;
+    font-size: 15px;
     font-weight: bold;
 }
