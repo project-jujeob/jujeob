@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Repository
@@ -42,6 +43,8 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
             products.addAll(productList);
         }
 
-        return products;
+        List<Product> uniqueProducts = new ArrayList<>(new HashSet<>(products));
+
+        return uniqueProducts;
     }
 }
