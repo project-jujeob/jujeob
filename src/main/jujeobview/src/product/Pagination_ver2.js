@@ -1,7 +1,7 @@
 // Pagination.js
 
 import React, { useEffect, useState } from 'react';
-import './Pagination.css';
+import '../common/Pagination.css';
 import { Link } from "react-router-dom";
 
 export default function Pagination({ totalItems, itemsPerPage, pageCount, currentPage, onPageChange, start }) {

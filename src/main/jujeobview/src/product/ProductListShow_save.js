@@ -1,7 +1,7 @@
 import './ProductList.css';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Pagination from './Pagination';
+import Pagination from '../common/Pagination';
 
 function ProductListShow() {
     const [productList, setProductList] = useState([]);
