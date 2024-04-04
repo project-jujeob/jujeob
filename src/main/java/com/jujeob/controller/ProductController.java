@@ -41,12 +41,9 @@ public class ProductController {
     @PostMapping("/api/categoryNo")
     public List<ProductListDto> showProductListByCategory (@RequestBody Map<String, Object> requestBody) {
         Integer categoryNoObject = (Integer) requestBody.get("categoryNo");
-        if (categoryNoObject == null) {
-            // categoryNo가 없을 경우에 대한 처리
-            // 예를 들어, 기본 카테고리를 선택하거나 에러를 반환하는 등의 처리를 할 수 있습니다.
-            return Collections.emptyList(); // 빈 목록 반환 또는 예외 처리 등
+        if (categoryNoObject == null) {// categoryNo가 없을 경우에 대한 처리 -> 빈 목록 반환
+            return Collections.emptyList();
         }
-
         int categoryNo = categoryNoObject.intValue();
 
         List<String> subCategories = subCategoryService.findCategoryNameByCategoryNo(categoryNo);

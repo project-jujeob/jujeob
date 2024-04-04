@@ -8,7 +8,7 @@ function ProductListShow(props) {
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
-    useEffect((props) => {
+    useEffect(() => {
         axios.get('/api/productList')
             .then((response) => {
                 setProductList(response.data);
@@ -17,6 +17,13 @@ function ProductListShow(props) {
                 console.error('데이터 가져오기 실패:', error);
             });
     }, []);
+
+    useEffect(() => {
+        if (props.selectedCategory) {
+            setProductList(props.selectedCategory);
+        }
+    }, [props.selectedCategory]);
+
 
     const itemsPerPage = 9;
 
@@ -30,15 +37,19 @@ function ProductListShow(props) {
 
     return (
         <div className="ProductListShowContainer">
+            <div className="ProductListShowHeader">
+                <div className="ItemCount">상품수: {productList.length}</div>
+            </div>
             <div className="ProductItems">
                 {currentItems.map((product) => (
-                        <div className="ProductItem" key={product.productNo} >
-                            <div className="ProductImg"><img src={product.img} alt={product.name} /></div>
-                            <div className="ProductName">{product.name}</div>
-                            <div className="ProductDescription">{product.description.length > 18 ? `${product.description.substring(0, 18)}...` : product.description}</div>
-                            <div className="ProductAlcohol">{product.alcohol}</div>
-                            <div className="ProductPrice">{product.price}</div>
-                        </div>
+                    <div className="ProductItem" key={product.productNo}>
+                        <div className="ProductImg"><img src={product.img} alt={product.name}/></div>
+                        <div className="ProductName">{product.name}</div>
+                        <div
+                            className="ProductDescription">{product.description.length > 18 ? `${product.description.substring(0, 18)}...` : product.description}</div>
+                        <div className="ProductAlcohol">{product.alcohol}</div>
+                        <div className="ProductPrice">{product.price}</div>
+                    </div>
 
                 ))}
             </div>
