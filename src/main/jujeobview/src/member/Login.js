@@ -6,6 +6,7 @@ import axios from "axios";
 function Login() {
     const [memId, setMemId] = useState('');
     const [memPw, setMemPw] = useState('');
+    const [loginMemberData, setLoginMemberData] = useState(null);
     // const [errorMessage, setErrorMessage] = useState('');
 
     const loginAction = () => {
@@ -19,7 +20,9 @@ function Login() {
             }
         }). then((response) => {
             alert("로그인 성공");
+            setLoginMemberData(response.data);
             window.location.href = "/";
+            console.log("로그인 성공한 회원 정보:", response.data);
         }).catch(error => {
             alert("로그인 실패");
             console.log(error);
