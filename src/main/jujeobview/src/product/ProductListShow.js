@@ -4,11 +4,11 @@ import axios from "axios";
 import Pagination from '../common/Pagination';
 import {Link} from "react-router-dom";
 
-function ProductListShow() {
+function ProductListShow(props) {
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
-    useEffect(() => {
+    useEffect((props) => {
         axios.get('/api/productList')
             .then((response) => {
                 setProductList(response.data);
@@ -32,7 +32,6 @@ function ProductListShow() {
         <div className="ProductListShowContainer">
             <div className="ProductItems">
                 {currentItems.map((product) => (
-                    <Link key={product.productNo} to={`/ProductItemDetail/${product.productNo}` }>
                         <div className="ProductItem" key={product.productNo} >
                             <div className="ProductImg"><img src={product.img} alt={product.name} /></div>
                             <div className="ProductName">{product.name}</div>
@@ -40,7 +39,7 @@ function ProductListShow() {
                             <div className="ProductAlcohol">{product.alcohol}</div>
                             <div className="ProductPrice">{product.price}</div>
                         </div>
-                    </Link>
+
                 ))}
             </div>
             <Pagination
