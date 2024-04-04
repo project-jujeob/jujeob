@@ -32,7 +32,8 @@ public class MemberController {
         Member loginMember = memberService.login(loginDto);
         if(loginMember != null) {
             session.setAttribute("loginMember", loginMember);
-            return ResponseEntity.ok().build(); //  HTTP 응답 코드 200(OK)를 반환하는 코드
+            return ResponseEntity.ok(loginMember);
+//            ResponseEntity.ok().build(); //  HTTP 응답 코드 200(OK)를 반환하는 코드
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // HTTP 응답 코드 401(UNAUTHORIZED)를 반환하는 코드
     }
