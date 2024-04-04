@@ -1,9 +1,30 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Login.css';
-import {Link, Route, Routes} from "react-router-dom";
+import {Link} from "react-router-dom";
+import axios from "axios";
 
 function Login() {
+    const [memId, setMemId] = useState('');
+    const [memPw, setMemPw] = useState('');
+    // const [errorMessage, setErrorMessage] = useState('');
 
+    const loginAction = () => {
+        axios({
+            method: "post",
+            url: "/login.do",
+            data: JSON.stringify({ memId, memPw }),
+            headers: {
+                "Accept": "application/json, text/plain, */*",
+                "Content-Type": "application/json"
+            }
+        }). then((response) => {
+            alert("로그인 성공");
+            window.location.href = "/";
+        }).catch(error => {
+            alert("로그인 실패");
+            console.log(error);
+        });
+    }
 
     return (
         <div className="LoginPage">
@@ -12,10 +33,18 @@ function Login() {
                 <h3>회원 로그인</h3>
                 <div className="LoginBox">
                     <div className="LoginInput">
-                        <input type={"text"} placeholder={"아이디"}/><br/>
-                        <input type={"password"} placeholder={"비밀번호"}/>
+                        <input type={"text"}
+                               placeholder={"아이디"}
+                               name={"memId"}
+                               onChange={(e) => setMemId(e.target.value)}
+                        /><br/>
+                        <input type={"password"}
+                               placeholder={"비밀번호"}
+                               name={"memPw"}
+                               onChange={(e) => setMemPw(e.target.value)}
+                        />
                     </div>
-                    <button id="LoginBtn">로그인</button>
+                    <button id="LoginBtn" onClick={loginAction}>로그인</button>
                 </div>
                 <div>
                     <span className="IdSave">
