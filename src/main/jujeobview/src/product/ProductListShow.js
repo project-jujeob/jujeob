@@ -38,7 +38,7 @@ function ProductListShow(props) {
     return (
         <div className="ProductListShowContainer">
             <div className="ProductListShowHeader">
-                <div className="ItemCount">상품수: {productList.length}</div>
+                <div className="ProductListCount">상품 수 : {productList.length} 개</div>
             </div>
             <div className="ProductItems">
                 {currentItems.map((product) => (
