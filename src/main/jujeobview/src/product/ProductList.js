@@ -15,12 +15,6 @@ function ProductList() {
             <div className="ProductCategory">
                 <ProductCategory />
             </div>
-            <div className="ProductList">
-                <div className="ProductListSidebar">사이드바</div>
-                <div className="ProductListShow"><ProductListShow /></div>
-            </div>
-
-
         </div>
     );
 }

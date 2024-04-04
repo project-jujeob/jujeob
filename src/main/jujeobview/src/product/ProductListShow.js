@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import './ProductList.css';
 
-function ProductListShow() {
+function ProductListShow(props) {
     const [productList, setProductList] = useState([]);
 
-    useEffect(() => {
+    useEffect((props) => {
         axios.get('/api/productList')
             .then((response) => {
                 setProductList(response.data);

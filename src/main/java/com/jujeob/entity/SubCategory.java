@@ -16,5 +16,5 @@ public class SubCategory {
     private String subCategoryName;
 
     @Column(name = "categoryno", nullable = false)
-    private String categoryNo;
+    private Integer categoryNo;
 }
