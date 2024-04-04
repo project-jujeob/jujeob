@@ -2,13 +2,12 @@ import './ProductList.css';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Pagination from './Pagination';
-import {Link} from "react-router-dom";
 
-function ProductListShow(props) {
+function ProductListShow() {
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
-    useEffect((props) => {
+    useEffect(() => {
         axios.get('/api/productList')
             .then((response) => {
                 setProductList(response.data);
@@ -32,15 +31,13 @@ function ProductListShow(props) {
         <div className="ProductListShowContainer">
             <div className="ProductItems">
                 {currentItems.map((product) => (
-                    <Link key={product.productNo} to={`/ProductItemDetail/${product.productNo}` }>
-                        <div className="ProductItem" key={product.productNo} >
-                            <div className="ProductImg"><img src={product.img} alt={product.name} /></div>
-                            <div className="ProductName">{product.name}</div>
-                            <div className="ProductDescription">{product.description.length > 18 ? `${product.description.substring(0, 18)}...` : product.description}</div>
-                            <div className="ProductAlcohol">{product.alcohol}</div>
-                            <div className="ProductPrice">{product.price}</div>
-                        </div>
-                    </Link>
+                    <div className="ProductItem" key={product.productNo} >
+                        <div className="ProductImg"><img src={product.img} alt={product.name} /></div>
+                        <div className="ProductName">{product.name}</div>
+                        <div className="ProductDescription">{product.description.length > 18 ? `${product.description.substring(0, 18)}...` : product.description}</div>
+                        <div className="ProductAlcohol">{product.alcohol}</div>
+                        <div className="ProductPrice">{product.price}</div>
+                    </div>
                 ))}
             </div>
             <Pagination
