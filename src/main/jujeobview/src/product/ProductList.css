@@ -1,0 +1,100 @@
+.ProductList {
+    display: flex;
+}
+
+.ProductListRecommend {
+
+}
+
+.ProductListCategory {
+    background-color: lightgray;
+}
+
+.ProductListSidebar {
+    width: 20%;
+    background-color: lightgreen;
+}
+
+.ProductListShow {
+    width: 80%;
+    background-color: lightgoldenrodyellow;
+
+}
+
+/*----------productListShow.js----------*/
+
+.ProductListShowContainer {
+    margin: 30px;
+}
+.ProductItems {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ProductItem {
+    width: 30%;
+    margin-right: 2%;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.ProductImg img {
+    border-radius: 10px;
+    width: 250px;
+    height: 260px;
+    margin-bottom: 10px;
+}
+
+.ProductName {
+    font-weight: bold;
+    font-size: large;
+}
+
+/*----------productRecommendList.js----------*/
+.ProductRecommendContainer{
+    text-align: left;
+    padding-top: 20px;
+}
+
+.ProductRecommendContainer h2{
+    margin-left: 100px;
+}
+
+.ProductListRecommendItems {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 20px;
+    text-align: center;
+}
+
+.ProductRecommendImg img {
+    width: 180px;
+    height: 190px;
+    border-radius: 50px;
+    border: solid 0.8px #FF7E5C;
+    margin-bottom: 10px;
+}
+
+.ProductRecommendName {
+    width: 200px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/*----------ProductCategory.js----------*/
+.CategoryItems {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px;
+}
+
+.CategoryItem button {
+    border: solid 0.5px;
+    border-radius: 5px;
+    background-color: white;
+    padding: 10px;
+    margin: 0 10px;
+    font-size: 15px;
+    font-weight: bold;
+}

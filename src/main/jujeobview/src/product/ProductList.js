@@ -1,11 +1,20 @@
 import React from 'react';
 import Header from "../common/Header";
+import './ProductList.css';
+import ProductListShow from "./ProductListShow";
+import ProductListRecommend from "./ProductListRecommend";
+import ProductCategory from "./ProductCategory";
 
 function ProductList() {
     return (
-        <div className="ProductList">
+        <div className="ProductListConatainer">
             <Header />
-            <h2>오늘의 추천 주류</h2>
+            <div className="ProductRecommendList">
+                <ProductListRecommend />
+            </div>
+            <div className="ProductCategory">
+                <ProductCategory />
+            </div>
         </div>
     );
 }

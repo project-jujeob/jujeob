@@ -1,0 +1,68 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    font-size: 14px;
+}
+
+.wrapper ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+}
+
+.move {
+    display: flex;
+    align-items: center;
+    margin: 0 5px;
+}
+
+.move .link {
+    text-decoration: none;
+    color:#000;
+}
+
+.move span {
+    margin-right: 5px;
+}
+
+.page button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    margin: 0 5px;
+}
+
+.page .link{
+    color:#FFF;
+}
+.page button{
+    background: transparent;
+}
+.page button:hover {
+    background-color: #fff;
+}
+
+.wrapper .active >button{
+    font-weight: bold;
+    color:#FFF;
+    border-radius: 50%; /* 원 모양 유지 */
+    background-color: #FF7E5C;
+    width: 40px; /* 너비를 고정 */
+    height: 40px; /* 높이를 고정 */
+    display: flex; /* 중앙 정렬을 위해 추가 */
+    align-items: center; /* 중앙 정렬을 위해 추가 */
+    justify-content: center; /* 중앙 정렬을 위해 추가 */
+}
+
+.pageNumber {
+    display: inline-block;
+    vertical-align: middle;
+}
