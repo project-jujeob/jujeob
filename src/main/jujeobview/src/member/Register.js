@@ -55,7 +55,6 @@ function Register() {  //회원가입폼에 입력받을 데이터
                 <input type={"email"} placeholder={"jujeob@xxx.com"} name={"memEmail"} onChange={registerDataChange}/><br/>
                 <input type={"text"} placeholder={"주소"} name={"memAddr"} onChange={registerDataChange}/><br/>
 
-
                 <button onClick={registerAction}>가입하기</button>
             </div>
         </div>

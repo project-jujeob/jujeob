@@ -14,7 +14,7 @@ function MainPage() {
                         <button>공지사항</button>
                         <button>장바구니</button>
 
-                        {loginMemberData == null ? (
+                        {loginMemberData != null ? (
                             <Link to={"/MyPage"}>
                                 <button>마이페이지</button>
                             </Link>
