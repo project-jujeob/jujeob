@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -21,6 +22,7 @@ public class ProductService {
         dto.setDescription(entity.getDescription());
         dto.setAlcohol(entity.getAlcohol());
         dto.setPrice(entity.getPrice());
+        dto.setProductNo(entity.getProductNo());
         return dto;
     }
 
@@ -63,5 +65,9 @@ public class ProductService {
             productListByCategoryDtos.add(mapProductToDto(entitiy));
         }
         return productListByCategoryDtos;
+    }
+
+    public Optional<Product> getProductByProductNo(Integer productNo) {
+        return productRepository.findById(productNo);
     }
 }

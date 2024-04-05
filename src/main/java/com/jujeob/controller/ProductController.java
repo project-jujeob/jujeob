@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -61,5 +62,12 @@ public class ProductController {
     @GetMapping("/api/productListByCategory/{subCategoryName}")
     public List<ProductListDto> showProductListByCategoryNameAndKeyword(@PathVariable String subCategoryName) {
         return productService.showProductListByCategoryNameAndKeyword(subCategoryName);
+    }
+
+
+    @GetMapping("/api/productDetail/{productNo}")
+    public Optional<Product> getProductDetails(@PathVariable Integer productNo) {
+        Optional<Product> product = productService.getProductByProductNo(productNo);
+        return product;
     }
 }

@@ -1,4 +1,4 @@
-import '../common/ProductList.css';
+import './ProductList.css';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Pagination from '../common/Pagination';
@@ -32,7 +32,11 @@ function ProductListShow(props) {
         <div className="ProductListShowContainer">
             <div className="ProductItems">
                 {currentItems.map((product) => (
+                    <div  key={product.productNo}>
+                    <Link to={`/ProductItemDetail/${product.productNo}`}>
+                    {/*<Link to={`/ProductItemDetail/1`}>*/}
                         <div className="ProductItem" key={product.productNo} >
+                            <div>{product.productNo}</div>
                             <div className="ProductImg"><img src={product.img} alt={product.name} /></div>
                             <div className="ProductName">{product.name}</div>
                             <div className="ProductDescription">{product.description.length > 18 ? `${product.description.substring(0, 18)}...` : product.description}</div>
@@ -40,6 +44,8 @@ function ProductListShow(props) {
                             <div className="ProductPrice">{product.price}</div>
                         </div>
 
+                    </Link>
+                    </div>
                 ))}
             </div>
             <Pagination

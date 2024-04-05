@@ -12,8 +12,8 @@ function App() {
             <Routes>
                 <Route path="/" element={<MainPage />} />
                 <Route path='/ProductList' element={<ProductList />}/>
-                {/*<Route path='/ProudctList/:productNo' component={ProductListShow} />*/}
-                <Route path='/ProuductItemDetail/:productNo' element={<ProductItemDetail /> } />
+                <Route path='/ProductItemDetail/:productNo' element={<ProductItemDetail /> } />
+                <Route path='/ProductItemDetail' element={<ProductItemDetail /> } />
             </Routes>
         </div>
     );
