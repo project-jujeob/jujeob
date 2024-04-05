@@ -1,6 +1,6 @@
 import './MainPage.css';
 import {Link} from "react-router-dom";
-
+import loginMemberData from '../src/member/Login';
 function MainPage() {
     return (
         <div className="Main">
@@ -13,9 +13,17 @@ function MainPage() {
                         <button>커뮤니티</button>
                         <button>공지사항</button>
                         <button>장바구니</button>
-                        <Link to={"/Login"}>
-                            <button>로그인</button>
-                        </Link>
+
+                        {loginMemberData == null ? (
+                            <Link to={"/MyPage"}>
+                                <button>마이페이지</button>
+                            </Link>
+                        ) : (
+                            <Link to={"/Login"}>
+                                <button>로그인</button>
+                            </Link>
+                        )}
+
                     </div>
                 </div>
                 <div className="MainContent">
