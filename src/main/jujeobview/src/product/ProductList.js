@@ -6,7 +6,7 @@ import ProductCategory from "./ProductCategory";
 
 function ProductList() {
     return (
-        <div className="ProductListConatainer">
+        <div className="ProductListContainer">
             <Header />
             <div className="ProductRecommendList">
                 <ProductListRecommend />
