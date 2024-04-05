@@ -20,14 +20,14 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
-    @PostMapping("/register.do")
+    @PostMapping("/api/register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
         memberService.register(registerDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("success");
     }
 
-    @PostMapping("/login.do")
+    @PostMapping("/api/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto, HttpSession session) {
         Member loginMember = memberService.login(loginDto);
         if(loginMember != null) {
@@ -39,7 +39,7 @@ public class MemberController {
     }
 
 
-    @PostMapping("/logout.do")
+    @PostMapping("/api/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
