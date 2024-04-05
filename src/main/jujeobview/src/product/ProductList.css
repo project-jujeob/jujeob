@@ -1,9 +1,4 @@
-.ProductList {
-    display: flex;
-}
-
-.ProductListRecommend {
-
+.ProductListContainer {
 }
 
 .ProductListCategory {
@@ -17,23 +12,26 @@
 
 .ProductListShow {
     width: 80%;
-    background-color: lightgoldenrodyellow;
-
 }
 
 /*----------productListShow.js----------*/
-
 .ProductListShowContainer {
     margin: 30px;
 }
 .ProductItems {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+}
+.ProductListCount {
+    text-align: right;
+    margin-right: 20px;
+    font-size: 15px;
+    font-weight: bolder;
 }
 
 .ProductItem {
     width: 30%;
-    margin-right: 2%;
     margin-top: 30px;
     margin-bottom: 20px;
     text-align: center;
@@ -41,9 +39,11 @@
 
 .ProductImg img {
     border-radius: 10px;
-    width: 220px;
-    height: 230px;
+    width: 270px;
+    height: 300px;
     margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
 }
 
 .ProductName {
@@ -98,4 +98,10 @@
     margin: 0 10px;
     font-size: 15px;
     font-weight: bold;
+}
+
+.ProductList {
+    display: flex;
+    width: 85%;
+    margin: auto;
 }
