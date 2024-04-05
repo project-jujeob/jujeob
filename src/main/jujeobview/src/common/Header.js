@@ -1,6 +1,7 @@
 import CommonLogo from '../img/CommonLogo.png';
 import {Link} from "react-router-dom";
 import './Header.css';
+import loginMemberData from "../member/Login";
 
 function Header() {
     return (
@@ -18,7 +19,15 @@ function Header() {
                 <button>커뮤니티</button>
                 <button>공지사항</button>
                 <button>장바구니</button>
-                <button>로그인/회원가입</button>
+                {loginMemberData != null ? (
+                    <Link to={"/MyPage"}>
+                        <button>마이페이지</button>
+                    </Link>
+                ) : (
+                    <Link to={"/Login"}>
+                        <button>로그인</button>
+                    </Link>
+                )}
             </div>
         </div>
     )

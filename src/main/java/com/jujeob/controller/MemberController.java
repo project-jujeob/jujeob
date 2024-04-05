@@ -37,4 +37,11 @@ public class MemberController {
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // HTTP 응답 코드 401(UNAUTHORIZED)를 반환하는 코드
     }
+
+
+    @PostMapping("/logout.do")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
+    }
 }

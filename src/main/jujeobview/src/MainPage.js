@@ -19,7 +19,7 @@ function MainPage() {
                                 <button>마이페이지</button>
                             </Link>
                         ) : (
-                            <Link to={"/Login"}>
+                            <Link to={"/login"}>
                                 <button>로그인</button>
                             </Link>
                         )}

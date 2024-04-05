@@ -24,6 +24,7 @@ function App() {
                 <Route path='/Register' element={<Register />} />
                 <Route path='/RegisterComplete' element={<RegisterComplete />} />
                 <Route path='/MyPage' element={<MyPage />} />
+                <Route path='/logout.do' element={<MainPage />} />
             </Routes>
         </div>
     );
