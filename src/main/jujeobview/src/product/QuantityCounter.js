@@ -14,10 +14,11 @@ function QuantityCounter(){
 
     return(
         <div>
-            <div className="quantity-input">
-                <button className="quantity-btn" onClick={decreaseQuantity}>-</button>
+            <div className="quantityInput">
+                구매수량 : &ensp;
+                <button className="quantityBtn" onClick={decreaseQuantity}>-</button>
                 <input type="text" className="quantity" value={quantity} readOnly />
-                <button className="quantity-btn" onClick={increaseQuantity}>+</button>
+                <button className="quantityBtn" onClick={increaseQuantity}>+</button>
             </div>
         </div>
     )

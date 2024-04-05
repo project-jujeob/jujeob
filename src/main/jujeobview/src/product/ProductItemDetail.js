@@ -5,6 +5,9 @@ import Header from "../common/Header";
 import './ProductItemDetail.css';
 import ProductType from "./ProductType";
 import QuantityCounter from "./QuantityCounter";
+import MainPage from "../MainPage";
+import ProductList from "./ProductList";
+import DetailBeer from "./Detail/DetailBeer";
 
 function ProductItemDetail() {
     const { productNo } = useParams();
@@ -27,33 +30,27 @@ function ProductItemDetail() {
     if (!product) {
         return <div>Loading...</div>;
     }
+
+    let componentToShow = null;
+
+    switch (product.productId) {
+        case "1":
+            componentToShow = <DetailBeer product={product}/>;
+            break;
+        case "2":
+            componentToShow = <MainPage />;
+            break;
+        default:
+            componentToShow = null;
+    }
+
+
     return (
         <div className="detailContainer">
             <Header/>
-            <div className="detail">
-                <div className="detailTop">
-                    <div>
-                        <img src={product.img} className="detailImgthumb"/>
-                    </div>
-                    <div>
-                        <ProductType productId={product.productId}/>
-                        <h1>{product.name}</h1>
-                        <p>{product.description}</p>
-                        <p>가격: {product.price}</p>
-                        <p>도수: {product.alcohol}</p>
-                        <p>추천 검색어:{product.keyword}</p>
-                        <QuantityCounter/>
-                        {/*<button> - </button>
-                        {' '}
-                        <button> + </button>*/}
-                    </div>
-                </div>
-                <div className="detailContent">
-                    여기가 내용+상세정보
-                </div>
-                <div className="detailBottom">
-                    
-                </div>
+
+            <div>
+                {componentToShow}
             </div>
 
         </div>
