@@ -11,8 +11,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
-@Table(name="products")
-@SequenceGenerator(name = "product_SEQ", sequenceName = "product_SEQ", allocationSize = 1)
+@Table(name="product")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
@@ -21,10 +20,10 @@ import java.time.LocalDateTime;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="productNo", updatable = false)
-    private Long productNo;
+    @Column(name ="productno", updatable = false)
+    private Integer productNo;
 
-    @Column(name = "productId", nullable = false)
+    @Column(name = "productid", nullable = false)
     private String productId;
 
     @Column(name = "name", nullable = false)
@@ -34,13 +33,13 @@ public class Product {
     private String img;
 
     @Column(name = "price")
-    private Double price;
+    private String price;
 
     @Column(name = "alcohol")
-    private Double alcohol;
+    private String alcohol;
 
     @Column(name = "volume")
-    private Double volume;
+    private String volume;
 
     @Column(name = "type")
     private String type;
@@ -57,16 +56,16 @@ public class Product {
     @Column(name = "unit")
     private String unit;
 
-    @Column(name = "expDate")
+    @Column(name = "expdate")
     private String expDate;
 
-    @Column(name = "detailImg")
+    @Column(name = "detailimg")
     private String detailImg;
 
-    @Column(name = "tastingImg")
+    @Column(name = "tastingimg")
     private String tastingImg;
 
-    @Column(name = "colorAndHomogeneity")
+    @Column(name = "colorandhomogeneity")
     private String colorAndHomogeneity;
 
     @Column(name = "incense")
@@ -78,7 +77,7 @@ public class Product {
     @Column(name = "mouthfeel")
     private String mouthfeel;
 
-    @Column(name = "brandImg")
+    @Column(name = "brandimg")
     private String brandImg;
 
     @Column(name = "winery")
@@ -90,25 +89,25 @@ public class Product {
     @Column(name = "color")
     private String color;
 
-    @Column(name = "openType")
+    @Column(name = "opentype")
     private String openType;
 
     @Column(name = "aroma")
     private String aroma;
 
-    @Column(name = "foodPairing")
+    @Column(name = "foodpairing")
     private String foodPairing;
 
     @Column(name = "breeding")
     private String breeding;
 
-    @Column(name = "recommendGlass")
+    @Column(name = "recommendglass")
     private String recommendGlass;
 
     @Column(name = "country")
     private String country;
 
-    @Column(name = "countryDescription")
+    @Column(name = "countrydescription")
     private String countryDescription;
 
     @Column(name = "brand")
@@ -117,7 +116,7 @@ public class Product {
     @Column(name = "crate")
     private String crate;
 
-    @Column(name = "howToDrink")
+    @Column(name = "howtodrink")
     private String howToDrink;
 
     @Column(name = "flavor")
@@ -129,17 +128,11 @@ public class Product {
     @Column(name = "keyword")
     private String keyword;
 
+    @Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     @CreatedDate
-    @LastModifiedDate
     private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "productNo=" + productNo +
-                ", productId='" + productId + '\'' +
-                ", name='" + name + '\'' +
-                '}';
-    }
+    @LastModifiedDate
+    private LocalDateTime modifiedAt;
+    
 }

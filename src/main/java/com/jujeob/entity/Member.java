@@ -1,70 +1,63 @@
 package com.jujeob.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.NonNull;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Table(name="users")
-@SequenceGenerator(name = "user_SEQ", sequenceName = "user_SEQ", allocationSize = 1)
-@EntityListeners(AuditingEntityListener.class)
-@Getter
-@Setter
-@Entity
 @Data
-public class Member{
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@EntityListeners(AuditingEntityListener.class)
+public class Member {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="userId", updatable = false)
-    private Long userId;
+    private Long memNo;
 
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;
+    @NonNull
+    private String memId;
 
-    @Column(name = "password")
-    private String password;
+    @NonNull
+    private String memPw;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @NonNull
+    private String memNickname;
 
-    @Column(name = "birthday")
-    private String birthday;
+    @NonNull
+    private String memName;
 
-    @Column(name = "phone")
-    private String phone;
+    @NonNull
+    private String memEmail;
 
-    @Column(name = "email")
-    private String email;
+    @NonNull
+    private String memPhone;
 
-    @Column(name = "gender")
-    private String gender;
+    private String memAddr;
 
-    @Column(name = "userRole")
-    private String userRole;
 
-    @CreatedDate
-    @LastModifiedDate
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    @NonNull
+    @CreatedDate // 생성되는 시간을 자동으로 넣어줌
+    private LocalDateTime createDate;
 
-    @Column
-    private Character isWithdrawn = 'N';
+    @LastModifiedDate // 엔티티가 수정될 때 수정시간을 넣어줌
+    private LocalDateTime updateDate;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+    @NonNull
+    private String memDeleted;
 
+    private LocalDateTime deleteDate;
+
+    private String memImage;
+
+    @NonNull
+    private String memRole;
 }

@@ -1,0 +1,43 @@
+.RegisterPage {
+    width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-top: 20px;
+}
+
+.RegisterForm {
+    margin-top: -20px;
+    padding: 60px 50px;
+    border: 1px solid lightgray;
+    width: 100%;
+    height: 100%;
+}
+
+.RegisterForm h1 {
+    text-align: center;
+}
+
+.hr {
+    border: 1px solid #eaeaea;
+    height: 1px;
+
+}
+
+.RegisterForm input {
+    padding: 10px;
+    border: 1px solid lightgray;
+    width: 100%;
+    margin: 9px 20px 8px 0px;
+}
+
+.RegisterForm button {
+    cursor: pointer;
+    margin: 30px 20px 8px 0px;
+    width: 100%;
+    height: 50px;
+    border: none;
+    background-color: #FF7E5C;
+    color: white;
+}
