@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'HallymGothic-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2204@1.0/HallymGothic-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
 .Header {
     display: flex;
     justify-content: space-between;
@@ -21,7 +28,7 @@ img {
 .HeaderLogo p {
     font-size: 25px;
     font-weight: bold;
-    font-family: Verdana;
+    font-family: "Verdana";
     text-decoration: line-through;
 }
 

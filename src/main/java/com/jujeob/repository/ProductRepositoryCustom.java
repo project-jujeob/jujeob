@@ -1,6 +1,7 @@
 package com.jujeob.repository;
 
 import com.jujeob.entity.Product;
+import com.jujeob.entity.SubCategory;
 
 import java.util.List;
 

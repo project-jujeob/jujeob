@@ -1,13 +1,10 @@
 package com.jujeob.controller;
 
 import com.jujeob.entity.Category;
-import com.jujeob.entity.SubCategory;
 import com.jujeob.service.CategoryService;
 import com.jujeob.service.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,13 +17,11 @@ public class SubCategoryController {
     @Autowired
     SubCategoryService subCategoryService;
 
-    @GetMapping("/api/categoryNo")
-    public List<String> findSubCategoryName(int categoryNo) {
+    @GetMapping("/api/subCategory")
+    public List<String> findSubCategoryName(@RequestParam int categoryNo) {
 
         Category category = categoryService.getCategoryNo(categoryNo).get();
 
-        List<String> subCategories = subCategoryService.findCategoryNameByCategoryNo(category.getCategoryNo());
-
-        return subCategories;
+        return subCategoryService.findCategoryNameByCategoryNo(category.getCategoryNo());
     }
 }

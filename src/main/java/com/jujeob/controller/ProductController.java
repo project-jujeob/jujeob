@@ -2,6 +2,7 @@ package com.jujeob.controller;
 
 import com.jujeob.dto.ProductListDto;
 import com.jujeob.entity.Product;
+import com.jujeob.entity.SubCategory;
 import com.jujeob.service.CategoryService;
 import com.jujeob.service.ProductService;
 import com.jujeob.service.SubCategoryService;
@@ -38,7 +39,7 @@ public class ProductController {
     }
 
     // 카테고리별 주류 조회
-    @PostMapping("/api/categoryNo")
+    @PostMapping("/api/selectedCategoryNo")
     public List<ProductListDto> showProductListByCategory (@RequestBody Map<String, Object> requestBody) {
         Integer categoryNoObject = (Integer) requestBody.get("categoryNo");
         if (categoryNoObject == null) {// categoryNo가 없을 경우에 대한 처리 -> 빈 목록 반환
@@ -48,15 +49,15 @@ public class ProductController {
 
         List<String> subCategories = subCategoryService.findCategoryNameByCategoryNo(categoryNo);
 
-        List<ProductListDto> p = productService.findProductListBySubCategories(subCategories);
-        System.out.println(p.size());
-        return p;
+        return productService.findProductListBySubCategories(subCategories);
     }
 
 
     // 서브카테고리별 주류 조회
-    @GetMapping("/api/productListByCategory/{subCategoryName}")
-    public List<ProductListDto> showProductListByCategoryNameAndKeyword(@PathVariable String subCategoryName) {
+    @PostMapping("/api/selectedSubCategoryName")
+    public List<ProductListDto> showProductListByCategoryNameAndKeyword(@RequestBody Map<String, String> requestBody) {
+        String subCategoryName = requestBody.get("subCategory");
+
         return productService.showProductListByCategoryNameAndKeyword(subCategoryName);
     }
 }
