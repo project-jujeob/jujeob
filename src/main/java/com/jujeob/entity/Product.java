@@ -127,12 +127,5 @@ public class Product {
 
     @Column(name = "keyword")
     private String keyword;
-
-    @Column(name = "created_at", updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
-    @CreatedDate
-    private LocalDateTime createdAt;
-
-    @LastModifiedDate
-    private LocalDateTime modifiedAt;
     
 }

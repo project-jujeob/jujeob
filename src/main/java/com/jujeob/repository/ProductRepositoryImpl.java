@@ -3,6 +3,7 @@ package com.jujeob.repository;
 import com.jujeob.entity.Product;
 import com.jujeob.entity.QProduct;
 import com.jujeob.entity.QSubCategory;
+import com.jujeob.entity.SubCategory;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -25,7 +26,9 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
                 .where(qProduct.keyword.like("%" + subCategoryName + "%"))
                 .fetch();
 
-        return products;
+        List<Product> uniqueProducts = new ArrayList<>(new HashSet<>(products));
+
+        return uniqueProducts;
     }
 
     @Override
@@ -34,7 +37,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
 
         List<Product> products = new ArrayList<>();
 
-        for (String subCategory : subCategories) {
+        for (String  subCategory : subCategories) {
             List<Product> productList = factory.select(qProduct)
                     .from(qProduct)
                     .where(qProduct.keyword.like("%" + subCategory + "%"))

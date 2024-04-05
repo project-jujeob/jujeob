@@ -2,6 +2,7 @@ package com.jujeob.service;
 
 import com.jujeob.dto.ProductListDto;
 import com.jujeob.entity.Product;
+import com.jujeob.entity.SubCategory;
 import com.jujeob.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

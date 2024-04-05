@@ -4,7 +4,7 @@ import axios from "axios";
 import Pagination from '../common/Pagination';
 import {Link} from "react-router-dom";
 
-function ProductListShow(props) {
+function ProductListShow({selectedCategory, selectedSubCategory}) {
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -19,10 +19,16 @@ function ProductListShow(props) {
     }, []);
 
     useEffect(() => {
-        if (props.selectedCategory) {
-            setProductList(props.selectedCategory);
+        if (selectedCategory) {
+            setProductList(selectedCategory);
+        } 
+    }, [selectedCategory]);
+
+    useEffect(() => {
+        if (selectedSubCategory) {
+            setProductList(selectedSubCategory);
         }
-    }, [props.selectedCategory]);
+    }, [selectedSubCategory]);
 
 
     const itemsPerPage = 9;

@@ -89,14 +89,14 @@
 }
 
 /*----------ProductCategory.js----------*/
-.CategoryItems {
+.CategoryItems, .SubCategoryItems {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 20px;
 }
 
-.CategoryItem button {
+.CategoryItem button, .SubCategoryItem button {
     border: solid 0.5px;
     border-radius: 5px;
     background-color: white;
@@ -111,3 +111,6 @@
     width: 85%;
     margin: auto;
 }
+
+
+
