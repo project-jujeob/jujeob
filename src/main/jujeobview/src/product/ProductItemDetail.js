@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Header from "../common/Header";
-import './ProductDetail.css';
+import './ProductItemDetail.css';
+import ProductType from "./ProductType";
+import QuantityCounter from "./QuantityCounter";
 
 function ProductItemDetail() {
     const { productNo } = useParams();
@@ -26,19 +28,24 @@ function ProductItemDetail() {
         return <div>Loading...</div>;
     }
     return (
-        <>
+        <div className="detailContainer">
             <Header/>
-            <div className="detailContainer">
+            <div className="detail">
                 <div className="detailTop">
                     <div>
                         <img src={product.img} className="detailImgthumb"/>
                     </div>
                     <div>
+                        <ProductType productId={product.productId}/>
                         <h1>{product.name}</h1>
                         <p>{product.description}</p>
-                        <p>Alcohol: {product.alcohol}</p>
-                        <p>Price: {product.price}</p>
-                        <p>Keyword:{product.keyword}</p>
+                        <p>가격: {product.price}</p>
+                        <p>도수: {product.alcohol}</p>
+                        <p>추천 검색어:{product.keyword}</p>
+                        <QuantityCounter/>
+                        {/*<button> - </button>
+                        {' '}
+                        <button> + </button>*/}
                     </div>
                 </div>
                 <div className="detailContent">
@@ -49,7 +56,7 @@ function ProductItemDetail() {
                 </div>
             </div>
 
-        </>
+        </div>
     );
 }
 

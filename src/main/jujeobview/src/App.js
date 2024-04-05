@@ -16,14 +16,12 @@ function App() {
         <div>
             <Routes>
                 <Route path="/" element={<MainPage />} />
-
                 <Route path='/ProductList' element={<ProductList />}/>
-                <Route path='/ProuductItemDetail/:productNo' element={<ProductItemDetail /> } />
+                <Route path='/ProductItemDetail/:productNo' element={<ProductItemDetail /> } />
                 <Route path='/Login' element={<Login />} />
                 <Route path='/Register' element={<Register />} />
                 <Route path='/RegisterComplete' element={<RegisterComplete />} />
                 <Route path='/MyPage' element={<MyPage />} />
-
             </Routes>
         </div>
     );

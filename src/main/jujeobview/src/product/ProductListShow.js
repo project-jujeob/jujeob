@@ -26,6 +26,7 @@ function ProductListShow(props) {
 
 
     const itemsPerPage = 9;
+    const itemsPerRow = 3;
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -35,25 +36,32 @@ function ProductListShow(props) {
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = productList.slice(indexOfFirstItem, indexOfLastItem);
 
+    // 각 행에 대한 배열로 나누기
+    const rows = [];
+    for (let i = 0; i < currentItems.length; i += itemsPerRow) {
+        rows.push(currentItems.slice(i, i + itemsPerRow));
+    }
+
     return (
         <div className="ProductListShowContainer">
             <div className="ProductListShowHeader">
                 <div className="ProductListCount">상품 수 : {productList.length} 개</div>
             </div>
             <div className="ProductItems">
-                {currentItems.map((product) => (
-                    <div  key={product.productNo}>
-                        <Link to={`/ProductItemDetail/${product.productNo}`}>
-                        {/*<Link to={`/ProductItemDetail/1`}>*/}
-                            <div className="ProductItem" key={product.productNo} >
-                                <div>{product.productNo}</div>
-                                <div className="ProductImg"><img src={product.img} alt={product.name} /></div>
-                                <div className="ProductName">{product.name}</div>
-                                <div className="ProductDescription">{product.description.length > 18 ? `${product.description.substring(0, 18)}...` : product.description}</div>
-                                <div className="ProductAlcohol">{product.alcohol}</div>
-                                <div className="ProductPrice">{product.price}</div>
+                {rows.map((row, index) => (
+                    <div key={index} className="ProductRow">
+                        {row.map((product) => (
+                            <div key={product.productNo} className="ProductItem">
+                                <Link to={`/ProductItemDetail/${product.productNo}`} className="link">
+                                    <div className="ProductImg"><img src={product.img} alt={product.name}/></div>
+                                    <div className="ProductName">{product.name}</div>
+                                    <div
+                                        className="ProductDescription">{product.description.length > 18 ? `${product.description.substring(0, 18)}...` : product.description}</div>
+                                    <div className="ProductAlcohol">{product.alcohol}</div>
+                                    <div className="ProductPrice">{product.price}</div>
+                                </Link>
                             </div>
-                        </Link>
+                        ))}
                     </div>
                 ))}
             </div>

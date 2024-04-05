@@ -30,8 +30,9 @@
     font-weight: bolder;
 }
 
+
 .ProductItem {
-    width: 30%;
+    width: 100%;
     margin-top: 30px;
     margin-bottom: 20px;
     text-align: center;
@@ -49,6 +50,11 @@
 .ProductName {
     font-weight: bold;
     font-size: large;
+}
+
+.ProductItems .link{
+    text-decoration: none;
+    color:#000;
 }
 
 /*----------productRecommendList.js----------*/
