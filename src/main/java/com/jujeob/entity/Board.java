@@ -30,7 +30,7 @@ public class Board {
 
     @NonNull
     @Column(name = "Board_Content")
-    private String boardContent;
+    private String boardContext;
 
     @NonNull
     @Column(name = "Board_CreateDate")
@@ -45,7 +45,6 @@ public class Board {
     @NonNull
     @Column(name = "Board_isDeleted" )
     private int isDeleted;
-
 
     @ManyToOne
     @JoinColumn(name = "memNo")

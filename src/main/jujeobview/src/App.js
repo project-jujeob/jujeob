@@ -7,6 +7,8 @@ import RegisterComplete from "./member/RegisterComplete";
 import MainPage from "./MainPage";
 import ProductItemDetail from "./product/ProductItemDetail";
 import React from "react";
+import BbsList from "./Board/BulletinBoardSystem/BbsList";
+import BbsWrite from "./Board/BulletinBoardSystem/BbsWrite";
 
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
                 <Route path='/Login' element={<Login />} />
                 <Route path='/Register' element={<Register />} />
                 <Route path='/RegisterComplete' element={<RegisterComplete />} />
+                <Route path='/BbsList' element={<BbsList />} />
+                <Route path='/BbsWrite' element={<BbsWrite />}/>
             </Routes>
         </div>
     );

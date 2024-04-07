@@ -3,7 +3,7 @@
     background-color: rgba(255, 255, 255, 0);
 }
 /* 슬라이드 영역 */
-.SubContainer{
+.BbsListContainer{
     width: 100%;
     display: flex;
     flex-direction: column;

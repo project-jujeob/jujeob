@@ -1,7 +1,7 @@
 package com.jujeob.controller;
 
+import com.jujeob.dto.BoardDto;
 import com.jujeob.entity.Board;
-import com.jujeob.repository.BoardRepository;
 import com.jujeob.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class BoardController {
     private BoardService boardService;
 
     @GetMapping("/api/boardData")
-    public List<Board> getAllBoards() {
+    public List<BoardDto> getAllBoards() {
         return boardService.getAllBoards();
     }
 
