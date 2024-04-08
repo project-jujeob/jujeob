@@ -1,8 +1,14 @@
 import ProductType from "./ProductType";
 import QuantityCounter from "./QuantityCounter";
+import addToCart from "../Cart/addToCart";
 
 
-function DetailTraditional({product, addCart}) {
+function DetailTraditional({product}) {
+
+    const handleAddToCart = () => {
+        addToCart(product);
+        // 장바구니에 상품을 추가했을 때 필요한 로직 추가
+    };
 
     return(
         <>
@@ -31,7 +37,7 @@ function DetailTraditional({product, addCart}) {
                             <div>
                                 [찜]
                             </div>
-                            <button className="cartBtn" onClick={addCart}>장바구니 담기</button>
+                            <button className="cartBtn" onClick={handleAddToCart}>장바구니 담기</button>
                         </div>
                     </div>
                 </div>

@@ -16,7 +16,7 @@ function Cart() {
         setCartItems(items);
 
         // 총 가격 계산
-        const totalPrice = items.reduce((acc, item) => acc + parseInt(item.price.replace(/[^\d]/g, '')), 0);
+        const totalPrice = items.reduce((acc, item) => acc + parseInt(item.price), 0);
         setTotalPrice(totalPrice);
     }, []);
 
