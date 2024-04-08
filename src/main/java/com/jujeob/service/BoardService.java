@@ -6,6 +6,7 @@ import com.jujeob.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class BoardService {
         BoardDto dto = new BoardDto();
         dto.setBoardId(entity.getBoardId());
         dto.setBoardTitle(entity.getBoardTitle());
-        dto.setBoardContext(entity.getBoardContext());
+        dto.setBoardContent(entity.getBoardContent());
         dto.setCreateDate(entity.getCreateDate());
         return dto;
     }
@@ -34,6 +35,16 @@ public class BoardService {
         }
 
         return BoardsDtos;
+    }
+    public Board boardWrite(BoardDto boardDto) {
+        // BoardDto를 이용하여 Board 객체를 생성
+        Board board = new Board();
+        board.setBoardTitle(boardDto.getBoardTitle());
+        board.setBoardContent(boardDto.getBoardContent());
+        board.setCreateDate(LocalDate.now()); // 현재 날짜 설정
+
+        // 게시글 저장
+        return boardRepository.save(board);
     }
 
 }

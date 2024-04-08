@@ -9,7 +9,7 @@ import ProductItemDetail from "./product/ProductItemDetail";
 import React from "react";
 import BbsList from "./Board/BulletinBoardSystem/BbsList";
 import BbsWrite from "./Board/BulletinBoardSystem/BbsWrite";
-
+import RandomCat from "./Board/BulletinBoardSystem/RandomCat";
 
 function App() {
 

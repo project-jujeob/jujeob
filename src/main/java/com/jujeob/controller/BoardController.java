@@ -6,10 +6,9 @@ import com.jujeob.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -24,5 +23,15 @@ public class BoardController {
         return boardService.getAllBoards();
     }
 
+    @PostMapping("/api/Write")
+    public void boardWrite(@RequestBody BoardDto boardDto) {
+        // BoardDto를 이용하여 Board 객체를 생성
+        Board board = new Board();
+        board.setBoardTitle(boardDto.getBoardTitle());
+        board.setBoardContent(boardDto.getBoardContent());
+        board.setCreateDate(LocalDate.now()); // 현재 날짜 설정
 
+        // 생성된 Board 객체를 서비스로 전달하여 저장
+        boardService.boardWrite(boardDto);
+    }
 }
