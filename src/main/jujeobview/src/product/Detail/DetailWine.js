@@ -2,7 +2,7 @@ import ProductType from "./ProductType";
 import QuantityCounter from "./QuantityCounter";
 
 
-function DetailBeer({product}) {
+function DetailTraditional({product}) {
 
     return(
         <>
@@ -40,10 +40,26 @@ function DetailBeer({product}) {
                         <div>상품문의</div>
                     </div>
                     <div className="detailContentTop">
-                        <div>[맥주] {product.name}</div>
+                        <div>[와인] {product.name}</div>
+                        <p>{product.description}</p>
                     </div>
                     <div>
-                    <p>{product.description}</p>
+                        <img src={product.tastingImg} alt="술테이스팅노트" className="tastingNote"/>
+                    </div>
+                    <div className="detailContentInfo">
+                        <p><span>색 | </span>{product.color}</p>
+                        <p><span>향 | </span>{product.aroma}</p>
+                        <p><span>품종 | </span>{product.kind}</p>
+                        <p><span>오픈타입 | </span>{product.openType}</p>
+                        <p><span>푸드 페어링 | </span>{product.foodPairing}</p>
+                        <p><span>브리딩 및 시음 온도 | </span>{product.breeding}</p>
+                        <p><span>추천 잔 | </span>{product.recommendGlass}</p>
+                    </div>
+                </div>
+                <div className="detailBottom">
+                    <div>
+                        <p><span>와이너리 | </span>{product.winery}</p>
+                        <p>{product.countryDescription}</p>
                     </div>
                 </div>
             </div>
@@ -51,4 +67,4 @@ function DetailBeer({product}) {
     )
 }
 
-export default DetailBeer;
+export default DetailTraditional;

@@ -18,6 +18,9 @@
 .ProductListShowContainer {
     margin: 30px;
 }
+
+
+
 .ProductItems {
     display: flex;
     flex-wrap: wrap;
@@ -30,12 +33,18 @@
     font-weight: bolder;
 }
 
+.ProductRow{
+    width:30%;
+}
 
 .ProductItem {
     width: 100%;
+    height:420px;
     margin-top: 30px;
     margin-bottom: 20px;
     text-align: center;
+    flex: 1 0 30%; /* 유동적인 너비 설정 */
+
 }
 
 .ProductImg img {
@@ -50,6 +59,8 @@
 .ProductName {
     font-weight: bold;
     font-size: large;
+
+    white-space: normal;
 }
 
 .ProductItems .link{

@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import Header from "../common/Header";
+import Header from "../../common/Header";
 import './ProductItemDetail.css';
-import ProductType from "./ProductType";
-import QuantityCounter from "./QuantityCounter";
-import MainPage from "../MainPage";
-import ProductList from "./ProductList";
-import DetailBeer from "./Detail/DetailBeer";
+import DetailBeer from "./DetailBeer";
+import DetailTraditional from "./DetailTraditional";
+import DetailWine from "./DetailWine";
+import DetailWhiskey from "./DetailWhiskey";
 
 function ProductItemDetail() {
     const { productNo } = useParams();
@@ -38,7 +37,13 @@ function ProductItemDetail() {
             componentToShow = <DetailBeer product={product}/>;
             break;
         case "2":
-            componentToShow = <MainPage />;
+            componentToShow = <DetailTraditional product={product}/>;
+            break;
+        case "3":
+            componentToShow = <DetailWine product={product}/>;
+            break;
+        case "4":
+            componentToShow = <DetailWhiskey product={product}/>;
             break;
         default:
             componentToShow = null;

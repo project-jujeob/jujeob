@@ -1,0 +1,190 @@
+.detail {
+    width:70%;
+    margin-top: 70px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.detailRightSpan{
+    margin-top:50px;
+}
+
+.detailRightSpan span{
+    font-weight: bold;
+}
+
+.detailRight h2{
+
+}
+
+.detailTop{
+    display: flex;
+    justify-content: space-between;
+}
+
+.detailTop>div:nth-child(1){
+    width:40%;
+    height:auto;
+}
+
+.detailTop>div:nth-child(1) img{
+    border-radius: 10px;
+}
+
+.detailTop>div:nth-child(2){
+    width:55%;
+}
+
+.detailTop>div:nth-child(2) h1{
+    margin:20px 0;
+}
+
+.detailTop>div:nth-child(2) p{
+    margin:20px 0;
+}
+
+.detailImgthumb {
+    width: 100%; /* 부모 요소에 꽉 차게 하기 위해 */
+    height: auto; /* 부모 요소에 꽉 차게 하기 위해 */
+    object-fit: cover; /* 이미지가 요소에 맞춰져 채워지되, 비율을 유지 */
+}
+
+.detailBtn{
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.cartBtn{
+    margin: 30px 0 0 0;
+    padding:15px 120px;
+    background-color: #FD4818;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color:#FFF;
+    font-weight: bold;
+    font-size:15px;
+}
+
+.detailContent{
+    margin-top:100px;
+    padding-bottom: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.detailContentTop>div{
+    position: relative;
+    padding-bottom: 50px;
+}
+
+.detailContentTop>div::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%; /* 가로 크기만큼 설정 */
+    height: 1px; /* 밑줄의 두께 설정 */
+    background-color: black; /* 밑줄 색상 설정 */
+}
+
+.detailContentTop>div:nth-child(1){
+    font-size: 50px;
+    margin-bottom:30px;
+}
+
+.detailContentBtn{
+    display: flex;
+}
+.detailContentBtn div{
+    background-color: #efefef;
+    flex: 1; /* 모든 아이템에 동일한 비율의 공간 할당 */
+    border: 1px solid #b4b4b4; /* 아이템들을 시각적으로 구분하기 위한 테두리 추가 */
+    text-align: center; /* 텍스트를 가운데 정렬 */
+    padding: 15px 0;
+    margin-bottom: 50px;
+}
+
+.detailContentBtn div:hover{
+    cursor: pointer;
+    background-color: #d3d3d3;
+}
+
+.detailContentImg{
+    margin-bottom:50px;
+}
+
+.detailContentImg>img{
+    width:100%;
+    height:auto;
+}
+
+.detailContentInfo{
+    margin-top:50px;
+    margin-left:20px;
+    text-align: left;
+}
+
+.detailContentInfo span{
+    font-weight:bold;
+}
+
+.tastingNote{
+    margin-top:120px;
+    width:100%;
+    height:auto;
+}
+
+
+.detailBottom{
+    margin:50px 0;
+}
+
+.detailBottom>img{
+    width:100%;
+    height:auto;
+}
+
+.detailBottom span{
+    font-weight:bold;
+}
+
+.detailBottom div{
+    margin:0 20px;
+}
+
+/* QuantityCouinter.js */
+.quantity{
+    display: flex;
+    align-items: baseline;
+}
+
+.quantity span{
+    font-weight: bold;
+}
+
+.quantity>div{
+    background-color: #FFF;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.quantityInput{
+    width:50px;
+}
+
+.quantityBtn{
+    cursor: pointer;
+    font-weight: bolder;
+    font-size:15px;
+    background-color: transparent;
+    border:none;
+    margin: 5px 10px;
+}
+
+.quantityInput{
+    border: none;
+    background-color: transparent;
+    text-align: center;
+}
