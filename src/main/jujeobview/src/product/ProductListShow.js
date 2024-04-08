@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Pagination from '../common/Pagination';
 import {Link} from "react-router-dom";
+import likeIcon from '../img/icon/likeIcon.png';
+import basketIcon from '../img/icon/basketIcon.png';
 
 function ProductListShow({selectedCategory, selectedSubCategory, viewAll}) {
     const [productList, setProductList] = useState([]);
@@ -72,12 +74,19 @@ function ProductListShow({selectedCategory, selectedSubCategory, viewAll}) {
                         {row.map((product) => (
                             <div key={product.productNo} className="ProductItem">
                                 <Link to={`/ProductItemDetail/${product.productNo}`} className="link">
-                                    <div className="ProductImg"><img src={product.img} alt={product.name}/></div>
+                                    <div className="ProductImg">
+                                        <img src={product.img} alt={product.name}/>
+                                        <div className="ProductBtns">
+                                            <div className="ProductLikeBtn"><img src={likeIcon}/></div>
+                                            <div className="ProductBasketBtn"><img src={basketIcon}/></div>
+                                        </div>
+                                    </div>
                                     <div className="ProductName">{product.name}</div>
                                     <div
                                         className="ProductDescription">{product.description.length > 18 ? `${product.description.substring(0, 18)}...` : product.description}</div>
                                     <div className="ProductAlcohol">{product.alcohol}</div>
                                     <div className="ProductPrice">{product.price}</div>
+
                                 </Link>
                             </div>
                         ))}

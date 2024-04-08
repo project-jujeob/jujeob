@@ -27,7 +27,7 @@
 
 .ProductListCount {
     text-align: right;
-    margin-right: 20px;
+    margin-right: 40px;
     font-size: 15px;
     font-weight: bolder;
 }
@@ -46,6 +46,9 @@
     align-items: center;
     flex-direction: column;
 }
+.ProductItem div {
+    margin: 5px 0;
+}
 .ProductRow {
     display: flex;
     justify-content: space-between;
@@ -55,17 +58,34 @@
 .ProductImg {
     width: 100%;
     height: 320px;
+    margin: 15px 0;
+    position: relative;
 }
+
 .ProductImg img {
     border-radius: 10px;
     max-width: 100%;
-    margin-bottom: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
 }
 
+.ProductBtns {
+    position: absolute;
+    top: 270px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.ProductLikeBtn, .ProductBasketBtn {
+    width: 27px;
+    height: 27px;
+    cursor: pointer;
+}
+
 .ProductName {
-    margin-top: 15px;
     font-weight: bold;
     font-size: large;
     white-space: normal;
@@ -144,6 +164,9 @@
 
 .ProductListSidebar {
     padding: 20px;
+    position: sticky;
+    top: 20px;
+    height: 80%;
 }
 
 .ProductListSidebarContainer {
@@ -178,7 +201,7 @@
 }
 
 .ProductListSidebarAlcoholType, .ProductListSidebarAlcoholLevel,
-.ProductListSidebarPrice {
+.ProductListSidebarPrice, .ProductListPopularity, .ProductListNew {
     margin: 10px 0;
 }
 

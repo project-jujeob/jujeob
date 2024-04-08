@@ -146,7 +146,7 @@ function ProductCategory() {
             </div>
             <div className="ProductList">
                 <div className="ProductListSidebar">
-                    <div className="ProductListSidebarContainer">[ 필터 ]
+                    <div className="ProductListSidebarContainer">[ 사이드바 ]
                         <button className="SelectedReset" onClick={resetCheckBoxs}>
                             <img className="ResetIcon" src={resetIcon}/>초기화</button>
                     </div>
@@ -211,10 +211,10 @@ function ProductCategory() {
                         </div>
                     </div>
                     <div className="ProductListSidebarSubContainer4">
-                        <div className="ProductListPopularity">[인기순]</div>
+                        <h4 className="ProductListPopularity">[인기순]</h4>
                     </div>
                     <div className="ProductListSidebarSubContainer5">
-                        <div className="ProductListNew">[최신순]</div>
+                        <h4 className="ProductListNew">[최신순]</h4>
                     </div>
 
                 </div>
