@@ -62,10 +62,22 @@ public class ProductController {
         return productService.showProductListByCategoryNameAndKeyword(subCategoryName);
     }
 
-
     @GetMapping("/api/productDetail/{productNo}")
     public Optional<Product> getProductDetails(@PathVariable Integer productNo) {
         Optional<Product> product = productService.getProductByProductNo(productNo);
         return product;
+    }
+
+    @GetMapping("/api/showProductMainType")
+    public List<String> getProductId() {
+        System.out.println(productService.getProductId());
+        return productService.getProductId();
+    }
+
+    @PostMapping("api/selectedMainType")
+    public List<String> getProductType(@RequestBody Map<String, String> requestBody) {
+        String productId = requestBody.get("mainType");
+        System.out.println(productId);
+        return productService.getProductType(productId);
     }
 }
