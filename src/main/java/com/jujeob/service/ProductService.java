@@ -71,4 +71,13 @@ public class ProductService {
     public Optional<Product> getProductByProductNo(Integer productNo) {
         return productRepository.findById(productNo);
     }
+
+
+    public List<String> getProductId() {
+        return productRepository.findProductId();
+    }
+
+    public List<String> getProductType(String productId) {
+        return productRepository.findType(productId);
+    }
 }

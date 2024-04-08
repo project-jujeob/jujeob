@@ -50,4 +50,25 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
 
         return uniqueProducts;
     }
+
+    @Override
+    public List<String> findProductId() {
+        QProduct qProduct = QProduct.product;
+
+        return factory
+                .select(qProduct.productId)
+                .from(qProduct)
+                .distinct()
+                .fetch();
+    }
+
+    @Override
+    public List<String> findType(String productId) {
+        QProduct qProduct = QProduct.product;
+        return factory
+                .select(qProduct.type)
+                .from(qProduct)
+                .where(qProduct.productId.eq(productId))
+                .distinct().fetch();
+    }
 }

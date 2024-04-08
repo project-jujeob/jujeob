@@ -6,12 +6,12 @@
 }
 
 .ProductListSidebar {
-    width: 20%;
-    background-color: lightgreen;
+    width: 23%;
+    border: solid 1px #FF7E5C;
 }
 
 .ProductListShow {
-    width: 80%;
+    width: 77%;
 }
 
 /*----------productListShow.js----------*/
@@ -19,13 +19,12 @@
     margin: 30px;
 }
 
-
-
 .ProductItems {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
+
 .ProductListCount {
     text-align: right;
     margin-right: 20px;
@@ -39,35 +38,52 @@
 
 .ProductItem {
     width: 100%;
-    height:420px;
+    height: 450px;
     margin-top: 30px;
     margin-bottom: 20px;
     text-align: center;
-    flex: 1 0 30%; /* 유동적인 너비 설정 */
-
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.ProductRow {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
+.ProductImg {
+    width: 100%;
+    height: 320px;
+}
 .ProductImg img {
     border-radius: 10px;
-    width: 270px;
-    height: 300px;
+    max-width: 100%;
     margin-bottom: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
 }
 
 .ProductName {
+    margin-top: 15px;
     font-weight: bold;
     font-size: large;
-
     white-space: normal;
+    word-break: keep-all;
+    line-break: 1.3em;
+    height: 2.6em;
 }
 
 .ProductItems .link{
     text-decoration: none;
     color:#000;
+    width: 270px;
+    display: block;
 }
-
+.ProductItems .link img {
+    width: 100%;
+    height: inherit;
+}
 /*----------productRecommendList.js----------*/
 .ProductRecommendContainer{
     text-align: left;
@@ -97,6 +113,9 @@
     width: 200px;
     font-size: 15px;
     font-weight: bold;
+    word-break: keep-all;
+    line-break: 1.3em;
+    height: 2.6em;
 }
 
 /*----------ProductCategory.js----------*/
@@ -107,7 +126,7 @@
     margin: 20px;
 }
 
-.CategoryItem button, .SubCategoryItem button {
+.CategoryItem button, .SubCategoryItem button, .AllCategory {
     border: solid 0.5px;
     border-radius: 5px;
     background-color: white;
@@ -123,5 +142,83 @@
     margin: auto;
 }
 
+.ProductListSidebar {
+    padding: 20px;
+}
 
+.ProductListSidebarContainer {
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.ProductListSidebarContainer::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: gray;
+}
+
+
+.SelectedReset {
+    border: none;
+    background-color: transparent;
+    float: right;
+}
+
+.ProductListSidebarSubContainer1 {
+    clear: both;
+}
+
+.ResetIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.ProductListSidebarAlcoholType, .ProductListSidebarAlcoholLevel,
+.ProductListSidebarPrice {
+    margin: 10px 0;
+}
+
+.alcoholTypeName {
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.TypeContainer{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.TypeSubContainer {
+    width: 50%;
+    margin: 5px 0;
+    display: flex;
+}
+
+.TypeCheckBox, .LevelCheckBox , .PriceCheckBox{
+    width: 1rem;
+    height: 1rem;
+    border-radius: 40%;
+    border: 1px solid #999;
+    appearance: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.TypeCheckBox:checked , .LevelCheckBox:checked, .PriceCheckBox:checked{
+    background: #FF7E5C;
+    border: none
+}
+
+.AlcoholLevelContainer, .PriceContainer {
+    display: flex;
+    flex-direction: column
+}
+
+.LevelCheckBoxContainer, .PriceCheckBoxContainer {
+    margin:  5px 0;
+}
 

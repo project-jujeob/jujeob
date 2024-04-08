@@ -4,19 +4,32 @@ import axios from "axios";
 import Pagination from '../common/Pagination';
 import {Link} from "react-router-dom";
 
-function ProductListShow({selectedCategory, selectedSubCategory}) {
+function ProductListShow({selectedCategory, selectedSubCategory, viewAll}) {
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
-    useEffect(() => {
+    const showAll = () => {
         axios.get('/api/productList')
-            .then((response) => {
+            .then(response => {
                 setProductList(response.data);
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error('데이터 가져오기 실패:', error);
             });
+    }
+
+    // 페이지 로드 시 실행되는 로직
+    useEffect(() => {
+       showAll();
     }, []);
+
+
+    useEffect(() => {
+        if (viewAll) {
+            showAll();
+        }
+    }, [viewAll]);
+
 
     useEffect(() => {
         if (selectedCategory) {

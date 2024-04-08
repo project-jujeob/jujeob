@@ -9,4 +9,8 @@ public interface ProductRepositoryCustom {
     List<Product> findProductListByCategoryNameAndKeyword(String subCategoryName);
 
     List<Product> findProductListByCategory(List<String> subCategories);
+
+    List<String> findProductId();
+
+    List<String> findType(String productId);
 }
