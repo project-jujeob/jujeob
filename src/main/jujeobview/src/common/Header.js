@@ -26,10 +26,6 @@ function Header() {
                   <button>커뮤니티</button>
                 </Link>
                 <button>공지사항</button>
-                <button>장바구니</button>
-                <button>로그인/회원가입</button>
-                <button>커뮤니티</button>
-                <button>공지사항</button>
                 <Link to={"/Cart"}>
                     <button>장바구니</button>
                 </Link>
