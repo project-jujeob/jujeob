@@ -10,5 +10,5 @@
 ## 팀원구성
 |이범신|서린|최재호|노용철|백세진|
 | ------- | ------- | ------- | ------- | ------- |
-| 조장    | 부조장   | 조원    |  조원   |  조원   |
+|   조장  |  부조장  |   조원  |   조원  |   조원  |
 | [newb997](https://github.com/newb997)| [addedurin](https://github.com/addedurin)| [CJeaHo](https://github.com/CJeaHo) |  [RYC0208](https://github.com/RYC0208) | [baeksejin](https://github.com/baeksejin) |
