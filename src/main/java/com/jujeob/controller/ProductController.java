@@ -76,4 +76,15 @@ public class ProductController {
 
         return productService.getProductTypesByMainTypes(mainTypes);
     }
+
+    // 선택된 주종으로 해당 상품 조회
+    @PostMapping("api/productListByMainType")
+    public List<ProductListDto> showProductListByMainType(@RequestBody Map<String, List<String>> requestBody) {
+        List<String> mainTypes = requestBody.get("mainType");
+        return productService.getProductListByMainType(mainTypes);
+    }
+
+
+    // 선택된 체크박스의 type으로 해당 상품 찾아오기
+
 }

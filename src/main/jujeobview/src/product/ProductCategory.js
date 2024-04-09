@@ -15,6 +15,7 @@ function ProductCategory() {
     const [selectedMainType, setSelectedMainType] = useState([]);
     const [currentMainType, setCurrentMainType] = useState([]); // 현재 선택된 주종 상태
     const [checkedTypes, setCheckedTypes] = useState({});
+    const [checkedMainType, setCheckedMainType] = useState([]);
 
 
     // 주종에 대응하는 이름을 매핑하는 객체
@@ -52,7 +53,6 @@ function ProductCategory() {
         axios.post('api/selectedSubCategoryName', {subCategory : subCategory })
             .then((response) => {
                 setSelectedSubCategory(response.data);
-
             })
             .catch((error)=>{
                 console.error('데이터 전송 실패:', error);
@@ -72,17 +72,25 @@ function ProductCategory() {
             .then((response) => {
                 setSelectedMainType(response.data);
 
-                let newCheckedTypes = {};
-                Object.values(response.data).flat().forEach(type => {
-                    newCheckedTypes[type] = false;
+                setCheckedTypes(prevCheckedTypes => {
+                    const newCheckedTypes = {...prevCheckedTypes};
+                    Object.values(response.data).flat().forEach(type => {
+                        if (newCheckedTypes[type] === undefined) {
+                            newCheckedTypes[type] = false;
+                        }
+                    });
+                    return newCheckedTypes;
                 });
-                setCheckedTypes(newCheckedTypes);
+                return axios.post('api/productListByMainType', { mainType : newMainTypes });
+            })
+            .then((productListByMainType) => {
+                console.log(productListByMainType.data);
+                setCheckedMainType(productListByMainType.data);
             })
             .catch((error) => {
-                console.error('타입 데이터 가져오기 실패:', error);
+                console.error('요청 처리 중 에러 발생:', error);
             });
     };
-
 
     // 체크박스 상태를 변경하는 핸들러
     const handleCheckboxChange = (type) => {
@@ -90,6 +98,16 @@ function ProductCategory() {
             ...prev,
             [type]: !prev[type]
         }));
+        axios.post('/api/updateCheckBoxState',  {
+            type : type,
+            isChecked : !checkedTypes[type]
+        })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error)=>{
+                console.error('체크박스 상태 업데이트 실패:', error);
+            })
     };
 
     // 체크박스 초기화
@@ -117,7 +135,6 @@ function ProductCategory() {
         axios.get('/api/showProductMainType')
             .then((response) => {
                 setProductMainType(response.data);
-                console.log(response.data);
             })
             .catch((error)=>{
                 console.error('주종 목록 가져오기 실패:', error);
@@ -226,7 +243,8 @@ function ProductCategory() {
                     <ProductListShow selectedCategory={selectedCategory}
                                      selectedSubCategory={selectedSubCategory}
                                      viewAll={viewAll}
-                                     onViewAll={AllCategoryBtn}/>
+                                     onViewAll={AllCategoryBtn}
+                                     checkedMainType={checkedMainType}/>
                 </div>
             </div>
         </div>

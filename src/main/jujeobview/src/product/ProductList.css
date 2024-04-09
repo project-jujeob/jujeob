@@ -172,6 +172,7 @@
 .ProductListSidebarContainer {
     position: relative;
     padding-bottom: 5px;
+    color: #555555;
 }
 
 .ProductListSidebarContainer::after {

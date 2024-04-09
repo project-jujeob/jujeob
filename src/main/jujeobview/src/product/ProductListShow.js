@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import likeIcon from '../img/icon/likeIcon.png';
 import basketIcon from '../img/icon/basketIcon.png';
 
-function ProductListShow({selectedCategory, selectedSubCategory, viewAll}) {
+function ProductListShow({selectedCategory, selectedSubCategory, viewAll, checkedMainType}) {
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -44,6 +44,12 @@ function ProductListShow({selectedCategory, selectedSubCategory, viewAll}) {
             setProductList(selectedSubCategory);
         }
     }, [selectedSubCategory]);
+
+    useEffect(() => {
+        if (checkedMainType) {
+            setProductList(checkedMainType);
+        }
+    }, [checkedMainType]);
 
 
     const itemsPerPage = 9;

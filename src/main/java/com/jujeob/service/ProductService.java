@@ -76,6 +76,7 @@ public class ProductService {
     }
 
 
+
     private List<String> getProductType(String mainType) {
         return productRepository.findType(mainType);
     }
@@ -89,4 +90,13 @@ public class ProductService {
         return mainTypeToTypes;
     }
 
+    public List<ProductListDto> getProductListByMainType(List<String> mainTypes) {
+        List<ProductListDto> productListByProductIdDtos = new ArrayList<>();
+
+        for (String productId : mainTypes) {
+            List<Product> products = productRepository.findProductListByMainType(productId);
+            products.forEach(product -> productListByProductIdDtos.add(mapProductToDto(product)));
+        }
+        return productListByProductIdDtos;
+    }
 }
