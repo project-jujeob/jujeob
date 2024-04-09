@@ -20,20 +20,28 @@ public class MemberController {
     @Autowired
     MemberService memberService;
 
-    @PostMapping("/register.do")
+    @PostMapping("/api/register")
     public ResponseEntity<String> register(@RequestBody RegisterDto registerDto) {
         memberService.register(registerDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("success");
     }
 
-    @PostMapping("/login.do")
+    @PostMapping("/api/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto, HttpSession session) {
         Member loginMember = memberService.login(loginDto);
         if(loginMember != null) {
             session.setAttribute("loginMember", loginMember);
-            return ResponseEntity.ok().build(); //  HTTP 응답 코드 200(OK)를 반환하는 코드
+            return ResponseEntity.ok(loginMember);
+//            ResponseEntity.ok().build(); //  HTTP 응답 코드 200(OK)를 반환하는 코드
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build(); // HTTP 응답 코드 401(UNAUTHORIZED)를 반환하는 코드
+    }
+
+
+    @PostMapping("/api/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
 }

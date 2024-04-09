@@ -21,13 +21,11 @@ public class SubCategoryRepositoryImpl implements SubCategoryRepositoryCustom{
         QCategory qCategory = QCategory.category;
         QSubCategory qSubCategory = QSubCategory.subCategory;
 
-        List<String> subCategoryNames = factory.select(qSubCategory.subCategoryName)
+        return factory.select(qSubCategory.subCategoryName)
                 .from(qSubCategory)
                 .join(qCategory)
                 .on(qSubCategory.categoryNo.eq(qCategory.categoryNo))
                 .where(qCategory.categoryNo.eq(categoryNo))
                 .fetch();
-
-        return subCategoryNames;
     }
 }

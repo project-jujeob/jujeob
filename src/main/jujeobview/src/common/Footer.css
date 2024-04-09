@@ -5,5 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    background-color: antiquewhite;
+    background-color: black;
+    color: #FF7E5C;
+    padding: 5px;
 }

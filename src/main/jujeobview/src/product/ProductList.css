@@ -1,9 +1,4 @@
-.ProductList {
-    display: flex;
-}
-
-.ProductListRecommend {
-
+.ProductListContainer {
 }
 
 .ProductListCategory {
@@ -11,46 +6,104 @@
 }
 
 .ProductListSidebar {
-    width: 20%;
-    background-color: lightgreen;
+    width: 23%;
+    border: solid 1px #FF7E5C;
 }
 
 .ProductListShow {
-    width: 80%;
-    background-color: lightgoldenrodyellow;
-
+    width: 77%;
 }
 
 /*----------productListShow.js----------*/
-
 .ProductListShowContainer {
     margin: 30px;
 }
+
 .ProductItems {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.ProductListCount {
+    text-align: right;
+    margin-right: 40px;
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+.ProductRow{
+    width:30%;
 }
 
 .ProductItem {
-    width: 30%;
-    margin-right: 2%;
+    width: 100%;
+    height: 450px;
     margin-top: 30px;
     margin-bottom: 20px;
     text-align: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.ProductItem div {
+    margin: 5px 0;
+}
+.ProductRow {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
-.ProductImg img {
+.ProductImgContainer {
+    width: 100%;
+    height: 320px;
+    margin: 15px 0;
+    position: relative;
+}
+
+.ProductImgContainer .ProductImg {
     border-radius: 10px;
-    width: 220px;
-    height: 230px;
-    margin-bottom: 10px;
+    max-width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.ProductBtns {
+    position: absolute;
+    top: 270px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.ProductLikeBtn, .ProductBasketBtn {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
 }
 
 .ProductName {
     font-weight: bold;
     font-size: large;
+    white-space: normal;
+    word-break: keep-all;
+    line-break: 1.3em;
+    height: 2.6em;
 }
 
+.ProductItems .link{
+    text-decoration: none;
+    color:#000;
+    width: 270px;
+    display: block;
+}
+.ProductItems .link img {
+    width: 100%;
+    height: inherit;
+}
 /*----------productRecommendList.js----------*/
 .ProductRecommendContainer{
     text-align: left;
@@ -58,7 +111,7 @@
 }
 
 .ProductRecommendContainer h2{
-    margin-left: 100px;
+    margin-left: 140px;
 }
 
 .ProductListRecommendItems {
@@ -80,17 +133,20 @@
     width: 200px;
     font-size: 15px;
     font-weight: bold;
+    word-break: keep-all;
+    line-break: 1.3em;
+    height: 2.6em;
 }
 
 /*----------ProductCategory.js----------*/
-.CategoryItems {
+.CategoryItems, .SubCategoryItems {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 20px;
 }
 
-.CategoryItem button {
+.CategoryItem button, .SubCategoryItem button, .AllCategory {
     border: solid 0.5px;
     border-radius: 5px;
     background-color: white;
@@ -99,3 +155,94 @@
     font-size: 15px;
     font-weight: bold;
 }
+
+.ProductList {
+    display: flex;
+    width: 85%;
+    margin: auto;
+}
+
+.ProductListSidebar {
+    padding: 20px;
+    position: sticky;
+    top: 20px;
+    height: 80%;
+}
+
+.ProductListSidebarContainer {
+    position: relative;
+    padding-bottom: 5px;
+    color: #555555;
+}
+
+.ProductListSidebarContainer::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background-color: gray;
+}
+
+
+.SelectedReset {
+    border: none;
+    background-color: transparent;
+    float: right;
+}
+
+.ProductListSidebarSubContainer1 {
+    clear: both;
+}
+
+.ResetIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.ProductListSidebarAlcoholType, .ProductListSidebarAlcoholLevel,
+.ProductListSidebarPrice, .ProductListPopularity, .ProductListNew {
+    margin: 10px 0;
+}
+
+.alcoholTypeName {
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.TypeContainer{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.TypeSubContainer {
+    width: 50%;
+    margin: 5px 0;
+    display: flex;
+}
+
+.TypeCheckBox, .LevelCheckBox , .PriceCheckBox{
+    width: 1rem;
+    height: 1rem;
+    border-radius: 40%;
+    border: 1px solid #999;
+    appearance: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.TypeCheckBox:checked , .LevelCheckBox:checked, .PriceCheckBox:checked{
+    background: #FF7E5C;
+    border: none
+}
+
+.AlcoholLevelContainer, .PriceContainer {
+    display: flex;
+    flex-direction: column
+}
+
+.LevelCheckBoxContainer, .PriceCheckBoxContainer {
+    margin:  5px 0;
+}
+
