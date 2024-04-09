@@ -20,4 +20,4 @@ DataBase : MySQL 8.0
 IDE      : intelliJ  
 버전 및 이슈관리 : Github, Github Issues, Github Project, SourceTree  
 협업 툴  : Discord, Notion  
-디자인 : Figma, kakaoOven  
+디자인   : Figma, kakaoOven  
