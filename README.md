@@ -21,3 +21,18 @@ IDE      : intelliJ
 버전 및 이슈관리 : Github, Github Issues, Github Project, SourceTree  
 협업 툴  : Discord, Notion  
 디자인   : Figma, kakaoOven  
+
+## 역할 분담
+🤨이범신
+- 로그인, 마이페이지 기능
+🎧최재호
+- 로그인, 회원가입 기능
+🫨서린
+- 상품 상세 조회, 장바구니 기능
+🐷백세진
+- 상품 리스트 조회, 검색 기능
+🤥노용철
+- 커뮤니티, 댓글 기능
+
+
+  
