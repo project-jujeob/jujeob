@@ -39,3 +39,6 @@ out/
 ### user secure info ###
 .env
 sql-scripts/*
+
+### YAML ###
+*.yml

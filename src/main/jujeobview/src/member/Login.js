@@ -75,7 +75,7 @@ function Login() {
                     <br/>
 
                     <div>
-                        <Link to={"/Register"}>
+                        <Link to={"/RegisterAdult"}>
                                 <button>회원가입</button>
                         </Link>
                     </div>

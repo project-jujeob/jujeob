@@ -2,6 +2,7 @@ import './App.css';
 import {Route, Routes, BrowserRouter as Router} from "react-router-dom";
 import ProductList from "./product/ProductList";
 import Login from "./member/Login";
+import RegisterAdult from "./member/RegisterAdult";
 import Register from "./member/Register";
 import RegisterComplete from "./member/RegisterComplete";
 import BbsList from "./Board/BulletinBoardSystem/BbsList";
@@ -39,6 +40,7 @@ function App() {
                 <Route path='/ProductList' element={<ProductList />}/>
                 <Route path='/ProductItemDetail/:productNo' element={<ProductItemDetail /> } />
                 <Route path='/Login' element={<Login />} />
+                <Route path='/RegisterAdult' element={<RegisterAdult />} />
                 <Route path='/Register' element={<Register />} />
                 <Route path='/RegisterComplete' element={<RegisterComplete />} />
                 <Route path='/BbsList' element={<BbsList />} />
