@@ -39,4 +39,5 @@ img {
     font-weight: bold;
     padding: 10px;
     margin-left: 20px;
+    cursor: pointer;
 }

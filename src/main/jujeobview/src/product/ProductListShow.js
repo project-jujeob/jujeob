@@ -5,6 +5,7 @@ import Pagination from '../common/Pagination';
 import {Link} from "react-router-dom";
 import likeIcon from '../img/icon/likeIcon.png';
 import basketIcon from '../img/icon/basketIcon.png';
+import addToCart from "./Cart/addToCart";
 
 function ProductListShow({selectedCategory, selectedSubCategory, viewAll}) {
     const [productList, setProductList] = useState([]);
@@ -63,6 +64,12 @@ function ProductListShow({selectedCategory, selectedSubCategory, viewAll}) {
         rows.push(currentItems.slice(i, i + itemsPerRow));
     }
 
+    const handleClick = (e, product) => {
+        e.preventDefault();
+        addToCart(product);
+    };
+
+
     return (
         <div className="ProductListShowContainer">
             <div className="ProductListShowHeader">
@@ -78,7 +85,10 @@ function ProductListShow({selectedCategory, selectedSubCategory, viewAll}) {
                                         <img className="ProductImg" src={product.img} alt={product.name}/>
                                         <div className="ProductBtns">
                                             <div className="ProductLikeBtn"><img src={likeIcon}/></div>
-                                            <div className="ProductBasketBtn"><img src={basketIcon}/></div>
+                                            <div className="ProductBasketBtn"
+                                                 onClick={(e) => handleClick(e, product)}>
+                                                <img src={basketIcon} />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="ProductName">{product.name}</div>
@@ -86,7 +96,6 @@ function ProductListShow({selectedCategory, selectedSubCategory, viewAll}) {
                                         className="ProductDescription">{product.description.length > 18 ? `${product.description.substring(0, 18)}...` : product.description}</div>
                                     <div className="ProductAlcohol">{product.alcohol}</div>
                                     <div className="ProductPrice">{product.price}</div>
-
                                 </Link>
                             </div>
                         ))}

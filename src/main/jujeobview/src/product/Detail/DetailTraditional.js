@@ -1,14 +1,19 @@
 import ProductType from "./ProductType";
 import QuantityCounter from "./QuantityCounter";
 import addToCart from "../Cart/addToCart";
+import {useState} from "react";
 
 
 function DetailTraditional({product}) {
+    const [cartQuantity, setCartQuantity] = useState(1);
 
     const handleAddToCart = () => {
-        addToCart(product);
-        // 장바구니에 상품을 추가했을 때 필요한 로직 추가
+        addToCart(product,cartQuantity);
     };
+
+    const handleQuantityChange = (newQuantity) => {
+        setCartQuantity(newQuantity);
+    }
 
     return(
         <>
@@ -28,9 +33,9 @@ function DetailTraditional({product}) {
                             <p><span>도수&ensp;:&ensp;</span> {product.alcohol}</p>
                             <p><span>용량&ensp;:&ensp;</span> {product.volume}</p>
                             <p><span>소비기한&ensp;:&ensp;</span> {product.expDate}</p>
-                            <p><span>추천 검색어&ensp;:&ensp;</span>{product.keyword}</p>
+                            <p><span>추천 검색어&ensp;:&ensp;</span> {product.keyword}</p>
+                            <p><span>구매수량 : &ensp;</span><QuantityCounter/></p>
                         </div>
-                        <QuantityCounter/>
 
                         <div className="detailBtn">
                             <div>[예약]</div>

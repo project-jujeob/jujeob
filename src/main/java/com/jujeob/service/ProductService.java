@@ -16,6 +16,22 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
+
+    // 기본 생성자
+    public ProductService() {
+        this.productRepository = null;
+    }
+
+    // 다른 생성자
+    public ProductService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
+
+
+
+
+
     private ProductListDto mapProductToDto(Product entity) {
         ProductListDto dto = new ProductListDto();
         dto.setImg(entity.getImg());

@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import Header from "../../common/Header";
+import './Cart.css';
+import QuantityCounter from "../Detail/QuantityCounter";
+import CartQuantityCounter from "./CartQuantityCounter";
 
 // 로컬 스토리지에서 상품 정보를 불러옴
 const getCartItems = () => {
@@ -34,19 +38,45 @@ function Cart() {
 
     return (
         <div>
-            <h2>장바구니</h2>
-            <ul>
-                {cartItems.map((item, index) => (
-                    <li key={index}>
-                        <div>{item.name}</div>
-                        <div>{item.price}</div>
-                        <button onClick={() => removeItemFromCart(index)}>제거</button>
-                    </li>
-                ))}
-            </ul>
-            <div>
-                총 가격: {totalPrice.toLocaleString()} 원
+            <Header/>
+
+            <div className="cartContainer">
+                <div className="cartTitle">
+                    <h1>장바구니</h1>
+                </div>
+                <div className="cartContentList">
+                    <div className="cartTotalChecked">{/*전체선택버튼만들기*/}
+                        <div className="cartCheckTotalBox">
+                            <input type="checkbox"/>전체선택(선택개수/총개수) | 선택삭제버튼
+                        </div>
+
+
+                        <div className="cartContentContainer">
+                            {cartItems.map((item, index) => (
+                                <div key={index} className="cartContent">
+                                    <div>
+                                        <input type="checkbox"/>
+                                    </div>
+                                    <div>
+                                        <img src={item.img} alt="장바구니목록이미지"/>
+                                    </div>
+                                    <div>{item.name}</div>
+                                    <div>
+                                        <CartQuantityCounter initialQuantity={item.quantity} index={index}/>
+                                    </div>
+                                    <button onClick={() => removeItemFromCart(index)}>제거</button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    총 가격: {totalPrice.toLocaleString()} 원
+                </div>
             </div>
+
+
         </div>
     );
 }

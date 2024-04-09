@@ -1,8 +1,13 @@
 import ProductType from "./ProductType";
 import QuantityCounter from "./QuantityCounter";
+import addToCart from "../Cart/addToCart";
 
 
 function DetailBeer({product}) {
+
+    const handleAddToCart = () => {
+        addToCart(product);
+    };
 
     return(
         <>
@@ -21,15 +26,16 @@ function DetailBeer({product}) {
                             <p><span>도수&ensp;:&ensp;</span> {product.alcohol}</p>
                             <p><span>용량&ensp;:&ensp;</span> {product.volume}</p>
                             <p><span>추천 검색어&ensp;:&ensp;</span>{product.keyword}</p>
+                            <p><span>구매수량 : &ensp;</span><QuantityCounter/></p>
                         </div>
-                        <QuantityCounter/>
+
 
                         <div className="detailBtn">
                             <div>[예약]</div>
                             <div>
                                 [찜]
                             </div>
-                            <button className="cartBtn">장바구니 담기</button>
+                            <button className="cartBtn" onClick={handleAddToCart}>장바구니 담기</button>
                         </div>
                     </div>
                 </div>
