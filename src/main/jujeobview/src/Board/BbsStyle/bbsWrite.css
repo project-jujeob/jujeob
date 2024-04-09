@@ -1,17 +1,70 @@
 *{
-    text-align: center;
+
     color: rgba(65, 65, 65, 0.89);
 
 }
-.BbsWriteContainer{
 
-}
-.WriteArea{
-    width: 80%;
-    height: 1000px;
-    border: 1px solid black;
+.BbsWriteContainer{
+    display: flex;
+    justify-content: center;
+    padding: 100px;
 }
 .context{
     width: 800px;
     height: 700px;
+}
+
+.ck.ck-editor__editable:not(.ck-editor__nested-editable) {
+
+    min-height: 400px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.ContentArea{
+    width: 1000px;
+}
+
+.TitleArea input{
+    width: 1000px;
+    height: 40px;
+    border-radius: 12px;
+    border: 1px solid rgba(187, 187, 187, 0.68);
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+ .TitleArea input[type="text"]{
+    padding: 10px;
+    font-size: 14px;
+}
+.ButtonArea{
+    display: flex;
+}
+.submitButton{
+    margin-left: 5px;
+    width: 80px;
+    height: 40px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 1px solid rgba(222, 222, 222, 0.78);
+    background-color: #FF7E5C;
+}
+.submitButton:hover{
+    background-color: rgba(255, 78, 34, 0.86);
+}
+.submitButton:active{
+    background-color: rgba(255, 163, 141, 0.86);
+}
+.goBackButton{
+    width: 80px;
+    height: 40px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 1px solid rgba(222, 222, 222, 0.78);
+}
+.goBackButton:hover{
+    background-color: #e0e0e0;
+}
+.goBackButton:active{
+    background-color: #b0b0b0;
 }

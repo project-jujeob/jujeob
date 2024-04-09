@@ -12,18 +12,18 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/board")
 public class BoardController {
 
     @Autowired
     private BoardService boardService;
 
-    @GetMapping("/api/boardData")
+    @GetMapping("/boardData")
     public List<BoardDto> getAllBoards() {
         return boardService.getAllBoards();
     }
 
-    @PostMapping("/api/Write")
+    @PostMapping("/Write")
     public void boardWrite(@RequestBody BoardDto boardDto) {
         // BoardDto를 이용하여 Board 객체를 생성
         Board board = new Board();
@@ -33,5 +33,9 @@ public class BoardController {
 
         // 생성된 Board 객체를 서비스로 전달하여 저장
         boardService.boardWrite(boardDto);
+    }
+    @PostMapping("/uploadImage")
+    public void uploadImage(){
+
     }
 }

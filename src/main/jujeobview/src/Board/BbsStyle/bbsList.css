@@ -92,7 +92,7 @@
 }
 /* 게시글 영역 */
 .PostContainer{
-    width:80%;
+    width:77%;
     display: grid;
     justify-content: center;
     grid-template-columns: repeat(4, 1fr);

@@ -5,11 +5,17 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Pagination from '../../common/Pagination';
+import parse from 'html-react-parser';
 
 function BbsList(props) {
+    const parse = require('html-react-parser').default;
     const [boardsList, setBoardsList] = useState([]);
     const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
+
+    const [currentPage, setCurrentPage] = useState(1);
+
 
     useEffect(() => {
         fetchData();
@@ -18,7 +24,7 @@ function BbsList(props) {
     const fetchData = () => {
         setLoading(true);
         axios
-            .get(`api/boardData?page=${page}&limit=12`) // 페이지당 12개의 데이터 요청
+            .get(`board/boardData?page=${page}&limit=12`) // 페이지당 12개의 데이터 요청
             .then((response) => {
                 const newBoards = response.data;
                 setBoardsList((prevBoardsList) => [...prevBoardsList, ...newBoards]);
@@ -29,6 +35,16 @@ function BbsList(props) {
                 setLoading(false);
             });
     };
+
+    const itemsPerPage = 12;
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = boardsList.slice(indexOfFirstItem, indexOfLastItem);
+
     return (
         <div>
             <Header />
@@ -70,7 +86,7 @@ function BbsList(props) {
 
 
                 <div className="PostContainer">
-                    {boardsList.map((board, index) => (
+                    {currentItems.map((board, index) => (
                         <div className="bbsPost bbsPostItem" key={index}>
                             <div className="bbsPostBackground">
                                 <div className="PostDetailTop">
@@ -79,7 +95,14 @@ function BbsList(props) {
                                     <h3>{board.boardTitle} </h3> <br />
                                 </div>
                                 <div className="PostDetailBottom">
-                                    <p>작성자: {board.boardContent}</p>
+                                    <p>작성자:
+
+                                        {parse(
+                                            board.boardContent
+                                        )}
+                                    </p>
+
+
                                     <div className="PostDetailBottomButton">
                                         <button className="LikeButton">♡</button>
                                         <button className="ReplyComment">댓글</button>
@@ -90,6 +113,14 @@ function BbsList(props) {
                     ))}
                     {/*{loading && <div>Loading...</div>}*/}
                 </div>
+                <Pagination
+                    totalItems={boardsList.length}
+                    itemsPerPage={itemsPerPage}
+                    pageCount={5}
+                    currentPage={currentPage}
+                    onPageChange={handlePageChange}
+                    start={indexOfFirstItem + 1} // 현재 페이지의 첫 번째 아이템 인덱스를 전달합니다.
+                />
             </div>
         </div>
     );

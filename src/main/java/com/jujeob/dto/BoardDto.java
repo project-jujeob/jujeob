@@ -14,6 +14,9 @@ public class BoardDto {
     private int boardId;
     private Member member;
     private String boardTitle;
-    private String boardContext;
+    private String boardContent;
     private LocalDate CreateDate;
+    private String imageUrl;
+    private int image_size;
+    private int imageId;
 }
