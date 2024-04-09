@@ -1,5 +1,5 @@
 # jujeob
-
+<img src="https://github.com/project-jujeob/jujeob/blob/sejin/src/main/jujeobview/src/img/maincapture.png?raw=true">
 
 ## 프로젝트 소개
 - 주접은 한국의 전통주부터 맥주, 와인, 위스키까지 다양한 술을 쉽게 접할 수 있도록 정보를 공유하고 구매할 수 있는 플랫폼입니다.
