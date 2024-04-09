@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 function RegisterAdult() {
-    useEffect(() => {
+    /*useEffect(() => {
         // 외부 스크립트를 동적으로 로드합니다.
         const script = document.createElement("script");
         script.src = "https://cdn.iamport.kr/v1/iamport.js";
@@ -26,11 +26,11 @@ function RegisterAdult() {
             pg: "",
             merchant_uid: "",
         });
-    };
+    };*/
 
     return (
         <>
-            <button onClick={requestCert}>성인인증하기</button>
+            {/*<button onClick={requestCert}>성인인증하기</button>*/}
             <Link to={"/Register"}>
                 <button>회원가입</button>
             </Link>
