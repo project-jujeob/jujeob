@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from "../../common/Header";
 import './Cart.css';
-import QuantityCounter from "../Detail/QuantityCounter";
 import CartQuantityCounter from "./CartQuantityCounter";
 
 // 로컬 스토리지에서 상품 정보를 불러옴
@@ -64,19 +63,18 @@ function Cart() {
                                     <div>
                                         <CartQuantityCounter initialQuantity={item.quantity} index={index}/>
                                     </div>
-                                    <button onClick={() => removeItemFromCart(index)}>제거</button>
+                                    <div>
+                                        <button onClick={() => removeItemFromCart(index)}>X</button>
+                                    </div>
                                 </div>
                             ))}
                         </div>
                     </div>
                 </div>
-
                 <div>
                     총 가격: {totalPrice.toLocaleString()} 원
                 </div>
             </div>
-
-
         </div>
     );
 }
