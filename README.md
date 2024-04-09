@@ -15,9 +15,9 @@
 
 ## 개발환경
 Front    : HTML, React, css, javaScript  
-Back-end : JAVA 17, SpringBoot 3.2.1
-DataBase : MySQL 8.0
-IDE      : intelliJ
-버전 및 이슈관리 : Github, Github Issues, Github Project, SourceTree
-협업 툴  : Discord, Notion
-디자인 : Figma, kakaoOven
+Back-end : JAVA 17, SpringBoot 3.2.1  
+DataBase : MySQL 8.0  
+IDE      : intelliJ  
+버전 및 이슈관리 : Github, Github Issues, Github Project, SourceTree  
+협업 툴  : Discord, Notion  
+디자인 : Figma, kakaoOven  
