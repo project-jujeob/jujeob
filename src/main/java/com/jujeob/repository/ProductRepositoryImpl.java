@@ -26,9 +26,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
                 .where(qProduct.keyword.like("%" + subCategoryName + "%"))
                 .fetch();
 
-        List<Product> uniqueProducts = new ArrayList<>(new HashSet<>(products));
-
-        return uniqueProducts;
+        return new ArrayList<>(new HashSet<>(products));
     }
 
     @Override
@@ -46,9 +44,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
             products.addAll(productList);
         }
 
-        List<Product> uniqueProducts = new ArrayList<>(new HashSet<>(products));
-
-        return uniqueProducts;
+        return new ArrayList<>(new HashSet<>(products));
     }
 
     @Override
@@ -63,12 +59,24 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
     }
 
     @Override
-    public List<String> findType(String productId) {
+    public List<String> findType(String mainType) {
         QProduct qProduct = QProduct.product;
         return factory
                 .select(qProduct.type)
                 .from(qProduct)
-                .where(qProduct.productId.eq(productId))
+                .where(qProduct.productId.eq(mainType))
+                .orderBy(qProduct.type.asc())
                 .distinct().fetch();
+    }
+
+    @Override
+    public List<Product> findProductListByMainType(String productId) {
+        QProduct qProduct = QProduct.product;
+        List<Product> products =  factory.select(qProduct)
+                .from(qProduct)
+                .where(qProduct.productId.eq(productId))
+                .fetch();
+
+        return new ArrayList<>(new HashSet<>(products));
     }
 }

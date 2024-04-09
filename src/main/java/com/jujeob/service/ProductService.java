@@ -7,9 +7,7 @@ import com.jujeob.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ProductService {
@@ -93,7 +91,28 @@ public class ProductService {
         return productRepository.findProductId();
     }
 
-    public List<String> getProductType(String productId) {
-        return productRepository.findType(productId);
+
+
+    private List<String> getProductType(String mainType) {
+        return productRepository.findType(mainType);
+    }
+
+    public Map<String, List<String>> getProductTypesByMainTypes(List<String> mainTypes) {
+        Map<String, List<String>> mainTypeToTypes = new HashMap<>();
+        for (String mainType : mainTypes) {
+            List<String> types = getProductType(mainType);
+            mainTypeToTypes.put(mainType, types);
+        }
+        return mainTypeToTypes;
+    }
+
+    public List<ProductListDto> getProductListByMainType(List<String> mainTypes) {
+        List<ProductListDto> productListByProductIdDtos = new ArrayList<>();
+
+        for (String productId : mainTypes) {
+            List<Product> products = productRepository.findProductListByMainType(productId);
+            products.forEach(product -> productListByProductIdDtos.add(mapProductToDto(product)));
+        }
+        return productListByProductIdDtos;
     }
 }

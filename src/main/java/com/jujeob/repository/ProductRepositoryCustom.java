@@ -12,5 +12,7 @@ public interface ProductRepositoryCustom {
 
     List<String> findProductId();
 
-    List<String> findType(String productId);
+    List<String> findType(String mainType);
+
+    List<Product> findProductListByMainType(String productId);
 }

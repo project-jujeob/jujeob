@@ -111,7 +111,7 @@
 }
 
 .ProductRecommendContainer h2{
-    margin-left: 100px;
+    margin-left: 140px;
 }
 
 .ProductListRecommendItems {
@@ -172,6 +172,7 @@
 .ProductListSidebarContainer {
     position: relative;
     padding-bottom: 5px;
+    color: #555555;
 }
 
 .ProductListSidebarContainer::after {
