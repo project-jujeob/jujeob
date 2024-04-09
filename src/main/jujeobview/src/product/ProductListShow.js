@@ -74,8 +74,8 @@ function ProductListShow({selectedCategory, selectedSubCategory, viewAll}) {
                         {row.map((product) => (
                             <div key={product.productNo} className="ProductItem">
                                 <Link to={`/ProductItemDetail/${product.productNo}`} className="link">
-                                    <div className="ProductImg">
-                                        <img src={product.img} alt={product.name}/>
+                                    <div className="ProductImgContainer">
+                                        <img className="ProductImg" src={product.img} alt={product.name}/>
                                         <div className="ProductBtns">
                                             <div className="ProductLikeBtn"><img src={likeIcon}/></div>
                                             <div className="ProductBasketBtn"><img src={basketIcon}/></div>
