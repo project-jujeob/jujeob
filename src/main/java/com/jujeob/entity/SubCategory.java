@@ -17,4 +17,5 @@ public class SubCategory {
 
     @Column(name = "categoryno", nullable = false)
     private Integer categoryNo;
+
 }
