@@ -14,7 +14,7 @@
 | [newb997](https://github.com/newb997)| [addedurin](https://github.com/addedurin)| [CJeaHo](https://github.com/CJeaHo) |  [RYC0208](https://github.com/RYC0208) | [baeksejin](https://github.com/baeksejin) |
 
 ## 개발환경
-Front    : HTML, React, css, javaScript
+Front    : HTML, React, css, javaScript  
 Back-end : JAVA 17, SpringBoot 3.2.1
 DataBase : MySQL 8.0
 IDE      : intelliJ
