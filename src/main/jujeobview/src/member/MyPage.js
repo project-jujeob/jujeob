@@ -1,7 +1,13 @@
 import './MyPage.css';
+import Header from "../common/Header";
+import {useContext} from "react";
+// import {AuthContext} from "./Context";
 function MyPage () {
+
+    // const { loginMemberData } = useContext(AuthContext);
     return (
         <div>
+            <Header/>
             <div className={"MyPage"}>
                 <div className={"MyPageForm"}>
                     <div className={"MyPageTitleBox"}>

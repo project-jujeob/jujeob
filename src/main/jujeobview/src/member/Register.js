@@ -26,7 +26,7 @@ function Register() {  //회원가입폼에 입력받을 데이터
 
         axios({
           method: "post",
-          url: "/register.do",
+          url: "/api/register",
           data: JSON.stringify(registerData),
           headers: {'Content-Type': 'application/json'}
         }).then((response) => {
