@@ -12,9 +12,9 @@ java {
     sourceCompatibility = '17'
 }
 
-compileJava {
-    options.compilerArgs += "-Xlint:deprecation"
-}
+//compileJava {
+//    options.compilerArgs += "-Xlint:deprecation"
+//}
 
 configurations {
     compileOnly {
@@ -47,6 +47,8 @@ dependencies {
 
     // 비밀번호 암호화
     implementation 'org.springframework.security:spring-security-crypto:6.2.1'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.20.0'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.20.0'
 
     //JJWT
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
