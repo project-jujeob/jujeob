@@ -9,4 +9,6 @@ public class ProductListDto {
     private String description;
     private String alcohol;
     private String price;
+    private Integer productNo;
+
 }

@@ -1,11 +1,14 @@
 package com.jujeob.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Table(name = "category")
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,4 +17,5 @@ public class Category {
 
     @Column(name = "categoryname", nullable = false)
     private String categoryName;
+
 }
