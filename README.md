@@ -11,4 +11,4 @@
 |이범신|서린|최재호|노용철|백세진|
 | ------- | ------- | ------- | ------- | ------- |
 | 조장    | 부조장   | 조원    |  조원   |  조원   |
-| ### [newb997]([https://](https://github.com/newb997)   | Cell5   | Cell6   |  Cell5   | Cell6   |
+| ([newb997](https://github.com/newb997)   | Cell5   | Cell6   |  Cell5   | Cell6   |
