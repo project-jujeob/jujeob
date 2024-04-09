@@ -4,11 +4,11 @@ import ProductList from "./product/ProductList";
 import Login from "./member/Login";
 import Register from "./member/Register";
 import RegisterComplete from "./member/RegisterComplete";
-import MyPage from "./member/MyPage";
 import MainPage from "./MainPage";
 import ProductItemDetail from "./product/ProductItemDetail";
 import React from "react";
 import Logout from "./member/Logout";
+import MyPage from "./mypage/MyPage";
 // import {AuthProvider} from "./member/Context";
 
 
