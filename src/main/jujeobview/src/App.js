@@ -4,7 +4,7 @@ import ProductList from "./product/ProductList";
 import Login from "./member/Login";
 import Register from "./member/Register";
 import RegisterComplete from "./member/RegisterComplete";
-import MyPage from "./member/MyPage";
+import MyPage from "./mypage/MyPage";
 import MainPage from "./MainPage"; 
 import Logout from "./member/Logout";
 // import {AuthProvider} from "./member/Context"; 
