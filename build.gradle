@@ -12,6 +12,10 @@ java {
     sourceCompatibility = '17'
 }
 
+compileJava {
+    options.compilerArgs += "-Xlint:deprecation"
+}
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
@@ -49,12 +53,21 @@ dependencies {
     implementation 'org.springframework.security:spring-security-crypto:6.2.1'
 
     //JJWT
+<<<<<<< HEAD
     implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
     implementation 'io.jsonwebtoken:jjwt-impl:0.12.5'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.12.5'
 
     // spring-boot-configuration-processor
     implementation 'org.springframework.boot:spring-boot-configuration-processor'
+=======
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+
+    // TEST
+    testImplementation 'org.mockito:mockito-core:3.12.4'
+>>>>>>> 643ef60bb207f48117b88b441ee1450703febe3b
 }
 
 tasks.named('test') {
