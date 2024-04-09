@@ -41,8 +41,6 @@ public class QProduct extends EntityPathBase<Product> {
 
     public final StringPath crate = createString("crate");
 
-    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
-
     public final StringPath description = createString("description");
 
     public final StringPath detailImg = createString("detailImg");
@@ -64,8 +62,6 @@ public class QProduct extends EntityPathBase<Product> {
     public final StringPath keyword = createString("keyword");
 
     public final StringPath kind = createString("kind");
-
-    public final DateTimePath<java.time.LocalDateTime> modifiedAt = createDateTime("modifiedAt", java.time.LocalDateTime.class);
 
     public final StringPath mouthfeel = createString("mouthfeel");
 
