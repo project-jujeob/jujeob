@@ -1,18 +1,12 @@
 import './App.css';
-import React from "react";
 import {Route, Routes, BrowserRouter as Router} from "react-router-dom";
-import MainPage from "./MainPage";
 import ProductList from "./product/ProductList";
 import Login from "./member/Login";
 import RegisterAdult from "./member/RegisterAdult";
 import Register from "./member/Register";
 import RegisterComplete from "./member/RegisterComplete";
 import MyPage from "./member/MyPage";
-<<<<<<< HEAD
-import ProductItemDetail from "./product/ProductItemDetail";
-=======
-import MainPage from "./MainPage"; 
->>>>>>> 643ef60bb207f48117b88b441ee1450703febe3b
+import MainPage from "./MainPage";
 import Logout from "./member/Logout";
 // import {AuthProvider} from "./member/Context"; 
 import ProductItemDetail from "./product/Detail/ProductItemDetail";
