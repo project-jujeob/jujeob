@@ -22,27 +22,27 @@ public class BoardComment {
     @Column(name = "Comment_Id")
     private int Comment_Id;
 
-    @NonNull
+
     @Column(name = "Comment_CreateDate")
     private LocalDate CreateDate;
 
-    @NonNull
+
     @Column(name = "Comment_Content")
     private String  CommentContent;
 
-    @NonNull
+
     @Column(name = "Comment_Parent_No")
     private int CommentOriginal;
 
-    @NonNull
+
     @Column(name = "Comment_Order")
     private int CommentOrder;
 
-    @NonNull
+
     @Column(name = "Comment_depth")
     private int CommentDepth;
 
-    @NonNull
+
     @Column(name = "Comment_isDeleted")
     private int isDeleted;
 

@@ -12,9 +12,9 @@ java {
     sourceCompatibility = '17'
 }
 
-compileJava {
-    options.compilerArgs += "-Xlint:deprecation"
-}
+//compileJava {
+//    options.compilerArgs += "-Xlint:deprecation"
+//}
 
 configurations {
     compileOnly {

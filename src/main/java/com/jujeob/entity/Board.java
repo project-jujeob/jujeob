@@ -20,19 +20,19 @@ public class Board {
     @Column(name = "Board_Id")
     private int boardId;
 
-    @NonNull
+
     @Column(name = "Board_Category")
     private String boardCategory;
 
-    @NonNull
+
     @Column(name = "Board_Title")
     private String boardTitle;
 
-    @NonNull
-    @Column(name = "Board_Content")
-    private String boardContext;
 
-    @NonNull
+    @Column(name = "Board_Content")
+    private String boardContent;
+
+
     @Column(name = "Board_CreateDate")
     private LocalDate CreateDate;
 
@@ -42,7 +42,7 @@ public class Board {
     @Column(name = "Board_Update" )
     private LocalDate boardUpdate;
 
-    @NonNull
+
     @Column(name = "Board_isDeleted" )
     private int isDeleted;
 
