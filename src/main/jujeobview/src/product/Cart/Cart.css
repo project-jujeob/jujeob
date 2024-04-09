@@ -64,6 +64,26 @@
     justify-content: center;
 }
 
+.cartContent>div:nth-child(4){
+    background-color: pink;
+    width:10%;
+    height:90%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cartContent>div:nth-child(5){
+    background-color: orange;
+    width:5%;
+    height:90%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .cartContent img{
     height:100%;
     max-width:100%;

@@ -15,6 +15,4 @@ public class Category {
     @Column(name = "categoryname", nullable = false)
     private String categoryName;
 
-    public Category(int i, String s) {
-    }
 }
