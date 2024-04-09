@@ -22,8 +22,10 @@ function Header() {
                 <Link to={"/ProductList"}>
                     <button>술 정보</button>
                 </Link>
-                <button>커뮤니티</button>
-                <button>공지사항</button> 
+                <Link to={"/BbsList"}>
+                  <button>커뮤니티</button>
+                </Link>
+                <button>공지사항</button>
                 <Link to={"/Cart"}>
                     <button>장바구니</button>
                 </Link>
@@ -38,7 +40,7 @@ function Header() {
                     <Link to={"/Login"}>
                         <button>로그인</button>
                     </Link>
-                )} 
+                )}
             </div>
         </div>
     )

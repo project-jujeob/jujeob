@@ -20,7 +20,9 @@ function MainPage() {
                         <Link to={"/ProductList"}>
                             <button>술 정보</button>
                         </Link>
-                        <button>커뮤니티</button>
+                        <Link to={"/BbsList"}>
+                             <button>커뮤니티</button>
+                        </Link>
                         <button>공지사항</button>
                         <button>장바구니</button>
 
