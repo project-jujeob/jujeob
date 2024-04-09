@@ -9,10 +9,7 @@ import com.jujeob.service.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 public class ProductController {
@@ -46,7 +43,7 @@ public class ProductController {
         if (categoryNoObject == null) {// categoryNo가 없을 경우에 대한 처리 -> 빈 목록 반환
             return Collections.emptyList();
         }
-        int categoryNo = categoryNoObject.intValue();
+        int categoryNo = categoryNoObject;
 
         List<String> subCategories = subCategoryService.findCategoryNameByCategoryNo(categoryNo);
 
@@ -64,8 +61,7 @@ public class ProductController {
 
     @GetMapping("/api/productDetail/{productNo}")
     public Optional<Product> getProductDetails(@PathVariable Integer productNo) {
-        Optional<Product> product = productService.getProductByProductNo(productNo);
-        return product;
+        return productService.getProductByProductNo(productNo);
     }
 
     @GetMapping("/api/showProductMainType")
@@ -75,9 +71,9 @@ public class ProductController {
     }
 
     @PostMapping("api/selectedMainType")
-    public List<String> getProductType(@RequestBody Map<String, String> requestBody) {
-        String productId = requestBody.get("mainType");
-        System.out.println(productId);
-        return productService.getProductType(productId);
+    public Map<String, List<String>> getProductType(@RequestBody Map<String, List<String>> requestBody) {
+        List<String> mainTypes = requestBody.get("mainType");
+
+        return productService.getProductTypesByMainTypes(mainTypes);
     }
 }

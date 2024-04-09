@@ -13,7 +13,7 @@ function ProductCategory() {
 
     const [productMainType, setProductMainType] = useState([]);
     const [selectedMainType, setSelectedMainType] = useState([]);
-    const [currentMainType, setCurrentMainType] = useState(null); // 현재 선택된 주종 상태
+    const [currentMainType, setCurrentMainType] = useState([]); // 현재 선택된 주종 상태
     const [checkedTypes, setCheckedTypes] = useState({});
 
 
@@ -60,25 +60,29 @@ function ProductCategory() {
     }
 
     const MainTypeBtn = (mainType) => {
-        if (currentMainType === mainType) {
-            setCurrentMainType(null); // 이미 선택된 주종을 다시 클릭하면 선택 해제
-            setSelectedMainType([]); // 선택된 타입 목록을 비움
+        let newMainTypes;
+        if (currentMainType.includes(mainType)) {
+            newMainTypes = currentMainType.filter(type => type !== mainType);
         } else {
-            setCurrentMainType(mainType); // 현재 선택된 주종 설정
-            axios.post('api/selectedMainType', { mainType: mainType })
-                .then((response) => {
-                    setSelectedMainType(response.data); // 선택된 주종의 type 목록을 업데이트
-                    const newCheckedTypes = response.data.reduce((acc, type) => {
-                        acc[type] = false; // 초기 상태는 모두 unchecked
-                        return acc;
-                    }, {});
-                    setCheckedTypes(newCheckedTypes);
-                })
-                .catch((error) => {
-                    console.error('타입 데이터 가져오기 실패:', error);
-                });
+            newMainTypes = [...currentMainType, mainType];
         }
+        setCurrentMainType(newMainTypes);
+
+        axios.post('api/selectedMainType', { mainType: newMainTypes })
+            .then((response) => {
+                setSelectedMainType(response.data);
+
+                let newCheckedTypes = {};
+                Object.values(response.data).flat().forEach(type => {
+                    newCheckedTypes[type] = false;
+                });
+                setCheckedTypes(newCheckedTypes);
+            })
+            .catch((error) => {
+                console.error('타입 데이터 가져오기 실패:', error);
+            });
     };
+
 
     // 체크박스 상태를 변경하는 핸들러
     const handleCheckboxChange = (type) => {
@@ -121,8 +125,6 @@ function ProductCategory() {
     }, []);
 
 
-
-
     return (
         <div className="ProductCategory">
             <div className="CategoryList">
@@ -158,10 +160,12 @@ function ProductCategory() {
                                     {alcoholTypeNames[mainType]}
                                 </div>
                                 <div className="TypeContainer">
-                                    {currentMainType === mainType && selectedMainType.map((type) => (
+                                    {currentMainType.includes(mainType) && selectedMainType[mainType]?.map((type) => (
                                         <div className="TypeSubContainer" key={type}>
-                                            <label htmlFor="TypeCheckBox" className="TypeCheckBoxContainer">
-                                                <input className="TypeCheckBox" id="TypeCheckBox" key={type}
+                                            <label htmlFor={`TypeCheckBox-${type}`} className="TypeCheckBoxContainer">
+                                                <input
+                                                    className="TypeCheckBox"
+                                                    id={`TypeCheckBox-${type}`} key={type}
                                                     type="checkbox"
                                                     checked={checkedTypes[type] || false}
                                                     onChange={() => handleCheckboxChange(type)}

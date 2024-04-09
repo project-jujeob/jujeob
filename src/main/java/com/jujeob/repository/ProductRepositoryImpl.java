@@ -63,12 +63,13 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
     }
 
     @Override
-    public List<String> findType(String productId) {
+    public List<String> findType(String mainType) {
         QProduct qProduct = QProduct.product;
         return factory
                 .select(qProduct.type)
                 .from(qProduct)
-                .where(qProduct.productId.eq(productId))
+                .where(qProduct.productId.eq(mainType))
+                .orderBy(qProduct.type.asc())
                 .distinct().fetch();
     }
 }
