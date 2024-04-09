@@ -127,5 +127,5 @@ public class Product {
 
     @Column(name = "keyword")
     private String keyword;
-    
+
 }

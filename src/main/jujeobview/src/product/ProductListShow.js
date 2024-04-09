@@ -3,20 +3,36 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Pagination from '../common/Pagination';
 import {Link} from "react-router-dom";
+import likeIcon from '../img/icon/likeIcon.png';
+import basketIcon from '../img/icon/basketIcon.png';
+import addToCart from "./Cart/addToCart";
 
-function ProductListShow({selectedCategory, selectedSubCategory}) {
+function ProductListShow({selectedCategory, selectedSubCategory, viewAll, checkedMainType}) {
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
-    useEffect(() => {
+    const showAll = () => {
         axios.get('/api/productList')
-            .then((response) => {
+            .then(response => {
                 setProductList(response.data);
             })
-            .catch((error) => {
+            .catch(error => {
                 console.error('데이터 가져오기 실패:', error);
             });
+    }
+
+    // 페이지 로드 시 실행되는 로직
+    useEffect(() => {
+       showAll();
     }, []);
+
+
+    useEffect(() => {
+        if (viewAll) {
+            showAll();
+        }
+    }, [viewAll]);
+
 
     useEffect(() => {
         if (selectedCategory) {
@@ -29,6 +45,12 @@ function ProductListShow({selectedCategory, selectedSubCategory}) {
             setProductList(selectedSubCategory);
         }
     }, [selectedSubCategory]);
+
+    useEffect(() => {
+        if (checkedMainType) {
+            setProductList(checkedMainType);
+        }
+    }, [checkedMainType]);
 
 
     const itemsPerPage = 9;
@@ -48,6 +70,12 @@ function ProductListShow({selectedCategory, selectedSubCategory}) {
         rows.push(currentItems.slice(i, i + itemsPerRow));
     }
 
+    const handleClick = (e, product) => {
+        e.preventDefault();
+        addToCart(product);
+    };
+
+
     return (
         <div className="ProductListShowContainer">
             <div className="ProductListShowHeader">
@@ -59,7 +87,16 @@ function ProductListShow({selectedCategory, selectedSubCategory}) {
                         {row.map((product) => (
                             <div key={product.productNo} className="ProductItem">
                                 <Link to={`/ProductItemDetail/${product.productNo}`} className="link">
-                                    <div className="ProductImg"><img src={product.img} alt={product.name}/></div>
+                                    <div className="ProductImgContainer">
+                                        <img className="ProductImg" src={product.img} alt={product.name}/>
+                                        <div className="ProductBtns">
+                                            <div className="ProductLikeBtn"><img src={likeIcon}/></div>
+                                            <div className="ProductBasketBtn"
+                                                 onClick={(e) => handleClick(e, product)}>
+                                                <img src={basketIcon} />
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div className="ProductName">{product.name}</div>
                                     <div
                                         className="ProductDescription">{product.description.length > 18 ? `${product.description.substring(0, 18)}...` : product.description}</div>

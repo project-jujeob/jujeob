@@ -26,7 +26,7 @@ function Register() {  //회원가입폼에 입력받을 데이터
 
         axios({
           method: "post",
-          url: "/register.do",
+          url: "/api/register",
           data: JSON.stringify(registerData),
           headers: {'Content-Type': 'application/json'}
         }).then((response) => {
@@ -54,7 +54,6 @@ function Register() {  //회원가입폼에 입력받을 데이터
                 <input type={"text"} placeholder={"전화번호"} name={"memPhone"} onChange={registerDataChange}/><br/>
                 <input type={"email"} placeholder={"jujeob@xxx.com"} name={"memEmail"} onChange={registerDataChange}/><br/>
                 <input type={"text"} placeholder={"주소"} name={"memAddr"} onChange={registerDataChange}/><br/>
-
 
                 <button onClick={registerAction}>가입하기</button>
             </div>

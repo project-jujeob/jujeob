@@ -3,7 +3,7 @@ import QuantityCounter from "./QuantityCounter";
 import addToCart from "../Cart/addToCart";
 
 
-function DetailBeer({product}) {
+function DetailTraditional({product}) {
 
     const handleAddToCart = () => {
         addToCart(product);
@@ -29,7 +29,6 @@ function DetailBeer({product}) {
                             <p><span>구매수량 : &ensp;</span><QuantityCounter/></p>
                         </div>
 
-
                         <div className="detailBtn">
                             <div>[예약]</div>
                             <div>
@@ -46,10 +45,27 @@ function DetailBeer({product}) {
                         <div>상품문의</div>
                     </div>
                     <div className="detailContentTop">
-                        <div>[맥주] {product.name}</div>
+                        <div>[위스키/기타] {product.name}</div>
+                        <p>{product.description}</p>
                     </div>
                     <div>
-                    <p>{product.description}</p>
+                        <img src={product.tastingImg} alt="술테이스팅노트" className="tastingNote"/>
+                    </div>
+                    <div className="detailContentInfo">
+                        <p><span>제조 국가 | </span>{product.country}</p>
+                        <p><span>브랜드 | </span>{product.brand}</p>
+                        <p><span>케이스 | </span>{product.crate}</p>
+                        <p><span>추천 음용법 | </span>{product.howToDrink}</p>
+
+
+                    </div>
+                </div>
+                <div className="detailBottom">
+                    <div>
+                        <p><span>향 | </span>{product.aroma}</p>
+                        <p><span>맛 | </span>{product.flavor}</p>
+                        <p><span>여운 | </span>{product.finish}</p>
+
                     </div>
                 </div>
             </div>
@@ -57,4 +73,4 @@ function DetailBeer({product}) {
     )
 }
 
-export default DetailBeer;
+export default DetailTraditional;
