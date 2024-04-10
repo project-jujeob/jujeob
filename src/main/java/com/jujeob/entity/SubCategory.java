@@ -1,11 +1,14 @@
 package com.jujeob.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Table(name = "subcategory")
 @Entity
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class SubCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
