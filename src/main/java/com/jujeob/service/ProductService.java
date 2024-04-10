@@ -14,7 +14,6 @@ public class ProductService {
     @Autowired
     ProductRepository productRepository;
 
-
     // 기본 생성자
     public ProductService() {
         this.productRepository = null;
@@ -43,7 +42,6 @@ public class ProductService {
         for (Product entity : products) {
             productListDtos.add(mapProductToDto(entity));
         }
-
         return productListDtos;
     }
 
@@ -71,8 +69,8 @@ public class ProductService {
         List<Product> products = productRepository.findProductListByCategory(subCategories);
         List<ProductListDto> productListByCategoryDtos = new ArrayList<>();
 
-        for (Product entitiy : products) {
-            productListByCategoryDtos.add(mapProductToDto(entitiy));
+        for (Product entity : products) {
+            productListByCategoryDtos.add(mapProductToDto(entity));
         }
         return productListByCategoryDtos;
     }
@@ -85,7 +83,6 @@ public class ProductService {
     public List<String> getProductId() {
         return productRepository.findProductId();
     }
-
 
 
     private List<String> getProductType(String mainType) {

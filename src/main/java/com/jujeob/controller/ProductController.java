@@ -44,18 +44,14 @@ public class ProductController {
             return Collections.emptyList();
         }
         int categoryNo = categoryNoObject;
-
         List<String> subCategories = subCategoryService.findCategoryNameByCategoryNo(categoryNo);
-
         return productService.findProductListBySubCategories(subCategories);
     }
-
 
     // 서브카테고리별 주류 조회
     @PostMapping("/api/selectedSubCategoryName")
     public List<ProductListDto> showProductListByCategoryNameAndKeyword(@RequestBody Map<String, String> requestBody) {
         String subCategoryName = requestBody.get("subCategory");
-
         return productService.showProductListByCategoryNameAndKeyword(subCategoryName);
     }
 
@@ -63,17 +59,16 @@ public class ProductController {
     public Optional<Product> getProductDetails(@PathVariable Integer productNo) {
         return productService.getProductByProductNo(productNo);
     }
-
+    // 주종 화면에 띄우기
     @GetMapping("/api/showProductMainType")
     public List<String> getProductId() {
-        System.out.println(productService.getProductId());
         return productService.getProductId();
     }
 
+    // 선택된 주종으로 주종의 type 조회
     @PostMapping("api/selectedMainType")
     public Map<String, List<String>> getProductType(@RequestBody Map<String, List<String>> requestBody) {
         List<String> mainTypes = requestBody.get("mainType");
-
         return productService.getProductTypesByMainTypes(mainTypes);
     }
 
@@ -83,7 +78,6 @@ public class ProductController {
         List<String> mainTypes = requestBody.get("mainType");
         return productService.getProductListByMainType(mainTypes);
     }
-
 
     // 선택된 체크박스의 type으로 해당 상품 찾아오기
 

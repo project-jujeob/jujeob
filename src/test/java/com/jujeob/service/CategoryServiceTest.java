@@ -29,7 +29,7 @@ class CategoryServiceTest {
     }
 
     @Test
-    @DisplayName("상품 카테고리 조회에 성공한다")
+    @DisplayName("getCategoryList : 상품 카테고리 조회에 성공한다")
     void getCategoryList() {
         // given
         Category category1 = new Category(1, "날씨별");

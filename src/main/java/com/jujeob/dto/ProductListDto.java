@@ -1,8 +1,11 @@
 package com.jujeob.dto;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductListDto {
     private String img;
     private String name;
@@ -10,5 +13,6 @@ public class ProductListDto {
     private String alcohol;
     private String price;
     private Integer productNo;
+
 
 }
