@@ -32,10 +32,10 @@ public class Product {
     private String img;
 
     @Column(name = "price")
-    private String price;
+    private double price;
 
     @Column(name = "alcohol")
-    private String alcohol;
+    private double alcohol;
 
     @Column(name = "volume")
     private String volume;

@@ -7,7 +7,7 @@ import likeIcon from '../img/icon/likeIcon.png';
 import basketIcon from '../img/icon/basketIcon.png';
 import addToCart from "./Cart/addToCart";
 
-function ProductListShow({selectedCategory, selectedSubCategory, viewAll, checkedMainType}) {
+function ProductListShow({selectedCategory, selectedSubCategory, viewAllProductList, checkedMainType, checkedType, checkedAlcoholLevel, checkedPrice}) {
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -28,10 +28,10 @@ function ProductListShow({selectedCategory, selectedSubCategory, viewAll, checke
 
 
     useEffect(() => {
-        if (viewAll) {
+        if (viewAllProductList) {
             showAll();
         }
-    }, [viewAll]);
+    }, [viewAllProductList]);
 
 
     useEffect(() => {
@@ -52,6 +52,23 @@ function ProductListShow({selectedCategory, selectedSubCategory, viewAll, checke
         }
     }, [checkedMainType]);
 
+    useEffect(() => {
+        if (checkedType) {
+            setProductList(checkedType);
+        }
+    }, [checkedType]);
+
+    useEffect(() => {
+        if (checkedAlcoholLevel) {
+            setProductList(checkedAlcoholLevel);
+        }
+    }, [checkedAlcoholLevel]);
+
+    useEffect(() => {
+        if (checkedPrice) {
+            setProductList(checkedPrice);
+        }
+    }, [checkedPrice]);
 
     const itemsPerPage = 9;
     const itemsPerRow = 3;
@@ -82,31 +99,35 @@ function ProductListShow({selectedCategory, selectedSubCategory, viewAll, checke
                 <div className="ProductListCount">상품 수 : {productList.length} 개</div>
             </div>
             <div className="ProductItems">
-                {rows.map((row, index) => (
-                    <div key={index} className="ProductRow">
-                        {row.map((product) => (
-                            <div key={product.productNo} className="ProductItem">
-                                <Link to={`/ProductItemDetail/${product.productNo}`} className="link">
-                                    <div className="ProductImgContainer">
-                                        <img className="ProductImg" src={product.img} alt={product.name}/>
-                                        <div className="ProductBtns">
-                                            <div className="ProductLikeBtn"><img src={likeIcon}/></div>
-                                            <div className="ProductBasketBtn"
-                                                 onClick={(e) => handleClick(e, product)}>
-                                                <img src={basketIcon} />
+                {productList.length > 0 ? (
+                    rows.map((row, index) => (
+                        <div key={index} className="ProductRow">
+                            {row.map((product) => (
+                                <div key={product.productNo} className="ProductItem">
+                                    <Link to={`/ProductItemDetail/${product.productNo}`} className="link">
+                                        <div className="ProductImgContainer">
+                                            <img className="ProductImg" src={product.img} alt={product.name}/>
+                                            <div className="ProductBtns">
+                                                <div className="ProductLikeBtn"><img src={likeIcon}/></div>
+                                                <div className="ProductBasketBtn"
+                                                     onClick={(e) => handleClick(e, product)}>
+                                                    <img src={basketIcon}/>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="ProductName">{product.name}</div>
-                                    <div
-                                        className="ProductDescription">{product.description.length > 18 ? `${product.description.substring(0, 18)}...` : product.description}</div>
-                                    <div className="ProductAlcohol">{product.alcohol}</div>
-                                    <div className="ProductPrice">{product.price}</div>
-                                </Link>
-                            </div>
-                        ))}
-                    </div>
-                ))}
+                                        <div className="ProductName">{product.name}</div>
+                                        <div
+                                            className="ProductDescription">{product.description.length > 18 ? `${product.description.substring(0, 18)}...` : product.description}</div>
+                                        <div className="ProductAlcohol">{product.alcohol}%</div>
+                                        <div className="ProductPrice">{product.price.toLocaleString()}원</div>
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
+                    ))
+                ) : (
+                    <div className="NoProductList">조회된 상품이 없습니다.</div>
+                )}
             </div>
             <Pagination
                 totalItems={productList.length}
@@ -114,7 +135,7 @@ function ProductListShow({selectedCategory, selectedSubCategory, viewAll, checke
                 pageCount={5}
                 currentPage={currentPage}
                 onPageChange={handlePageChange}
-                start={indexOfFirstItem + 1} // 현재 페이지의 첫 번째 아이템 인덱스를 전달합니다.
+                start={indexOfFirstItem + 1}
             />
         </div>
     );

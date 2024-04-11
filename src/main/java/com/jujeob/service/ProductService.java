@@ -107,4 +107,34 @@ public class ProductService {
         }
         return productListByProductIdDtos;
     }
+
+    public List<ProductListDto> getProductListByType(List<String> types) {
+        List<ProductListDto> productListByTypeDtos = new ArrayList<>();
+
+        for(String type : types) {
+            List<Product> products = productRepository.findProductListByType(type);
+            products.forEach(product -> productListByTypeDtos.add(mapProductToDto(product)));
+        }
+        return productListByTypeDtos;
+    }
+
+    public List<ProductListDto> getProductListByAlcohol(List<String> alcoholLevels) {
+        List<ProductListDto> productListByAlcoholDtos = new ArrayList<>();
+
+        for(String alcohol : alcoholLevels) {
+            List<Product> products = productRepository.findProductListByAlcohol(alcohol);
+            products.forEach(product -> productListByAlcoholDtos.add(mapProductToDto(product)));
+        }
+        return productListByAlcoholDtos;
+    }
+
+    public List<ProductListDto> getProductListByPrice(List<String> prices) {
+        List<ProductListDto> productListByPriceDtos = new ArrayList<>();
+
+        for(String price : prices) {
+            List<Product> products = productRepository.findProductListByPrice(price);
+            products.forEach(product -> productListByPriceDtos.add(mapProductToDto(product)));
+        }
+        return productListByPriceDtos;
+    }
 }

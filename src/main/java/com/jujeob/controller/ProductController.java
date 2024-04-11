@@ -80,5 +80,27 @@ public class ProductController {
     }
 
     // 선택된 체크박스의 type으로 해당 상품 찾아오기
+    @PostMapping("/api/productListByType")
+    public List<ProductListDto> showProductListByType(@RequestBody Map<String, List<String>> requestBody) {
+        List<String> types = requestBody.get("types");
+        System.out.println(types);
+       return productService.getProductListByType(types);
+    }
+
+    // 선택된 체크박스의 level로 해당 상품 찾아오기
+    @PostMapping("/api/productListByAlcoholLevel")
+    public List<ProductListDto> showProductListByAlcoholLevel(@RequestBody Map<String, List<String>> requestBody) {
+        List<String> alcoholLevels = requestBody.get("levels");
+        return productService.getProductListByAlcohol(alcoholLevels);
+    }
+
+    // 선택된 체크박스의 price로 해당 상품 찾아오기
+    @PostMapping("/api/productListByPrice")
+    public List<ProductListDto> showProductListByPrice(@RequestBody Map<String, List<String>> requestBody) {
+        List<String> prices = requestBody.get("prices");
+        System.out.println(prices);
+        return productService.getProductListByPrice(prices);
+    }
+
 
 }

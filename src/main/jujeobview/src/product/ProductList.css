@@ -104,6 +104,16 @@
     width: 100%;
     height: inherit;
 }
+
+.NoProductList {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    margin: 100px 100px;
+    width: 100%;
+}
+
+
 /*----------productRecommendList.js----------*/
 .ProductRecommendContainer{
     text-align: left;
