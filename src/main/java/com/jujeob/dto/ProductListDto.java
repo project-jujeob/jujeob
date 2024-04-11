@@ -13,6 +13,4 @@ public class ProductListDto {
     private double alcohol;
     private double price;
     private Integer productNo;
-
-
 }

@@ -65,8 +65,8 @@ public class ProductControllerTest {
 
     @BeforeEach
     void setUp() {
-        ProductListDto productDto1 = new ProductListDto("감자이미지어쩌구", "감자맥주", "이 맥주는 강판에 갈은 감자로 원래는 감자전을 만드려했으나 실패하여 맥주가 되었다", "5%", "4500원", 1);
-        ProductListDto productDto2 = new ProductListDto("고사리이미지어쩌구", "고사리맥주", "이 맥주는 밭에서 난 고사리로 만든 맥주이다", "5.5%", "5500원", 2);
+        ProductListDto productDto1 = new ProductListDto("감자이미지어쩌구", "감자맥주", "이 맥주는 강판에 갈은 감자로 원래는 감자전을 만드려했으나 실패하여 맥주가 되었다", 5, 4500, 1);
+        ProductListDto productDto2 = new ProductListDto("고사리이미지어쩌구", "고사리맥주", "이 맥주는 밭에서 난 고사리로 만든 맥주이다", 5.5, 5500, 2);
 
         mockProductListDtos = Arrays.asList(productDto1, productDto2);
     }
@@ -84,7 +84,7 @@ public class ProductControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name").value("감자맥주"))
-                .andExpect(jsonPath("$[1].price").value("5500원"));
+                .andExpect(jsonPath("$[1].price").value(5500));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class ProductControllerTest {
                 .content("{\"subCategory\": \"" + subCategoryName + "\"}")
                 .with(csrf()))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].price").value("4500원"));
+                .andExpect(jsonPath("$[0].price").value(4500));
     }
 
     @Test
@@ -179,7 +179,7 @@ public class ProductControllerTest {
         when(productService.getProductListByMainType(mainTypes)).thenReturn(mockProductListDtos);
 
         // when & then
-        mockMvc.perform(post("/api/productListByMainType") // URL 앞에 슬래시(/) 추가
+        mockMvc.perform(post("/api/productListByMainType")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"mainType\": " + new ObjectMapper().writeValueAsString(mainTypes) + "}")
                         .with(csrf()))
@@ -187,6 +187,63 @@ public class ProductControllerTest {
                 .andExpect(jsonPath("$", hasSize(mockProductListDtos.size())))
                 .andExpect(jsonPath("$[0].name").value(mockProductListDtos.get(0).getName()))
                 .andExpect(jsonPath("$[1].price").value(mockProductListDtos.get(1).getPrice()));
+    }
+
+    @Test
+    @DisplayName("showProductListByType : type별 상품 조회에 성공한다")
+    @WithMockUser
+    void showProductListByType() throws Exception{
+        // given
+        List<String> types = Arrays.asList("레드와인", "화이트와인", "로제와인");
+        when(productService.getProductListByType(types)).thenReturn(mockProductListDtos);
+
+        // when & then
+        mockMvc.perform(post("/api/productListByType")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"types\": " + new ObjectMapper().writeValueAsString(types) + "}")
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(mockProductListDtos.size())))
+                .andExpect(jsonPath("$[0].name").value(mockProductListDtos.get(0).getName()));
+
+    }
+
+    @Test
+    @DisplayName("showProductListByAlcoholLevel : 도수별 상품 조회에 성공한다")
+    @WithMockUser
+    void showProductListByAlcoholLevel() throws Exception {
+        // given
+        List<String> alcoholLevels = Arrays.asList("level1", "level2", "level3", "level4", "level5");
+        when(productService.getProductListByAlcohol(alcoholLevels)).thenReturn(mockProductListDtos);
+
+        // when & then
+        mockMvc.perform(post("/api/productListByAlcoholLevel")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"levels\": " + new ObjectMapper().writeValueAsString(alcoholLevels) + "}")
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(mockProductListDtos.size())))
+                .andExpect(jsonPath("$[0].name").value(mockProductListDtos.get(0).getName()))
+                .andExpect(jsonPath("$[1].price").value(mockProductListDtos.get(1).getPrice()));
+        }
+
+    @Test
+    @DisplayName("showProductListByPrice : 가격별 상품 조회에 성공한다")
+    @WithMockUser
+    void showProductListByPrice() throws Exception {
+        // given
+        List<String> prices = Arrays.asList("price1", "price2", "price3", "price4", "price5", "price6");
+        when(productService.getProductListByPrice(prices)).thenReturn(mockProductListDtos);
+        // when & then
+        mockMvc.perform(post("/api/productListByPrice")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"prices\": " + new ObjectMapper().writeValueAsString(prices) + "}")
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(mockProductListDtos.size())))
+                .andExpect(jsonPath("$[0].name").value(mockProductListDtos.get(0).getName()))
+                .andExpect(jsonPath("$[1].price").value(mockProductListDtos.get(1).getPrice()));
+
     }
 }
 

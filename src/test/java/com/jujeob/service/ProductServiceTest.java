@@ -39,16 +39,16 @@ public class ProductServiceTest {
         product1.setImg("감자이미지어쩌구");
         product1.setName("감자맥주");
         product1.setDescription("이 맥주는 강판에 갈은 감자로 원래는 감자전을 만드려했으나 실패하여 맥주가 되었다");
-        product1.setAlcohol("5%");
-        product1.setPrice("4500원");
+        product1.setAlcohol(5);
+        product1.setPrice(4500);
         product1.setProductNo(1);
 
         product2 = new Product();
         product2.setImg("고사리이미지어쩌구");
         product2.setName("고사리맥주");
         product2.setDescription("이 맥주는 밭에서 난 고사리로 만든 맥주이다");
-        product2.setAlcohol("5.5%");
-        product2.setPrice("5500원");
+        product2.setAlcohol(5.5);
+        product2.setPrice(5500);
         product2.setProductNo(2);
 
         mockProducts = Arrays.asList(product1, product2);
@@ -91,7 +91,7 @@ public class ProductServiceTest {
         // then
         assertEquals(2, productList.size());
         assertEquals("감자맥주", productList.get(0).getName());
-        assertEquals("5500원", productList.get(1).getPrice());
+        assertEquals(5500, productList.get(1).getPrice());
     }
 
     @Test
@@ -184,8 +184,8 @@ public class ProductServiceTest {
         // given
         List<String> mainTypes = Arrays.asList("1", "2");
 
-        List<Product> productsForMainType = Arrays.asList(product1, product2);
-        when(productRepository.findProductListByMainType("1")).thenReturn(productsForMainType);
+        List<Product> productsListByMainType = Arrays.asList(product1, product2);
+        when(productRepository.findProductListByMainType("1")).thenReturn(productsListByMainType);
 
         List<ProductListDto> expectedDtoList = new ArrayList<>();
         expectedDtoList.add(new ProductListDto(product1.getImg(), product1.getName(), product1.getDescription(), product1.getAlcohol(), product1.getPrice(), product1.getProductNo()));
@@ -200,5 +200,75 @@ public class ProductServiceTest {
             assertEquals(expectedDtoList.get(i).getName(), result.get(i).getName());
         }
     }
+
+    @Test
+    @DisplayName("getProductListByType : type에 따른 상품 목록을 조회해온다")
+    void getProductListByType() {
+        // given
+        List<String> types = Arrays.asList("맥주", "에일");
+
+        List<Product> productLisByType = Arrays.asList(product1, product2);
+        when(productRepository.findProductListByType("맥주")).thenReturn(productLisByType);
+
+        List<ProductListDto> expectedDtoList = new ArrayList<>();
+        expectedDtoList.add(new ProductListDto(product1.getImg(), product1.getName(), product1.getDescription(), product1.getAlcohol(), product1.getPrice(), product1.getProductNo()));
+        expectedDtoList.add(new ProductListDto(product2.getImg(), product2.getName(), product2.getDescription(), product2.getAlcohol(), product2.getPrice(), product2.getProductNo()));
+
+        // when
+        List<ProductListDto> result = productService.getProductListByType(types);
+
+        // then
+        assertEquals(expectedDtoList.size(), result.size());
+        for (int i = 0; i < result.size(); i++) {
+            assertEquals(expectedDtoList.get(i).getName(), result.get(i).getName());
+        }
+    }
+
+    @Test
+    @DisplayName("getProductListByAlcohol : 도수에 따른 상품 목록을 조회해온다")
+    void getProductListByAlcohol() {
+        // given
+        List<String> alcoholLevels = Arrays.asList("level1", "level2");
+
+        List<Product> productLisByAlcoholLevel = Arrays.asList(product1, product2);
+        when(productRepository.findProductListByAlcohol("level1")).thenReturn(productLisByAlcoholLevel);
+
+        List<ProductListDto> expectedDtoList = new ArrayList<>();
+        expectedDtoList.add(new ProductListDto(product1.getImg(), product1.getName(), product1.getDescription(), product1.getAlcohol(), product1.getPrice(), product1.getProductNo()));
+        expectedDtoList.add(new ProductListDto(product2.getImg(), product2.getName(), product2.getDescription(), product2.getAlcohol(), product2.getPrice(), product2.getProductNo()));
+
+        // when
+        List<ProductListDto> result = productService.getProductListByAlcohol(alcoholLevels);
+
+        // then
+        assertEquals(expectedDtoList.size(), result.size());
+        for (int i = 0; i < result.size(); i++) {
+            assertEquals(expectedDtoList.get(i).getName(), result.get(i).getName());
+        }
+    }
+
+    @Test
+    @DisplayName("getProductListByPrice : 가격에 따른 상품 목록을 조회해온다")
+    void getProductListByPrice() {
+        // given
+        List<String> prices = Arrays.asList("price1", "price2");
+
+        List<Product> productLisByPrice = Arrays.asList(product1, product2);
+        when(productRepository.findProductListByPrice("price1")).thenReturn(productLisByPrice);
+
+        List<ProductListDto> expectedDtoList = new ArrayList<>();
+        expectedDtoList.add(new ProductListDto(product1.getImg(), product1.getName(), product1.getDescription(), product1.getAlcohol(), product1.getPrice(), product1.getProductNo()));
+        expectedDtoList.add(new ProductListDto(product2.getImg(), product2.getName(), product2.getDescription(), product2.getAlcohol(), product2.getPrice(), product2.getProductNo()));
+
+        // when
+        List<ProductListDto> result = productService.getProductListByPrice(prices);
+
+        // then
+        assertEquals(expectedDtoList.size(), result.size());
+        for (int i = 0; i < result.size(); i++) {
+            assertEquals(expectedDtoList.get(i).getName(), result.get(i).getName());
+        }
+    }
+
 }
 
