@@ -1,6 +1,8 @@
 
 package com.jujeob.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jujeob.dto.ProductListDto;
 import com.jujeob.service.CategoryService;
 import com.jujeob.service.ProductService;
@@ -18,11 +20,15 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -92,6 +98,95 @@ public class ProductControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name").value("감자맥주"));
+    }
+
+    @Test
+    @DisplayName("showProductListByCategory : 카테고리별 상품 조회에 성공한다")
+    @WithMockUser
+    void showProductListByCategory() throws Exception{
+        Integer categoryNo = 1;
+        List<String> subCategories = Arrays.asList("좋음", "맑음");
+        when(subCategoryService.findCategoryNameByCategoryNo(categoryNo)).thenReturn(subCategories);
+        when(productService.findProductListBySubCategories(subCategories)).thenReturn(mockProductListDtos);
+
+        // when & then
+        mockMvc.perform(post("/api/selectedCategoryNo")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"categoryNo\": " + categoryNo + "}")
+                .with(csrf()))  //  추가하기전 시큐리티에 의해 403오류 발생해 넣음
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].name").value("감자맥주"));
+    }
+
+    @Test
+    @DisplayName("showProductListByCategoryNameAndKeyword : 하위 카테고리별 상품 조회에 성공한다")
+    @WithMockUser
+    void showProductListByCategoryNameAndKeyword() throws Exception{
+        String subCategoryName = "가족과";
+        when(productService.showProductListByCategoryNameAndKeyword(subCategoryName)).thenReturn(mockProductListDtos);
+
+        // when & then
+        mockMvc.perform(post("/api/selectedSubCategoryName")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"subCategory\": \"" + subCategoryName + "\"}")
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].price").value("4500원"));
+    }
+
+    @Test
+    @DisplayName("getProductId : 주종을 조회한다")
+    @WithMockUser
+    void getProductId() throws Exception {
+        //given
+        List<String> expectedProductIds = Arrays.asList("1", "2", "3", "4");
+        when(productService.getProductId()).thenReturn(expectedProductIds);
+
+        // when & then
+        mockMvc.perform(get("/api/showProductMainType"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0]").value("1"))
+                .andExpect(jsonPath("$[3]").value("4"));
+
+    }
+
+    @Test
+    @DisplayName("getProductType : 주종으로 type을 조회한다")
+    @WithMockUser
+    void getProductType() throws Exception{
+        // given
+        List<String> mainTypes = Arrays.asList("1", "2", "3", "4");
+        Map<String, List<String>> expectedTypes = new HashMap<>();
+        expectedTypes.put("1", Arrays.asList("맥주", "에일", "라거"));
+        when(productService.getProductTypesByMainTypes(mainTypes)).thenReturn(expectedTypes);
+
+        // when & then
+        mockMvc.perform(post("/api/selectedMainType")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"mainType\": " + new ObjectMapper().writeValueAsString(mainTypes) + "}")
+                .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.['1'][0]").value("맥주"));
+
+    }
+
+    @Test
+    @DisplayName("showProductListByMainType : 주종에 따른 상품을 조회한다")
+    @WithMockUser
+    void showProductListByMainType() throws Exception {
+        // given
+        List<String> mainTypes = Arrays.asList("1", "2", "3", "4");
+        when(productService.getProductListByMainType(mainTypes)).thenReturn(mockProductListDtos);
+
+        // when & then
+        mockMvc.perform(post("/api/productListByMainType") // URL 앞에 슬래시(/) 추가
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"mainType\": " + new ObjectMapper().writeValueAsString(mainTypes) + "}")
+                        .with(csrf()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(mockProductListDtos.size())))
+                .andExpect(jsonPath("$[0].name").value(mockProductListDtos.get(0).getName()))
+                .andExpect(jsonPath("$[1].price").value(mockProductListDtos.get(1).getPrice()));
     }
 }
 
