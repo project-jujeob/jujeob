@@ -30,7 +30,7 @@ public class Board {
 
     @NonNull
     @Column(name = "Board_Content")
-    private String boardContext;
+    private String boardContent;
 
     @NonNull
     @Column(name = "Board_CreateDate")
@@ -49,7 +49,6 @@ public class Board {
     @ManyToOne
     @JoinColumn(name = "memNo")
     private Member member;
-
-
+    
 
 }

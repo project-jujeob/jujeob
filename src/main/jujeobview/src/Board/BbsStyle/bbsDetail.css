@@ -1,0 +1,49 @@
+*{
+    color: rgba(65, 65, 65, 0.89);
+    background-color: rgba(255, 255, 255, 0);
+}
+.Board-Detail-Top-Container{
+    width: 60%;
+    padding: 100px 0 100px 600px;
+    display: flex;
+    flex-direction: column;
+}
+/**/
+.Board-Detail-Profile{
+    display: flex;
+    flex-direction: row;
+}
+.Profile-Setting{
+    margin-left: auto;
+}
+/**/
+.Board-Detail-TitleAndContent{
+    text-align: left;
+}
+
+.TitleAndContent-Title{
+    margin-top: 20px;
+}
+
+.TitleAndContent-Img{
+    margin-bottom: 20px;
+    height: 300px;
+    border: 1px solid black;
+}
+.TitleAndContent-Content{
+    margin-top: 30px;
+    height: 200px;
+}
+/**/
+.Board-Detail-DateAndViews{
+    display: flex;
+    flex-direction: row;
+}
+.DateAndViews-Views{
+    margin-left: auto;;
+}
+
+.WidthDevide{
+    height: 1px;
+    background-color: #b4b4b4;
+}

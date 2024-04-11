@@ -13,6 +13,7 @@ import Logout from "./member/Logout";
 import ProductItemDetail from "./product/Detail/ProductItemDetail";
 import React, {useEffect, useState} from "react";
 import Cart from "./product/Cart/Cart";
+import BbsDetail from "./Board/BulletinBoardSystem/BbsDetail";
 
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
                 <Route path='/RegisterComplete' element={<RegisterComplete />} />
                 <Route path='/BbsList' element={<BbsList />} />
                 <Route path='/BbsWrite' element={<BbsWrite />}/>
+                <Route path='/BbsDetail/:boardId' element={<BbsDetail />} />
                 <Route path='/MyPage' element={<MyPage />} />
                 <Route path='/Logout' element={<Logout />} />
                 <Route path='/Cart' element={<Cart/>} />

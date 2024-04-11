@@ -11,28 +11,22 @@ import parse from 'html-react-parser';
 function BbsList(props) {
     const parse = require('html-react-parser').default;
     const [boardsList, setBoardsList] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [page, setPage] = useState(1);
-
     const [currentPage, setCurrentPage] = useState(1);
-
 
     useEffect(() => {
         fetchData();
     }, [page]);
 
     const fetchData = () => {
-        setLoading(true);
         axios
             .get(`board/boardData?page=${page}&limit=12`) // 페이지당 12개의 데이터 요청
             .then((response) => {
                 const newBoards = response.data;
                 setBoardsList((prevBoardsList) => [...prevBoardsList, ...newBoards]);
-                setLoading(false);
             })
             .catch((error) => {
                 console.error("데이터 가져오기 실패:", error);
-                setLoading(false);
             });
     };
 
@@ -60,12 +54,12 @@ function BbsList(props) {
                             <div className="Category">자유게시판</div>
                             <div className="Category">주류게시판</div>
                             <Link to={"/RandomCat"}>
-                            <div className="Category">모임게시판</div>
+                                <div className="Category">모임게시판</div>
                             </Link>
                         </div>
                         <div className="CategoryNewPost">
                             <Link to={"/BbsWrite"}>
-                                 <a>글 작성하기</a>
+                                <a>글 작성하기</a>
                             </Link>
                         </div>
                     </div>
@@ -85,33 +79,27 @@ function BbsList(props) {
                 </div>
 
 
-                <div className="PostContainer">
+                <div className="PostContainer" >
                     {currentItems.map((board, index) => (
-                        <div className="bbsPost bbsPostItem" key={index}>
-                            <div className="bbsPostBackground">
-                                <div className="PostDetailTop">
-                                    <p>{board.boardId}</p>
-                                    <p> {board.createDate}</p>
-                                    <h3>{board.boardTitle} </h3> <br />
-                                </div>
-                                <div className="PostDetailBottom">
-                                    <p>작성자:
-
-                                        {parse(
-                                            board.boardContent
-                                        )}
-                                    </p>
-
-
-                                    <div className="PostDetailBottomButton">
-                                        <button className="LikeButton">♡</button>
-                                        <button className="ReplyComment">댓글</button>
+                        <div className="bbsPost bbsPostItem" key={index} >
+                            <Link to={`/BbsDetail/${board.boardId}`}>
+                                <div className="bbsPostBackground">
+                                    <div className="PostDetailTop">
+                                        <p>{board.boardId}</p>
+                                        <p> {board.createDate}</p>
+                                        <h3>{board.boardTitle} </h3> <br />
+                                    </div>
+                                    <div className="PostDetailBottom">
+                                        <div className="PostDetailBottomAuthor">작성자: 아직 구현 X</div>
+                                        <div className="PostDetailBottomButton">
+                                            <button className="LikeButton">♡</button>
+                                            <button className="ReplyComment">댓글</button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     ))}
-                    {/*{loading && <div>Loading...</div>}*/}
                 </div>
                 <Pagination
                     totalItems={boardsList.length}

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BoardService {
@@ -23,13 +24,14 @@ public class BoardService {
         dto.setBoardTitle(entity.getBoardTitle());
         dto.setBoardContent(entity.getBoardContent());
         dto.setCreateDate(entity.getCreateDate());
+        System.out.println("나 Dto인데 6번 보내줄게 서비스야");
         return dto;
     }
 
     public List<BoardDto> getAllBoards() {
         List<Board> Boards = boardRepository.findAll();
         List<BoardDto> BoardsDtos = new ArrayList<>();
-
+        System.out.println("어 받았어 이제 Dto차례야");
         for (Board entity : Boards) {
             BoardsDtos.add(mapBoardToDto(entity));
         }
@@ -46,5 +48,9 @@ public class BoardService {
         // 게시글 저장
         return boardRepository.save(board);
     }
-
+    public Board getBoardById(Integer boardId) {
+        System.out.println("서비스에서 요청 받았어!!!!");
+        return boardRepository.findById(boardId)
+                .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
+    }
 }
