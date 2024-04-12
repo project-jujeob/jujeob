@@ -1,0 +1,50 @@
+
+.CategoriesNavContainer{
+    display: flex;
+    justify-content: center;
+}
+.Categories{
+    display: flex;
+    justify-content: center;
+}
+.Category{
+    font-weight: bold;
+    text-align: center;
+    font-size: 20px;
+    margin-right: 85px;
+}
+.CategoryNewPost{
+    margin-left: 700px;
+}
+.DetailNavContainer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.DetailNavButtonArea{
+    display: flex;
+    padding: 10px;
+}
+.DetailNavSearchArea{
+    padding: 10px;
+    margin-left: 600px;
+}
+.DetailNavSearchArea input{
+    text-align: center;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+/*.DetailNavSearchArea img{*/
+/*    height: 30px;*/
+/*}*/
+.DetailNavButton{
+    background-color: white;
+    font-weight: bolder;
+    font-size: 16px;
+    width: 120px;
+    height: 35px;
+    margin-right: 60px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
