@@ -5,7 +5,7 @@ import ProductListShow from "./ProductListShow";
 import resetIcon from '../img/icon/resetIcon.png';
 
 function ProductCategory() {
-    const [viewAll, setViewAll] = useState(0);
+    const [viewAllProductList, setViewAllProductList] = useState(0);
     const [productCategory, setProductCategory] = useState([]);
     const [subProductCategory, setProductSubCategory] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState([]);
@@ -14,9 +14,26 @@ function ProductCategory() {
     const [productMainType, setProductMainType] = useState([]);
     const [selectedMainType, setSelectedMainType] = useState([]);
     const [currentMainType, setCurrentMainType] = useState([]); // 현재 선택된 주종 상태
-    const [checkedTypes, setCheckedTypes] = useState({});
+    const [productTypes, setProductTypes] = useState({});
     const [checkedMainType, setCheckedMainType] = useState([]);
-
+    const [checkedType, setCheckedType] = useState([]);
+    const [alcoholLevels, setAlcoholLevels] = useState({
+        level1: false,
+        level2: false,
+        level3: false,
+        level4: false,
+        level5: false,
+    });
+    const [checkedAlcoholLevel, setCheckedAlcoholLevel] = useState([]);
+    const [prices, setPrices] = useState({
+        price1: false,
+        price2: false,
+        price3: false,
+        price4: false,
+        price5: false,
+        price6: false
+    })
+    const [checkedPrice, setCheckedPrice] = useState([]);
 
     // 주종에 대응하는 이름을 매핑하는 객체
     const alcoholTypeNames = {
@@ -27,9 +44,8 @@ function ProductCategory() {
     };
 
     const AllCategoryBtn = () => {
-        setViewAll(prev => prev + 1);
+        setViewAllProductList(prev => prev + 1);
     };
-
 
     const CategoryBtn = (categoryNo) => {
         axios.post('api/selectedCategoryNo', { categoryNo : categoryNo })
@@ -72,19 +88,18 @@ function ProductCategory() {
             .then((response) => {
                 setSelectedMainType(response.data);
 
-                setCheckedTypes(prevCheckedTypes => {
-                    const newCheckedTypes = {...prevCheckedTypes};
+                setProductTypes(prevProductTypes => {
+                    const newProductTypes = {...prevProductTypes};
                     Object.values(response.data).flat().forEach(type => {
-                        if (newCheckedTypes[type] === undefined) {
-                            newCheckedTypes[type] = false;
+                        if (newProductTypes[type] === undefined) {
+                            newProductTypes[type] = false;
                         }
                     });
-                    return newCheckedTypes;
+                    return newProductTypes;
                 });
                 return axios.post('api/productListByMainType', { mainType : newMainTypes });
             })
             .then((productListByMainType) => {
-                console.log(productListByMainType.data);
                 setCheckedMainType(productListByMainType.data);
             })
             .catch((error) => {
@@ -93,32 +108,110 @@ function ProductCategory() {
     };
 
     // 체크박스 상태를 변경하는 핸들러
-    const handleCheckboxChange = (type) => {
-        setCheckedTypes(prev => ({
-            ...prev,
-            [type]: !prev[type]
+    const handleTypeCheckboxChange = (type) => {
+        setProductTypes(prevTypes => ({
+            ...prevTypes,
+            [type]: !prevTypes[type]
         }));
-        axios.post('/api/updateCheckBoxState',  {
-            type : type,
-            isChecked : !checkedTypes[type]
-        })
-            .then((response) => {
-                console.log(response.data);
-            })
-            .catch((error)=>{
-                console.error('체크박스 상태 업데이트 실패:', error);
-            })
     };
+
+    const handleAlcoholLevelCheckboxChange = (levelId) => {
+        setAlcoholLevels(prevLevels => ({
+            ...prevLevels,
+            [levelId]: !prevLevels[levelId]
+        }));
+    };
+
+    const handlePriceCheckboxChange = (priceId) => {
+        setPrices(prevPrices => ({
+            ...prevPrices,
+            [priceId]: !prevPrices[priceId]
+        }));
+    };
+
+
+    useEffect(() => {
+        const checkedTypes = Object.keys(productTypes).filter(key => productTypes[key]);
+        findProductListByTypes(checkedTypes);
+    }, [productTypes]);
+
+    // 사용자가 선택한 types 서버로 보내 상품 목록 조회하기
+    const findProductListByTypes = (checkedTypes) => {
+        axios.post('/api/productListByType', {
+            types: checkedTypes
+        })
+            .then((productListByType) => {
+                // 상품 목록 상태 업데이트 또는 다른 처리
+                console.log(productListByType);
+                setCheckedType(productListByType.data);
+            })
+            .catch(error => {
+                console.error('상품 조회 실패:', error);
+            });
+    };
+
+    useEffect(()=>{
+        const checkedAlcoholLevels = Object.keys(alcoholLevels).filter(key => alcoholLevels[key]);
+        findProductListByAlcoholLevels(checkedAlcoholLevels);
+    }, [alcoholLevels]);
+
+    const findProductListByAlcoholLevels = (checkedAlcoholLevels) => {
+        axios.post('/api/productListByAlcoholLevel', {
+            levels: checkedAlcoholLevels
+        })
+            .then((productListByAlcoholLevel) => {
+                // 상품 목록 상태 업데이트 또는 다른 처리
+                console.log(productListByAlcoholLevel.data);
+                setCheckedAlcoholLevel(productListByAlcoholLevel.data);
+            })
+            .catch(error => {
+                console.error('상품 조회 실패:', error);
+            });
+    };
+
+    useEffect(()=>{
+        const checkedPrices = Object.keys(prices).filter(key => prices[key]);
+        findProductListByPrices(checkedPrices);
+    }, [prices]);
+
+    const findProductListByPrices = (checkedPrices) => {
+        axios.post('/api/productListByPrice', {
+            prices: checkedPrices
+        })
+            .then((productListByPrice) => {
+                // 상품 목록 상태 업데이트 또는 다른 처리
+                console.log(productListByPrice.data);
+                setCheckedPrice(productListByPrice.data);
+            })
+            .catch(error => {
+                console.error('상품 조회 실패:', error);
+            });
+    };
+
 
     // 체크박스 초기화
     const resetCheckBoxs = () => {
-        setCheckedTypes(prevTypes => {
+        setProductTypes(prevTypes => {
             const resetTypes = {};
             for (const type in prevTypes) {
                 resetTypes[type] = false;
             }
             return resetTypes;
         })
+        setAlcoholLevels(prevLevels => {
+            const resetLevels = {};
+            for (const level in prevLevels) {
+                resetLevels[level] = false;
+            }
+            return resetLevels;
+        });
+        setPrices(prevPrices => {
+            const resetPrices = {};
+            for (const price in prevPrices) {
+                resetPrices[price] = false;
+            }
+            return resetPrices;
+        });
     };
 
     useEffect(() => {
@@ -167,7 +260,7 @@ function ProductCategory() {
                 <div className="ProductListSidebar">
                     <div className="ProductListSidebarContainer">[ 사이드바 ]
                         <button className="SelectedReset" onClick={resetCheckBoxs}>
-                            <img className="ResetIcon" src={resetIcon}/>초기화</button>
+                            <img className="ResetIcon" src={resetIcon} alt={"초기화"}/>초기화</button>
                     </div>
                     <div className="ProductListSidebarSubContainer1">
                         <h4 className="ProductListSidebarAlcoholType">[주종]</h4>
@@ -184,8 +277,8 @@ function ProductCategory() {
                                                     className="TypeCheckBox"
                                                     id={`TypeCheckBox-${type}`} key={type}
                                                     type="checkbox"
-                                                    checked={checkedTypes[type] || false}
-                                                    onChange={() => handleCheckboxChange(type)}
+                                                    checked={productTypes[type] || false}
+                                                    onChange={() => handleTypeCheckboxChange(type)}
                                                 /> {type}
                                             </label>
                                         </div>
@@ -197,37 +290,43 @@ function ProductCategory() {
                     <div className="ProductListSidebarSubContainer2">
                         <h4 className="ProductListSidebarAlcoholLevel">[도수]</h4>
                         <div className="AlcoholLevelContainer">
-                            <label className="LevelCheckBoxContainer" htmlFor="LevelCheckBox">
-                                <input type="checkbox" id="LevelCheckBox" className="LevelCheckBox"/> 5도 이하
+                            <label className="LevelCheckBoxContainer" htmlFor="level1">
+                                <input type="checkbox" id="level1" className="LevelCheckBox" onChange={() => handleAlcoholLevelCheckboxChange('level1')}/> 5도 이하
                             </label>
-                            <label className="LevelCheckBoxContainer">
-                                <input type="checkbox" id="LevelCheckBox" className="LevelCheckBox"/> 6도 ~ 15도 이하
+                            <label className="LevelCheckBoxContainer" htmlFor="level2">
+                                <input type="checkbox" id="level2" className="LevelCheckBox" onChange={() => handleAlcoholLevelCheckboxChange('level2')}/> 6도 ~ 15도 이하
                             </label>
-                            <label className="LevelCheckBoxContainer">
-                                <input type="checkbox" id="LevelCheckBox" className="LevelCheckBox"/> 16도 ~ 30도 이하
+                            <label className="LevelCheckBoxContainer" htmlFor="level3">
+                                <input type="checkbox" id="level3" className="LevelCheckBox" onChange={() => handleAlcoholLevelCheckboxChange('level3')}/> 16도 ~ 30도 이하
                             </label>
-                            <label className="LevelCheckBoxContainer">
-                                <input type="checkbox" id="LevelCheckBox" className="LevelCheckBox"/> 30도 이상
+                            <label className="LevelCheckBoxContainer" htmlFor="level4">
+                                <input type="checkbox" id="level4" className="LevelCheckBox" onChange={() => handleAlcoholLevelCheckboxChange('level4')}/> 31도 ~ 50도 이하
+                            </label>
+                            <label className="LevelCheckBoxContainer" htmlFor="level5">
+                                <input type="checkbox" id="level5" className="LevelCheckBox" onChange={() => handleAlcoholLevelCheckboxChange('level5')}/> 51도 이상
                             </label>
                         </div>
                     </div>
                     <div className="ProductListSidebarSubContainer3">
                         <h4 className="ProductListSidebarPrice">[가격]</h4>
                         <div className="PriceContainer">
-                            <label className="PriceCheckBoxContainer" htmlFor="PriceCheckBox">
-                                <input type="checkbox" id="PriceCheckBox" className="PriceCheckBox"/> 5도 이하
+                            <label className="PriceCheckBoxContainer" htmlFor="price1">
+                                <input type="checkbox" id="price1" className="PriceCheckBox" onChange={() => handlePriceCheckboxChange('price1')}/> 7,000원 미만
                             </label>
-                            <label className="PriceCheckBoxContainer">
-                                <input type="checkbox" id="PriceCheckBox" className="PriceCheckBox"/> 6도 ~ 15도 이하
+                            <label className="PriceCheckBoxContainer" htmlFor="price2">
+                                <input type="checkbox" id="price2" className="PriceCheckBox" onChange={() => handlePriceCheckboxChange('price2')}/> 7,000원 ~ 30,000원
                             </label>
-                            <label className="PriceCheckBoxContainer">
-                                <input type="checkbox" id="PriceCheckBox" className="PriceCheckBox"/> 16도 ~ 30도 이하
+                            <label className="PriceCheckBoxContainer" htmlFor="price3">
+                                <input type="checkbox" id="price3" className="PriceCheckBox" onChange={() => handlePriceCheckboxChange('price3')}/> 30,000원 ~ 70,000원
                             </label>
-                            <label className="PriceCheckBoxContainer">
-                                <input type="checkbox" id="PriceCheckBox" className="PriceCheckBox"/> 31도 ~ 50도 이하
+                            <label className="PriceCheckBoxContainer" htmlFor="price4">
+                                <input type="checkbox" id="price4" className="PriceCheckBox" onChange={() => handlePriceCheckboxChange('price4')}/> 70,000원 ~ 100,000원
                             </label>
-                            <label className="PriceCheckBoxContainer">
-                                <input type="checkbox" id="PriceCheckBox" className="PriceCheckBox"/> 51도 이상
+                            <label className="PriceCheckBoxContainer" htmlFor="price5">
+                                <input type="checkbox" id="price5" className="PriceCheckBox" onChange={() => handlePriceCheckboxChange('price5')}/> 100,000원 ~ 200,000원
+                            </label>
+                            <label className="PriceCheckBoxContainer" htmlFor="price6">
+                                <input type="checkbox" id="price6" className="PriceCheckBox" onChange={() => handlePriceCheckboxChange('price6')}/> 200,000원 이상
                             </label>
                         </div>
                     </div>
@@ -242,9 +341,12 @@ function ProductCategory() {
                 <div className="ProductListShow">
                     <ProductListShow selectedCategory={selectedCategory}
                                      selectedSubCategory={selectedSubCategory}
-                                     viewAll={viewAll}
+                                     viewAllProductList={viewAllProductList}
                                      onViewAll={AllCategoryBtn}
-                                     checkedMainType={checkedMainType}/>
+                                     checkedMainType={checkedMainType}
+                                     checkedType={checkedType}
+                                     checkedAlcoholLevel={checkedAlcoholLevel}
+                                     checkedPrice={checkedPrice}/>
                 </div>
             </div>
         </div>

@@ -15,4 +15,10 @@ public interface ProductRepositoryCustom {
     List<String> findType(String mainType);
 
     List<Product> findProductListByMainType(String productId);
+
+    List<Product> findProductListByType(String type);
+
+    List<Product> findProductListByAlcohol(String alcohol);
+
+    List<Product> findProductListByPrice(String price);
 }

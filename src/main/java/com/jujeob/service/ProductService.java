@@ -42,7 +42,6 @@ public class ProductService {
         for (Product entity : products) {
             productListDtos.add(mapProductToDto(entity));
         }
-
         return productListDtos;
     }
 
@@ -70,8 +69,8 @@ public class ProductService {
         List<Product> products = productRepository.findProductListByCategory(subCategories);
         List<ProductListDto> productListByCategoryDtos = new ArrayList<>();
 
-        for (Product entitiy : products) {
-            productListByCategoryDtos.add(mapProductToDto(entitiy));
+        for (Product entity : products) {
+            productListByCategoryDtos.add(mapProductToDto(entity));
         }
         return productListByCategoryDtos;
     }
@@ -84,7 +83,6 @@ public class ProductService {
     public List<String> getProductId() {
         return productRepository.findProductId();
     }
-
 
 
     private List<String> getProductType(String mainType) {
@@ -108,5 +106,35 @@ public class ProductService {
             products.forEach(product -> productListByProductIdDtos.add(mapProductToDto(product)));
         }
         return productListByProductIdDtos;
+    }
+
+    public List<ProductListDto> getProductListByType(List<String> types) {
+        List<ProductListDto> productListByTypeDtos = new ArrayList<>();
+
+        for(String type : types) {
+            List<Product> products = productRepository.findProductListByType(type);
+            products.forEach(product -> productListByTypeDtos.add(mapProductToDto(product)));
+        }
+        return productListByTypeDtos;
+    }
+
+    public List<ProductListDto> getProductListByAlcohol(List<String> alcoholLevels) {
+        List<ProductListDto> productListByAlcoholDtos = new ArrayList<>();
+
+        for(String alcohol : alcoholLevels) {
+            List<Product> products = productRepository.findProductListByAlcohol(alcohol);
+            products.forEach(product -> productListByAlcoholDtos.add(mapProductToDto(product)));
+        }
+        return productListByAlcoholDtos;
+    }
+
+    public List<ProductListDto> getProductListByPrice(List<String> prices) {
+        List<ProductListDto> productListByPriceDtos = new ArrayList<>();
+
+        for(String price : prices) {
+            List<Product> products = productRepository.findProductListByPrice(price);
+            products.forEach(product -> productListByPriceDtos.add(mapProductToDto(product)));
+        }
+        return productListByPriceDtos;
     }
 }
