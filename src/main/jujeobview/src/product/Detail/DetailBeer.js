@@ -1,6 +1,9 @@
 import ProductType from "./ProductType";
 import QuantityCounter from "./QuantityCounter";
 import addToCart from "../Cart/addToCart";
+import {useRef} from "react";
+import DetailScrollToTarget from "./DetailScrollToTarget";
+import ReviewPage from "./review/ReviewPage";
 
 
 function DetailBeer({product}) {
@@ -8,6 +11,10 @@ function DetailBeer({product}) {
     const handleAddToCart = () => {
         addToCart(product);
     };
+
+    const contentTopRef = useRef(null);
+    const bottomRef = useRef(null);
+    const reviewRef = useRef(null);
 
     return(
         <>
@@ -29,7 +36,6 @@ function DetailBeer({product}) {
                             <p><span>구매수량 : &ensp;</span><QuantityCounter/></p>
                         </div>
 
-
                         <div className="detailBtn">
                             <div>[예약]</div>
                             <div>
@@ -40,18 +46,21 @@ function DetailBeer({product}) {
                     </div>
                 </div>
                 <div className="detailContent">
-                    <div className="detailContentBtn">
-                        <div>상세정보</div>
-                        <div>후기</div>
-                        <div>상품문의</div>
-                    </div>
-                    <div className="detailContentTop">
+                    <DetailScrollToTarget
+                        contentTopRef={contentTopRef}
+                        bottomRef={bottomRef}
+                        reviewRef={reviewRef}
+                    />
+                    <div className="detailContentTop" ref={contentTopRef}>
                         <div>[맥주] {product.name}</div>
                     </div>
                     <div>
-                    <p>{product.description}</p>
+                        <p>{product.description}</p>
                     </div>
                 </div>
+            </div>
+            <div ref={reviewRef}>
+                <ReviewPage/>
             </div>
         </>
     )

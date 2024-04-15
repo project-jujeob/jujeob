@@ -1,7 +1,9 @@
 import ProductType from "./ProductType";
 import QuantityCounter from "./QuantityCounter";
 import addToCart from "../Cart/addToCart";
-import {useState} from "react";
+import {useRef, useState} from "react";
+import DetailScrollToTarget from "./DetailScrollToTarget";
+import ReviewPage from "./review/ReviewPage";
 
 
 function DetailTraditional({product}) {
@@ -11,9 +13,16 @@ function DetailTraditional({product}) {
         addToCart(product,cartQuantity);
     };
 
+    /* 이거 안쓰는건지 확인
     const handleQuantityChange = (newQuantity) => {
         setCartQuantity(newQuantity);
     }
+    */
+
+    const contentTopRef = useRef(null);
+    const bottomRef = useRef(null);
+    const reviewRef = useRef(null);
+
 
     return(
         <>
@@ -47,12 +56,12 @@ function DetailTraditional({product}) {
                     </div>
                 </div>
                 <div className="detailContent">
-                    <div className="detailContentBtn">
-                        <div>상세정보</div>
-                        <div>후기</div>
-                        <div>상품문의</div>
-                    </div>
-                    <div className="detailContentImg">
+                    <DetailScrollToTarget
+                        contentTopRef={contentTopRef}
+                        bottomRef={bottomRef}
+                        reviewRef={reviewRef}
+                    />
+                    <div className="detailContentImg" ref={contentTopRef}>
                         <img src={product.detailImg} alt="술디테일이미지"/>
                     </div>
                     <div className="detailContentTop">
@@ -69,9 +78,12 @@ function DetailTraditional({product}) {
                         <p><span>목넘김 | </span>{product.mouthfeel}</p>
                     </div>
                 </div>
-                <div className="detailBottom">
+                <div className="detailBottom" ref={bottomRef}>
                     <img src={product.brandImg} alt="술브랜드이미지"/>
                 </div>
+            </div>
+            <div ref={reviewRef}>
+                <ReviewPage />
             </div>
         </>
     )

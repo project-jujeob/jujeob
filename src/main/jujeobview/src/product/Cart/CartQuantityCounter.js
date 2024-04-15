@@ -1,26 +1,25 @@
 import React, { useState } from "react";
 
-function CartQuantityCounter({ initialQuantity, index }) {
+function CartQuantityCounter({ initialQuantity, index, onQuantityChange }) {
     const [quantity, setQuantity] = useState(initialQuantity);
 
+    // index를 사용해서 decrease, increase일 때 부모 컴포넌트에 알려줌
     const decreaseQuantity = () => {
         if (quantity > 1) {
             const newQuantity = quantity - 1;
             setQuantity(newQuantity);
-            updateLocalStorage(newQuantity);
+            //updateLocalStorage(index, newQuantity);
+            onQuantityChange(index, newQuantity);
+        } else {
+            alert('1보다 적은 수량은 입력할 수 없습니다');
         }
     };
 
     const increaseQuantity = () => {
         const newQuantity = quantity + 1;
         setQuantity(newQuantity);
-        updateLocalStorage(newQuantity);
-    };
-
-    const updateLocalStorage = (newQuantity) => {
-        const cartItems = JSON.parse(localStorage.getItem('cart'));
-        cartItems[index].quantity = newQuantity;
-        localStorage.setItem('cart', JSON.stringify(cartItems));
+        //updateLocalStorage(index, newQuantity);
+        onQuantityChange(index, newQuantity);
     };
 
     return (

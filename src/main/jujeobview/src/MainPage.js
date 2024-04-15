@@ -24,7 +24,9 @@ function MainPage() {
                              <button>커뮤니티</button>
                         </Link>
                         <button>공지사항</button>
-                        <button>장바구니</button>
+                        <Link to={"/Cart"}>
+                            <button>장바구니</button>
+                        </Link>
 
                         {loginMemberData != null ?[
                             <Link to={"/MyPage"}>

@@ -1,6 +1,9 @@
 import ProductType from "./ProductType";
 import QuantityCounter from "./QuantityCounter";
 import addToCart from "../Cart/addToCart";
+import DetailScrollToTarget from "./DetailScrollToTarget";
+import {useRef} from "react";
+import ReviewPage from "./review/ReviewPage";
 
 
 function DetailTraditional({product}) {
@@ -8,6 +11,10 @@ function DetailTraditional({product}) {
     const handleAddToCart = () => {
         addToCart(product);
     };
+
+    const contentTopRef = useRef(null);
+    const bottomRef = useRef(null);
+    const reviewRef = useRef(null);
 
     return(
         <>
@@ -39,12 +46,12 @@ function DetailTraditional({product}) {
                     </div>
                 </div>
                 <div className="detailContent">
-                    <div className="detailContentBtn">
-                        <div>상세정보</div>
-                        <div>후기</div>
-                        <div>상품문의</div>
-                    </div>
-                    <div className="detailContentTop">
+                    <DetailScrollToTarget
+                        contentTopRef={contentTopRef}
+                        bottomRef={bottomRef}
+                        reviewRef={reviewRef}
+                    />
+                    <div className="detailContentTop" ref={contentTopRef}>
                         <div>[위스키/기타] {product.name}</div>
                         <p>{product.description}</p>
                     </div>
@@ -56,18 +63,18 @@ function DetailTraditional({product}) {
                         <p><span>브랜드 | </span>{product.brand}</p>
                         <p><span>케이스 | </span>{product.crate}</p>
                         <p><span>추천 음용법 | </span>{product.howToDrink}</p>
-
-
                     </div>
                 </div>
-                <div className="detailBottom">
+                <div className="detailBottom" ref={bottomRef}>
                     <div>
                         <p><span>향 | </span>{product.aroma}</p>
                         <p><span>맛 | </span>{product.flavor}</p>
                         <p><span>여운 | </span>{product.finish}</p>
-
                     </div>
                 </div>
+            </div>
+            <div ref={reviewRef}>
+                <ReviewPage/>
             </div>
         </>
     )
