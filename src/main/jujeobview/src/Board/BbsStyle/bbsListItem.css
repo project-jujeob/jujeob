@@ -51,3 +51,20 @@
 .bbsPost img{
 
 }
+
+
+.DetailNavSearchArea{
+    width: 97%;
+    position: relative;
+    text-align: right;
+    bottom: 50px;
+}
+.DetailNavSearchArea input{
+    text-align: center;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+/*.DetailNavSearchArea img{*/
+/*    height: 30px;*/
+/*}*/

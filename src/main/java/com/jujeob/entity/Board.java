@@ -37,14 +37,14 @@ public class Board {
     private LocalDate CreateDate;
 
     @Column(name = "Board_Views")
-    private String boardViews;
+    private String boardViews = "0";
 
     @Column(name = "Board_Update" )
     private LocalDate boardUpdate;
 
     @NonNull
     @Column(name = "Board_isDeleted" )
-    private int isDeleted;
+    private int isDeleted = 0; ;
 
     @ManyToOne
     @JoinColumn(name = "memNo")

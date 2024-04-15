@@ -2,8 +2,7 @@ import "../../MainPage.css";
 import "../BbsStyle/bbsCategory.css";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-function BbsCategory() {
+function BbsCategory({ onSearch }) {
 
     return (
         <div>
@@ -11,13 +10,11 @@ function BbsCategory() {
                 <div className="Categories">
                     <div className="Category">자유게시판</div>
                     <div className="Category">주류게시판</div>
-                    <Link to={"/RandomCat"}>
-                        <div className="Category">모임게시판</div>
-                    </Link>
+                    <div className="Category">모임게시판</div>
                 </div>
                 <div className="CategoryNewPost">
                     <Link to={"/BbsWrite"}>
-                        <a>글 작성하기</a>
+                        <div>글 작성하기</div>
                     </Link>
                 </div>
             </div>
@@ -29,10 +26,6 @@ function BbsCategory() {
                     <button className="DetailNavButton">내 북마크 보기</button>
                 </div>
 
-                <div className="DetailNavSearchArea">
-                    {/*<img src={BoardImg} alt="돋보기"></img>*/}
-                    <input type="text" placeholder="검색어를 입력하세요"></input>
-                </div>
             </div>
         </div>
     );
