@@ -44,6 +44,9 @@
     display: flex;
     flex-direction: row;
 }
+.Board-Detail-DateAndViews div{
+    margin-right: 30px;
+}
 .DateAndViews-Views{
     margin-left: auto;;
 }
@@ -59,4 +62,9 @@
     flex-direction: column;
     align-items: center;
     padding: 20px;
+}
+.UpdateButton{
+    cursor: pointer;
+    border: 1px solid rgba(128, 128, 128, 0.63);
+    border-radius: 8px;
 }

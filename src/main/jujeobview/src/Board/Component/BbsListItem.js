@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Pagination from "../../common/Pagination";
-import BbsDetailModal from "./BbsDetail";
+import BbsDetailModal from "../Modal/BbsDetail";
 function BbsListItem() {
     const [boardsList, setBoardsList] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -21,7 +21,10 @@ function BbsListItem() {
     }, [page]);
 
     useEffect(() => {
-        filterBoardsList();
+        const delaySearch = setTimeout(() => {
+            filterBoardsList();
+        }, 90);
+        return () => clearTimeout(delaySearch);
     }, [searchTerm, boardsList]);
 
     const fetchData = () => {
@@ -56,12 +59,12 @@ function BbsListItem() {
     const openModal = (boardId) => {
         console.log(boardId);
         setSelectedBoardId(boardId);
-        setIsModalOpen(true); // 모달 열기
+        setIsModalOpen(true);
     };
 
     const closeModal = () => {
         setSelectedBoardId(null);
-        setIsModalOpen(false); // 모달 닫기
+        setIsModalOpen(false);
     };
 
 

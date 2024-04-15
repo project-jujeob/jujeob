@@ -2,7 +2,18 @@ import "../../MainPage.css";
 import "../BbsStyle/bbsCategory.css";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import BbsDetailModal from "../Modal/BbsDetail";
+import BbsWrite from "../Modal/BbsWrite";
 function BbsCategory({ onSearch }) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const openModal = () => {
+        console.log();
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
 
     return (
         <div>
@@ -13,9 +24,7 @@ function BbsCategory({ onSearch }) {
                     <div className="Category">모임게시판</div>
                 </div>
                 <div className="CategoryNewPost">
-                    <Link to={"/BbsWrite"}>
-                        <div>글 작성하기</div>
-                    </Link>
+                        <div className="NewPostDiv"  onClick={() => openModal()}>글 작성하기</div>
                 </div>
             </div>
             <div className="DetailNavContainer">
@@ -27,7 +36,14 @@ function BbsCategory({ onSearch }) {
                 </div>
 
             </div>
+
+            <BbsWrite
+                isOpen={isModalOpen}
+                onRequestClose={closeModal}
+            />
         </div>
+
+
     );
 }
 

@@ -19,6 +19,13 @@
     margin-left: 700px;
 
 }
+.NewPostDiv{
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border: 1px solid rgba(128, 128, 128, 0.63);
+    border-radius: 8px;
+}
 .CategoryNewPost a{
     text-decoration: none;
     font-weight: bold;

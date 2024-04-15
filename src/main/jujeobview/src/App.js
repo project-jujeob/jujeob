@@ -5,7 +5,7 @@ import Login from "./member/Login";
 import Register from "./member/Register";
 import RegisterComplete from "./member/RegisterComplete";
 import BbsList from "./Board/BulletinBoardSystem/BbsList";
-import BbsWrite from "./Board/BulletinBoardSystem/BbsWrite";
+import BbsWrite from "./Board/Modal/BbsWrite";
 import MyPage from "./member/MyPage";
 import MainPage from "./MainPage";
 import Logout from "./member/Logout";
@@ -13,7 +13,7 @@ import Logout from "./member/Logout";
 import ProductItemDetail from "./product/Detail/ProductItemDetail";
 import React, {useEffect, useState} from "react";
 import Cart from "./product/Cart/Cart";
-import BbsDetail from "./Board/Component/BbsDetail";
+import BbsDetail from "./Board/Modal/BbsDetail";
 
 
 function App() {
