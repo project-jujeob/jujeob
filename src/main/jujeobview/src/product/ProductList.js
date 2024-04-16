@@ -20,18 +20,21 @@ function ProductList() {
         if (!searchKeyword.trim()) {
             alert('검색어를 입력해주세요');
             inputRef.current.focus();
+            setSearchKeyword('');
             return;
         }
         axios.post('/api/productListBySearch', { searchKeyword:searchKeyword })
             .then((productListBySearchKeyword)=>{
                 setSearchResult(productListBySearchKeyword.data);
                 inputRef.current.focus();
+                setSearchKeyword('');
 
             })
             .catch(error => {
                 console.error('상품 검색 실패:', error);
             });
     }
+
     return (
         <div className="ProductListContainer">
             <Header/>
