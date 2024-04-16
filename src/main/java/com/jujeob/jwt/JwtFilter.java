@@ -47,6 +47,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         // 토큰에서 username과 role 획득
+        Long no = jwtUtil.getNo(token);
         String id = jwtUtil.getUsername(token);
         String nickname = jwtUtil.getNickname(token);
         String name = jwtUtil.getName(token);
@@ -57,6 +58,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
 
         Member member = new Member();
+        member.setMemNo(no);
         member.setMemId(id);
         member.setMemNickname(nickname);
         member.setMemName(name);

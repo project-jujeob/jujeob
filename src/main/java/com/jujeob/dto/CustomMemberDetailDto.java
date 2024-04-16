@@ -31,6 +31,9 @@ public class CustomMemberDetailDto implements UserDetails, CustomMemberDetailInt
     public String getPassword() {return member.get().getMemPw();}
 
     @Override
+    public Long getNo() {return member.get().getMemNo();}
+
+    @Override
     public String getUsername() {return member.get().getMemId();}
 
     @Override

@@ -21,6 +21,11 @@ public class JwtUtil {
     }
 
     // 검증
+    public Long getNo(String token) {
+        String memberNoStr = Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("memberNo", String.class);
+        return Long.parseLong(memberNoStr);
+    }
+
     public String getUsername(String token) {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().get("memberId", String.class);
     }
@@ -56,16 +61,24 @@ public class JwtUtil {
     }
 
     // 토큰 생성
-    public String createJwt(String memberId, String memberNickname, String memberName, String memberEmail, String memberPhone, String memberAddr, String memberRole
-            , Long expiredMs) {
+    public String createJwt(Long memNo,
+                            String memId,
+                            String memNickname,
+                            String memName,
+                            String memEmail,
+                            String memPhone,
+                            String memAddr,
+                            String memRole,
+                            Long expiredMs) {
         return Jwts.builder()
-                .claim("memberId", memberId)
-                .claim("memberNickname", memberNickname)
-                .claim("memberName", memberName)
-                .claim("memberEmail", memberEmail)
-                .claim("memberPhone", memberPhone)
-                .claim("memberAddr", memberAddr)
-                .claim("memberRole", memberRole)
+                .claim("memberNo", memNo)
+                .claim("memberId", memId)
+                .claim("memberNickname", memNickname)
+                .claim("memberName", memName)
+                .claim("memberEmail", memEmail)
+                .claim("memberPhone", memPhone)
+                .claim("memberAddr", memAddr)
+                .claim("memberRole", memRole)
 
                 .issuedAt(new Date(System.currentTimeMillis())) // 현재 발행시간
                 .expiration(new Date(System.currentTimeMillis() + expiredMs))   // 소멸시간
