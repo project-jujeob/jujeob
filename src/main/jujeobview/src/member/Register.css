@@ -1,5 +1,5 @@
 .RegisterPage {
-    width: 700px;
+    width: 750px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -73,6 +73,18 @@
     width: 100%;
     padding: 10px 20px;
 }
+
+.MemberId button {
+    cursor: pointer;
+    margin: 10px 20px 8px 20px;
+    padding: 10px 20px;
+    width: 100px;
+    border-radius: 5px;
+    border: 2px solid #FF7E5C;
+    color: #FF7E5C;
+    font-weight: bold;
+}
+
 
 .RegisterForm input {
     padding: 10px;

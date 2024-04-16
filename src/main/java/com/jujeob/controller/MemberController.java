@@ -47,7 +47,15 @@ public class MemberController {
         if(loginMember != null) {
 
             // 로그인에 성공하면 토큰 생성
-            String token = jwtUtil.createJwt(loginMember.getMemId(), loginMember.getMemNickname(), loginMember.getMemName(), loginMember.getMemEmail(), loginMember.getMemPhone(), loginMember.getMemAddr() ,loginMember.getMemRole(), 1000 * 60 * 60 * 24L);
+            String token = jwtUtil.createJwt(loginMember.getMemNo(),
+                                             loginMember.getMemId(),
+                                             loginMember.getMemNickname(),
+                                             loginMember.getMemName(),
+                                             loginMember.getMemEmail(),
+                                             loginMember.getMemPhone(),
+                                             loginMember.getMemAddr() ,
+                                             loginMember.getMemRole(),
+                                    1000 * 60 * 60 * 24L);
             // 토큰을 출력
             return ResponseEntity.ok().body(token);
 

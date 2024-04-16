@@ -20,23 +20,7 @@ public class MyPageService {
     @Autowired
     MyPageRepository myPageRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private JwtUtil jwtUtil;
 
-        // 회원가입
-        public RegisterDto mapRegisterDto(Member member) {
-        RegisterDto registerDto = new RegisterDto();
-        registerDto.setMemId(member.getMemId());
-        registerDto.setMemNickname(member.getMemNickname());
-        registerDto.setMemName(member.getMemName());
-        registerDto.setMemEmail(member.getMemEmail());
-        registerDto.setMemPhone(member.getMemPhone());
-        registerDto.setMemAddr(member.getMemAddr());
-
-        return registerDto;
-    }
 
     // 토큰 해석(분리) 회원 정보조회
     public String getMemberInfo(String token) {
