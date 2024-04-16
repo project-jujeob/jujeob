@@ -1,5 +1,7 @@
 package com.jujeob.config;
 
+import com.jujeob.jwt.JwtUtil;
+import com.jujeob.jwt.LoginFilter;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,13 +13,21 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+    //AuthenticationManager가 인자로 받을 때 AuthenticationConfiguration 객체 생성자 주입
+    private final AuthenticationConfiguration authenticationConfiguration;
+    private final JwtUtil jwtUtil;
+
+    public WebSecurityConfig(AuthenticationConfiguration authenticationConfiguration, JwtUtil jwtUtil) {
+        this.authenticationConfiguration = authenticationConfiguration;
+        this.jwtUtil = jwtUtil;
+    }
 
     // AuthenticationManager Bean에 등록
     @Bean
@@ -27,7 +37,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -49,13 +59,15 @@ public class WebSecurityConfig {
         // 동일한 출처로 간주되어 웹 공격 방지 (localhost:8080 = localhost:XXXX)
         httpSecurity.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
 
+        httpSecurity.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
+                UsernamePasswordAuthenticationFilter.class);
 
-        /*httpSecurity.authorizeHttpRequests((auth) -> auth
-                .requestMatchers("/", "/api/login", "/api/register").permitAll() // 메인페이지, 로그인페이지, 회원가입페이지 모두 허용
-                .requestMatchers(PathRequest.toH2Console()).permitAll()
-                .requestMatchers("/admin").hasRole("admin") // admin페이지는 admin만
-                .anyRequest().authenticated() // 모든 요청에 대해 인증된 사용자만 가능
-        );*/
+//        httpSecurity.authorizeHttpRequests((auth) -> auth
+//                .requestMatchers("/", "/api/login2", "/api/register2", "api/member/info2").permitAll() // 메인페이지, 로그인페이지, 회원가입페이지 모두 허용
+////                .requestMatchers(PathRequest.toH2Console()).permitAll()
+//                .requestMatchers("/admin").hasRole("admin") // admin페이지는 admin만
+//                .anyRequest().authenticated() // 모든 요청에 대해 인증된 사용자만 가능
+//        );
 
         return httpSecurity.build(); // 빌드되어서 SecurityFilterChain 반환
     }

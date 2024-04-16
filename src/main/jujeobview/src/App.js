@@ -1,15 +1,15 @@
 import './App.css';
-import {Route, Routes, BrowserRouter as Router} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import ProductList from "./product/ProductList";
 import Login from "./member/Login";
 import RegisterAdult from "./member/RegisterAdult";
 import Register from "./member/Register";
 import RegisterComplete from "./member/RegisterComplete";
+import MyPage from "./mypage/MyPage";
 import BbsList from "./Board/BulletinBoardSystem/BbsList";
 import BbsWrite from "./Board/BulletinBoardSystem/BbsWrite";
-import MyPage from "./member/MyPage";
 import MainPage from "./MainPage";
-import Logout from "./member/Logout";
+
 // import {AuthProvider} from "./member/Context";
 import ProductItemDetail from "./product/Detail/ProductItemDetail";
 import React from "react";
@@ -35,6 +35,7 @@ function App() {
                 <Route path='/Logout' element={<Logout />} />
                 <Route path='/Cart' element={<CartPage/>} />
                 <Route path='/ReviewWrite/:productNo' element={<ReviewWrite/>} />
+                <Route path='/Cart' element={<Cart/>} />
             </Routes>
         </div>
     );
