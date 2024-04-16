@@ -22,5 +22,8 @@ public interface ProductRepositoryCustom {
 
     List<Product> findProductListByPrice(String price);
 
-    List<Product> findProductListByFilterOptions(List<String> categoryNo, List<String> subCategoryName, List<String> mainTypes, List<String> types, List<String> alcoholLevels, List<String> prices);
+    List<Product> findProductListByFilterOptions(List<String> searchResult, List<String> categoryNo, List<String> subCategoryName, List<String> mainTypes, List<String> types, List<String> alcoholLevels, List<String> prices);
+
+    List<Product> findProductListBySearchKeyword(String searchKeyword);
+
 }

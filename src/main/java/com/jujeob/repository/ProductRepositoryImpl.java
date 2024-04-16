@@ -155,7 +155,8 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
     }
 
     @Override
-    public List<Product> findProductListByFilterOptions(List<String> categoryNo,
+    public List<Product> findProductListByFilterOptions(List<String> searchKeyword,
+                                                        List<String> categoryNo,
                                                         List<String> subCategoryName,
                                                         List<String> mainTypes,
                                                         List<String> types,
@@ -165,26 +166,38 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
         QProduct qProduct = QProduct.product;
         BooleanBuilder finalBuilder = new BooleanBuilder();
 
+        // 검색어 필터
+        if (searchKeyword != null && !searchKeyword.isEmpty()) {
+            BooleanBuilder keywordBuilder = new BooleanBuilder();
+            searchKeyword.forEach(keyword -> {
+                if (keyword != null) {
+                    keywordBuilder.or(qProduct.name.containsIgnoreCase(keyword));
+                }
+            });
+            finalBuilder.and(keywordBuilder);
+        }
+
 
         // 카테고리 번호 필터
         if (categoryNo != null && !categoryNo.isEmpty()) {
             BooleanBuilder categoryBuilder = new BooleanBuilder();
             try {
-                // categoryNo.get(0)이 null이 아닐 경우에만 Integer로 변환
                 Integer categoryNumber = categoryNo.get(0) != null ? Integer.valueOf(categoryNo.get(0)) : null;
                 if (categoryNumber != null) {
                     List<String> subCategories = subCategoryService.findCategoryNameByCategoryNo(categoryNumber);
                     if (subCategories != null && !subCategories.isEmpty()) {
                         subCategories.forEach(subCategory -> {
-                            if (subCategory != null) {  // null 체크 추가
+                            if (subCategory != null) {
                                 categoryBuilder.or(qProduct.keyword.contains(subCategory));
                             }
                         });
-                        finalBuilder.and(categoryBuilder);  // 카테고리 조건을 최종 빌더에 추가
+                    } else {
+                        // 서브 카테고리가 비어있는 경우, 주 카테고리만으로 검색 진행
+                        categoryBuilder.or(qProduct.productId.eq(String.valueOf(categoryNumber)));
                     }
+                    finalBuilder.and(categoryBuilder);
                 }
             } catch (NumberFormatException e) {
-                // 잘못된 형식의 카테고리 번호 입력 처리 (예외 로깅 또는 사용자에게 피드백)
                 log.error("Invalid category number format", e);
             }
         }
@@ -204,12 +217,16 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
 
         // 주종 필터
         if (mainTypes != null && !mainTypes.isEmpty()) {
-            finalBuilder.and(qProduct.productId.in(mainTypes));
+            BooleanBuilder mainTypeBuilder = new BooleanBuilder();
+            mainTypes.forEach(mainType -> mainTypeBuilder.or(qProduct.productId.eq(mainType)));
+            finalBuilder.and(mainTypeBuilder);
         }
 
         // 유형 필터
         if (types != null && !types.isEmpty()) {
-            finalBuilder.and(qProduct.type.in(types));
+            BooleanBuilder typeBuilder = new BooleanBuilder();
+            types.forEach(type -> typeBuilder.or(qProduct.type.eq(type)));
+            finalBuilder.and(typeBuilder);
         }
 
 
@@ -233,6 +250,18 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
                 .fetch();
 
         return new ArrayList<>(productList);
+    }
 
+
+    @Override
+    public List<Product> findProductListBySearchKeyword(String searchKeyword) {
+        QProduct qProduct = QProduct.product;
+
+        List<Product> productList = factory.select(qProduct)
+                .from(qProduct)
+                .where(qProduct.name.like("%" + searchKeyword + "%"))
+                .fetch();
+
+        return new ArrayList<>(new HashSet<>(productList));
     }
 }

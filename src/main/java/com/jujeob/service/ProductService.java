@@ -142,6 +142,7 @@ public class ProductService {
 
     public List<ProductListDto> getProductListByFilterOption(Map<String, List<String>> filters) {
 
+        List<String> searchKeyword = filters.get("keyword");
         List<String> categoryNo = filters.get("category");
         List<String> subCategoryName = filters.get("subCategory");
         List<String> mainTypes = filters.get("mainType");
@@ -149,8 +150,18 @@ public class ProductService {
         List<String> alcoholLevels = filters.get("alcoholLevels");
         List<String> prices = filters.get("prices");
 
-        List<Product> productsListByFilterOption = productRepository.findProductListByFilterOptions(categoryNo, subCategoryName, mainTypes, types, alcoholLevels, prices);
+        List<Product> productsListByFilterOption = productRepository.findProductListByFilterOptions(searchKeyword, categoryNo, subCategoryName, mainTypes, types, alcoholLevels, prices);
 
         return productsListByFilterOption.stream().map(this::mapProductToDto).collect(Collectors.toList());
+    }
+
+    public List<ProductListDto> getProductListBySearchKeyword(String searchKeyword) {
+        List<Product> products = productRepository.findProductListBySearchKeyword(searchKeyword);
+        List<ProductListDto> productListBySearchKeywordDtos = new ArrayList<>();
+
+        for (Product entity : products) {
+            productListBySearchKeywordDtos.add(mapProductToDto(entity));
+        }
+        return productListBySearchKeywordDtos;
     }
 }

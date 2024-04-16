@@ -1,6 +1,42 @@
 .ProductListContainer {
 }
 
+.ProductListSearch {
+    //border-bottom: solid 2px #FF7E5C;
+    border: solid 2px #FF7E5C;
+    border-radius: 5px;
+    width: 40%;
+    text-align: center;
+    margin: 20px auto;
+}
+
+.ProductListSearch form{
+    display: flex;
+    justify-content: space-between;
+}
+
+.SearchInput {
+    border: none;
+    font-size: 16px;
+    margin-left: 10px;
+    background-color: inherit;
+    outline: none;
+    letter-spacing: -0.33px;
+    width: 90%;
+}
+
+.ProductSearchBtn {
+    border: none;
+    cursor: pointer;
+}
+
+.SearchIcon img {
+    filter: invert(68%) sepia(96%) saturate(5745%) hue-rotate(334deg)
+    brightness(91%) contrast(95%);
+}
+
+
+
 .ProductListCategory {
     background-color: lightgray;
 }
@@ -16,7 +52,6 @@
 
 /*----------productListShow.js----------*/
 .ProductListShowContainer {
-    margin: 30px;
 }
 
 .ProductItems {
@@ -27,9 +62,10 @@
 
 .ProductListCount {
     text-align: right;
-    margin-right: 40px;
     font-size: 15px;
     font-weight: bolder;
+    margin-top: 30px;
+    margin-right: 40px;
 }
 
 .ProductRow{
@@ -49,6 +85,7 @@
 .ProductItem div {
     margin: 5px 0;
 }
+
 .ProductRow {
     display: flex;
     justify-content: space-between;
@@ -113,11 +150,17 @@
     width: 100%;
 }
 
+.ProductListShowHeader {
+    display: flex;
+    flex-direction: column;
+    align-content: flex-end;
+    align-items: flex-end;
+}
 
 /*----------productRecommendList.js----------*/
 .ProductRecommendContainer{
     text-align: left;
-    padding-top: 20px;
+    margin-bottom: 30px;
 }
 
 .ProductRecommendContainer h2{
@@ -188,6 +231,13 @@
     color: #FF7E5C;
 }
 
+.AllCategory.clicked {
+    border: solid 0.5px #FF7E5C;
+    background-color: #FF7E5C;
+    color: black;
+}
+
+
 .ProductList {
     display: flex;
     width: 85%;
@@ -199,6 +249,7 @@
     position: sticky;
     top: 20px;
     height: 80%;
+    margin-top: 30px;
 }
 
 .ProductListSidebarContainer {

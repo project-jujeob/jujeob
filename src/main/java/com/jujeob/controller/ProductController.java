@@ -107,4 +107,12 @@ public class ProductController {
         List<ProductListDto> products = productService.getProductListByFilterOption(filters);
         return ResponseEntity.ok(products);
     }
+
+    // 검색어에 따라 사용자가 원하는 상품 찾아오기
+    @PostMapping("/api/productListBySearch")
+    public List<ProductListDto> showProductListBySearchkeyword(@RequestBody Map<String, String> requestBody) {
+        String searchKeyword = requestBody.get("searchKeyword");
+        System.out.println(searchKeyword);
+        return productService.getProductListBySearchKeyword(searchKeyword);
+    }
 }

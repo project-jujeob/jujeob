@@ -1,5 +1,5 @@
 import './ProductList.css';
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import axios from "axios";
 import Pagination from '../common/Pagination';
 import {Link} from "react-router-dom";
@@ -7,29 +7,15 @@ import likeIcon from '../img/icon/likeIcon.png';
 import basketIcon from '../img/icon/basketIcon.png';
 import addToCart from "./Cart/addToCart";
 
-function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList, checkedMainType, checkedType, checkedAlcoholLevel, checkedPrice, ProductListByFilterOption}) {
+function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList,
+                             ProductListByFilterOption, searchResult}) {
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-
-    const showAll = () => {
-        axios.get('/api/productList')
-            .then(response => {
-                setProductList(response.data);
-            })
-            .catch(error => {
-                console.error('데이터 가져오기 실패:', error);
-            });
-    }
-
-    // 페이지 로드 시 실행되는 로직
-    useEffect(() => {
-       showAll();
-    }, []);
 
 
     useEffect(() => {
         if (viewAllProductList) {
-            showAll();
+            setProductList(viewAllProductList);
         }
     }, [viewAllProductList]);
 
@@ -52,6 +38,12 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         }
     }, [ProductListByFilterOption]);
 
+    useEffect(() => {
+        if (Array.isArray(searchResult)) {
+            setProductList(searchResult);
+        }
+    }, [searchResult]);
+
     const itemsPerPage = 9;
     const itemsPerRow = 3;
 
@@ -67,13 +59,12 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const rows = [];
     for (let i = 0; i < currentItems.length; i += itemsPerRow) {
         rows.push(currentItems.slice(i, i + itemsPerRow));
-    }
+     }
 
     const handleClick = (e, product) => {
         e.preventDefault();
         addToCart(product);
     };
-
 
     return (
         <div className="ProductListShowContainer">
