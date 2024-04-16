@@ -17,7 +17,7 @@ function ReviewWrite(){
     //console.log("로케이션"+location);
 
     //Object로 가져온 값 확인
-    //console.log("프로덕트"+Object.entries(product));
+    //console.log("프로덕트"+Object.entri es(product));
     //console.log("로케이션"+Object.entries(location));
 
     // textarea 내용 변경 시 호출되는 함수
@@ -42,7 +42,7 @@ function ReviewWrite(){
                 body: JSON.stringify({
                     reviewContent: reviewContent,
                     star: rating,
-                    member: { memNo: 1 }, // todo : 로그인유저정보 가져와야함
+                    member: { memNo: 1}, // todo : 로그인유저정보 가져와야함
                     product: { productNo: productNo } // 수정된 필드명
                 })
             });
