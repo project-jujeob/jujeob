@@ -1,41 +1,27 @@
 import './App.css';
-import {Route, Routes, BrowserRouter as Router} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import ProductList from "./product/ProductList";
 import Login from "./member/Login";
 import RegisterAdult from "./member/RegisterAdult";
 import Register from "./member/Register";
 import RegisterComplete from "./member/RegisterComplete";
+import MyPage from "./mypage/MyPage";
 import BbsList from "./Board/BulletinBoardSystem/BbsList";
 import BbsWrite from "./Board/BulletinBoardSystem/BbsWrite";
-import MyPage from "./member/MyPage";
 import MainPage from "./MainPage";
-import Logout from "./member/Logout";
+
 // import {AuthProvider} from "./member/Context";
 import ProductItemDetail from "./product/Detail/ProductItemDetail";
-import React, {useEffect, useState} from "react";
-import Cart from "./product/Cart/Cart";
+import React from "react";
+import CartPage from "./product/Cart/CartPage";
+import ReviewWrite from "./product/Detail/review/ReviewWrite";
 
 
 function App() {
-    const [cart, setCart] = useState([]);
-
-    useEffect(() => {
-        const savedCart = localStorage.getItem('cart');
-        if (savedCart) {
-            setCart(JSON.parse(savedCart));
-        }
-    }, []);
-
-    const addToCart = (product) => {
-        const newCart = [...cart, product];
-        setCart(newCart);
-        localStorage.setItem('cart', JSON.stringify(newCart));
-    };
 
     return (
         <div>
             <Routes>
-
                 <Route path="/" element={<MainPage />} />
                 <Route path='/ProductList' element={<ProductList />}/>
                 <Route path='/ProductItemDetail/:productNo' element={<ProductItemDetail /> } />
@@ -47,6 +33,8 @@ function App() {
                 <Route path='/BbsWrite' element={<BbsWrite />}/>
                 <Route path='/MyPage' element={<MyPage />} />
                 <Route path='/Logout' element={<Logout />} />
+                <Route path='/Cart' element={<CartPage/>} />
+                <Route path='/ReviewWrite/:productNo' element={<ReviewWrite/>} />
                 <Route path='/Cart' element={<Cart/>} />
             </Routes>
         </div>

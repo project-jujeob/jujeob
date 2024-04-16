@@ -98,9 +98,9 @@
     display: flex;
 }
 .detailContentBtn div{
-    background-color: #efefef;
+    background-color: #f8f8f8;
     flex: 1; /* 모든 아이템에 동일한 비율의 공간 할당 */
-    border: 1px solid #b4b4b4; /* 아이템들을 시각적으로 구분하기 위한 테두리 추가 */
+    border: 1px solid #e0e0e0; /* 아이템들을 시각적으로 구분하기 위한 테두리 추가 */
     text-align: center; /* 텍스트를 가운데 정렬 */
     padding: 15px 0;
     margin-bottom: 50px;
@@ -108,7 +108,7 @@
 
 .detailContentBtn div:hover{
     cursor: pointer;
-    background-color: #d3d3d3;
+    background-color: #e0e0e0;
 }
 
 .detailContentImg{
@@ -187,4 +187,163 @@
     border: none;
     background-color: transparent;
     text-align: center;
+}
+
+/* review page */
+
+.reviewContainer{
+    width:70%;
+    margin-top: 70px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.reviewTop{
+    padding-bottom: 10px;
+    border-bottom : 1px solid rgb(51, 51, 51);
+}
+
+.reviewContent{
+    width:90%;
+    padding:10px;
+    background-color: lightpink;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.reviewContentLeft{
+    background-color: lightseagreen;
+    width:20%;
+
+
+}
+
+.reviewContentRight{
+    background-color: lightyellow;
+    width:80%;
+}
+
+
+/* review write */
+.reviewWriteContainer{
+    background-color: lightcyan;
+    width:50%;
+    height:100%;
+    margin-top:50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.reviewWriteContainer h2{
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.reviewProduct{
+    /*background-color: red;*/
+    display: flex;
+    align-items: center;
+    width:80%;
+    margin:0 auto;
+}
+
+.reviewProduct>div>img{
+    width:80px;
+    height:auto;
+    margin-right: 15px;
+}
+
+.reviewProduct div span{
+    font-weight: bold;
+    margin:0 5px;
+}
+
+.starRating{
+    /*background-color: green;*/
+    text-align: center;
+    padding:30px 0;
+}
+
+/* 별표 표시 클래스 */
+.starRating p {
+    visibility: hidden;
+}
+
+.starRating p.visible {
+    visibility: visible;
+}
+
+
+.star {
+    cursor: pointer;
+    font-size: 50px;
+    color: gray;
+}
+
+.star.gold {
+    color: gold;
+}
+
+.reviewWriteContent{
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.reviewTextarea{
+    width:80%;
+    height:150px;
+}
+
+.reviewTextarea textarea{
+    width:100%;
+    height:100%;
+    resize: none;
+    padding:10px;
+    font-family: 'HallymGothic-Regular';
+}
+
+.characterCount{
+    text-align: right;
+}
+
+.reviewPrepareOrNot{
+    width:80%;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    margin:20px 0;
+
+}
+
+.reviewPrepareOrNot>div:nth-child(1){
+    padding:12px 30px;
+    width:49%;
+    background-color: #eaeaea;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.reviewPrepareOrNot>div:nth-child(2){
+    padding:12px 30px;
+    width:49%;
+    background-color: #FD4818;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/* scroll to top */
+.scrollToTopButton {
+    position: fixed; /* 화면에 고정 */
+    bottom: 100px; /* 하단 여백 설정 */
+    right: 30px; /* 오른쪽 여백 설정 */
+    z-index: 999; /* 다른 요소 위에 표시되도록 설정 */
+}
+
+/* 버튼이 숨겨진 상태일 때 */
+.scrollToTopButton.hidden {
+    display: none;
 }

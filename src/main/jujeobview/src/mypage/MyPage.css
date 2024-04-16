@@ -1,0 +1,45 @@
+.MyPageForm {
+    width: 65%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    gap: 30px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+.MyPageTitle {
+    padding-top: 10px;
+}
+.MyPageTitle h1 {
+    padding-bottom: 15px;
+}
+
+.MyPageSideBar {
+    width: 200px;
+    height: 595px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.MyPageSubTitle {
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 30px;
+
+}
+
+.MyPageSubTitle h1 {
+    border-bottom: 2px solid black;
+    padding-bottom: 15px;
+
+}
+
+.SubTitleDetail {
+    height: 595px;
+    padding-top: 20px;
+    padding-left: 10px;
+}

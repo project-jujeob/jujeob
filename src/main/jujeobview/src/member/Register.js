@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Register.css';
 import axios from "axios";
+import Header from "../common/Header";
 
 function Register() {  //회원가입폼에 입력받을 데이터
     const [registerData, setRegisterData] = useState({
@@ -40,24 +41,87 @@ function Register() {  //회원가입폼에 입력받을 데이터
     }
 
     return (
-        <div className={"RegisterPage"}>
-            <div className={"RegisterForm"}>
-                <h1>회원가입</h1><br/>
-                <div className={"hr"}></div>
-                <br/>
-                <input type={"text"} placeholder={"아이디"} name={"memId"} onChange={registerDataChange} required={true}/><br/>
-                <input type={"password"} placeholder={"비밀번호"} name={"memPw"} onChange={registerDataChange}/><br/>
-                <input type={"password"} placeholder={"비밀번호 재입력"}/><br/>
+        <form>
+            <div>
+                <Header/>
+                <div className={"RegisterPage"}>
+                    <div className={"RegisterForm"}>
+                        <h1>회원가입</h1><br/>
+                        <div className={"hr"}></div>
+                        <br/>
+                        <div className={"MemberId"}>
+                            <div className={"MemberLabel"}><label htmlFor={"memId"}>아이디</label></div>
+                            <div className={"MemberInput"}>
+                                <input type={"text"} id={"memId"} placeholder={"아이디를 입력해주세요"} name={"memId"}
+                                       onChange={registerDataChange} required={true}/><br/>
+                            </div>
+                        </div>
 
-                <input type={"text"} placeholder={"닉네임"} name={"memNickname"} onChange={registerDataChange}/><br/>
-                <input type={"text"} placeholder={"이름"} name={"memName"} onChange={registerDataChange}/><br/>
-                <input type={"text"} placeholder={"전화번호"} name={"memPhone"} onChange={registerDataChange}/><br/>
-                <input type={"email"} placeholder={"jujeob@xxx.com"} name={"memEmail"} onChange={registerDataChange}/><br/>
-                <input type={"text"} placeholder={"주소"} name={"memAddr"} onChange={registerDataChange}/><br/>
+                        <div className={"MemberPw"}>
+                            <div className={"MemberLabel"}><label htmlFor={"memPw"}>비밀번호</label></div>
+                            <div className={"MemberInput"}>
+                                <input type={"password"} id={"memPw"} placeholder={"비밀번호를 입력해주세요"} name={"memPw"}
+                                       onChange={registerDataChange} required={true}/><br/>
+                            </div>
+                        </div>
 
-                <button onClick={registerAction}>가입하기</button>
+                        <div className={"MemberPwConfirm"}>
+                            <div className={"MemberLabel"}><label htmlFor={"memPwConfirm"}>비밀번호 확인</label></div>
+                            <div className={"MemberInput"}>
+                                <input type={"password"} id={"memPwConfirm"} placeholder={"비밀번호를 다시 입력해주세요"}
+                                       name={"memPwConfirm"} onChange={registerDataChange} required={true}/><br/>
+                            </div>
+                        </div>
+
+                        <div className={"MemberNickname"}>
+                            <div className={"MemberLabel"}><label htmlFor={"memNickname"}>닉네임</label></div>
+                            <div className={"MemberInput"}>
+                                <input type={"text"} id={"memNickname"} placeholder={"닉네임을 입력해주세요"} name={"memNickname"}
+                                       onChange={registerDataChange} required={true}/><br/>
+                            </div>
+                        </div>
+
+                        <div className={"MemberName"}>
+                            <div className={"MemberLabel"}><label htmlFor={"memName"}>이름</label></div>
+                            <div className={"MemberInput"}>
+                                <input type={"text"} id={"memName"} placeholder={"이름을 입력해주세요"} name={"memName"}
+                                       onChange={registerDataChange} required={true}/><br/>
+                            </div>
+                        </div>
+
+                        <div className={"MemberPhone"}>
+                            <div className={"MemberLabel"}><label htmlFor={"memPhone"}>전화번호</label></div>
+                            <div className={"MemberInput"}>
+                                <input type={"text"} id={"memPhone"} placeholder={"숫자만 입력해주세요"} name={"memPhone"}
+                                       onChange={registerDataChange} required={true}/><br/>
+                            </div>
+                        </div>
+
+                        <div className={"MemberEmail"}>
+                            <div className={"MemberLabel"}><label htmlFor={"memEmail"}>이메일</label></div>
+                            <div className={"MemberInput"}>
+                                <input type={"email"} id={"memEmail"} placeholder={"예: jujeob@ssada.com"} name={"memEmail"}
+                                       onChange={registerDataChange} required={true}/><br/>
+                            </div>
+                        </div>
+
+                        <div className={"MemberAddr"}>
+                            <div className={"MemberLabel"}><label htmlFor={"memAddr"}>주소</label></div>
+                            <div className={"MemberInput"}>
+                                <input type={"text"} id={"memAddr"} placeholder={"주소를 입력해주세요"} name={"memAddr"}
+                                       onChange={registerDataChange} required={true}/><br/>
+                            </div>
+                        </div>
+
+                        <div className={"BtnGroup"}>
+                            <div className={"SubmitBtn"}>
+                                <button onClick={registerAction}>가입하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     )
 }
 
