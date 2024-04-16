@@ -32,10 +32,8 @@ function App() {
                 <Route path='/BbsList' element={<BbsList />} />
                 <Route path='/BbsWrite' element={<BbsWrite />}/>
                 <Route path='/MyPage' element={<MyPage />} />
-                <Route path='/Logout' element={<Logout />} />
                 <Route path='/Cart' element={<CartPage/>} />
                 <Route path='/ReviewWrite/:productNo' element={<ReviewWrite/>} />
-                <Route path='/Cart' element={<Cart/>} />
             </Routes>
         </div>
     );
