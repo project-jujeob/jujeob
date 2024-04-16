@@ -30,7 +30,7 @@ function MyPage() {
     // }, []);
 
 
-
+    // 서브메뉴 클릭시 회원정보수정만 비번검증하고 페이지 이동
     // const verifyPassword = (isVerified) => {
     //     setPasswordVerified(isVerified);
     //     if (isVerified) {
@@ -40,7 +40,7 @@ function MyPage() {
     //     }
     // };
 
-
+    // 서브메뉴 클릭시 회원정보수정만 비번검증하고 페이지 이동
     // const subTitleChange = (title) => {
     //     setSubTitleText(title)  //클릭시 제목이 먼저 바뀌게 하기
     //     if (title === "회원 정보 수정") {
@@ -52,7 +52,7 @@ function MyPage() {
     //     }
     // }
 
-    // 회원정보 수정 (임시)
+    // 회원정보 수정 클릭시 비번검증 안하고 바로 수정페이지로(임시)
     const subTitleChange = (title) => {
         setSubTitleText(title)  //클릭시 제목이 먼저 바뀌게 하기
         if (title) {

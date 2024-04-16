@@ -38,6 +38,7 @@ function Profile() {
                 const payload = JSON.parse(payloadString)
 
                 console.log(payload)
+                console.log(payload.memberNo)
                 console.log("memberId", payload.memberId)
                 console.log("memberNickname" + payload.memberNickname)
                 console.log(payload.memberName)
@@ -46,6 +47,7 @@ function Profile() {
                 console.log(payload.memberAddr)
 
                 setUserData({
+                    memberNo : payload.memberNo,
                     memberId : payload.memberId,
                     memberRole : payload.memberRole,
                     memberNickname : payload.memberNickname,

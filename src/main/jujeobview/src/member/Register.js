@@ -7,6 +7,7 @@ function Register() {  //회원가입폼에 입력받을 데이터
     const [registerData, setRegisterData] = useState({
         memId: "",
         memPw: "",
+        // memPwConfirm: "",
         memNickname: "",
         memName: "",
         memPhone: "",
@@ -14,8 +15,11 @@ function Register() {  //회원가입폼에 입력받을 데이터
         memAddr: ""
     });
 
+    // const [memPw, setMemPw] = useState('')
+    // const [memPwConfirm, setMemPwConfirm] = useState('')
+
     const registerDataChange = (e) => { //
-        setRegisterData({ ...registerData, [e.target.name]: e.target.value})
+        setRegisterData({ ...registerData, [e.target.name]: e.target.value })
     }
     const registerAction = (e) => {
         e.preventDefault();
@@ -55,6 +59,9 @@ function Register() {  //회원가입폼에 입력받을 데이터
                                 <input type={"text"} id={"memId"} placeholder={"아이디를 입력해주세요"} name={"memId"}
                                        onChange={registerDataChange} required={true}/><br/>
                             </div>
+                            <div>
+                                <button>중복확인</button>
+                            </div>
                         </div>
 
                         <div className={"MemberPw"}>
@@ -63,6 +70,12 @@ function Register() {  //회원가입폼에 입력받을 데이터
                                 <input type={"password"} id={"memPw"} placeholder={"비밀번호를 입력해주세요"} name={"memPw"}
                                        onChange={registerDataChange} required={true}/><br/>
                             </div>
+                            {/*{memPw && memPw.length < 10 && (*/}
+                            {/*    <p>10자리 이상</p>*/}
+                            {/*)}*/}
+                            {/*{!/(?=.*[a-zA-Z])(?=.*\d)(?=.*\W).{10,}/.test(memPw) && memPw.length >= 10 && (*/}
+                            {/*    <p>영문/숫자/특수문자를 모두 포함해야 합니다</p>*/}
+                            {/*)}*/}
                         </div>
 
                         <div className={"MemberPwConfirm"}>
@@ -71,6 +84,9 @@ function Register() {  //회원가입폼에 입력받을 데이터
                                 <input type={"password"} id={"memPwConfirm"} placeholder={"비밀번호를 다시 입력해주세요"}
                                        name={"memPwConfirm"} onChange={registerDataChange} required={true}/><br/>
                             </div>
+                            {/*{registerData.memPw && memPwConfirm && registerData.memPw !== memPwConfirm && (*/}
+                            {/*    <p>동일한 비밀번호를 입력해주세요</p>*/}
+                            {/*)}*/}
                         </div>
 
                         <div className={"MemberNickname"}>

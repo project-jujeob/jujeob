@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './Login.css';
-import {Link} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import Header from "../common/Header";
 
@@ -8,61 +8,35 @@ import Header from "../common/Header";
 function Login() {
     const [memId, setMemId] = useState('');
     const [memPw, setMemPw] = useState('');
-    const token = null
 
 
-    // const [errorMessage, setErrorMessage] = useState('');
-
-    useEffect(() => {
-        console.log("로그인 성공한 회원 정보:", token);
-    }, [token]);
-
-
-    // function loginSuccess(response) {
-    //     alert("로그인 성공");
-    //     console.log('로그인 성공:', JSON.stringify(response.data)) // 개발자 콘솔에 성공 로그 출력
-    //     localStorage.setItem('memId', response.data.memId) // 로컬 스토리지에 memId 저장
-    //     localStorage.setItem('loginMemberData', JSON.stringify(response.data))
-    //     window.location.href = "/";
-    // }
-
-    // const loginAction = async () => {
-    //     try {
-    //         const response = await axios.post('/api/login', {
-    //             memId: memId,
-    //             memPw: memPw
-    //         });
-    //         loginSuccess(response); // 로그인 성공 시 처리 함수 호출
-    //         //history.push('/'); // 메인 페이지로 리다이렉트
-    //     } catch (error) {
-    //         console.error('로그인 실패:', error)
-    //         alert('로그인 실패: ' + error.message)
-    //     }
+    const navigate = useNavigate();
+    const location = useLocation();
+    // location 객체에서 state 속성을 추출하고, 만약 state 속성이 존재하지 않으면 기본값으로 { from: { pathname: "/" } }
+    const { from } = location.state || { from: { pathname: "/" } };
 
 
-const loginAction = () => {
-    axios({
-        method: "post",
-        url: "/api/login",
-        data: JSON.stringify({ memId, memPw }),
-        headers: {
-            "Accept": "application/json, text/plain, */*",
-            "Content-Type": "application/json"
-        }
-    }). then((response) => {
-        alert("로그인 성공");
-        console.log(response.data)
-        localStorage.setItem('token', JSON.stringify(response.data)); // 로그인 정보를 로컬 스토리지에 저장
-        window.location.href = "/";
+    const loginAction = () => {
+        axios({
+            method: "post",
+            url: "/api/login",
+            data: JSON.stringify({ memId, memPw }),
+            headers: {
+                "Accept": "application/json, text/plain, */*",
+                "Content-Type": "application/json"
+            }
+        }). then((response) => {
+            alert("로그인 성공");
+            console.log(response.data)
+            localStorage.setItem('token', JSON.stringify(response.data)); // 로그인 정보를 로컬 스토리지에 저장
+            // 이전 페이지로 리다이렉트
+            navigate(-1)
 
-    }).catch(error => {
-        alert("로그인 실패");
-        console.log(error);
-    });
-
-
-
-}
+        }).catch(error => {
+            alert("로그인 실패");
+            console.log(error);
+        });
+    }
 
     return (
         <div>

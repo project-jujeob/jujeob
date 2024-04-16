@@ -25,6 +25,13 @@ function Header() {
     const checkLoginStatus = () => {
         const token = JSON.parse(localStorage.getItem('token'));
         setIsLoggedIn(token != null);
+
+        if (token != null) {
+            const [, payloadBase64] = token.split(".");
+            const payloadString = atob(payloadBase64);
+            const payload = JSON.parse(payloadString);
+            console.log(payload);
+        }
     };
 
     // 로그아웃 처리
