@@ -1,9 +1,11 @@
 import Header from "../../../common/Header";
 import {useLocation, useParams} from "react-router-dom";
 import ReviewStarRating from "./ReviewStarRating";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 function ReviewWrite(){
+
+    const [memberNo, setMemberNo] = useState(null); // 회원 번호를 저장할 상태
 
     const location = useLocation();
     const { productNo } = useParams(); // 상품 번호 추출
@@ -11,6 +13,19 @@ function ReviewWrite(){
     const [reviewContent, setReviewContent] = useState("");
     const [rating, setRating] = useState(null); // 선택된 별점을 저장하는 state
 
+    useEffect(() => {
+        // localStorage에서 토큰을 가져옴
+        const token = localStorage.getItem('token');
+        if (token) {
+            // 토큰이 있으면 디코딩하여 회원 정보를 추출
+            const [, payloadBase64] = token.split('.');
+            const payloadString = atob(payloadBase64);
+            const payload = JSON.parse(payloadString);
+            // 추출한 회원 정보에서 회원 번호를 가져옴
+            const userMemberNo = payload.memberNo; // 예시: 실제 사용되는 키 이름으로 수정해야 함
+            setMemberNo(userMemberNo);
+        }
+    }, []); // 컴포넌트가 마운트될 때 한 번만 실행
 
     //이렇게 가져오면 Object로 넘어옴
     //console.log("프로덕트"+product);
@@ -42,7 +57,7 @@ function ReviewWrite(){
                 body: JSON.stringify({
                     reviewContent: reviewContent,
                     star: rating,
-                    member: { memNo: 1}, // todo : 로그인유저정보 가져와야함
+                    member: { memNo: memberNo}, // todo : 로그인유저정보 가져와야함
                     product: { productNo: productNo } // 수정된 필드명
                 })
             });
