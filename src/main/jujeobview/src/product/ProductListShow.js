@@ -7,7 +7,7 @@ import likeIcon from '../img/icon/likeIcon.png';
 import basketIcon from '../img/icon/basketIcon.png';
 import addToCart from "./Cart/addToCart";
 
-function ProductListShow({selectedCategory, selectedSubCategory, viewAllProductList, checkedMainType, checkedType, checkedAlcoholLevel, checkedPrice}) {
+function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList, checkedMainType, checkedType, checkedAlcoholLevel, checkedPrice, ProductListByFilterOption}) {
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -35,40 +35,22 @@ function ProductListShow({selectedCategory, selectedSubCategory, viewAllProductL
 
 
     useEffect(() => {
-        if (selectedCategory) {
-            setProductList(selectedCategory);
-        } 
-    }, [selectedCategory]);
+        if (selectedSubCategoryData) {
+            setProductList(selectedSubCategoryData);
+        }
+    }, [selectedSubCategoryData]);
 
     useEffect(() => {
-        if (selectedSubCategory) {
-            setProductList(selectedSubCategory);
+        if (selectedCategoryData) {
+            setProductList(selectedCategoryData);
         }
-    }, [selectedSubCategory]);
+    }, [selectedCategoryData]);
 
     useEffect(() => {
-        if (checkedMainType) {
-            setProductList(checkedMainType);
+        if (ProductListByFilterOption) {
+            setProductList(ProductListByFilterOption);
         }
-    }, [checkedMainType]);
-
-    useEffect(() => {
-        if (checkedType) {
-            setProductList(checkedType);
-        }
-    }, [checkedType]);
-
-    useEffect(() => {
-        if (checkedAlcoholLevel) {
-            setProductList(checkedAlcoholLevel);
-        }
-    }, [checkedAlcoholLevel]);
-
-    useEffect(() => {
-        if (checkedPrice) {
-            setProductList(checkedPrice);
-        }
-    }, [checkedPrice]);
+    }, [ProductListByFilterOption]);
 
     const itemsPerPage = 9;
     const itemsPerRow = 3;

@@ -21,4 +21,6 @@ public interface ProductRepositoryCustom {
     List<Product> findProductListByAlcohol(String alcohol);
 
     List<Product> findProductListByPrice(String price);
+
+    List<Product> findProductListByFilterOptions(List<String> categoryNo, List<String> subCategoryName, List<String> mainTypes, List<String> types, List<String> alcoholLevels, List<String> prices);
 }

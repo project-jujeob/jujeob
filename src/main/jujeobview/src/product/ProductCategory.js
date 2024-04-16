@@ -8,8 +8,12 @@ function ProductCategory() {
     const [viewAllProductList, setViewAllProductList] = useState(0);
     const [productCategory, setProductCategory] = useState([]);
     const [subProductCategory, setProductSubCategory] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState([]);
-    const [selectedSubCategory, setSelectedSubCategory] = useState([]);
+    const [selectedCategoryData, setSelectedCategoryData] = useState([]);
+    const [selectedSubCategoryData, setSelectedSubCategoryData] = useState([]);
+    const [selectedCategoryNo, setSelectedCategoryNo] = useState([]);
+    const [selectedSubCategoryName, setSelectedSubCategoryName] = useState([]);
+    const [ProductListByFilterOption, setProductListByFilterOption] = useState([]);
+
 
     const [productMainType, setProductMainType] = useState([]);
     const [selectedMainType, setSelectedMainType] = useState([]);
@@ -35,6 +39,7 @@ function ProductCategory() {
     })
     const [checkedPrice, setCheckedPrice] = useState([]);
 
+
     // 주종에 대응하는 이름을 매핑하는 객체
     const alcoholTypeNames = {
         1: '맥주',
@@ -45,36 +50,97 @@ function ProductCategory() {
 
     const AllCategoryBtn = () => {
         setViewAllProductList(prev => prev + 1);
+        // 카테고리 선택 상태 초기화
+        setSelectedCategoryNo(null);
+        setSelectedSubCategoryName(null);
+
+        // 데이터 초기화
+        setSelectedCategoryData([]);
+        setSelectedSubCategoryData([]);
+        setProductSubCategory([]);
+        setProductListByFilterOption([]);
     };
 
+    // 필터링 상품조회
+    const submitAllSelections = () => {
+        const selections = {
+            category: [selectedCategoryNo],
+            subCategory: [selectedSubCategoryName],
+            mainType: currentMainType,
+            types: Object.keys(productTypes).filter(key => productTypes[key]),
+            alcoholLevels: Object.keys(alcoholLevels).filter(key => alcoholLevels[key]),
+            prices: Object.keys(prices).filter(key => prices[key]),
+        };
+         axios.post('/api/submitSelections', selections)
+            .then(response => {
+                console.log(selections);
+                console.log('서버 응답:', response.data);
+                setProductListByFilterOption(response.data);
+
+                // 추가적인 처리 작업 진행
+            })
+            .catch(error => {
+                console.error('서버 전송 실패:', error);
+            });
+    };
+
+    // 상위 카테고리 선택 후 그에 해당하는 하위 카테고리 항목 조회
     const CategoryBtn = (categoryNo) => {
-        axios.post('api/selectedCategoryNo', { categoryNo : categoryNo })
-            .then((response)=> {
-                setSelectedCategory(response.data);
-                // 상위 카테고리 선택 후 하위 카테고리 가져오기
-                axios.get('api/subCategory', { params: { categoryNo: categoryNo } })
-                    .then((subResponse)=>{
-                        setProductSubCategory(subResponse.data);
-                    })
-                    .catch((error)=>{
-                        console.error('데이터 가져오기 실패:', error);
-                    })
-            })
-            .catch((error)=>{
-                console.error('데이터 전송 실패:', error);
-            })
+        if (selectedCategoryNo === categoryNo) {
+            setSelectedCategoryNo(null);
+            setSelectedCategoryData([]);
+            setProductSubCategory([]);
+        } else {
+            setSelectedCategoryNo(categoryNo);
+            fetchCategoryData(categoryNo);
+        }
     };
 
-    const SubCategoryBtn = (subCategory) => {
-        axios.post('api/selectedSubCategoryName', {subCategory : subCategory })
+    // 상위 카테고리 데이터를 불러오는 함수
+    const fetchCategoryData = (categoryNo) => {
+        axios.post('api/selectedCategoryNo', { categoryNo })
             .then((response) => {
-                setSelectedSubCategory(response.data);
+                setSelectedCategoryData(response.data);
+                // 하위 카테고리 데이터 가져오기
+                fetchSubCategoryData(categoryNo);
             })
-            .catch((error)=>{
-                console.error('데이터 전송 실패:', error);
-            })
-    }
+            .catch((error) => {
+                console.error('상위 카테고리 데이터 가져오기 실패:', error);
+            });
+    };
 
+    // 하위 카테고리 데이터를 불러오는 함수
+    const fetchSubCategoryData = (categoryNo) => {
+        axios.get('api/subCategory', { params: { categoryNo } })
+            .then((subResponse) => {
+                setProductSubCategory(subResponse.data);
+            })
+            .catch((error) => {
+                console.error('하위 카테고리 데이터 가져오기 실패:', error);
+            });
+    };
+
+
+    // 하위 카테고리 버튼 클릭 시 해당 데이터 조회
+    const SubCategoryBtn = (subCategory) => {
+        if (selectedSubCategoryName === subCategory) {
+            setSelectedSubCategoryName(null); // 선택 해제
+            setSelectedSubCategoryData([]); // 관련 데이터 초기화
+            // 상위 카테고리 데이터를 다시 불러옴
+            fetchCategoryData(selectedCategoryNo);
+        } else {
+            setSelectedSubCategoryName(subCategory);
+            axios.post('api/selectedSubCategoryName', { subCategory: subCategory })
+                .then((response) => {
+                    setSelectedSubCategoryData(response.data);
+                })
+                .catch((error) => {
+                    console.error('데이터 전송 실패:', error);
+                });
+        }
+    };
+
+    // 주종 버튼 클릭 시 해당 데이터 조회
     const MainTypeBtn = (mainType) => {
         let newMainTypes;
         if (currentMainType.includes(mainType)) {
@@ -116,10 +182,12 @@ function ProductCategory() {
     };
 
     const handleAlcoholLevelCheckboxChange = (levelId) => {
-        setAlcoholLevels(prevLevels => ({
-            ...prevLevels,
-            [levelId]: !prevLevels[levelId]
-        }));
+        setAlcoholLevels(prevLevels => {
+            return {
+                ...prevLevels,
+                [levelId]: !prevLevels[levelId]
+            };
+        });
     };
 
     const handlePriceCheckboxChange = (priceId) => {
@@ -129,7 +197,7 @@ function ProductCategory() {
         }));
     };
 
-
+    // type 체크박스 상태 변화시 해당 하는 데이터 조회
     useEffect(() => {
         const checkedTypes = Object.keys(productTypes).filter(key => productTypes[key]);
         findProductListByTypes(checkedTypes);
@@ -141,8 +209,6 @@ function ProductCategory() {
             types: checkedTypes
         })
             .then((productListByType) => {
-                // 상품 목록 상태 업데이트 또는 다른 처리
-                console.log(productListByType);
                 setCheckedType(productListByType.data);
             })
             .catch(error => {
@@ -150,6 +216,7 @@ function ProductCategory() {
             });
     };
 
+    // 도수 체크박스 상태 변화시 해당 하는 데이터 조회
     useEffect(()=>{
         const checkedAlcoholLevels = Object.keys(alcoholLevels).filter(key => alcoholLevels[key]);
         findProductListByAlcoholLevels(checkedAlcoholLevels);
@@ -160,15 +227,14 @@ function ProductCategory() {
             levels: checkedAlcoholLevels
         })
             .then((productListByAlcoholLevel) => {
-                // 상품 목록 상태 업데이트 또는 다른 처리
-                console.log(productListByAlcoholLevel.data);
                 setCheckedAlcoholLevel(productListByAlcoholLevel.data);
             })
             .catch(error => {
                 console.error('상품 조회 실패:', error);
             });
     };
-
+    
+    // 가격 체크박스 상태 변화시 해당 하는 데이터 조회
     useEffect(()=>{
         const checkedPrices = Object.keys(prices).filter(key => prices[key]);
         findProductListByPrices(checkedPrices);
@@ -179,8 +245,6 @@ function ProductCategory() {
             prices: checkedPrices
         })
             .then((productListByPrice) => {
-                // 상품 목록 상태 업데이트 또는 다른 처리
-                console.log(productListByPrice.data);
                 setCheckedPrice(productListByPrice.data);
             })
             .catch(error => {
@@ -188,32 +252,30 @@ function ProductCategory() {
             });
     };
 
-
     // 체크박스 초기화
     const resetCheckBoxs = () => {
-        setProductTypes(prevTypes => {
+        // 주종 관련 상태 초기화
+        setCurrentMainType([]);
+        setSelectedMainType([]);
+
+        // 모든 주종에 대한 타입 체크박스 상태를 초기화
+        setProductTypes(prevProductTypes => {
             const resetTypes = {};
-            for (const type in prevTypes) {
+            Object.keys(prevProductTypes).forEach(type => {
                 resetTypes[type] = false;
-            }
+            });
             return resetTypes;
-        })
-        setAlcoholLevels(prevLevels => {
-            const resetLevels = {};
-            for (const level in prevLevels) {
-                resetLevels[level] = false;
-            }
-            return resetLevels;
         });
-        setPrices(prevPrices => {
-            const resetPrices = {};
-            for (const price in prevPrices) {
-                resetPrices[price] = false;
-            }
-            return resetPrices;
-        });
+
+        // 모든 검증된 데이터 목록 초기화
+        setCheckedType([]);
+        setCheckedMainType([]);
+        setCheckedAlcoholLevel([]);
+        setCheckedPrice([]);
     };
 
+
+    // 카테고리 항목 조회 ( 날씨별, 기분별, 상황별, 이벤트별, 기타 )
     useEffect(() => {
         axios.get('api/category')
             .then((response)=>{
@@ -224,6 +286,7 @@ function ProductCategory() {
             })
     }, []);
 
+    // 주종 항목 조회 ( 1: 맥주, 2: 전통주, 3: 와인, 4: 위스키/기타 )
     useEffect(() => {
         axios.get('/api/showProductMainType')
             .then((response) => {
@@ -242,15 +305,17 @@ function ProductCategory() {
                     <button className="AllCategory" onClick={AllCategoryBtn}>전체</button>
                     {productCategory.map((category) => (
                         <div className="CategoryItem" key={category.categoryNo}>
-                            <button className="CategoryName"
-                                    onClick={() => CategoryBtn(category.categoryNo)}>{category.categoryName}</button>
+                            <button
+                                className={`CategoryName ${selectedCategoryNo === category.categoryNo ? 'selected' : ''}`}
+                                onClick={() => CategoryBtn(category.categoryNo)}>{category.categoryName}</button>
                         </div>
                     ))}
                 </div>
                 <div className="SubCategoryItems">
-                    {selectedCategory && subProductCategory.map((subCategory) => (
+                    {selectedCategoryData && subProductCategory.map((subCategory) => (
                         <div className="SubCategoryItem" key={subCategory}>
-                            <button className="SubCategoryName"
+                            <button
+                                className={`SubCategoryName ${selectedSubCategoryName === subCategory ? 'selected' : ''}`}
                                 onClick={()=> SubCategoryBtn(subCategory)}># {subCategory}</button>
                         </div>
                     ))}
@@ -262,11 +327,16 @@ function ProductCategory() {
                         <button className="SelectedReset" onClick={resetCheckBoxs}>
                             <img className="ResetIcon" src={resetIcon} alt={"초기화"}/>초기화</button>
                     </div>
+                    <div>
+                        <button className="CheckBoxSubmitButton" onClick={submitAllSelections}>필터 검색</button>
+                    </div>
                     <div className="ProductListSidebarSubContainer1">
-                        <h4 className="ProductListSidebarAlcoholType">[주종]</h4>
+                    <h4 className="ProductListSidebarAlcoholType">[주종]</h4>
                         {productMainType.map((mainType) => (
                             <React.Fragment key={mainType}>
-                                <div className="alcoholTypeName" onClick={() => MainTypeBtn(mainType)}>
+                                <div
+                                    className={`alcoholTypeName ${currentMainType.includes(mainType) ? 'selected' : ''}`}
+                                    onClick={() => MainTypeBtn(mainType)}>
                                     {alcoholTypeNames[mainType]}
                                 </div>
                                 <div className="TypeContainer">
@@ -330,23 +400,18 @@ function ProductCategory() {
                             </label>
                         </div>
                     </div>
-                    <div className="ProductListSidebarSubContainer4">
-                        <h4 className="ProductListPopularity">[인기순]</h4>
-                    </div>
-                    <div className="ProductListSidebarSubContainer5">
-                        <h4 className="ProductListNew">[최신순]</h4>
-                    </div>
 
                 </div>
                 <div className="ProductListShow">
-                    <ProductListShow selectedCategory={selectedCategory}
-                                     selectedSubCategory={selectedSubCategory}
+                    <ProductListShow selectedCategoryData={selectedCategoryData}
+                                     selectedSubCategoryData={selectedSubCategoryData}
                                      viewAllProductList={viewAllProductList}
                                      onViewAll={AllCategoryBtn}
                                      checkedMainType={checkedMainType}
                                      checkedType={checkedType}
                                      checkedAlcoholLevel={checkedAlcoholLevel}
-                                     checkedPrice={checkedPrice}/>
+                                     checkedPrice={checkedPrice}
+                                     ProductListByFilterOption={ProductListByFilterOption}/>
                 </div>
             </div>
         </div>

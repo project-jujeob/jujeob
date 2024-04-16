@@ -166,6 +166,28 @@
     font-weight: bold;
 }
 
+.CheckBoxSubmitButton {
+    width: 100%;
+    border: solid 0.5px #FF7E5C;
+    border-radius: 5px;
+    background-color: #FF7E5C;
+    margin-top: 10px;
+    padding: 7px;
+    color: white;
+    font-size: 16px;
+}
+
+.CategoryName.selected, .SubCategoryName.selected {
+    border: solid 0.5px #FF7E5C;
+    background-color: #FF7E5C;
+    color: black;
+}
+
+.alcoholTypeName.selected {
+    font-size: large;
+    color: #FF7E5C;
+}
+
 .ProductList {
     display: flex;
     width: 85%;
