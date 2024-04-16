@@ -1,5 +1,5 @@
 import './App.css';
-import {Route, Routes, BrowserRouter as Router} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import ProductList from "./product/ProductList";
 import Login from "./member/Login";
 import RegisterAdult from "./member/RegisterAdult";
@@ -9,7 +9,7 @@ import MyPage from "./mypage/MyPage";
 import BbsList from "./Board/BulletinBoardSystem/BbsList";
 import BbsWrite from "./Board/BulletinBoardSystem/BbsWrite";
 import MainPage from "./MainPage";
-import Logout from "./member/Logout";
+
 // import {AuthProvider} from "./member/Context";
 import ProductItemDetail from "./product/Detail/ProductItemDetail";
 import React, {useEffect, useState} from "react";
@@ -46,7 +46,6 @@ function App() {
                 <Route path='/BbsList' element={<BbsList />} />
                 <Route path='/BbsWrite' element={<BbsWrite />}/>
                 <Route path='/MyPage' element={<MyPage />} />
-                <Route path='/Logout' element={<Logout />} />
                 <Route path='/Cart' element={<Cart/>} />
             </Routes>
         </div>

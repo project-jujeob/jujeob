@@ -1,6 +1,86 @@
+
+
 .MemberInfo input {
-    padding: 15px;
+    padding: 15px 20px;
     border: 1px solid lightgray;
     border-radius: 5px;
-    width: 40%;
+    width: 100%;
+}
+
+.MemberLabel {
+    width: 160px;
+    padding-top: 14px;
+    padding-left: 30px;
+}
+.MemberInput {
+    width: 300px;
+}
+
+.MemberId {
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+}
+.MemberPw {
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+}
+.MemberPwConfirm {
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+}
+.MemberNickname {
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+}
+.MemberName {
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+}
+.MemberEmail {
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+}
+.MemberPhone {
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+}
+.MemberAddr {
+    display: flex;
+    width: 100%;
+    padding: 10px 20px;
+}
+.SubmitBtn button{
+    cursor: pointer;
+    width: 100px;
+    height: 45px;
+    border: none;
+    border-radius: 5px;
+    background-color: #FF7E5C;
+    margin-right: 20px;
+}
+.BtnGroup {
+    display: flex;
+    margin-top: 20px;
+    padding-top: 20px;
+    padding-left: 180px;
+    border-top: 1px solid rgb(244, 244, 244);
+}
+.MemberPw p {
+    font-size: 12px;
+    color: rgb(240, 63, 64);
+    margin-top: 14px;
+    margin-left: 10px;
+}
+.MemberPwConfirm p {
+    font-size: 12px;
+    color: rgb(240, 63, 64);
+    margin-top: 14px;
+    margin-left: 10px;
 }

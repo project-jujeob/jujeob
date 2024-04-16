@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class JujeobApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(JujeobApplication.class, args);
     }
 

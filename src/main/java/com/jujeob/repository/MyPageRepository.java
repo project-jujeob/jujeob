@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MyPageRepository extends JpaRepository<Member, Long> {
-
+    Member findByMemId(String memId);
 }
