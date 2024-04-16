@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import likeIcon from '../img/icon/likeIcon.png';
 import basketIcon from '../img/icon/basketIcon.png';
 import addToCart from "./Cart/addToCart";
+import LikeProduct from "./Like/LikeProduct";
 
 function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList,
                              ProductListByFilterOption, searchResult}) {
@@ -18,7 +19,6 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
             setProductList(viewAllProductList);
         }
     }, [viewAllProductList]);
-
 
     useEffect(() => {
         if (selectedSubCategoryData) {
@@ -39,7 +39,7 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     }, [ProductListByFilterOption]);
 
     useEffect(() => {
-        if (Array.isArray(searchResult)) {
+        if (searchResult) {
             setProductList(searchResult);
         }
     }, [searchResult]);
@@ -66,6 +66,12 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         addToCart(product);
     };
 
+    const likeBtnClick = (e, product) => {
+        e.preventDefault();
+        const userId = 1;
+        LikeProduct(product, userId);
+    }
+
     return (
         <div className="ProductListShowContainer">
             <div className="ProductListShowHeader">
@@ -81,7 +87,10 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
                                         <div className="ProductImgContainer">
                                             <img className="ProductImg" src={product.img} alt={product.name}/>
                                             <div className="ProductBtns">
-                                                <div className="ProductLikeBtn"><img src={likeIcon}/></div>
+                                                <div className="ProductLikeBtn"
+                                                     onClick={(e)=> likeBtnClick(e, product)}>
+                                                    <img src={likeIcon}/>
+                                                </div>
                                                 <div className="ProductBasketBtn"
                                                      onClick={(e) => handleClick(e, product)}>
                                                     <img src={basketIcon}/>

@@ -177,7 +177,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
             finalBuilder.and(keywordBuilder);
         }
 
-
         // 카테고리 번호 필터
         if (categoryNo != null && !categoryNo.isEmpty()) {
             BooleanBuilder categoryBuilder = new BooleanBuilder();
@@ -202,7 +201,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
             }
         }
 
-
         // 하위 카테고리 이름 필터
         if (subCategoryName != null && !subCategoryName.isEmpty()) {
             BooleanBuilder subCategoryBuilder = new BooleanBuilder();
@@ -213,7 +211,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
             });
             finalBuilder.and(subCategoryBuilder);  // 하위 카테고리 조건을 최종 빌더에 추가
         }
-
 
         // 주종 필터
         if (mainTypes != null && !mainTypes.isEmpty()) {
@@ -228,7 +225,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
             types.forEach(type -> typeBuilder.or(qProduct.type.eq(type)));
             finalBuilder.and(typeBuilder);
         }
-
 
         // 알코올 도수 필터
         if (alcoholLevels != null && !alcoholLevels.isEmpty()) {
