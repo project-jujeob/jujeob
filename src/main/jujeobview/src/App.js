@@ -73,7 +73,7 @@ function App({payload}) {
                 <Route path='/BbsWrite' element={<BbsWrite />}/>
                 <Route path='/MyPage' element={<MyPage />} />
                 <Route path='/Cart' element={<CartPage/>} />
-                <Route path='/ReviewWrite/:productNo' element={<ReviewWrite payload={payload}/>} />
+                <Route path='/ReviewWrite/:productNo' element={<ReviewWrite/>} />
             </Routes>
         </div>
     );

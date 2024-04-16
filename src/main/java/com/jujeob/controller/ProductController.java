@@ -7,6 +7,7 @@ import com.jujeob.service.CategoryService;
 import com.jujeob.service.ProductService;
 import com.jujeob.service.SubCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -83,7 +84,6 @@ public class ProductController {
     @PostMapping("/api/productListByType")
     public List<ProductListDto> showProductListByType(@RequestBody Map<String, List<String>> requestBody) {
         List<String> types = requestBody.get("types");
-        System.out.println(types);
        return productService.getProductListByType(types);
     }
 
@@ -98,9 +98,21 @@ public class ProductController {
     @PostMapping("/api/productListByPrice")
     public List<ProductListDto> showProductListByPrice(@RequestBody Map<String, List<String>> requestBody) {
         List<String> prices = requestBody.get("prices");
-        System.out.println(prices);
         return productService.getProductListByPrice(prices);
     }
 
+    // 필터링 조건에 따라 사용자가 원하는 상품 찾아오기
+    @PostMapping("/api/submitSelections")
+    public ResponseEntity<List<ProductListDto>> showProductListByFiltering(@RequestBody Map<String, List<String>> filters) {
+        List<ProductListDto> products = productService.getProductListByFilterOption(filters);
+        return ResponseEntity.ok(products);
+    }
 
+    // 검색어에 따라 사용자가 원하는 상품 찾아오기
+    @PostMapping("/api/productListBySearch")
+    public List<ProductListDto> showProductListBySearchkeyword(@RequestBody Map<String, String> requestBody) {
+        String searchKeyword = requestBody.get("searchKeyword");
+        System.out.println(searchKeyword);
+        return productService.getProductListBySearchKeyword(searchKeyword);
+    }
 }

@@ -5,9 +5,11 @@ import com.jujeob.entity.Product;
 import com.jujeob.entity.SubCategory;
 import com.jujeob.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
@@ -136,5 +138,30 @@ public class ProductService {
             products.forEach(product -> productListByPriceDtos.add(mapProductToDto(product)));
         }
         return productListByPriceDtos;
+    }
+
+    public List<ProductListDto> getProductListByFilterOption(Map<String, List<String>> filters) {
+
+        List<String> searchKeyword = filters.get("keyword");
+        List<String> categoryNo = filters.get("category");
+        List<String> subCategoryName = filters.get("subCategory");
+        List<String> mainTypes = filters.get("mainType");
+        List<String> types = filters.get("types");
+        List<String> alcoholLevels = filters.get("alcoholLevels");
+        List<String> prices = filters.get("prices");
+
+        List<Product> productsListByFilterOption = productRepository.findProductListByFilterOptions(searchKeyword, categoryNo, subCategoryName, mainTypes, types, alcoholLevels, prices);
+
+        return productsListByFilterOption.stream().map(this::mapProductToDto).collect(Collectors.toList());
+    }
+
+    public List<ProductListDto> getProductListBySearchKeyword(String searchKeyword) {
+        List<Product> products = productRepository.findProductListBySearchKeyword(searchKeyword);
+        List<ProductListDto> productListBySearchKeywordDtos = new ArrayList<>();
+
+        for (Product entity : products) {
+            productListBySearchKeywordDtos.add(mapProductToDto(entity));
+        }
+        return productListBySearchKeywordDtos;
     }
 }
