@@ -1,14 +1,15 @@
-import ReviewWrite from "./ReviewWrite";
 import {Link} from "react-router-dom";
 
-function ReviewPage(){
+function ReviewPage({product}){
     return(
         <div className="reviewContainer">
             <div className="reviewTop">
                 <h2>상품 후기</h2>
             </div>
             <div>
-                <Link to={"/ReviewWrite"}>
+                <Link to={`/ReviewWrite/${product.productNo}`}
+                    state={{ product: product }}
+                >
                     <button>리뷰 작성하기</button>
                 </Link>
             </div>

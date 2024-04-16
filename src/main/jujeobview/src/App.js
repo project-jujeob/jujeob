@@ -12,23 +12,12 @@ import MainPage from "./MainPage";
 import Logout from "./member/Logout";
 // import {AuthProvider} from "./member/Context";
 import ProductItemDetail from "./product/Detail/ProductItemDetail";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import CartPage from "./product/Cart/CartPage";
 import ReviewWrite from "./product/Detail/review/ReviewWrite";
 
 
 function App() {
-/*
-    const [cart, setCart] = useState([]);
-
-    useEffect(() => {
-        const savedCart = localStorage.getItem('cart');
-        if (savedCart) {
-            setCart(JSON.parse(savedCart));
-        }
-    }, []);
-
-*/
 
     return (
         <div>
@@ -45,7 +34,7 @@ function App() {
                 <Route path='/MyPage' element={<MyPage />} />
                 <Route path='/Logout' element={<Logout />} />
                 <Route path='/Cart' element={<CartPage/>} />
-                <Route path='/ReviewWrite' element={<ReviewWrite/>} />
+                <Route path='/ReviewWrite/:productNo' element={<ReviewWrite/>} />
             </Routes>
         </div>
     );

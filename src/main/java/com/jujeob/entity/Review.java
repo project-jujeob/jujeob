@@ -1,4 +1,3 @@
-package com.jujeob.entity;/*
 package com.jujeob.entity;
 
 import jakarta.persistence.*;
@@ -9,66 +8,11 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDate;
-
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-@Data
-@Table(name="Review")
-public class Review {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="Review_No")
-    private int reviewNo;
-
-    @Column(name="Review_Content")
-    private String reviewContent;
-
-    @Column(name="Star")
-    private double star;
-
-    @Column(name="Like")
-    private double like;
-
-    @CreatedDate
-    @Column(name="Review_Date")
-    private LocalDate reviewDate;
-
-    @LastModifiedDate
-    @Column(name="Review_Update_Date")
-    private LocalDate reviewUpdateDate;
-
-    */
-/*
-    @ManyToOne
-    @JoinColumn(name="memNo")
-    private Member member;
-
-    @ManyToOne
-    @JoinColumn(name="productNo")
-    private Product product;
-    *//*
-
-
-    @Column(name="memNo")
-    private Long memNo;
-
-    @Column(name ="productno")
-    private Integer productNo;
-}
-*/
-
-import jakarta.persistence.*;
-import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 import java.time.LocalDateTime;
 
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
 public class Review {

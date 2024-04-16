@@ -76,7 +76,7 @@ function DetailTraditional({product}) {
                 </div>
             </div>
             <div ref={reviewRef}>
-                <ReviewPage/>
+                <ReviewPage product={product}/>
             </div>
         </>
     )

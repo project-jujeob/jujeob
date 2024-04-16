@@ -4,6 +4,7 @@ import addToCart from "../Cart/addToCart";
 import {useRef, useState} from "react";
 import DetailScrollToTarget from "./DetailScrollToTarget";
 import ReviewPage from "./review/ReviewPage";
+import DetailScrollToTop from "./DetailScrollToTop";
 
 
 function DetailTraditional({product}) {
@@ -83,7 +84,10 @@ function DetailTraditional({product}) {
                 </div>
             </div>
             <div ref={reviewRef}>
-                <ReviewPage />
+                <ReviewPage product={product}/>
+            </div>
+            <div>
+                <DetailScrollToTop/>
             </div>
         </>
     )

@@ -4,19 +4,19 @@ function DetailScrollToTarget({ contentTopRef, bottomRef, reviewRef }) {
 
     const scrollToContentTop = () => {
         if (contentTopRef.current) {
-            contentTopRef.current.scrollIntoView({ behavior: 'smooth' });
+            contentTopRef.current.scrollIntoView({ behavior: 'instant' });
         }
     };
 
     const scrollToBottom = () => {
         if (bottomRef.current) {
-            bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+            bottomRef.current.scrollIntoView({ behavior: 'instant' });
         }
     };
 
     const scrollToReview = () => {
         if (reviewRef.current) {
-            reviewRef.current.scrollIntoView({ behavior: 'smooth' });
+            reviewRef.current.scrollIntoView({ behavior: 'instant' });
         }
     };
 
