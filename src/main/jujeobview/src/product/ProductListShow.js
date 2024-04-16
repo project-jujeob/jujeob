@@ -1,6 +1,5 @@
 import './ProductList.css';
 import React, {useState, useEffect, useRef} from "react";
-import axios from "axios";
 import Pagination from '../common/Pagination';
 import {Link} from "react-router-dom";
 import likeIcon from '../img/icon/likeIcon.png';
@@ -12,7 +11,8 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
                              ProductListByFilterOption, searchResult}) {
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-
+    const [memberNo, setMemberNo] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         if (viewAllProductList) {
@@ -44,6 +44,25 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         }
     }, [searchResult]);
 
+    useEffect(() => {
+        checkLoginStatus();
+    }, []); // 컴포넌트가 마운트될 때 한 번만 실행
+
+    // 로그인 상태 확인
+    const checkLoginStatus = () => {
+        const token = JSON.parse(localStorage.getItem('token'));
+        setIsLoggedIn(token != null);
+
+        if (token != null) {
+            const [, payloadBase64] = token.split(".");
+            const payloadString = atob(payloadBase64);
+            const payload = JSON.parse(payloadString);
+            console.log(payload);
+            const userMemberNo = payload.memberNo;
+            setMemberNo(userMemberNo);
+        }
+    };
+
     const itemsPerPage = 9;
     const itemsPerRow = 3;
 
@@ -66,10 +85,13 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         addToCart(product);
     };
 
-    const likeBtnClick = (e, product) => {
+    const likeBtnClick = (e, product, memberNo) => {
         e.preventDefault();
-        const userId = 1;
-        LikeProduct(product, userId);
+        if(isLoggedIn) {
+            LikeProduct(product, memberNo);
+        } else {
+            alert("로그인한 사용자만 가능합니다!");
+        }
     }
 
     return (
@@ -88,7 +110,7 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
                                             <img className="ProductImg" src={product.img} alt={product.name}/>
                                             <div className="ProductBtns">
                                                 <div className="ProductLikeBtn"
-                                                     onClick={(e)=> likeBtnClick(e, product)}>
+                                                     onClick={(e)=> likeBtnClick(e, product, memberNo)}>
                                                     <img src={likeIcon}/>
                                                 </div>
                                                 <div className="ProductBasketBtn"

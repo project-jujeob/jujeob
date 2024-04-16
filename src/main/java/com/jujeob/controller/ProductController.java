@@ -1,8 +1,10 @@
 package com.jujeob.controller;
 
 import com.jujeob.dto.ProductListDto;
+import com.jujeob.entity.LikeProduct;
 import com.jujeob.entity.Product;
 import com.jujeob.entity.SubCategory;
+import com.jujeob.repository.LikeProductRepository;
 import com.jujeob.service.CategoryService;
 import com.jujeob.service.ProductService;
 import com.jujeob.service.SubCategoryService;
@@ -23,6 +25,9 @@ public class ProductController {
 
     @Autowired
     SubCategoryService subCategoryService;
+
+    @Autowired
+    LikeProductRepository likeProductRepository;
 
 
     // 상품 전체 조회
@@ -112,7 +117,23 @@ public class ProductController {
     @PostMapping("/api/productListBySearch")
     public List<ProductListDto> showProductListBySearchkeyword(@RequestBody Map<String, String> requestBody) {
         String searchKeyword = requestBody.get("searchKeyword");
-        System.out.println(searchKeyword);
         return productService.getProductListBySearchKeyword(searchKeyword);
+    }
+
+    // 상품 좋아요 버튼
+    @PostMapping("/api/likeProduct")
+    public ResponseEntity<String> likeProduct(@RequestBody LikeProduct likeProduct) {
+        Optional<LikeProduct> existingLike = likeProductRepository
+                .findByMemberNoAndProductId(likeProduct.getMemberNo(), likeProduct.getProductId());
+        if (existingLike.isPresent()) {
+            LikeProduct currentLike = existingLike.get();
+            currentLike.setLikeStatus(currentLike.getLikeStatus().equals("Y") ? "N" : "Y");
+            likeProductRepository.save(currentLike);
+            return ResponseEntity.ok(currentLike.getLikeStatus().equals("Y") ? "좋아요 성공🙂" : "좋아요 취소😭");
+        } else {
+            likeProduct.setLikeStatus("Y");
+            likeProductRepository.save(likeProduct);
+            return ResponseEntity.ok("좋아요 성공🙂");
+        }
     }
 }

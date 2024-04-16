@@ -33,6 +33,7 @@ function Header() {
                 localStorage.removeItem('token');
                 setAuthPayload(null); // 로그아웃 시 payload를 null로 설정
                 console.log('Logout successful');
+                window.location.reload();
             })
             .catch((error) => {
                 console.error('Error logging out:', error);

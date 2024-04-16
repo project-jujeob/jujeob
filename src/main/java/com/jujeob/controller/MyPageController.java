@@ -3,6 +3,7 @@ package com.jujeob.controller;
 import com.jujeob.dto.ApiResponse;
 import com.jujeob.dto.PasswordVerificationDto;
 import com.jujeob.dto.RegisterDto;
+import com.jujeob.entity.LikeProduct;
 import com.jujeob.entity.Member;
 import com.jujeob.repository.MemberRepository;
 import com.jujeob.service.MemberService;
