@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Header from "../common/Header";
 import './ProductList.css';
 import ProductListRecommend from "./ProductListRecommend";
@@ -10,6 +10,26 @@ function ProductList() {
     const [searchKeyword, setSearchKeyword] = useState('');
     const inputRef = useRef(null);
     const [searchResult, setSearchResult] = useState([]);
+    const [memberNo, setMemberNo] = useState(null);
+    const [likes, setLikes] = useState({});
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        checkLoginStatus();
+    }, []);
+
+    // 로그인 상태 확인
+    const checkLoginStatus = () => {
+        const token = JSON.parse(localStorage.getItem('token'));
+        setIsLoggedIn(token != null);
+        if (token != null) {
+            const [, payloadBase64] = token.split(".");
+            const payloadString = atob(payloadBase64);
+            const payload = JSON.parse(payloadString);
+            const userMemberNo = payload.memberNo;
+            setMemberNo(userMemberNo);
+        }
+    };
 
     const searchChange = (event) => {
         setSearchKeyword(event.target.value);
@@ -23,8 +43,8 @@ function ProductList() {
             setSearchKeyword('');
             return;
         }
-        axios.post('/api/productListBySearch', { searchKeyword:searchKeyword })
-            .then((productListBySearchKeyword)=>{
+        axios.post('/api/productListBySearch', {searchKeyword: searchKeyword})
+            .then((productListBySearchKeyword) => {
                 setSearchResult(productListBySearchKeyword.data);
                 inputRef.current.focus();
                 setSearchKeyword('');
@@ -34,6 +54,30 @@ function ProductList() {
                 console.error('상품 검색 실패:', error);
             });
     }
+
+    useEffect(() => {
+        console.log(memberNo);
+        if (isLoggedIn
+            && memberNo !== null) {
+            userLikes();
+        }
+    }, [isLoggedIn]);
+
+    // 로그인한 사용자의 좋아요한 상품 확인
+    const userLikes = async () => {
+        console.log(memberNo);
+        try {
+            const checkedUserLike = await axios.post(`api/checkedUserLikes?memberNo=${memberNo}`)
+            console.log(checkedUserLike.data);
+            const likedProducts = checkedUserLike.data.reduce((acc, product) => {
+                acc[product.productNo] = true;
+                return acc;
+            }, {});
+            setLikes(likedProducts);
+        } catch (error) {
+            console.error('좋아요 목록 로딩 실패:', error);
+        }
+    };
 
     return (
         <div className="ProductListContainer">
@@ -57,7 +101,10 @@ function ProductList() {
                 <ProductListRecommend/>
             </div>
             <div className="ProductCategory">
-                <ProductCategory searchResult={searchResult} searchKeyword={searchKeyword}/>
+                <ProductCategory searchResult={searchResult} searchKeyword={searchKeyword}
+                                 memberNo={memberNo} likes={likes} isLoggedIn={isLoggedIn}
+                                 setLikes={setLikes} userLikes={userLikes}
+                />
             </div>
         </div>
     );

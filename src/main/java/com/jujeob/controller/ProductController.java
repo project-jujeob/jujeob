@@ -26,9 +26,6 @@ public class ProductController {
     @Autowired
     SubCategoryService subCategoryService;
 
-    @Autowired
-    LikeProductRepository likeProductRepository;
-
 
     // 상품 전체 조회
     @GetMapping("/api/productList")
@@ -118,22 +115,5 @@ public class ProductController {
     public List<ProductListDto> showProductListBySearchkeyword(@RequestBody Map<String, String> requestBody) {
         String searchKeyword = requestBody.get("searchKeyword");
         return productService.getProductListBySearchKeyword(searchKeyword);
-    }
-
-    // 상품 좋아요 버튼
-    @PostMapping("/api/likeProduct")
-    public ResponseEntity<String> likeProduct(@RequestBody LikeProduct likeProduct) {
-        Optional<LikeProduct> existingLike = likeProductRepository
-                .findByMemberNoAndProductId(likeProduct.getMemberNo(), likeProduct.getProductId());
-        if (existingLike.isPresent()) {
-            LikeProduct currentLike = existingLike.get();
-            currentLike.setLikeStatus(currentLike.getLikeStatus().equals("Y") ? "N" : "Y");
-            likeProductRepository.save(currentLike);
-            return ResponseEntity.ok(currentLike.getLikeStatus().equals("Y") ? "좋아요 성공🙂" : "좋아요 취소😭");
-        } else {
-            likeProduct.setLikeStatus("Y");
-            likeProductRepository.save(likeProduct);
-            return ResponseEntity.ok("좋아요 성공🙂");
-        }
     }
 }

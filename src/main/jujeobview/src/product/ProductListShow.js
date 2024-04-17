@@ -3,16 +3,16 @@ import React, {useState, useEffect, useRef} from "react";
 import Pagination from '../common/Pagination';
 import {Link} from "react-router-dom";
 import likeIcon from '../img/icon/likeIcon.png';
+import likeIconChecked from '../img/icon/likeIconChecked.png';
 import basketIcon from '../img/icon/basketIcon.png';
 import addToCart from "./Cart/addToCart";
 import LikeProduct from "./Like/LikeProduct";
 
 function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList,
-                             ProductListByFilterOption, searchResult}) {
+                             ProductListByFilterOption, searchResult, likes, setLikes, memberNo, isLoggedIn}) {
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [memberNo, setMemberNo] = useState(null);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
 
     useEffect(() => {
         if (viewAllProductList) {
@@ -44,24 +44,6 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         }
     }, [searchResult]);
 
-    useEffect(() => {
-        checkLoginStatus();
-    }, []); // 컴포넌트가 마운트될 때 한 번만 실행
-
-    // 로그인 상태 확인
-    const checkLoginStatus = () => {
-        const token = JSON.parse(localStorage.getItem('token'));
-        setIsLoggedIn(token != null);
-
-        if (token != null) {
-            const [, payloadBase64] = token.split(".");
-            const payloadString = atob(payloadBase64);
-            const payload = JSON.parse(payloadString);
-            console.log(payload);
-            const userMemberNo = payload.memberNo;
-            setMemberNo(userMemberNo);
-        }
-    };
 
     const itemsPerPage = 9;
     const itemsPerRow = 3;
@@ -87,12 +69,20 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
 
     const likeBtnClick = (e, product, memberNo) => {
         e.preventDefault();
-        if(isLoggedIn) {
-            LikeProduct(product, memberNo);
-        } else {
+        if (!isLoggedIn) {
             alert("로그인한 사용자만 가능합니다!");
+            return;
         }
-    }
+
+        const isLiked = !likes[product.productNo];
+        // UI를 즉시 업데이트
+        const newLikes = { ...likes, [product.productNo]: isLiked };
+        setLikes(newLikes);
+
+        // 백엔드에 변경 사항 반영
+        LikeProduct(product, memberNo, isLiked);
+    };
+
 
     return (
         <div className="ProductListShowContainer">
@@ -110,8 +100,9 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
                                             <img className="ProductImg" src={product.img} alt={product.name}/>
                                             <div className="ProductBtns">
                                                 <div className="ProductLikeBtn"
-                                                     onClick={(e)=> likeBtnClick(e, product, memberNo)}>
-                                                    <img src={likeIcon}/>
+                                                     onClick={(e) => likeBtnClick(e, product, memberNo)}>
+                                                    <img src={likes[product.productNo] ? likeIconChecked : likeIcon}
+                                                         alt="Like Button"/>
                                                 </div>
                                                 <div className="ProductBasketBtn"
                                                      onClick={(e) => handleClick(e, product)}>

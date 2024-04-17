@@ -1,14 +1,16 @@
 import axios from "axios";
+import {useState} from "react";
 
-const LikeProduct = (product, memberNo) => {
+const LikeProduct = (product, memberNo, isLiked) => {
     const likeData = {
         productId : product.productNo,
-        memberNo : memberNo
+        memberNo : memberNo,
+        likeStatus: isLiked ? 'Y' : 'N'
     }
-    console.log("메머넘버"+memberNo);
     axios.post('api/likeProduct', likeData)
         .then(likeProductList =>{
             alert(likeProductList.data)
+            console.log(likeProductList);
         })
         .catch(error => {
             console.error('좋아요 저장 실패:', error);
