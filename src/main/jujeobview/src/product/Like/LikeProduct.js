@@ -1,5 +1,4 @@
 import axios from "axios";
-import {useState} from "react";
 
 const LikeProduct = (product, memberNo, isLiked) => {
     const likeData = {
@@ -7,7 +6,7 @@ const LikeProduct = (product, memberNo, isLiked) => {
         memberNo : memberNo,
         likeStatus: isLiked ? 'Y' : 'N'
     }
-    axios.post('api/likeProduct', likeData)
+    axios.post('/api/likeProduct', likeData)
         .then(likeProductList =>{
             alert(likeProductList.data)
             console.log(likeProductList);

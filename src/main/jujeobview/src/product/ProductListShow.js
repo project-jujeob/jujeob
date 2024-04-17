@@ -6,16 +6,15 @@ import likeIcon from '../img/icon/likeIcon.png';
 import likeIconChecked from '../img/icon/likeIconChecked.png';
 import basketIcon from '../img/icon/basketIcon.png';
 import addToCart from "./Cart/addToCart";
-import LikeProduct from "./Like/LikeProduct";
 import axios from "axios";
 import {useAuth} from "../member/Context";
+import LikeBtnClick from "./Like/LikeBtnClick";
 
 function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList,
                              ProductListByFilterOption, searchResult}) {
     const { payload } = useAuth();
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [memberNo, setMemberNo] = useState(null);
     const [likes, setLikes] = useState({});
 
     useEffect(() => {
@@ -63,6 +62,9 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
                     return acc;
                 }, {});
                 setLikes(updatedLikes);
+
+                console.log(checkedUserLike.data);
+                console.log(updatedLikes);
             })
             .catch(error => {
                 console.error('좋아요 목록 로딩 실패:', error);
@@ -91,19 +93,8 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         addToCart(product);
     };
 
-    const likeBtnClick = (e, product) => {
-        e.preventDefault();
-        if (!payload) {
-            alert("로그인한 사용자만 가능합니다!");
-            return;
-        }
-        const isLiked = !likes[product.productNo];
-        // UI를 즉시 업데이트
-        const newLikes = { ...likes, [product.productNo]: !likes[product.productNo] };
-        setLikes(newLikes);
-
-        // 백엔드에 변경 사항 반영
-        LikeProduct(product, payload.memberNo, isLiked);
+    const handleLikeClick = (e, product) => {
+        LikeBtnClick(e, product, payload, likes, setLikes);
     };
 
 
@@ -123,7 +114,7 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
                                             <img className="ProductImg" src={product.img} alt={product.name}/>
                                             <div className="ProductBtns">
                                                 <div className="ProductLikeBtn"
-                                                     onClick={(e) => likeBtnClick(e, product)}>
+                                                     onClick={(e) => handleLikeClick(e, product)}>
                                                     <img src={likes[product.productNo] ? likeIconChecked : likeIcon}
                                                          alt="Like Button"/>
                                                 </div>
