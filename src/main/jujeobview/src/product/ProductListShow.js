@@ -58,9 +58,11 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const userLikes = () => {
         axios.post(`api/checkedUserLikes?memberNo=${payload.memberNo}`)
             .then(checkedUserLike => {
-                console.log(checkedUserLike.data);
-                setLikes(checkedUserLike.data);
-                console.log(checkedUserLike.data);
+                const updatedLikes = checkedUserLike.data.reduce((acc, item) => {
+                    acc[item.productId] = item.likeStatus === 'Y';
+                    return acc;
+                }, {});
+                setLikes(updatedLikes);
             })
             .catch(error => {
                 console.error('좋아요 목록 로딩 실패:', error);
@@ -89,7 +91,7 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         addToCart(product);
     };
 
-    const likeBtnClick = (e, product, memberNo) => {
+    const likeBtnClick = (e, product) => {
         e.preventDefault();
         if (!payload) {
             alert("로그인한 사용자만 가능합니다!");
@@ -101,7 +103,7 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         setLikes(newLikes);
 
         // 백엔드에 변경 사항 반영
-        LikeProduct(product, memberNo, isLiked);
+        LikeProduct(product, payload.memberNo, isLiked);
     };
 
 
@@ -121,7 +123,7 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
                                             <img className="ProductImg" src={product.img} alt={product.name}/>
                                             <div className="ProductBtns">
                                                 <div className="ProductLikeBtn"
-                                                     onClick={(e) => likeBtnClick(e, product, memberNo)}>
+                                                     onClick={(e) => likeBtnClick(e, product)}>
                                                     <img src={likes[product.productNo] ? likeIconChecked : likeIcon}
                                                          alt="Like Button"/>
                                                 </div>
