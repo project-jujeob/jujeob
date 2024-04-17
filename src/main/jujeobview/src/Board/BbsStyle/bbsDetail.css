@@ -11,11 +11,21 @@
     align-items: center;
     padding: 80px;
 }
+
+.DetailNavSearchArea{
+    width: auto;
+}
+.DetailNavSearchArea input{
+    margin-right: 62px;
+}
 /**/
 .Board-Detail-Profile{
     width: 80%;
     display: flex;
     flex-direction: row;
+}
+.Profile{
+    margin-right: 10px;
 }
 .Profile-Setting{
     margin-left: auto;
@@ -27,6 +37,7 @@
 }
 
 .TitleAndContent-Title{
+    background-color: rgba(232, 232, 232, 0.35);
     margin-top: 20px;
 }
 
@@ -40,16 +51,6 @@
     height: 200px;
 }
 /**/
-.Board-Detail-DateAndViews{
-    display: flex;
-    flex-direction: row;
-}
-.Board-Detail-DateAndViews div{
-    margin-right: 30px;
-}
-.DateAndViews-Views{
-    margin-left: auto;;
-}
 
 .de{
     width: 1px;
@@ -63,8 +64,38 @@
     align-items: center;
     padding: 20px;
 }
+
+
+.Board-Detail-UpdateAndDelete{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    line-height: 38px;
+}
 .UpdateButton{
+    width: 80px;
+    height: 40px;
+    border-radius: 12px;
     cursor: pointer;
-    border: 1px solid rgba(128, 128, 128, 0.63);
-    border-radius: 8px;
+    border: 1px solid rgba(222, 222, 222, 0.78);
+    background-color: #FF7E5C;
+}
+.UpdateButton:hover{
+    background-color: rgba(255, 78, 34, 0.86);
+}
+.UpdateButton:active{
+    background-color: rgba(255, 163, 141, 0.86);
+}
+.DeleteButton{
+    width: 80px;
+    height: 40px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 1px solid rgba(222, 222, 222, 0.78);
+}
+.DeleteButton:hover{
+    background-color: #e0e0e0;
+}
+.DeleteButton:active{
+    background-color: #b0b0b0;
 }

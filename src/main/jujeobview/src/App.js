@@ -5,7 +5,6 @@ import Login from "./member/Login";
 import Register from "./member/Register";
 import RegisterComplete from "./member/RegisterComplete";
 import BbsList from "./Board/BulletinBoardSystem/BbsList";
-import BbsWrite from "./Board/Modal/BbsWrite";
 import MyPage from "./member/MyPage";
 import MainPage from "./MainPage";
 import Logout from "./member/Logout";
@@ -13,7 +12,6 @@ import Logout from "./member/Logout";
 import ProductItemDetail from "./product/Detail/ProductItemDetail";
 import React, {useEffect, useState} from "react";
 import Cart from "./product/Cart/Cart";
-import BbsDetail from "./Board/Modal/BbsDetail";
 
 
 function App() {
@@ -43,7 +41,6 @@ function App() {
                 <Route path='/Register' element={<Register />} />
                 <Route path='/RegisterComplete' element={<RegisterComplete />} />
                 <Route path='/BbsList' element={<BbsList />} />
-                <Route path='/BbsWrite' element={<BbsWrite />}/>
                 <Route path='/MyPage' element={<MyPage />} />
                 <Route path='/Logout' element={<Logout />} />
                 <Route path='/Cart' element={<Cart/>} />

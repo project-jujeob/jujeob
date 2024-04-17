@@ -3,7 +3,6 @@ import "../../MainPage.css";
 import "../BbsStyle/bbsListItem.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import Pagination from "../../common/Pagination";
 import BbsDetailModal from "../Modal/BbsDetail";
 function BbsListItem() {
@@ -57,7 +56,6 @@ function BbsListItem() {
 
 
     const openModal = (boardId) => {
-        console.log(boardId);
         setSelectedBoardId(boardId);
         setIsModalOpen(true);
     };
@@ -92,8 +90,15 @@ function BbsListItem() {
                         {/*<Link to={`/BbsDetail/${board.boardId}`}>*/}
                             <div className="bbsPostBackground" onClick={() => openModal(board.boardId)}>
                                 <div className="PostDetailTop">
-                                    <p>{board.boardId}</p>
-                                    <p>{board.createDate}</p>
+                                    <p>게시물 조회수 : {board.boardViews}</p>
+                                    <p>{new Date(board.createDate).toLocaleString('ko-KR', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                        second: '2-digit',
+                                    })}</p>
                                     <h3>{board.boardTitle}</h3>
                                 </div>
                                 <div className="PostDetailBottom">
@@ -118,6 +123,7 @@ function BbsListItem() {
             />
             <BbsDetailModal
                 isOpen={isModalOpen}
+                onRequestOpen={openModal}
                 onRequestClose={closeModal}
                 boardId={selectedBoardId}
             />
