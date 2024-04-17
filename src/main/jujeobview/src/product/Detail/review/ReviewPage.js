@@ -63,26 +63,30 @@ function ReviewPage({product}) {
                 </div>
             )}
             <div className="reviewContentList">
-                {reviews.map((review) => {
-                    console.log("리뷰", review); // 여기로 이동됨
-                    return (
-                        <div key={review.reviewNo} className="reviewContent">
-                            <div className="reviewContentLeft">
-                                <div>
-                                    <span>{review.memNickname}</span>
+                {reviews.length === 0 ? (
+                    <div className="emptyReview">리뷰가 없습니다</div>
+                ) : (
+                    reviews.map((review) => {
+                        console.log("리뷰", review); // 여기로 이동됨
+                        return (
+                            <div key={review.reviewNo} className="reviewContent">
+                                <div className="reviewContentLeft">
+                                    <div>
+                                        <span>{review.memNickname}</span>
+                                    </div>
                                 </div>
+                                <article className="reviewContentRight">
+                                    <div>{review.productName }</div>
+                                    <div>{review.reviewContent.split('\n')
+                                        .map((line, index) => (
+                                            <div key={index}>{line}</div>
+                                        ))}</div>
+                                    <div>{new Date(review.reviewDate).toLocaleDateString()}</div>
+                                </article>
                             </div>
-                            <article className="reviewContentRight">
-                                <div>{review.productName }</div>
-                                <div>{review.reviewContent.split('\n')
-                                                                   .map((line, index) => (
-                                    <div key={index}>{line}</div>
-                                ))}</div>
-                                <div>{new Date(review.reviewDate).toLocaleDateString()}</div>
-                            </article>
-                        </div>
-                    );
-                })}
+                        );
+                    })
+                )}
             </div>
         </div>
     )
