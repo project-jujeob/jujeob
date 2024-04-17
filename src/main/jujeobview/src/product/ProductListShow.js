@@ -8,14 +8,15 @@ import basketIcon from '../img/icon/basketIcon.png';
 import addToCart from "./Cart/addToCart";
 import LikeProduct from "./Like/LikeProduct";
 import axios from "axios";
+import {useAuth} from "../member/Context";
 
 function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList,
                              ProductListByFilterOption, searchResult}) {
+    const { payload } = useAuth();
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [memberNo, setMemberNo] = useState(null);
     const [likes, setLikes] = useState({});
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         if (viewAllProductList) {
@@ -48,42 +49,22 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     }, [searchResult]);
 
     useEffect(() => {
-        checkLoginStatus();
-    }, []);
-
-    useEffect(() => {
-        if (memberNo && isLoggedIn) {
+        if (payload && payload.memberNo) {
             userLikes();
         }
-    }, [memberNo, isLoggedIn]);
+    }, [payload]);
 
     // 로그인한 사용자의 좋아요한 상품 확인
     const userLikes = () => {
-        axios.get(`api/checkedUserLikes?memberNo=${memberNo}`)
+        axios.post(`api/checkedUserLikes?memberNo=${payload.memberNo}`)
             .then(checkedUserLike => {
                 console.log(checkedUserLike.data);
-                const likedProducts = checkedUserLike.data.reduce((acc, product) => {
-                    acc[product.productNo] = true;
-                    return acc;
-                }, {});
-                setLikes(likedProducts);
+                setLikes(checkedUserLike.data);
+                console.log(checkedUserLike.data);
             })
             .catch(error => {
                 console.error('좋아요 목록 로딩 실패:', error);
             });
-    };
-
-    // 로그인 상태 확인
-    const checkLoginStatus = () => {
-        const token = JSON.parse(localStorage.getItem('token'));
-        setIsLoggedIn(token != null);
-        if (token != null) {
-            const [, payloadBase64] = token.split(".");
-            const payloadString = atob(payloadBase64);
-            const payload = JSON.parse(payloadString);
-            const userMemberNo = payload.memberNo;
-            setMemberNo(userMemberNo);
-        }
     };
 
     const itemsPerPage = 9;
@@ -110,11 +91,10 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
 
     const likeBtnClick = (e, product, memberNo) => {
         e.preventDefault();
-        if (!isLoggedIn) {
+        if (!payload) {
             alert("로그인한 사용자만 가능합니다!");
             return;
         }
-
         const isLiked = !likes[product.productNo];
         // UI를 즉시 업데이트
         const newLikes = { ...likes, [product.productNo]: !likes[product.productNo] };

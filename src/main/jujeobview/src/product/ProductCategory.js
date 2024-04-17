@@ -4,7 +4,7 @@ import axios from "axios";
 import ProductListShow from "./ProductListShow";
 import resetIcon from '../img/icon/resetIcon.png';
 
-function ProductCategory({searchResult, searchKeyword, likes, setLikes, memberNo, isLoggedIn, userLikes}) {
+function ProductCategory({searchResult, searchKeyword, likes, setLikes, memberNo}) {
     const [viewAllProductList, setViewAllProductList] = useState(0);
     const [viewAllBtn, setViewAllBtn] = useState(false);
     const [productCategory, setProductCategory] = useState([]);
@@ -480,9 +480,7 @@ function ProductCategory({searchResult, searchKeyword, likes, setLikes, memberNo
                                      checkedAlcoholLevel={checkedAlcoholLevel}
                                      checkedPrice={checkedPrice}
                                      ProductListByFilterOption={ProductListByFilterOption}
-                                     searchResult={searchResult}
-                                     likes={likes} setLikes={setLikes}
-                                     memberNo={memberNo} isLoggedIn={isLoggedIn}/>
+                                     searchResult={searchResult}/>
                 </div>
             </div>
         </div>
