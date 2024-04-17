@@ -5,10 +5,10 @@ import {Link} from "react-router-dom";
 import likeIcon from '../img/icon/likeIcon.png';
 import likeIconChecked from '../img/icon/likeIconChecked.png';
 import basketIcon from '../img/icon/basketIcon.png';
-import addToCart from "./Cart/addToCart";
 import LikeProduct from "./Like/LikeProduct";
 import axios from "axios";
 import {useAuth} from "../member/Context";
+import addToCart from "./Cart/addToCart";
 
 function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList,
                              ProductListByFilterOption, searchResult}) {
@@ -17,6 +17,7 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const [currentPage, setCurrentPage] = useState(1);
     const [memberNo, setMemberNo] = useState(null);
     const [likes, setLikes] = useState({});
+    //const addToCart = useAddToCart2();
 
     useEffect(() => {
         if (viewAllProductList) {
@@ -84,9 +85,9 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         rows.push(currentItems.slice(i, i + itemsPerRow));
      }
 
-    const handleClick = (e, product) => {
+    const handleClickAddToCart = (e, product) => {
         e.preventDefault();
-        addToCart(product);
+        addToCart(product,payload.memberNo);
     };
 
     const likeBtnClick = (e, product, memberNo) => {
@@ -126,7 +127,7 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
                                                          alt="Like Button"/>
                                                 </div>
                                                 <div className="ProductBasketBtn"
-                                                     onClick={(e) => handleClick(e, product)}>
+                                                     onClick={(e) => handleClickAddToCart(e, product)}>
                                                     <img src={basketIcon}/>
                                                 </div>
                                             </div>

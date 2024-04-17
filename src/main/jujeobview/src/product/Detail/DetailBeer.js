@@ -4,12 +4,21 @@ import addToCart from "../Cart/addToCart";
 import {useRef} from "react";
 import DetailScrollToTarget from "./DetailScrollToTarget";
 import ReviewPage from "./review/ReviewPage";
+import {useAuth} from "../../member/Context";
 
 
 function DetailBeer({product}) {
+/*
 
+    const { payload } = useAuth();
+    const addToCart = useAddToCart2();
     const handleAddToCart = () => {
-        addToCart(product);
+        addToCart(product, payload.memberNo);
+    };
+*/
+    const { payload } = useAuth();
+    const handleAddToCart = () => {
+        addToCart(product,payload.memberNo);
     };
 
     const contentTopRef = useRef(null);

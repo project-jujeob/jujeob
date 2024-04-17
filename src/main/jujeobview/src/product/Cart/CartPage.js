@@ -2,30 +2,46 @@ import React, { useState, useEffect } from 'react';
 import Header from "../../common/Header";
 import './CartPage.css';
 import CartQuantityCounter from "./CartQuantityCounter";
+import {useAuth} from "../../member/Context";
 
 // 로컬 스토리지에서 상품 정보를 불러옴
-const getCartItems = () => {
+/*const getCartItems = () => {
     const cartItems = localStorage.getItem('cart');
     return cartItems ? JSON.parse(cartItems) : [];
-};
+};*/
 
 function CartPage() {
     const [cartItems, setCartItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [selectedAll, setSelectedAll] = useState(true); // 전체선택
 
-    useEffect(() => {
-        // 페이지가 로드될 때 로컬 스토리지에서 장바구니 정보를 가져옴
-        const items = getCartItems();
-        setCartItems(items);
+    const {payload} = useAuth();
+    const memberNo = payload ? payload.memberNo : null;
 
-        // 전체 선택 상태에 따라 각 항목의 체크 상태를 업데이트하고 총 가격을 계산
-        const updatedCart = items.map(item => {
-            return { ...item, isChecked: selectedAll };
-        });
-        setCartItems(updatedCart);
-        updateTotalPrice(updatedCart); // 전체 선택 상태 변경에 따른 총 가격 업데이트
-    }, [selectedAll]); // selectedAll 상태가 변경될 때만 실행됨
+
+    useEffect(() => {
+        // 페이지가 로드될 때 현재 로그인된 사용자의 memberNo 값을 얻어옴
+        if (memberNo) {
+            // 현재 사용자의 memberNo 값을 기준으로 로컬 스토리지에서 장바구니 정보를 가져옴
+            const cartItemsForCurrentUser = getCartItems(memberNo);
+
+            // 가져온 장바구니 정보를 상태로 설정하여 화면에 표시
+            setCartItems(cartItemsForCurrentUser);
+
+            // 전체 선택 상태에 따라 각 항목의 체크 상태를 업데이트하고 총 가격을 계산
+            const updatedCart = cartItemsForCurrentUser.map(item => {
+                return { ...item, isChecked: selectedAll };
+            });
+            setCartItems(updatedCart);
+            updateTotalPrice(updatedCart); // 전체 선택 상태 변경에 따른 총 가격 업데이트
+        }
+    }, [memberNo, selectedAll]); // memberNo와 selectedAll 상태가 변경될 때만 실행됨
+
+    // 로컬 스토리지에서 특정 사용자의 장바구니 정보를 불러오는 함수
+    const getCartItems = (memberNo) => {
+        const cartItems = localStorage.getItem(memberNo);
+        return cartItems ? JSON.parse(cartItems) : [];
+    };
 
     // 총 가격 업데이트 함수
     const updateTotalPrice = (updatedCart) => {
@@ -54,11 +70,7 @@ function CartPage() {
         const updatedCart = [...cartItems];
         updatedCart[index].isChecked = !updatedCart[index].isChecked;
         setCartItems(updatedCart);
-
-
-
         updateTotalPrice(updatedCart);
-
     };
 
     // 전체 선택 체크박스 상태 변경 핸들러
@@ -77,7 +89,7 @@ function CartPage() {
         const updatedCart = [...cartItems];
         updatedCart.splice(index, 1);
         setCartItems(updatedCart);
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
+        localStorage.setItem(memberNo, JSON.stringify(updatedCart));
 
         // 삭제 후 총 가격 업데이트
         //const totalPrice = updatedCart.reduce((acc, item) => acc + parseInt(item.price.replace(/[^\d]/g, '')), 0);
@@ -100,7 +112,7 @@ function CartPage() {
     const handleDeleteSelected = () => {
         const updatedCart = cartItems.filter(item => !item.isChecked);
         setCartItems(updatedCart);
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
+        localStorage.setItem(memberNo, JSON.stringify(updatedCart));
         //const totalPrice = updatedCart.reduce((acc, item) => acc + parseInt(item.price.replace(/[^\d]/g, '')), 0);
         const totalPrice = updatedCart.reduce((acc, item) => acc + (parseInt(item.price) * item.quantity), 0);
         setTotalPrice(totalPrice);
@@ -112,7 +124,7 @@ function CartPage() {
         const updatedCart = [...cartItems];
         updatedCart[index].quantity = newQuantity;
         setCartItems(updatedCart);
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
+        localStorage.setItem(memberNo, JSON.stringify(updatedCart));
         updateTotalPrice(updatedCart);
     };
 
