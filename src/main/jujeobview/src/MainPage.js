@@ -35,6 +35,8 @@ function MainPage() {
                 setIsLoggedIn(false);
                 console.log('Logout successful');
 
+                window.location.reload();
+
                 // 이전 페이지로 이동
                 navigate(-1)
             })

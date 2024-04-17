@@ -1,8 +1,10 @@
 package com.jujeob.controller;
 
 import com.jujeob.dto.ProductListDto;
+import com.jujeob.entity.LikeProduct;
 import com.jujeob.entity.Product;
 import com.jujeob.entity.SubCategory;
+import com.jujeob.repository.LikeProductRepository;
 import com.jujeob.service.CategoryService;
 import com.jujeob.service.ProductService;
 import com.jujeob.service.SubCategoryService;
@@ -113,7 +115,6 @@ public class ProductController {
     @PostMapping("/api/productListBySearch")
     public List<ProductListDto> showProductListBySearchkeyword(@RequestBody Map<String, String> requestBody) {
         String searchKeyword = requestBody.get("searchKeyword");
-        System.out.println(searchKeyword);
         return productService.getProductListBySearchKeyword(searchKeyword);
     }
 }

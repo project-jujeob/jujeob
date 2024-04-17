@@ -1,14 +1,15 @@
 import './ProductList.css';
 import React, {useState, useEffect, useRef} from "react";
-import axios from "axios";
 import Pagination from '../common/Pagination';
 import {Link} from "react-router-dom";
 import likeIcon from '../img/icon/likeIcon.png';
+import likeIconChecked from '../img/icon/likeIconChecked.png';
 import basketIcon from '../img/icon/basketIcon.png';
 import addToCart from "./Cart/addToCart";
+import LikeProduct from "./Like/LikeProduct";
 
 function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList,
-                             ProductListByFilterOption, searchResult}) {
+                             ProductListByFilterOption, searchResult, likes, setLikes, memberNo, isLoggedIn}) {
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -18,7 +19,6 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
             setProductList(viewAllProductList);
         }
     }, [viewAllProductList]);
-
 
     useEffect(() => {
         if (selectedSubCategoryData) {
@@ -39,10 +39,11 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     }, [ProductListByFilterOption]);
 
     useEffect(() => {
-        if (Array.isArray(searchResult)) {
+        if (searchResult) {
             setProductList(searchResult);
         }
     }, [searchResult]);
+
 
     const itemsPerPage = 9;
     const itemsPerRow = 3;
@@ -66,6 +67,23 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         addToCart(product);
     };
 
+    const likeBtnClick = (e, product, memberNo) => {
+        e.preventDefault();
+        if (!isLoggedIn) {
+            alert("로그인한 사용자만 가능합니다!");
+            return;
+        }
+
+        const isLiked = !likes[product.productNo];
+        // UI를 즉시 업데이트
+        const newLikes = { ...likes, [product.productNo]: isLiked };
+        setLikes(newLikes);
+
+        // 백엔드에 변경 사항 반영
+        LikeProduct(product, memberNo, isLiked);
+    };
+
+
     return (
         <div className="ProductListShowContainer">
             <div className="ProductListShowHeader">
@@ -81,7 +99,11 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
                                         <div className="ProductImgContainer">
                                             <img className="ProductImg" src={product.img} alt={product.name}/>
                                             <div className="ProductBtns">
-                                                <div className="ProductLikeBtn"><img src={likeIcon}/></div>
+                                                <div className="ProductLikeBtn"
+                                                     onClick={(e) => likeBtnClick(e, product, memberNo)}>
+                                                    <img src={likes[product.productNo] ? likeIconChecked : likeIcon}
+                                                         alt="Like Button"/>
+                                                </div>
                                                 <div className="ProductBasketBtn"
                                                      onClick={(e) => handleClick(e, product)}>
                                                     <img src={basketIcon}/>

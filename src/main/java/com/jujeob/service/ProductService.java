@@ -1,11 +1,11 @@
 package com.jujeob.service;
 
 import com.jujeob.dto.ProductListDto;
+import com.jujeob.entity.LikeProduct;
 import com.jujeob.entity.Product;
-import com.jujeob.entity.SubCategory;
+import com.jujeob.repository.LikeProductRepository;
 import com.jujeob.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 public class ProductService {
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    LikeProductRepository likeProductRepository;
 
     // 기본 생성자
     public ProductService() {
@@ -163,5 +166,9 @@ public class ProductService {
             productListBySearchKeywordDtos.add(mapProductToDto(entity));
         }
         return productListBySearchKeywordDtos;
+    }
+
+    public LikeProduct saveLikeProduct(LikeProduct likeProduct) {
+        return likeProductRepository.save(likeProduct);
     }
 }
