@@ -7,12 +7,15 @@ import likeIconChecked from '../img/icon/likeIconChecked.png';
 import basketIcon from '../img/icon/basketIcon.png';
 import addToCart from "./Cart/addToCart";
 import LikeProduct from "./Like/LikeProduct";
+import axios from "axios";
 
 function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList,
-                             ProductListByFilterOption, searchResult, likes, setLikes, memberNo, isLoggedIn}) {
+                             ProductListByFilterOption, searchResult}) {
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-
+    const [memberNo, setMemberNo] = useState(null);
+    const [likes, setLikes] = useState({});
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
         if (viewAllProductList) {
@@ -44,6 +47,44 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         }
     }, [searchResult]);
 
+    useEffect(() => {
+        checkLoginStatus();
+    }, []);
+
+    useEffect(() => {
+        if (memberNo && isLoggedIn) {
+            userLikes();
+        }
+    }, [memberNo, isLoggedIn]);
+
+    // 로그인한 사용자의 좋아요한 상품 확인
+    const userLikes = () => {
+        axios.get(`api/checkedUserLikes?memberNo=${memberNo}`)
+            .then(checkedUserLike => {
+                console.log(checkedUserLike.data);
+                const likedProducts = checkedUserLike.data.reduce((acc, product) => {
+                    acc[product.productNo] = true;
+                    return acc;
+                }, {});
+                setLikes(likedProducts);
+            })
+            .catch(error => {
+                console.error('좋아요 목록 로딩 실패:', error);
+            });
+    };
+
+    // 로그인 상태 확인
+    const checkLoginStatus = () => {
+        const token = JSON.parse(localStorage.getItem('token'));
+        setIsLoggedIn(token != null);
+        if (token != null) {
+            const [, payloadBase64] = token.split(".");
+            const payloadString = atob(payloadBase64);
+            const payload = JSON.parse(payloadString);
+            const userMemberNo = payload.memberNo;
+            setMemberNo(userMemberNo);
+        }
+    };
 
     const itemsPerPage = 9;
     const itemsPerRow = 3;
@@ -76,7 +117,7 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
 
         const isLiked = !likes[product.productNo];
         // UI를 즉시 업데이트
-        const newLikes = { ...likes, [product.productNo]: isLiked };
+        const newLikes = { ...likes, [product.productNo]: !likes[product.productNo] };
         setLikes(newLikes);
 
         // 백엔드에 변경 사항 반영
