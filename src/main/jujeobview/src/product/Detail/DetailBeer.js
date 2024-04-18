@@ -4,7 +4,6 @@ import addToCart from "../Cart/addToCart";
 import React, {useEffect, useRef, useState} from "react";
 import DetailScrollToTarget from "./DetailScrollToTarget";
 import ReviewPage from "./review/ReviewPage";
-<<<<<<< HEAD
 import likeIconChecked from "../../img/icon/likeIconChecked.png";
 import likeIcon from "../../img/icon/likeIcon.png";
 import LikeBtnClick from "../Like/LikeBtnClick";
@@ -15,21 +14,7 @@ import axios from "axios";
 function DetailBeer({product}) {
     const { payload } = useAuth();
     const [likes, setLikes] = useState({});
-=======
-import {useAuth} from "../../member/Context";
-
-
-function DetailBeer({product}) {
-/*
->>>>>>> 6e0c3aa42ddbe39f83ddb66ff4ec5677488368da
-
-    const { payload } = useAuth();
-    const addToCart = useAddToCart2();
-    const handleAddToCart = () => {
-        addToCart(product, payload.memberNo);
-    };
-*/
-    const { payload } = useAuth();
+    
     const handleAddToCart = () => {
         addToCart(product,payload.memberNo);
     };
