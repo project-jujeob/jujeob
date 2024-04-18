@@ -64,8 +64,7 @@
     text-align: right;
     font-size: 15px;
     font-weight: bolder;
-    margin-top: 30px;
-    margin-right: 40px;
+    margin-left: 30px;
 }
 
 .ProductRow{
@@ -137,6 +136,7 @@
     width: 270px;
     display: block;
 }
+
 .ProductItems .link img {
     width: 100%;
     height: inherit;
@@ -152,9 +152,17 @@
 
 .ProductListShowHeader {
     display: flex;
-    flex-direction: column;
     align-content: flex-end;
-    align-items: flex-end;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.ProductListOrderBy {
+    display: flex;
+}
+.ProductListOrderBy div {
+    margin-right: 30px;
 }
 
 /*----------productRecommendList.js----------*/
@@ -170,8 +178,15 @@
 .ProductListRecommendItems {
     display: flex;
     justify-content: space-evenly;
-    padding: 20px;
+    padding: 20px 80px;
     text-align: center;
+}
+
+.ProductListRecommendItems .link{
+    text-decoration: none;
+    color:#000;
+    width: 270px;
+    display: block;
 }
 
 .ProductRecommendImg img {
@@ -183,7 +198,6 @@
 }
 
 .ProductRecommendName {
-    width: 200px;
     font-size: 15px;
     font-weight: bold;
     word-break: keep-all;

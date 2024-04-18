@@ -1,29 +1,28 @@
 package com.jujeob.repository;
 
-import com.jujeob.entity.Product;
-import com.jujeob.entity.QProduct;
-import com.jujeob.entity.QSubCategory;
-import com.jujeob.entity.SubCategory;
+import com.jujeob.entity.*;
 import com.jujeob.service.SubCategoryService;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
+import com.querydsl.core.types.dsl.NumberPath;
+import com.querydsl.jpa.JPAExpressions;
+import com.querydsl.jpa.JPQLQuery;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Log4j2
 @Repository
 @RequiredArgsConstructor
-public class ProductRepositoryImpl implements ProductRepositoryCustom{
+public class ProductRepositoryImpl implements ProductRepositoryCustom {
     private final JPAQueryFactory factory;
 
     @Autowired
@@ -47,7 +46,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
 
         List<Product> products = new ArrayList<>();
 
-        for (String  subCategory : subCategories) {
+        for (String subCategory : subCategories) {
             List<Product> productList = factory.select(qProduct)
                     .from(qProduct)
                     .where(qProduct.keyword.like("%" + subCategory + "%"))
@@ -84,7 +83,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
     @Override
     public List<Product> findProductListByMainType(String productId) {
         QProduct qProduct = QProduct.product;
-        List<Product> products =  factory.select(qProduct)
+        List<Product> products = factory.select(qProduct)
                 .from(qProduct)
                 .where(qProduct.productId.eq(productId))
                 .fetch();
@@ -95,7 +94,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
     @Override
     public List<Product> findProductListByType(String type) {
         QProduct qProduct = QProduct.product;
-        List<Product> products= factory.select(qProduct)
+        List<Product> products = factory.select(qProduct)
                 .from(qProduct)
                 .where(qProduct.type.eq(type))
                 .fetch();
@@ -260,4 +259,39 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
 
         return new ArrayList<>(new HashSet<>(productList));
     }
+
+    @Override
+    public List<Product> findProductListByOrderByOrderType(String orderType) {
+        QProduct qProduct = QProduct.product;
+        QLikeProduct qLikeProduct = QLikeProduct.likeProduct;
+        QReview qReview = QReview.review;
+
+        JPAQuery<Product> query = factory.selectFrom(qProduct);
+
+        if ("orderLike".equals(orderType)) {
+            query.from(qProduct)
+                    .leftJoin(qLikeProduct)
+                    .on(qProduct.productNo.eq(qLikeProduct.productId)
+                            .and(qLikeProduct.likeStatus.eq("Y")))
+                    .groupBy(qProduct.productNo)
+                    .orderBy(qLikeProduct.count().desc().nullsLast())
+                    .fetch();
+    } else if ("orderReview".equals(orderType)) {
+            query.from(qProduct)
+                    .leftJoin(qReview)
+                    .on(qProduct.productNo.eq(qReview.product.productNo))
+                    .groupBy(qProduct.productNo)
+                    .orderBy(qReview.count().desc().nullsLast())
+                    .fetch();
+        } else if ("orderLowPrice".equals(orderType)) {
+            query.orderBy(qProduct.price.asc(), qProduct.name.asc());
+        } else if ("orderHighPrice".equals(orderType)) {
+            query.orderBy(qProduct.price.desc(), qProduct.name.asc());
+        }
+
+        return query.fetch();
+    }
 }
+
+
+

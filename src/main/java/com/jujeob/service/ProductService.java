@@ -168,7 +168,13 @@ public class ProductService {
         return productListBySearchKeywordDtos;
     }
 
-    public LikeProduct saveLikeProduct(LikeProduct likeProduct) {
-        return likeProductRepository.save(likeProduct);
+    public List<ProductListDto> getProductListByOrderByOrderType(String orderType) {
+        List<Product> products = productRepository.findProductListByOrderByOrderType(orderType);
+        List<ProductListDto> productListByOrderByDtos = new ArrayList<>();
+
+        for (Product entity : products) {
+            productListByOrderByDtos.add(mapProductToDto(entity));
+        }
+        return productListByOrderByDtos;
     }
 }

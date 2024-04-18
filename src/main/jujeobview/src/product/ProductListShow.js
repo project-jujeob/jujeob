@@ -1,14 +1,12 @@
 import './ProductList.css';
 import React, {useState, useEffect, useRef} from "react";
 import Pagination from '../common/Pagination';
-import {Link} from "react-router-dom";
-import likeIcon from '../img/icon/likeIcon.png';
-import likeIconChecked from '../img/icon/likeIconChecked.png';
-import basketIcon from '../img/icon/basketIcon.png';
+
 import addToCart from "./Cart/addToCart";
 import axios from "axios";
 import {useAuth} from "../member/Context";
 import LikeBtnClick from "./Like/LikeBtnClick";
+import ProductItem from "./ProductItem";
 
 function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList,
                              ProductListByFilterOption, searchResult}) {
@@ -20,30 +18,35 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     useEffect(() => {
         if (viewAllProductList) {
             setProductList(viewAllProductList);
+            setCurrentPage(1);
         }
     }, [viewAllProductList]);
 
     useEffect(() => {
         if (selectedSubCategoryData) {
             setProductList(selectedSubCategoryData);
+            setCurrentPage(1);
         }
     }, [selectedSubCategoryData]);
 
     useEffect(() => {
         if (selectedCategoryData) {
             setProductList(selectedCategoryData);
+            setCurrentPage(1);
         }
     }, [selectedCategoryData]);
 
     useEffect(() => {
         if (ProductListByFilterOption) {
             setProductList(ProductListByFilterOption);
+            setCurrentPage(1);
         }
     }, [ProductListByFilterOption]);
 
     useEffect(() => {
         if (searchResult) {
             setProductList(searchResult);
+            setCurrentPage(1);
         }
     }, [searchResult]);
 
@@ -62,14 +65,12 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
                     return acc;
                 }, {});
                 setLikes(updatedLikes);
-
-                console.log(checkedUserLike.data);
-                console.log(updatedLikes);
             })
             .catch(error => {
                 console.error('좋아요 목록 로딩 실패:', error);
             });
     };
+
 
     const itemsPerPage = 9;
     const itemsPerRow = 3;
@@ -88,49 +89,48 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         rows.push(currentItems.slice(i, i + itemsPerRow));
      }
 
-    const handleClick = (e, product) => {
-        e.preventDefault();
-        addToCart(product);
-    };
 
-    const handleLikeClick = (e, product) => {
-        LikeBtnClick(e, product, payload, likes, setLikes);
-    };
-
+    const OrderByBtn = (orderByBtnType) => {
+        console.log(orderByBtnType);
+        axios.post('api/productListByOrderBy', {orderByBtnType : orderByBtnType})
+            .then((productListByOrderBy) => {
+                setProductList(productListByOrderBy.data);
+            }).catch(error => {
+            console.error('정렬버튼별 상품 조회 실패:', error);
+        });
+    }
 
     return (
         <div className="ProductListShowContainer">
             <div className="ProductListShowHeader">
-                <div className="ProductListCount">상품 수 : {productList.length} 개</div>
+                <div className="ProductListCount">총 : {productList.length} 건</div>
+                <div className="ProductListOrderBy">
+                    <div className="ProductListOrderByLike" id="orderLike"
+                         onClick={() => OrderByBtn('orderLike')}>좋아요순
+                    </div>
+                    <div className="ProductListOrderByReview" id="orderReview"
+                         onClick={() => OrderByBtn('orderReview')}>리뷰많은순
+                    </div>
+                    <div className="productListOrderByLowPrice" id="orderLowPrice"
+                         onClick={() => OrderByBtn('orderLowPrice')}>가격낮은순
+                    </div>
+                    <div className="ProductListOrderByHighPrice" id="orderHighPrice"
+                         onClick={() => OrderByBtn('orderHighPrice')}>높은가격순
+                    </div>
+                </div>
             </div>
             <div className="ProductItems">
                 {productList.length > 0 ? (
                     rows.map((row, index) => (
                         <div key={index} className="ProductRow">
-                            {row.map((product) => (
-                                <div key={product.productNo} className="ProductItem">
-                                    <Link to={`/ProductItemDetail/${product.productNo}`} className="link">
-                                        <div className="ProductImgContainer">
-                                            <img className="ProductImg" src={product.img} alt={product.name}/>
-                                            <div className="ProductBtns">
-                                                <div className="ProductLikeBtn"
-                                                     onClick={(e) => handleLikeClick(e, product)}>
-                                                    <img src={likes[product.productNo] ? likeIconChecked : likeIcon}
-                                                         alt="Like Button"/>
-                                                </div>
-                                                <div className="ProductBasketBtn"
-                                                     onClick={(e) => handleClick(e, product)}>
-                                                    <img src={basketIcon}/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="ProductName">{product.name}</div>
-                                        <div
-                                            className="ProductDescription">{product.description.length > 18 ? `${product.description.substring(0, 18)}...` : product.description}</div>
-                                        <div className="ProductAlcohol">{product.alcohol}%</div>
-                                        <div className="ProductPrice">{product.price.toLocaleString()}원</div>
-                                    </Link>
-                                </div>
+                            {row.map(product => (
+                                <ProductItem
+                                    key={product.productNo}
+                                    product={product}
+                                    payload={payload}
+                                    likes={likes}
+                                    setLikes={setLikes}
+                                />
                             ))}
                         </div>
                     ))

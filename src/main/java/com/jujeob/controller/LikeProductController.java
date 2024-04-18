@@ -38,4 +38,9 @@ public class LikeProductController {
         return likeProductRepository.findAllByMemberNo(memberNo);
     }
 
+    @GetMapping("/api/getLikeCount")
+    public long getLikeCount(@RequestParam int productNo) {
+        return likeProductRepository.getLikeCount(productNo);
+    }
+
 }

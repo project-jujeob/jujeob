@@ -1,6 +1,7 @@
 import './ProductList.css';
 import React, {useEffect, useState} from "react";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 function ProductListRecommend() {
     const [productRecommendList, setProductRecommendList] = useState([]);
@@ -20,11 +21,12 @@ function ProductListRecommend() {
             <h2>오늘의 추천 주류</h2>
             <div className="ProductListRecommendItems">
                 {productRecommendList.map((recommendList)=> (
-                    <div className="ProductRecommendItem" key={recommendList.productNo}>
-                        <div className="ProductRecommendImg"><img src={recommendList.img}/></div>
-                        <div className="ProductRecommendName">{recommendList.name}</div>
-                    </div>
-
+                    <Link to={`/ProductItemDetail/${recommendList.productNo}`} className="link" key={recommendList.productNo}>
+                        <div className="ProductRecommendItem" >
+                            <div className="ProductRecommendImg"><img src={recommendList.img}/></div>
+                            <div className="ProductRecommendName">{recommendList.name}</div>
+                        </div>
+                    </Link>
                 ))}
             </div>
 
