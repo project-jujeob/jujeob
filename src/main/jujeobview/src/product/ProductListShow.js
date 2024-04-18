@@ -1,12 +1,15 @@
 import './ProductList.css';
 import React, {useState, useEffect, useRef} from "react";
 import Pagination from '../common/Pagination';
-
-import addToCart from "./Cart/addToCart";
+import ProductItem from "./ProductItem";
+import {Link} from "react-router-dom";
+import likeIcon from '../img/icon/likeIcon.png';
+import likeIconChecked from '../img/icon/likeIconChecked.png';
+import basketIcon from '../img/icon/basketIcon.png';
+import LikeProduct from "./Like/LikeProduct";
 import axios from "axios";
 import {useAuth} from "../member/Context";
-import LikeBtnClick from "./Like/LikeBtnClick";
-import ProductItem from "./ProductItem";
+import addToCart from "./Cart/addToCart";
 
 function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList,
                              ProductListByFilterOption, searchResult}) {
@@ -14,6 +17,7 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [likes, setLikes] = useState({});
+    //const addToCart = useAddToCart2();
 
     useEffect(() => {
         if (viewAllProductList) {
@@ -89,6 +93,26 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         rows.push(currentItems.slice(i, i + itemsPerRow));
      }
 
+
+    const handleClickAddToCart = (e, product) => {
+        e.preventDefault();
+        addToCart(product,payload.memberNo);
+    };
+
+    const likeBtnClick = (e, product, memberNo) => {
+        e.preventDefault();
+        if (!payload) {
+            alert("로그인한 사용자만 가능합니다!");
+            return;
+        }
+        const isLiked = !likes[product.productNo];
+        // UI를 즉시 업데이트
+        const newLikes = { ...likes, [product.productNo]: !likes[product.productNo] };
+        setLikes(newLikes);
+
+        // 백엔드에 변경 사항 반영
+        LikeProduct(product, memberNo, isLiked);
+    };
 
     const OrderByBtn = (orderByBtnType) => {
         console.log(orderByBtnType);

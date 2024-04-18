@@ -1,15 +1,18 @@
-import {useParams} from "react-router-dom";
+import Header from "../../../common/Header";
+import {useLocation, useParams} from "react-router-dom";
 import ReviewStarRating from "./ReviewStarRating";
 import {useState} from "react";
 import {useAuth} from "../../../member/Context";
-import axios from "axios";
 
-function ReviewWrite({ product, closeModal, onReviewSubmitted }){
+function ReviewWrite({ product, closeModal }){
 
     const { payload } = useAuth();
     const { productNo } = useParams(); // 상품 번호 추출
+    //const location = useLocation();
+    //const product = location.state.product;
     const [reviewContent, setReviewContent] = useState("");
     const [rating, setRating] = useState(null); // 선택된 별점을 저장하는 state
+
 
     //이렇게 가져오면 Object로 넘어옴
     //console.log("프로덕트"+product);
@@ -29,30 +32,39 @@ function ReviewWrite({ product, closeModal, onReviewSubmitted }){
         setRating(selectedRating); // 선택된 별점을 state에 저장
     };
 
+
     const handleReviewSubmit = async () => {
+        console.log("선택된 별점:", rating);
         try {
-            const response = await axios.post('/api/ReviewWrite/createReview', {
-                reviewContent: reviewContent,
-                star: rating,
-                member: { memNo: payload.memberNo },
-                product: { productNo: productNo }
+            const response = await fetch('/api/ReviewWrite/createReview', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    reviewContent: reviewContent,
+                    star: rating,
+                    member: { memNo: payload.memberNo}, // todo : 로그인유저정보 가져와야함
+                    product: { productNo: productNo } // 수정된 필드명
+                })
             });
-            if (response.status === 200 || response.status === 201) {
-                alert("리뷰가 작성되었습니다");
-                closeModal();
-                // 새로운 리뷰가 등록된 후 ReviewPage로 콜백 함수 호출
-                onReviewSubmitted();
+            if (response.ok) {
+                // 서버에 리뷰 등록 성공 시 페이지 이동
+                window.location.href = '/reviews'; // 예시: 리뷰 목록 페이지로 이동
             } else {
+                // 서버에서 오류 응답을 받은 경우
                 console.error('리뷰 등록 실패');
             }
         } catch (error) {
+            // 네트워크 오류 등으로 요청을 보낼 수 없는 경우
             console.error('요청 보내기 실패:', error);
         }
-    };
+    }
 
     return(
         /*리뷰작성컴포넌트 마이페이지로 옮길지 생각해봐야*/
         <>
+            <Header/>
             <div className="reviewWriteContainer">
                 <h2>후기 쓰기</h2>
                 <div className="reviewProduct">
@@ -78,10 +90,10 @@ function ReviewWrite({ product, closeModal, onReviewSubmitted }){
                         />
                     </div>
                     <div className="characterCount">
-                        <span>{reviewContent.length}/300</span>
+                        {reviewContent.length}/300
                     </div>
                     <div className="reviewPrepareOrNot">
-                        <div onClick={closeModal}>취소</div>
+                        <div>취소</div>
                         <div onClick={handleReviewSubmit}>등록</div>
                     </div>
                 </div>

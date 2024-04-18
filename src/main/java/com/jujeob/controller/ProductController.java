@@ -62,6 +62,7 @@ public class ProductController {
     public Optional<Product> getProductDetails(@PathVariable Integer productNo) {
         return productService.getProductByProductNo(productNo);
     }
+
     // 주종 화면에 띄우기
     @GetMapping("/api/showProductMainType")
     public List<String> getProductId() {
