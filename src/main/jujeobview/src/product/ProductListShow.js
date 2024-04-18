@@ -5,10 +5,10 @@ import {Link} from "react-router-dom";
 import likeIcon from '../img/icon/likeIcon.png';
 import likeIconChecked from '../img/icon/likeIconChecked.png';
 import basketIcon from '../img/icon/basketIcon.png';
-import addToCart from "./Cart/addToCart";
 import LikeProduct from "./Like/LikeProduct";
 import axios from "axios";
 import {useAuth} from "../member/Context";
+import addToCart from "./Cart/addToCart";
 
 function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList,
                              ProductListByFilterOption, searchResult}) {
@@ -17,6 +17,7 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const [currentPage, setCurrentPage] = useState(1);
     const [memberNo, setMemberNo] = useState(null);
     const [likes, setLikes] = useState({});
+    //const addToCart = useAddToCart2();
 
     useEffect(() => {
         if (viewAllProductList) {
@@ -58,11 +59,9 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const userLikes = () => {
         axios.post(`api/checkedUserLikes?memberNo=${payload.memberNo}`)
             .then(checkedUserLike => {
-                const updatedLikes = checkedUserLike.data.reduce((acc, item) => {
-                    acc[item.productId] = item.likeStatus === 'Y';
-                    return acc;
-                }, {});
-                setLikes(updatedLikes);
+                console.log(checkedUserLike.data);
+                setLikes(checkedUserLike.data);
+                console.log(checkedUserLike.data);
             })
             .catch(error => {
                 console.error('좋아요 목록 로딩 실패:', error);
@@ -84,14 +83,14 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const rows = [];
     for (let i = 0; i < currentItems.length; i += itemsPerRow) {
         rows.push(currentItems.slice(i, i + itemsPerRow));
-     }
+    }
 
-    const handleClick = (e, product) => {
+    const handleClickAddToCart = (e, product) => {
         e.preventDefault();
-        addToCart(product);
+        addToCart(product,payload.memberNo);
     };
 
-    const likeBtnClick = (e, product) => {
+    const likeBtnClick = (e, product, memberNo) => {
         e.preventDefault();
         if (!payload) {
             alert("로그인한 사용자만 가능합니다!");
@@ -103,7 +102,7 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         setLikes(newLikes);
 
         // 백엔드에 변경 사항 반영
-        LikeProduct(product, payload.memberNo, isLiked);
+        LikeProduct(product, memberNo, isLiked);
     };
 
 
@@ -123,12 +122,12 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
                                             <img className="ProductImg" src={product.img} alt={product.name}/>
                                             <div className="ProductBtns">
                                                 <div className="ProductLikeBtn"
-                                                     onClick={(e) => likeBtnClick(e, product)}>
+                                                     onClick={(e) => likeBtnClick(e, product, memberNo)}>
                                                     <img src={likes[product.productNo] ? likeIconChecked : likeIcon}
                                                          alt="Like Button"/>
                                                 </div>
                                                 <div className="ProductBasketBtn"
-                                                     onClick={(e) => handleClick(e, product)}>
+                                                     onClick={(e) => handleClickAddToCart(e, product)}>
                                                     <img src={basketIcon}/>
                                                 </div>
                                             </div>

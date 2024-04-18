@@ -2,47 +2,30 @@ import React, { useState, useEffect } from 'react';
 import Header from "../../common/Header";
 import './CartPage.css';
 import CartQuantityCounter from "./CartQuantityCounter";
-import {useAuth} from "../../member/Context";
-import axios from "axios";
 
 // 로컬 스토리지에서 상품 정보를 불러옴
-/*const getCartItems = () => {
+const getCartItems = () => {
     const cartItems = localStorage.getItem('cart');
     return cartItems ? JSON.parse(cartItems) : [];
-};*/
+};
 
 function CartPage() {
     const [cartItems, setCartItems] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [selectedAll, setSelectedAll] = useState(true); // 전체선택
 
-    const {payload} = useAuth();
-    const memberNo = payload ? payload.memberNo : null;
-
-
     useEffect(() => {
-        // 페이지가 로드될 때 현재 로그인된 사용자의 memberNo 값을 얻어옴
-        if (memberNo) {
-            // 현재 사용자의 memberNo 값을 기준으로 로컬 스토리지에서 장바구니 정보를 가져옴
-            const cartItemsForCurrentUser = getCartItems(memberNo);
+        // 페이지가 로드될 때 로컬 스토리지에서 장바구니 정보를 가져옴
+        const items = getCartItems();
+        setCartItems(items);
 
-            // 가져온 장바구니 정보를 상태로 설정하여 화면에 표시
-            setCartItems(cartItemsForCurrentUser);
-
-            // 전체 선택 상태에 따라 각 항목의 체크 상태를 업데이트하고 총 가격을 계산
-            const updatedCart = cartItemsForCurrentUser.map(item => {
-                return { ...item, isChecked: selectedAll };
-            });
-            setCartItems(updatedCart);
-            updateTotalPrice(updatedCart); // 전체 선택 상태 변경에 따른 총 가격 업데이트
-        }
-    }, [memberNo, selectedAll]); // memberNo와 selectedAll 상태가 변경될 때만 실행됨
-
-    // 로컬 스토리지에서 특정 사용자의 장바구니 정보를 불러오는 함수
-    const getCartItems = (memberNo) => {
-        const cartItems = localStorage.getItem(memberNo);
-        return cartItems ? JSON.parse(cartItems) : [];
-    };
+        // 전체 선택 상태에 따라 각 항목의 체크 상태를 업데이트하고 총 가격을 계산
+        const updatedCart = items.map(item => {
+            return { ...item, isChecked: selectedAll };
+        });
+        setCartItems(updatedCart);
+        updateTotalPrice(updatedCart); // 전체 선택 상태 변경에 따른 총 가격 업데이트
+    }, [selectedAll]); // selectedAll 상태가 변경될 때만 실행됨
 
     // 총 가격 업데이트 함수
     const updateTotalPrice = (updatedCart) => {
@@ -71,7 +54,9 @@ function CartPage() {
         const updatedCart = [...cartItems];
         updatedCart[index].isChecked = !updatedCart[index].isChecked;
         setCartItems(updatedCart);
+
         updateTotalPrice(updatedCart);
+
     };
 
     // 전체 선택 체크박스 상태 변경 핸들러
@@ -90,19 +75,7 @@ function CartPage() {
         const updatedCart = [...cartItems];
         updatedCart.splice(index, 1);
         setCartItems(updatedCart);
-        localStorage.setItem(memberNo, JSON.stringify(updatedCart));
-
-        const productNo = cartItems[index].productNo; // 삭제할 상품의 productNo를 가져옴
-        console.log("프로덕트넘버가져오냐",productNo);
-
-        axios.delete(`/api/cartDelete/${memberNo}/${productNo}`)
-            .then(response => {
-                alert(response.data.message); // 서버로부터의 응답 메시지를 처리
-                // 삭제에 성공했을 경우, 화면을 갱신하거나 다른 작업을 수행할 수 있음
-            })
-            .catch(error => {
-                console.error('장바구니 삭제 안됨:', error);
-            });
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
 
         // 삭제 후 총 가격 업데이트
         //const totalPrice = updatedCart.reduce((acc, item) => acc + parseInt(item.price.replace(/[^\d]/g, '')), 0);
@@ -122,43 +95,11 @@ function CartPage() {
     };
      */
 
-    /*const handleDeleteSelected = () => {
-        const updatedCart = cartItems.filter(item => !item.isChecked);
-        setCartItems(updatedCart);
-        localStorage.setItem(memberNo, JSON.stringify(updatedCart));
-        //const totalPrice = updatedCart.reduce((acc, item) => acc + parseInt(item.price.replace(/[^\d]/g, '')), 0);
-        const totalPrice = updatedCart.reduce((acc, item) => acc + (parseInt(item.price) * item.quantity), 0);
-        setTotalPrice(totalPrice);
-        setSelectedAll(false); // 선택된 모든 항목을 삭제한 후 전체 선택 상태를 해제합니다.
-    };*/
-
     const handleDeleteSelected = () => {
-        // 선택된 상품들을 필터링하여 새로운 배열로 생성
-        const selectedItems = cartItems.filter(item => item.isChecked);
-
-        // 선택된 상품들의 productNo를 배열로 추출
-        const selectedProductNos = selectedItems.map(item => item.productNo);
-
-        // 선택된 상품들의 productNo를 서버로 보내어 삭제 요청
-        axios.delete(`/api/cartDeleteSelected/${memberNo}`, {
-            data: {
-                productNos: selectedProductNos
-            }
-        })
-            .then(response => {
-                alert(response.data.message); // 서버로부터의 응답 메시지를 처리
-                // 삭제에 성공했을 경우, 화면을 갱신하거나 다른 작업을 수행할 수 있음
-            })
-            .catch(error => {
-                console.error('선택된 상품 삭제 실패:', error);
-            });
-
-        // 선택된 상품들을 장바구니에서 제거
         const updatedCart = cartItems.filter(item => !item.isChecked);
         setCartItems(updatedCart);
-        localStorage.setItem(memberNo, JSON.stringify(updatedCart));
-
-        // 선택된 상품들을 제거한 후 총 가격 업데이트
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+        //const totalPrice = updatedCart.reduce((acc, item) => acc + parseInt(item.price.replace(/[^\d]/g, '')), 0);
         const totalPrice = updatedCart.reduce((acc, item) => acc + (parseInt(item.price) * item.quantity), 0);
         setTotalPrice(totalPrice);
         setSelectedAll(false); // 선택된 모든 항목을 삭제한 후 전체 선택 상태를 해제합니다.
@@ -169,18 +110,7 @@ function CartPage() {
         const updatedCart = [...cartItems];
         updatedCart[index].quantity = newQuantity;
         setCartItems(updatedCart);
-        localStorage.setItem(memberNo, JSON.stringify(updatedCart));
-
-        // 서버로 변경된 수량을 전송하여 DB를 업데이트합니다.
-        const productNo = updatedCart[index].productNo; // 상품 번호를 가져옵니다.
-        axios.put(`/api/updateCartItemQuantity/${memberNo}/${productNo}`, { quantity: newQuantity })
-            .then(response => {
-                console.log(response.data.message); // 서버 응답 메시지를 처리합니다.
-            })
-            .catch(error => {
-                console.error('수량 업데이트 실패:', error);
-            });
-
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
         updateTotalPrice(updatedCart);
     };
 
@@ -201,8 +131,8 @@ function CartPage() {
                                     <input type="checkbox" checked={selectedAll} className="selectedAllCheckbox"
                                            onChange={handleToggleAllCheckboxes}/>
                                     <span>전체선택({cartItems.filter(item => item.isChecked).length}개
-                                        &nbsp;/&nbsp;
-                                        {cartItems.length}개)</span>
+                                    &nbsp;/&nbsp;
+                                    {cartItems.length}개)</span>
                                 </label>
                                 <span>&nbsp; | &nbsp;</span>
                                 <p className="checkDeleteBtn" onClick={handleDeleteSelected}>선택삭제</p>
