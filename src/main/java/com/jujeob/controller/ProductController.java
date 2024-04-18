@@ -117,4 +117,11 @@ public class ProductController {
         String searchKeyword = requestBody.get("searchKeyword");
         return productService.getProductListBySearchKeyword(searchKeyword);
     }
+
+    // 사용자가 누른 정렬 버튼에 해당하는 상품 찾아오기
+    @PostMapping("api/productListByOrderBy")
+    public List<ProductListDto> showProductListByOrderBy (@RequestBody Map<String, String> requestBody) {
+        String orderType = requestBody.get("orderByBtnType");
+        return productService.getProductListByOrderByOrderType(orderType);
+    }
 }

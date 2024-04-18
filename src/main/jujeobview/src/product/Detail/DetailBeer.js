@@ -1,35 +1,57 @@
 import ProductType from "./ProductType";
 import QuantityCounter from "./QuantityCounter";
 import addToCart from "../Cart/addToCart";
-import {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import DetailScrollToTarget from "./DetailScrollToTarget";
 import ReviewPage from "./review/ReviewPage";
 import {useAuth} from "../../member/Context";
-
+import likeIconChecked from "../../img/icon/likeIconChecked.png";
+import likeIcon from "../../img/icon/likeIcon.png";
+import LikeBtnClick from "../Like/LikeBtnClick";
+import axios from "axios";
 
 function DetailBeer({product}) {
-    /*
-
-        const { payload } = useAuth();
-        const addToCart = useAddToCart2();
-        const handleAddToCart = () => {
-            addToCart(product, payload.memberNo);
-        };
-    */
     const { payload } = useAuth();
     const [cartQuantity, setCartQuantity] = useState(1); // 장바구니에 추가될 수량 상태
+    const [likes, setLikes] = useState({});
 
     const handleQuantityChange = (newQuantity) => {
         setCartQuantity(newQuantity); // 수량 변경 시 장바구니에 추가될 수량 업데이트
     };
 
     const handleAddToCart = () => {
-        addToCart(product,payload.memberNo);
+        console.log("카트수량"+cartQuantity);
+        addToCart(product,payload.memberNo,cartQuantity);
     };
 
     const contentTopRef = useRef(null);
     const bottomRef = useRef(null);
     const reviewRef = useRef(null);
+
+    function handleLikeClick(e, product) {
+        LikeBtnClick(e, product, payload, likes, setLikes);
+    }
+
+    useEffect(() => {
+        if (payload && payload.memberNo) {
+            userLikes();
+        }
+    }, [payload]);
+
+    // 로그인한 사용자의 좋아요한 상품 확인
+    const userLikes = () => {
+        axios.post(`/api/checkedUserLikes?memberNo=${payload.memberNo}`)
+            .then(checkedUserLike => {
+                const updatedLikes = checkedUserLike.data.reduce((acc, item) => {
+                    acc[item.productId] = item.likeStatus === 'Y';
+                    return acc;
+                }, {});
+                setLikes(updatedLikes);
+            })
+            .catch(error => {
+                console.error('좋아요 목록 로딩 실패:', error);
+            });
+    };
 
     return(
         <>
@@ -50,14 +72,16 @@ function DetailBeer({product}) {
                             <p><span>추천 검색어&ensp;:&ensp;</span>{product.keyword}</p>
                             <p><span>구매수량 : &ensp;</span>
                                 <QuantityCounter initialQuantity={1} // 초기 수량 설정
-                                                 onQuantityChange={handleAddToCart} // 수량 변경 시 addToCart 함수 호출
+                                                 onQuantityChange={handleQuantityChange} // 수량 변경 시 addToCart 함수 호출
                             /></p>
                         </div>
 
                         <div className="detailBtn">
                             <div>[예약]</div>
-                            <div>
-                                [찜]
+                            <div className="ProductLikeBtn"
+                                 onClick={(e) => handleLikeClick(e, product)}>
+                                <img src={likes[product.productNo] ? likeIconChecked : likeIcon}
+                                     alt="Like Button"/>
                             </div>
                             <button className="cartBtn" onClick={handleAddToCart}>장바구니 담기</button>
                         </div>

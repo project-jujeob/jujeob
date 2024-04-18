@@ -5,6 +5,7 @@ import CartQuantityCounter from "./CartQuantityCounter";
 import {useAuth} from "../../member/Context";
 import axios from "axios";
 
+
 // 로컬 스토리지에서 상품 정보를 불러옴
 /*const getCartItems = () => {
     const cartItems = localStorage.getItem('cart');
@@ -104,6 +105,7 @@ function CartPage() {
                 console.error('장바구니 삭제 안됨:', error);
             });
 
+
         // 삭제 후 총 가격 업데이트
         //const totalPrice = updatedCart.reduce((acc, item) => acc + parseInt(item.price.replace(/[^\d]/g, '')), 0);
         const totalPrice = updatedCart.reduce((acc, item) => acc + (parseInt(item.price) * item.quantity), 0);
@@ -180,6 +182,7 @@ function CartPage() {
             .catch(error => {
                 console.error('수량 업데이트 실패:', error);
             });
+
 
         updateTotalPrice(updatedCart);
     };

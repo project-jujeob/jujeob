@@ -1,13 +1,21 @@
 import ProductType from "./ProductType";
 import QuantityCounter from "./QuantityCounter";
 import addToCart from "../Cart/addToCart";
-import {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import DetailScrollToTarget from "./DetailScrollToTarget";
 import ReviewPage from "./review/ReviewPage";
 import DetailScrollToTop from "./DetailScrollToTop";
+import {useAuth} from "../../member/Context";
+import LikeBtnClick from "../Like/LikeBtnClick";
+import axios from "axios";
+import likeIconChecked from "../../img/icon/likeIconChecked.png";
+import likeIcon from "../../img/icon/likeIcon.png";
 
 
 function DetailTraditional({product}) {
+    const { payload } = useAuth();
+    const [likes, setLikes] = useState({});
+
     const [cartQuantity, setCartQuantity] = useState(1);
 
     const handleAddToCart = () => {
@@ -23,6 +31,31 @@ function DetailTraditional({product}) {
     const contentTopRef = useRef(null);
     const bottomRef = useRef(null);
     const reviewRef = useRef(null);
+
+    function handleLikeClick(e, product) {
+        LikeBtnClick(e, product, payload, likes, setLikes);
+    }
+
+    useEffect(() => {
+        if (payload && payload.memberNo) {
+            userLikes();
+        }
+    }, [payload]);
+
+    // 로그인한 사용자의 좋아요한 상품 확인
+    const userLikes = () => {
+        axios.post(`/api/checkedUserLikes?memberNo=${payload.memberNo}`)
+            .then(checkedUserLike => {
+                const updatedLikes = checkedUserLike.data.reduce((acc, item) => {
+                    acc[item.productId] = item.likeStatus === 'Y';
+                    return acc;
+                }, {});
+                setLikes(updatedLikes);
+            })
+            .catch(error => {
+                console.error('좋아요 목록 로딩 실패:', error);
+        });
+    };
 
 
     return(
@@ -49,8 +82,10 @@ function DetailTraditional({product}) {
 
                         <div className="detailBtn">
                             <div>[예약]</div>
-                            <div>
-                                [찜]
+                            <div className="ProductLikeBtn"
+                                 onClick={(e) => handleLikeClick(e, product)}>
+                                <img src={likes[product.productNo] ? likeIconChecked : likeIcon}
+                                     alt="Like Button"/>
                             </div>
                             <button className="cartBtn" onClick={handleAddToCart}>장바구니 담기</button>
                         </div>

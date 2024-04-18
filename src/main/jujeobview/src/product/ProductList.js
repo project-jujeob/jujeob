@@ -19,14 +19,13 @@ function ProductList() {
         if (!searchKeyword.trim()) {
             alert('검색어를 입력해주세요');
             inputRef.current.focus();
-            setSearchKeyword('');
             return;
         }
         axios.post('/api/productListBySearch', {searchKeyword: searchKeyword})
             .then((productListBySearchKeyword) => {
                 setSearchResult(productListBySearchKeyword.data);
                 inputRef.current.focus();
-                setSearchKeyword('');
+                // setSearchKeyword('');
 
             })
             .catch(error => {
@@ -56,7 +55,9 @@ function ProductList() {
                 <ProductListRecommend/>
             </div>
             <div className="ProductCategory">
-                <ProductCategory searchResult={searchResult} searchKeyword={searchKeyword}
+                <ProductCategory searchResult={searchResult}
+                                 searchKeyword={searchKeyword}
+                                 setSearchKeyword={setSearchKeyword}
                 />
             </div>
         </div>

@@ -18,6 +18,7 @@ public class LikeProductController {
     // 상품 좋아요 버튼
     @PostMapping("/api/likeProduct")
     public ResponseEntity<String> likeProduct(@RequestBody LikeProduct likeProduct) {
+        System.out.println("ghkrdls"+likeProduct);
         return likeProductRepository
                 .findByMemberNoAndProductId(likeProduct.getMemberNo(), likeProduct.getProductId())
                 .map(existingLike -> {
@@ -34,8 +35,12 @@ public class LikeProductController {
 
     @PostMapping("api/checkedUserLikes")
     public List<LikeProduct> getLikeProduct(@RequestParam long memberNo) {
-        System.out.println("확인"+memberNo);
         return likeProductRepository.findAllByMemberNo(memberNo);
+    }
+
+    @GetMapping("/api/getLikeCount")
+    public long getLikeCount(@RequestParam int productNo) {
+        return likeProductRepository.getLikeCount(productNo);
     }
 
 }

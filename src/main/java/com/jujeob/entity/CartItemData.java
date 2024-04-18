@@ -34,4 +34,6 @@ public class CartItemData {
     //private String img;
     @Column(nullable = false)
     private int quantity;
+
 }
+

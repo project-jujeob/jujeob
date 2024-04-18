@@ -26,4 +26,5 @@ public interface ProductRepositoryCustom {
 
     List<Product> findProductListBySearchKeyword(String searchKeyword);
 
+    List<Product> findProductListByOrderByOrderType(String orderType);
 }

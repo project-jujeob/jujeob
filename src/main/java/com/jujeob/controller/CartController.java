@@ -1,6 +1,5 @@
 package com.jujeob.controller;
 
-import com.jujeob.dto.ApiResponse;
 import com.jujeob.entity.CartItemData;
 import com.jujeob.repository.CartRepository;
 import com.jujeob.service.CartService;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-import static com.jujeob.entity.QCartItemData.cartItemData;
-
 @RestController
 @RequestMapping("/api")
 public class CartController {
@@ -25,14 +22,6 @@ public class CartController {
     @Autowired
     CartService cartService;
 
-    /*@PostMapping("/addToCart")
-    //public String addToCart(@RequestBody CartItemData cartItemData) {
-    public ResponseEntity<String> addToCart(@RequestBody List<CartItemData> cartItems) {
-        System.out.println("카트내용뜨냐"+cartItems);
-
-        cartRepository.saveAll(cartItems);
-        return ResponseEntity.ok("장바구니에 상품이 추가되었습니다.");
-    }*/
 
     @PostMapping("/addToCart")
     public ResponseEntity<String> addToCart(@RequestBody List<CartItemData> cartItems) {
