@@ -4,7 +4,7 @@ import axios from "axios";
 import ProductListShow from "./ProductListShow";
 import resetIcon from '../img/icon/resetIcon.png';
 
-function ProductCategory({searchResult, searchKeyword, likes, setLikes, memberNo}) {
+function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
     const [viewAllProductList, setViewAllProductList] = useState(0);
     const [viewAllBtn, setViewAllBtn] = useState(false);
     const [productCategory, setProductCategory] = useState([]);
@@ -111,7 +111,7 @@ function ProductCategory({searchResult, searchKeyword, likes, setLikes, memberNo
                 console.log(selections);
                 console.log('서버 응답:', response.data);
                 setProductListByFilterOption(response.data);
-
+                setSearchKeyword('');
                 // 추가적인 처리 작업 진행
             })
             .catch(error => {
