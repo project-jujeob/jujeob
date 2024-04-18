@@ -2,9 +2,9 @@ import "../../MainPage.css";
 import "../BbsStyle/bbsList.css";
 import Header from "../../common/Header";
 import React, { useState, useEffect } from "react";
-import BbsListItem from "../Component/BbsListItem";
-import BbsCategory from "../Component/BbsCategory";
-import BbsSlideAndBestPost from "../Component/BbsSlideAndBestPost";
+import BbsListItem from "../BoardComponent/BbsListItem";
+import BbsCategory from "../BoardComponent/BbsCategory";
+import BbsSlideAndBestPost from "../BoardComponent/BbsSlideAndBestPost";
 
 function BbsList() {
 

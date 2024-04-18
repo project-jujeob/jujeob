@@ -6,6 +6,7 @@ import '../BbsStyle/bbsDetail.css'
 
 import BbsModifyModal from "./BbsModify";
 import BbsDeleteModal from "./BbsDelete";
+import Comment from "../Comment/Comment";
 
 function BbsDetail({ isOpen, onRequestClose, boardId , onRequestOpen}) {
     const [board, setBoard] = useState(null);
@@ -26,6 +27,16 @@ function BbsDetail({ isOpen, onRequestClose, boardId , onRequestOpen}) {
                 });
         }
     }, [boardId]);
+    const handleUpdateModal = () => {
+        axios.get(`/board/Detail/${boardId}`)
+            .then((response) => {
+                setBoard(response.data);
+            })
+            .catch((error) => {
+                console.error('데이터 가져오기 실패:', error);
+            });
+    };
+
     if (!board) {
         return null;
     }
@@ -36,6 +47,7 @@ function BbsDetail({ isOpen, onRequestClose, boardId , onRequestOpen}) {
 
     const closeModifyModal = () => {
         setIsModifyModalOpen(false);
+        handleUpdateModal();
     };
 
     const openDeleteModal = ()=>{
@@ -103,14 +115,7 @@ function BbsDetail({ isOpen, onRequestClose, boardId , onRequestOpen}) {
                         </div>
                     </div>
                     <div className="de"></div>
-                    <div className="Board-Detail-Comment-Container">
-                        <div>
-                            <h1>여기는 댓글창</h1>
-                        </div>
-                        <div>여기는 댓글 리스트창</div>
-                        <div>여기는 좋아요 같은거 창</div>
-                        <div>여기는 채팅창</div>
-                    </div>
+                    <Comment boardId={boardId} />
                 </div>
             </Modal>
             <BbsModifyModal

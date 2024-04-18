@@ -21,19 +21,15 @@ public class Board {
     @Column(name = "Board_Id")
     private int BoardId;
 
-    @NonNull
     @Column(name = "Board_Category")
     private String BoardCategory;
 
-    @NonNull
     @Column(name = "Board_Title")
     private String BoardTitle;
 
-    @NonNull
     @Column(name = "Board_Content")
     private String BoardContent;
 
-    @NonNull
     @Column(name = "Board_CreateDate")
     private LocalDateTime CreateDate;
 
@@ -43,12 +39,12 @@ public class Board {
     @Column(name = "Board_Update" )
     private LocalDateTime BoardUpdate;
 
-    @NonNull
     @Column(name = "Board_isDeleted" )
     private int IsDeleted = 0; ;
 
     @ManyToOne
     @JoinColumn(name = "memNo")
-    private Member Member;
+    private Member member;
+
 
 }

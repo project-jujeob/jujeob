@@ -26,7 +26,7 @@ public class BoardService {
         dto.setBoardContent(entity.getBoardContent());
         dto.setBoardViews(entity.getBoardViews());
         dto.setCreateDate(entity.getCreateDate());
-        System.out.println("나 Dto인데 6번 보내줄게 서비스야");
+
         return dto;
     }
 

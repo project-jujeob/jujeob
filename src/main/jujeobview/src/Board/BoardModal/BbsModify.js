@@ -42,7 +42,6 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
             });
             alert('게시물이 성공적으로 업데이트되었습니다!');
             onRequestClose();
-            window.location.reload();
         } catch (error){
             console.error("에러!", error)
             alert('게시물 업데이트에 실패하였습니다. 다시 시도해주세요.');

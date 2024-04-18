@@ -2,13 +2,9 @@ package com.jujeob.entity;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
+import lombok.*;
 
-import java.time.LocalDate;
-import java.util.Locale;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -24,7 +20,7 @@ public class BoardComment {
 
     @NonNull
     @Column(name = "Comment_CreateDate")
-    private LocalDate CreateDate;
+    private LocalDateTime CreateDate;
 
     @NonNull
     @Column(name = "Comment_Content")
@@ -47,13 +43,17 @@ public class BoardComment {
     private int isDeleted;
 
     @Column(name = "Comment_UpdateDate")
-    private LocalDate UpdateDate;
+    private LocalDateTime UpdateDate;
+
+    @Column(name = "board_id")
+    private int boardId;
 
     @ManyToOne
-    @JoinColumn(name = "Board_Id")
-    private Board Board;
+    @JoinColumn(name = "board_id", insertable = false, updatable = false)
+    private Board board;
 
     @ManyToOne
     @JoinColumn(name = "memNo")
-    private Member member;
+    private Member memNo;
+
 }

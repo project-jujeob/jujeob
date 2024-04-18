@@ -3,7 +3,6 @@ import Modal from "react-modal";
 import {useNavigate} from "react-router-dom";
 import "../BbsStyle/bbsDelete.css";
 function BbsDelete({ isOpen, onRequestClose, boardId }) {
-    const navigate = useNavigate();
     Modal.setAppElement('#root');
     const handleDelete = async () => {
       try{

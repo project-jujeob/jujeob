@@ -65,6 +65,50 @@
     padding: 20px;
 }
 
+.Comment-List{
+    width: 100%;
+    height: 88%;
+    border: 1px solid black;
+    overflow: auto;
+    max-height: 700px;
+}
+.Comment-Detail{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflowY: auto;
+    margin-bottom: 8px;
+}
+.Comment-AuthorAndContent{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.AuthorAndContent-ProfileImgAndAuthor{
+    display: flex;
+    flex-direction: row;
+}
+.AuthorAndContent{
+    margin-right: 5px;
+}
+.Comment-Author{
+}
+.Comment-Date{
+    font-size: 11px;
+}
+.Comment-LikeArea{
+    width: 100%;
+    height: 5%;
+    border: 1px solid black;
+}
+.Comment-Write{
+    width: 100%;
+    height: 7%;
+    border: 1px solid black;
+}
+.Comment-Write button{
+    cursor: pointer;
+}
 
 .Board-Detail-UpdateAndDelete{
     display: flex;

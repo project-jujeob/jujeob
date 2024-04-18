@@ -4,7 +4,7 @@ import "../BbsStyle/bbsListItem.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Pagination from "../../common/Pagination";
-import BbsDetailModal from "../Modal/BbsDetail";
+import BbsDetailModal from "../BoardModal/BbsDetail";
 function BbsListItem() {
     const [boardsList, setBoardsList] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');

@@ -2,8 +2,8 @@ import "../../MainPage.css";
 import "../BbsStyle/bbsCategory.css";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import BbsDetailModal from "../Modal/BbsDetail";
-import BbsWrite from "../Modal/BbsWrite";
+import BbsDetailModal from "../BoardModal/BbsDetail";
+import BbsWrite from "../BoardModal/BbsWrite";
 function BbsCategory({ onSearch }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => {
