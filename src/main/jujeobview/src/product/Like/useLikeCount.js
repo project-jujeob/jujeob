@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function LikeCount(productNo) {
+function useLikeCount(productNo) {
     const [likeCount, setLikeCount] = useState(0);
 
     useEffect(() => {
@@ -12,4 +12,4 @@ function LikeCount(productNo) {
 
     return likeCount;
 }
-export default LikeCount;
+export default useLikeCount;
