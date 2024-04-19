@@ -1,10 +1,11 @@
 import './ProductList.css';
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect} from "react";
 import Pagination from '../common/Pagination';
 import ProductItem from "./ProductItem";
 import {useAuth} from "../member/Context";
 import useCheckUserLikes from "./Like/useCheckUserLikes";
 import ProductListOrderBy from "./ProductListOrderBy";
+import {useLocation, useParams} from "react-router-dom";
 
 function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList,
                              ProductListByFilterOption, searchResult}) {
@@ -12,7 +13,10 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
-    
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get('page') ;
+
     useEffect(() => {
         if (viewAllProductList) {
             setProductList(viewAllProductList);
@@ -52,8 +56,17 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const itemsPerRow = 3;
 
     const handlePageChange = (page) => {
+        //console.log(page)
         setCurrentPage(page);
     };
+
+    useEffect(() =>{
+        if(page > 0) {
+            console.log(page)
+            setCurrentPage(page);
+        }
+    },[])
+
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
