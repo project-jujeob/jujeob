@@ -10,13 +10,17 @@ import LikeProduct from "./Like/LikeProduct";
 import axios from "axios";
 import {useAuth} from "../member/Context";
 import addToCart from "./Cart/addToCart";
+import useCheckUserLikes from "./Like/useCheckUserLikes";
+import ProductListOrderBy from "./ProductListOrderBy";
 
 function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList,
                              ProductListByFilterOption, searchResult}) {
     const { payload } = useAuth();
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [likes, setLikes] = useState({});
+    // const [likes, setLikes] = useState({});
+    const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
+
     //const addToCart = useAddToCart2();
 
     useEffect(() => {
@@ -54,28 +58,6 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         }
     }, [searchResult]);
 
-    useEffect(() => {
-        if (payload && payload.memberNo) {
-            userLikes();
-        }
-    }, [payload]);
-
-    // 로그인한 사용자의 좋아요한 상품 확인
-    const userLikes = () => {
-        axios.post(`api/checkedUserLikes?memberNo=${payload.memberNo}`)
-            .then(checkedUserLike => {
-                const updatedLikes = checkedUserLike.data.reduce((acc, item) => {
-                    acc[item.productId] = item.likeStatus === 'Y';
-                    return acc;
-                }, {});
-                setLikes(updatedLikes);
-            })
-            .catch(error => {
-                console.error('좋아요 목록 로딩 실패:', error);
-            });
-    };
-
-
     const itemsPerPage = 9;
     const itemsPerRow = 3;
 
@@ -99,49 +81,12 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         addToCart(product,payload.memberNo);
     };
 
-    const likeBtnClick = (e, product, memberNo) => {
-        e.preventDefault();
-        if (!payload) {
-            alert("로그인한 사용자만 가능합니다!");
-            return;
-        }
-        const isLiked = !likes[product.productNo];
-        // UI를 즉시 업데이트
-        const newLikes = { ...likes, [product.productNo]: !likes[product.productNo] };
-        setLikes(newLikes);
-
-        // 백엔드에 변경 사항 반영
-        LikeProduct(product, memberNo, isLiked);
-    };
-
-    const OrderByBtn = (orderByBtnType) => {
-        console.log(orderByBtnType);
-        axios.post('api/productListByOrderBy', {orderByBtnType : orderByBtnType})
-            .then((productListByOrderBy) => {
-                setProductList(productListByOrderBy.data);
-            }).catch(error => {
-            console.error('정렬버튼별 상품 조회 실패:', error);
-        });
-    }
 
     return (
         <div className="ProductListShowContainer">
             <div className="ProductListShowHeader">
                 <div className="ProductListCount">총 : {productList.length} 건</div>
-                <div className="ProductListOrderBy">
-                    <div className="ProductListOrderByLike" id="orderLike"
-                         onClick={() => OrderByBtn('orderLike')}>좋아요순
-                    </div>
-                    <div className="ProductListOrderByReview" id="orderReview"
-                         onClick={() => OrderByBtn('orderReview')}>리뷰많은순
-                    </div>
-                    <div className="productListOrderByLowPrice" id="orderLowPrice"
-                         onClick={() => OrderByBtn('orderLowPrice')}>가격낮은순
-                    </div>
-                    <div className="ProductListOrderByHighPrice" id="orderHighPrice"
-                         onClick={() => OrderByBtn('orderHighPrice')}>높은가격순
-                    </div>
-                </div>
+                <ProductListOrderBy setProductList={setProductList} />
             </div>
             <div className="ProductItems">
                 {productList.length > 0 ? (
