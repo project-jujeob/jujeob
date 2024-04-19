@@ -8,7 +8,7 @@ const useCheckUserLikes = (memberNo) => {
         if (memberNo) {
             const fetchUserLikes = async () => {
                 try {
-                    const response = await axios.post(`api/checkedUserLikes?memberNo=${memberNo}`);
+                    const response = await axios.post(`/api/checkedUserLikes?memberNo=${memberNo}`);
                     const updatedLikes = response.data.reduce((acc, item) => {
                         acc[item.productId] = item.likeStatus === 'Y';
                         return acc;

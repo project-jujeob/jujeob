@@ -2,14 +2,7 @@ import './ProductList.css';
 import React, {useState, useEffect, useRef} from "react";
 import Pagination from '../common/Pagination';
 import ProductItem from "./ProductItem";
-import {Link} from "react-router-dom";
-import likeIcon from '../img/icon/likeIcon.png';
-import likeIconChecked from '../img/icon/likeIconChecked.png';
-import basketIcon from '../img/icon/basketIcon.png';
-import LikeProduct from "./Like/LikeProduct";
-import axios from "axios";
 import {useAuth} from "../member/Context";
-import addToCart from "./Cart/addToCart";
 import useCheckUserLikes from "./Like/useCheckUserLikes";
 import ProductListOrderBy from "./ProductListOrderBy";
 
@@ -19,7 +12,7 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
-
+    
     useEffect(() => {
         if (viewAllProductList) {
             setProductList(viewAllProductList);

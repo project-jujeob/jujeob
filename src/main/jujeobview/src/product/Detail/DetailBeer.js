@@ -9,11 +9,12 @@ import likeIconChecked from "../../img/icon/likeIconChecked.png";
 import likeIcon from "../../img/icon/likeIcon.png";
 import LikeBtnClick from "../Like/LikeBtnClick";
 import axios from "axios";
+import useCheckUserLikes from "../Like/useCheckUserLikes";
 
 function DetailBeer({product}) {
     const { payload } = useAuth();
     const [cartQuantity, setCartQuantity] = useState(1); // 장바구니에 추가될 수량 상태
-    const [likes, setLikes] = useState({});
+    const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
 
     const handleQuantityChange = (newQuantity) => {
         setCartQuantity(newQuantity); // 수량 변경 시 장바구니에 추가될 수량 업데이트
@@ -28,30 +29,6 @@ function DetailBeer({product}) {
     const bottomRef = useRef(null);
     const reviewRef = useRef(null);
 
-    function handleLikeClick(e, product) {
-        LikeBtnClick(e, product, payload, likes, setLikes);
-    }
-
-    useEffect(() => {
-        if (payload && payload.memberNo) {
-            userLikes();
-        }
-    }, [payload]);
-
-    // 로그인한 사용자의 좋아요한 상품 확인
-    const userLikes = () => {
-        axios.post(`/api/checkedUserLikes?memberNo=${payload.memberNo}`)
-            .then(checkedUserLike => {
-                const updatedLikes = checkedUserLike.data.reduce((acc, item) => {
-                    acc[item.productId] = item.likeStatus === 'Y';
-                    return acc;
-                }, {});
-                setLikes(updatedLikes);
-            })
-            .catch(error => {
-                console.error('좋아요 목록 로딩 실패:', error);
-            });
-    };
 
     return(
         <>
@@ -78,11 +55,7 @@ function DetailBeer({product}) {
 
                         <div className="detailBtn">
                             <div>[예약]</div>
-                            <div className="ProductLikeBtn"
-                                 onClick={(e) => handleLikeClick(e, product)}>
-                                <img src={likes[product.productNo] ? likeIconChecked : likeIcon}
-                                     alt="Like Button"/>
-                            </div>
+                            <LikeBtnClick product={product} payload={payload} likes={likes} setLikes={setLikes} />
                             <button className="cartBtn" onClick={handleAddToCart}>장바구니 담기</button>
                         </div>
                     </div>
