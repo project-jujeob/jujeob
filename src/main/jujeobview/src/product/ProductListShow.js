@@ -17,7 +17,6 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [likes, setLikes] = useState({});
-    //const addToCart = useAddToCart2();
 
     useEffect(() => {
         if (viewAllProductList) {
@@ -64,9 +63,11 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const userLikes = () => {
         axios.post(`api/checkedUserLikes?memberNo=${payload.memberNo}`)
             .then(checkedUserLike => {
-                console.log(checkedUserLike.data);
-                setLikes(checkedUserLike.data);
-                console.log(checkedUserLike.data);
+                const updatedLikes = checkedUserLike.data.reduce((acc, item) => {
+                    acc[item.productId] = item.likeStatus === 'Y';
+                    return acc;
+                }, {});
+                setLikes(updatedLikes);
             })
             .catch(error => {
                 console.error('좋아요 목록 로딩 실패:', error);
@@ -90,26 +91,6 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     for (let i = 0; i < currentItems.length; i += itemsPerRow) {
         rows.push(currentItems.slice(i, i + itemsPerRow));
     }
-
-    const handleClickAddToCart = (e, product) => {
-        e.preventDefault();
-        addToCart(product,payload.memberNo);
-    };
-
-    const likeBtnClick = (e, product, memberNo) => {
-        e.preventDefault();
-        if (!payload) {
-            alert("로그인한 사용자만 가능합니다!");
-            return;
-        }
-        const isLiked = !likes[product.productNo];
-        // UI를 즉시 업데이트
-        const newLikes = { ...likes, [product.productNo]: !likes[product.productNo] };
-        setLikes(newLikes);
-
-        // 백엔드에 변경 사항 반영
-        LikeProduct(product, memberNo, isLiked);
-    };
 
     const OrderByBtn = (orderByBtnType) => {
         console.log(orderByBtnType);

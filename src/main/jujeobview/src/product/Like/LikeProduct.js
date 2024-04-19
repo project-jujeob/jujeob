@@ -14,5 +14,8 @@ const LikeProduct = (product, memberNo, isLiked) => {
         .catch(error => {
             console.error('좋아요 저장 실패:', error);
         });
+
 };
+
+
 export default LikeProduct;
