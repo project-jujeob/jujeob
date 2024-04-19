@@ -18,10 +18,8 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const { payload } = useAuth();
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    // const [likes, setLikes] = useState({});
     const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
 
-    //const addToCart = useAddToCart2();
 
     useEffect(() => {
         if (viewAllProductList) {
@@ -73,14 +71,7 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const rows = [];
     for (let i = 0; i < currentItems.length; i += itemsPerRow) {
         rows.push(currentItems.slice(i, i + itemsPerRow));
-     }
-
-
-    const handleClickAddToCart = (e, product) => {
-        e.preventDefault();
-        addToCart(product,payload.memberNo);
-    };
-
+    }
 
     return (
         <div className="ProductListShowContainer">
@@ -92,6 +83,7 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
                 {productList.length > 0 ? (
                     rows.map((row, index) => (
                         <div key={index} className="ProductRow">
+
                             {row.map(product => (
                                 <ProductItem
                                     key={product.productNo}

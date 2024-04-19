@@ -4,7 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
+
 
 @Table(name="cart")
 @EntityListeners(AuditingEntityListener.class)
@@ -19,6 +23,13 @@ public class Cart {
 
     @Column(nullable = false)
     private Long quantity;
+
+    @Column(nullable = false)
+    private Long price;
+
+    @CreatedDate
+    @Column(nullable = false)
+    private LocalDateTime cartDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memNo", nullable = false)

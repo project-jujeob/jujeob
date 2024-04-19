@@ -31,7 +31,9 @@ public class CartItemData {
 
     private String name;
     private Long price;
-    private String img;
+    //private String img;
     @Column(nullable = false)
     private int quantity;
+
 }
+

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const addToCart = (product,memberNo) => {
+const addToCart = (product,memberNo,cartQuantity) => {
     if (!product) {
         alert('추가할 상품이 없습니다.');
         return;
@@ -27,7 +27,7 @@ const addToCart = (product,memberNo) => {
 
     // 중복된 제품이 없으면 장바구니에 상품을 추가
     if (existingItemIndex === -1) {
-        const newCart = { memberNo, productNo, name, price, img, quantity: 1 };
+        const newCart = { memberNo, productNo, name, price, img, quantity: cartQuantity};
         cartItems.push(newCart);
         alert('상품이 장바구니에 추가되었습니다.');
     } else {
@@ -53,13 +53,14 @@ const addToCart = (product,memberNo) => {
     console.log("memberNo:",cartItems);
     /*axios.post('/api/addToCart', {
         cartItems: cartItems.map(item => ({
-
             memberNo: item.memberNo,
             productNo: item.productNo,
             name: item.name,
             price: item.price,
             img: item.img,
-            quantity:item.quantity
+
+            quantity: item.quantity // 로컬 스토리지에서 가져온 개수 정보를 함께 전송
+
         }))
     })
         .then(response => {
