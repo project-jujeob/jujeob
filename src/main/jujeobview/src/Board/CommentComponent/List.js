@@ -1,33 +1,27 @@
-import React, {useState} from "react";
-import axios from "axios";
+import React from "react";
 
-function List({ PostId }){
-    const [CommentsList,setCommentsList] = useState([]);
 
-    const fetchData = ()=>{
-      axios
-          .get(`boardComment/CommentData`)
-          .then((response) =>{
-              const newComments = response.data;
-              setCommentsList((prevCommentsList)=>[...prevCommentsList, ...newComments]);
-          })
-          .catch((error) => {
-              console.error("데이터 가져오기 실패:", error);
-          });
-    };
-    console.log(CommentsList);
+function List({ commentsList }){
+
     return (
         <div className="Comment-List">
-            {CommentsList.map((comment, index)=>(
-                <div className="Comment-Detail">
-                        <div className="Comment-Date">{comment.CreateDate}</div>
-                        <div className="Comment-AuthorAndContent">
-                            <div className="AuthorAndContent-ProfileImgAndAuthor">
-                                <div  className="AuthorAndContent Comment-ProfileImg">이미지</div>
-                                <div className="AuthorAndContent Comment-Author">작성자</div>
-                            </div>
-                            <div className="AuthorAndContent Comment-Content">{comment.CommentContent}</div>
+            {commentsList.map((comment, index) => (
+                <div className="Comment-Detail" key={index}>
+                    <div className="Comment-Date"> {new Date(comment.createDate).toLocaleString('ko-KR', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                    })}</div>
+                    <div className="Comment-AuthorAndContent">
+                        <div className="AuthorAndContent-ProfileImgAndAuthor">
+                            <div className="AuthorAndContent Comment-ProfileImg">이미지</div>
+                            <div className="AuthorAndContent Comment-Author">{comment.author}</div>
                         </div>
+                        <div className="AuthorAndContent Comment-Content">{comment.commentContent}</div>
+                    </div>
                 </div>
             ))}
         </div>

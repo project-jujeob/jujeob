@@ -1,12 +1,30 @@
 import Write from "../CommentComponent/Wirte";
 import List from "../CommentComponent/List";
+import {useEffect, useState} from "react";
+import axios from "axios";
 function Comment ({ boardId }){
+    const [commentsList, setCommentsList] = useState([]);
 
+    useEffect(() => {
+        if (boardId) {
+            commentFetchData();
+        }
+    }, [boardId]);
+    const commentFetchData = () => {
+        axios
+            .get(`boardComment/CommentData/${boardId}`)
+            .then((response) => {
+                setCommentsList(response.data);
+            })
+            .catch((error) => {
+                console.error("데이터 가져오기 실패:", error);
+            });
+    };
     return (
         <div className="Board-Detail-Comment-Container">
-            <List boardId={boardId}/>
+            <List commentsList={commentsList}/>
             <div className="Comment-LikeArea">하트</div>
-            <Write boardId={boardId} />
+            <Write boardId={boardId} commentFetchData={commentFetchData} />
         </div>
     );
 }

@@ -1,10 +1,9 @@
 import React, {useState} from "react";
 import axios from "axios";
 
-function Write({ boardId }){
+function Write({ boardId, commentFetchData }){
     const [commentContent, setCommentContent] = useState(null);
     const [d,setD] = useState([boardId, commentContent]);
-    console.log(parseInt(boardId));
     const handleSubmit = async (e) =>{
         e.preventDefault();
 
@@ -12,8 +11,8 @@ function Write({ boardId }){
             const response = await axios.post(`/boardComment/Write`, {
                 boardId,
                 commentContent});
-            console.log(response.data);
             alert('댓글 성공!')
+            commentFetchData();
         } catch (error) {
             console.error('댓글 실패', error);
         }

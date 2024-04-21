@@ -1,7 +1,6 @@
 package com.jujeob.service;
 
 import com.jujeob.dto.BoardCommentDto;
-import com.jujeob.dto.BoardDto;
 import com.jujeob.entity.BoardComment;
 import com.jujeob.repository.BoardCommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +33,13 @@ public class BoardCommentService {
         return CommentDto;
     }
 
-    public List<BoardCommentDto> getAllComments() {
-        List<BoardComment> Comments = boardCommentRepository.findAll();
-        List<BoardCommentDto> CommentDto = new ArrayList<>();
-        System.out.println("서비스에서 댓글 데이터 요청 받았습니다.");
-        for (BoardComment entity : Comments){
-            CommentDto.add(mapCommentDto(entity));
+    public List<BoardCommentDto> getCommentsByBoardId(int boardId) {
+        List<BoardComment> comments = boardCommentRepository.findByBoardId(boardId);
+        List<BoardCommentDto> commentDtoList = new ArrayList<>();
+        System.out.println("서비스에서 게시글 id에 해당하는 댓글 데이터 요청 받았습니다.");
+        for (BoardComment comment : comments){
+            commentDtoList.add(mapCommentDto(comment));
         }
-        return CommentDto;
+        return commentDtoList;
     }
 }

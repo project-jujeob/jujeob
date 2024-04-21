@@ -8,7 +8,7 @@ import BbsModifyModal from "./BbsModify";
 import BbsDeleteModal from "./BbsDelete";
 import Comment from "../Comment/Comment";
 
-function BbsDetail({ isOpen, onRequestClose, boardId , onRequestOpen}) {
+function BbsDetail({ isOpen, onRequestClose, boardId }) {
     const [board, setBoard] = useState(null);
     const [isModifyModalOpen, setIsModifyModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
