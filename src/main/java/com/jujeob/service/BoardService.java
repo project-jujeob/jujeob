@@ -56,9 +56,9 @@ public class BoardService {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
 
-        int views = Integer.parseInt(board.getBoardViews());
+/*        int views = Integer.parseInt(board.getBoardViews());
         views++;
-        board.setBoardViews(String.valueOf(views));
+        board.setBoardViews(String.valueOf(views));*/
         return boardRepository.save(board);
     }
     // 업데이트용

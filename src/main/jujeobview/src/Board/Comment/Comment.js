@@ -3,6 +3,7 @@ import List from "../CommentComponent/List";
 import {useEffect, useState} from "react";
 import axios from "axios";
 function Comment ({ boardId }){
+    
     const [commentsList, setCommentsList] = useState([]);
 
     useEffect(() => {
@@ -14,7 +15,8 @@ function Comment ({ boardId }){
         axios
             .get(`boardComment/CommentData/${boardId}`)
             .then((response) => {
-                setCommentsList(response.data);
+                const sortedComments = response.data.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
+                setCommentsList(sortedComments);
             })
             .catch((error) => {
                 console.error("데이터 가져오기 실패:", error);

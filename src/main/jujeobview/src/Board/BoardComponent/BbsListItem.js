@@ -31,6 +31,7 @@ function BbsListItem() {
             .get(`board/boardData?page=${page}&limit=12`)
             .then((response) => {
                 const newBoards = response.data;
+                newBoards.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
                 setBoardsList((prevBoardsList) => [...prevBoardsList, ...newBoards]);
                 setIsLoading(false);
             })
@@ -91,8 +92,7 @@ function BbsListItem() {
                         {/*<Link to={`/BbsDetail/${board.boardId}`}>*/}
                             <div className="bbsPostBackground" onClick={() => openModal(board.boardId)}>
                                 <div className="PostDetailTop">
-                                    <p>게시물 조회수 : {board.boardViews}</p>
-                                    <p>{new Date(board.createDate).toLocaleString('ko-KR', {
+                                    <p className="PostDetailTop-CreateDate">{new Date(board.createDate).toLocaleString('ko-KR', {
                                         year: 'numeric',
                                         month: 'long',
                                         day: 'numeric',
@@ -100,6 +100,7 @@ function BbsListItem() {
                                         minute: '2-digit',
                                         second: '2-digit',
                                     })}</p>
+                                    <p>게시물 조회수 : {board.boardViews}</p>
                                     <h3>{board.boardTitle}</h3>
                                 </div>
                                 <div className="PostDetailBottom">
