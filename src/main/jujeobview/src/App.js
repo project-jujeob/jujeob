@@ -16,6 +16,8 @@ import React, {useEffect, useState} from "react";
 import CartPage from "./product/Cart/CartPage";
 import ReviewWrite from "./product/Detail/review/ReviewWrite";
 import axios from "axios";
+import {PaginationProvider} from "./common/PaginationContext";
+import Pagination from "./common/Pagination";
 
 
 function App({payload}) {
@@ -60,6 +62,7 @@ function App({payload}) {
     };
 
     return (
+        <PaginationProvider>
         <div>
             <Routes>
                 <Route path="/" element={<MainPage />} />
@@ -74,8 +77,10 @@ function App({payload}) {
                 <Route path='/MyPage' element={<MyPage />} />
                 <Route path='/Cart' element={<CartPage/>} />
                 <Route path='/ReviewWrite/:productNo' element={<ReviewWrite/>} />
+                <Route path='/Pagination' element={<Pagination />} />
             </Routes>
         </div>
+        </PaginationProvider>
     );
 }
 

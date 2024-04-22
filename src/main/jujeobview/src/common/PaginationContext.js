@@ -1,27 +1,31 @@
-import {createContext, useContext, useState} from "react";
+import React, { createContext, useContext, useState } from 'react';
 
 const PaginationContext = createContext();
 
+export const usePagination = () => useContext(PaginationContext);
+
 export const PaginationProvider = ({ children }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(1);
+    const [totalItems, setTotalItems] = useState(0);
 
-    const onPageChange = (page) => {
+    const handlePageChange = (page) => {
         setCurrentPage(page);
     };
 
-    const paginationState = {
-        currentPage,
-        totalPages,
-        onPageChange,
-        setTotalPages
+    const setTotalItemCount = (count) => {
+        setTotalItems(count);
     };
 
     return (
-        <PaginationContext.Provider value={paginationState}>
+        <PaginationContext.Provider
+            value={{
+                currentPage,
+                handlePageChange,
+                totalItems,
+                setTotalItemCount
+            }}
+        >
             {children}
         </PaginationContext.Provider>
     );
 };
-
-export const usePagination = () => useContext(PaginationContext);

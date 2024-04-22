@@ -40,7 +40,6 @@ function DetailBeer({product}) {
                         <h2>{product.price.toLocaleString()}원</h2>
                         <div className="detailRightSpan">
                             <p><span>종류&ensp;:&ensp;</span> {product.type}</p>
-                            <p><span>판매자&ensp;:&ensp;</span> {product.company}</p>
                             <p><span>도수&ensp;:&ensp;</span> {product.alcohol}%</p>
                             <p><span>용량&ensp;:&ensp;</span> {product.volume}</p>
                             <p><span>추천 검색어&ensp;:&ensp;</span>{product.keyword}</p>
