@@ -160,10 +160,10 @@ function CartPage() {
     const currentItem = selectedItems.length > 0 ? selectedItems[0] : null;
     console.log("바깥아이템",currentItem);
 
-        const link = {
+       /* const link = {
             pathname: '/CustomerOrder',
             state: {selectedItems: selectedItems}
-        };
+        };*/
 console.log("선택된아이템",selectedItems);
     return (
         <div>
@@ -249,7 +249,8 @@ console.log("선택된아이템",selectedItems);
                             state: { selectedItems: selectedItems } }}>
                             <div className="orderBtn">구매하기</div>
                         </Link>*/}
-                        <Link to={"/CustomerOrder"} state={{test:"hello", state: {selectedItems: selectedItems}}}>야진짜</Link>
+                        {/*<Link to={"/CustomerOrder"} state={{selectedItems: selectedItems}}>야진짜</Link>*/}
+                        <Link to={{ pathname: "/CustomerOrder", state: selectedItems }}>구매하기</Link>
                     </div>
                 </div>
             </div>

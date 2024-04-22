@@ -3,20 +3,34 @@ import {useLocation} from "react-router-dom";
 
 function CustomerOrder() {
     const location = useLocation();
-    const { selectedItems} = location.state;
-    console.log("얍"+JSON.stringify(location) );
+    console.log(" 로케이션",location);
+    /*const { selectedItems} = location.state;
+
+    console.log("주문자 정보:", selectedItems);
+
+    console.log("selectedItems:",selectedItems);
+    console.log("location:"+JSON.stringify(location) );
     const location2 = JSON.stringify(location);
-    console.log("얍2"+location2);
+    console.log("location2:"+location2);
+*/
+    //const selectedItems = location.state?.state?.selectedItems;
+    const selectedItem = location.state.state.selectedItems;
+    // 이거 무조건 풀어서 받는 수 밖에 없는듯
 
     return (
         <>
             <Header />
-            {selectedItems  ? (
-                <ul>
-                    {selectedItems .map(item => (
-                        <li key={item.id}>{item.name} - 수량: {item.quantity}</li>
-                    ))}
-                </ul>
+            {selectedItem && selectedItem.length > 0 ? (
+                <div>
+                    <h2>선택된 상품 목록</h2>
+                    <ul>
+                        {selectedItem.map(item => (
+                            <li key={item.productNo}>
+                                상품번호: {item.productNo}, 상품명: {item.name}, 가격: {item.price}, 수량: {item.quantity}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             ) : (
                 <p>선택된 항목이 없습니다.</p>
             )}
