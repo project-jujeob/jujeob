@@ -1,14 +1,16 @@
 package com.jujeob.dto;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductListDto {
     private String img;
     private String name;
     private String description;
-    private String alcohol;
-    private String price;
+    private double alcohol;
+    private double price;
     private Integer productNo;
-
 }

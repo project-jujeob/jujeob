@@ -15,7 +15,7 @@ public class BoardCommentDto {
     private int comment_Id;
     private String commentContent;
     private LocalDateTime createDate;
-    private int memNo;
+    private Long memNo;
     private int boardId;
-
+    private String memNickname;
 }

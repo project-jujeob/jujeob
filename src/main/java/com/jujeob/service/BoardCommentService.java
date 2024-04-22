@@ -16,8 +16,9 @@ public class BoardCommentService {
     private BoardCommentRepository boardCommentRepository;
 
     public void Write(BoardCommentDto boardCommentDto) {
-        System.out.println("댓글 Write 서비스입니다 보드 아이디는: ");
+        System.out.println("댓글 Write 서비스입니다 memNo은: "+boardCommentDto.getMemNo());
         BoardComment boardComment = new BoardComment();
+        boardComment.setMemNo(boardCommentDto.getMemNo());
         boardComment.setCommentContent(boardCommentDto.getCommentContent());
         boardComment.setCreateDate(LocalDateTime.now());
         boardComment.setBoardId(boardCommentDto.getBoardId()); // 수정된 부분
@@ -30,6 +31,7 @@ public class BoardCommentService {
         CommentDto.setComment_Id(entity.getComment_Id());
         CommentDto.setCreateDate(entity.getCreateDate());
         CommentDto.setBoardId(entity.getBoard().getBoardId()); // 수정된 부분
+        //CommentDto.setMemNickname(entity);
         return CommentDto;
     }
 
@@ -38,7 +40,11 @@ public class BoardCommentService {
         List<BoardCommentDto> commentDtoList = new ArrayList<>();
         System.out.println("서비스에서 게시글 id에 해당하는 댓글 데이터 요청 받았습니다.");
         for (BoardComment comment : comments){
-            commentDtoList.add(mapCommentDto(comment));
+            BoardCommentDto commentDto = mapCommentDto(comment);
+            String nickname = boardCommentRepository.findNicknameByMemNo(comment.getMemNo());
+            commentDto.setMemNickname(nickname);
+            commentDto.setMemNo(comment.getMemNo());
+            commentDtoList.add(commentDto);
         }
         return commentDtoList;
     }

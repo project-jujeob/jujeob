@@ -2,10 +2,11 @@ import Write from "../CommentComponent/Wirte";
 import List from "../CommentComponent/List";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {useAuth} from "../../member/Context";
 function Comment ({ boardId }){
-    
+    const { payload } = useAuth();
     const [commentsList, setCommentsList] = useState([]);
-
+    console.log(payload);
     useEffect(() => {
         if (boardId) {
             commentFetchData();

@@ -18,27 +18,27 @@ public class BoardComment {
     @Column(name = "Comment_Id")
     private int Comment_Id;
 
-    @NonNull
+
     @Column(name = "Comment_CreateDate")
     private LocalDateTime CreateDate;
 
-    @NonNull
+
     @Column(name = "Comment_Content")
     private String  CommentContent;
 
-    @NonNull
+
     @Column(name = "Comment_Parent_No")
     private int CommentOriginal;
 
-    @NonNull
+
     @Column(name = "Comment_Order")
     private int CommentOrder;
 
-    @NonNull
+
     @Column(name = "Comment_depth")
     private int CommentDepth;
 
-    @NonNull
+
     @Column(name = "Comment_isDeleted")
     private int isDeleted;
 
@@ -48,12 +48,15 @@ public class BoardComment {
     @Column(name = "board_id")
     private int boardId;
 
+    @Column(name = "mem_no")
+    private Long memNo;
+
     @ManyToOne
     @JoinColumn(name = "board_id", insertable = false, updatable = false)
     private Board board;
 
     @ManyToOne
-    @JoinColumn(name = "memNo")
-    private Member memNo;
+    @JoinColumn(name = "mem_no", insertable = false, updatable = false)
+    private Member member;
 
 }

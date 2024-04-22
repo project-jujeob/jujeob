@@ -71,6 +71,17 @@
     overflow: auto;
     max-height: 700px;
 }
+.Comment-List2{
+    text-align: center;
+    color: rgba(176, 176, 176, 0.71);
+    width: 100%;
+    height: 88%;
+    overflow: auto;
+    max-height: 700px;
+}
+.Comment-Content{
+    font-size: 12px;
+}
 .Comment-Detail{
     display: flex;
     flex-direction: column;
@@ -98,12 +109,21 @@
 .Comment-LikeArea{
     width: 100%;
     height: 5%;
-    border: 1px solid black;
 }
 .Comment-Write{
+    border-top: 1px solid rgba(157, 157, 157, 0.68);
     width: 100%;
     height: 7%;
-    border: 1px solid black;
+}
+.Comment-Write input{
+    margin-top: 5px;
+    margin-right: 5px;
+    width: 85%;
+    height: 40px;
+    border: none;
+}
+.Comment-Write input:focus {
+    outline: none; /* 포커스 시 발생하는 외곽선 제거 */
 }
 .Comment-Write button{
     cursor: pointer;
@@ -116,10 +136,11 @@
     line-height: 38px;
 }
 .Comment-SubmitButton{
+    margin-top: 5px;
     background-color: #FF7E5C;
     border: none;
     width: 50px;
-    height: 30px;
+    height: 40px;
     border-radius: 5px;
 }
 .UpdateButton{

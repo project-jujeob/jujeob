@@ -5,7 +5,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Pagination from "../../common/Pagination";
 import BbsDetailModal from "../BoardModal/BbsDetail";
+import {useAuth} from "../../member/Context";
 function BbsListItem() {
+    const { payload } = useAuth();
     const [boardsList, setBoardsList] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredBoardsList, setFilteredBoardsList] = useState([]);
@@ -59,6 +61,7 @@ function BbsListItem() {
     const openModal = (boardId) => {
         setSelectedBoardId(boardId);
         setIsModalOpen(true);
+
     };
 
     const closeModal = () => {

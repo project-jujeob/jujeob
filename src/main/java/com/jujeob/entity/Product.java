@@ -2,21 +2,21 @@ package com.jujeob.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Table(name="product")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
 @Entity
-@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,10 +33,10 @@ public class Product {
     private String img;
 
     @Column(name = "price")
-    private String price;
+    private int price;
 
     @Column(name = "alcohol")
-    private String alcohol;
+    private double alcohol;
 
     @Column(name = "volume")
     private String volume;

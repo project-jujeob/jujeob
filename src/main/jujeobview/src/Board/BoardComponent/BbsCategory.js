@@ -4,10 +4,15 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BbsDetailModal from "../BoardModal/BbsDetail";
 import BbsWrite from "../BoardModal/BbsWrite";
+import {useAuth} from "../../member/Context";
 function BbsCategory({ onSearch }) {
+    const {payload} = useAuth();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => {
-        console.log();
+        if (!payload) {
+            alert("로그인한 사용자만 가능합니다!");
+            return;
+        }
         setIsModalOpen(true);
     };
 

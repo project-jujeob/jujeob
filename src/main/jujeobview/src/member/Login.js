@@ -1,18 +1,20 @@
 import React, {useState, useEffect} from 'react';
 import './Login.css';
-import {Link} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import Header from "../common/Header";
+
 
 function Login() {
     const [memId, setMemId] = useState('');
     const [memPw, setMemPw] = useState('');
-    const [loginMemberData, setLoginMemberData] = useState(null);
-    // const [errorMessage, setErrorMessage] = useState('');
 
-    useEffect(() => {
-        console.log("로그인 성공한 회원 정보:", loginMemberData);
-    }, [loginMemberData]);
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    // location 객체에서 state 속성을 추출하고, 만약 state 속성이 존재하지 않으면 기본값으로 { from: { pathname: "/" } }
+    const { from } = location.state || { from: { pathname: "/" } };
+
 
     const loginAction = () => {
         axios({
@@ -25,18 +27,15 @@ function Login() {
             }
         }). then((response) => {
             alert("로그인 성공");
-            console.log("테스트" ,response.data)
-            setLoginMemberData(response.data);
-            localStorage.setItem('loginMemberData', JSON.stringify(response.data)); // 로그인 정보를 로컬 스토리지에 저장
-            window.location.href = "/";
-            console.log("로그인 성공한 회원 정보:", loginMemberData);
+            console.log(response.data)
+            localStorage.setItem('token', JSON.stringify(response.data)); // 로그인 정보를 로컬 스토리지에 저장
+            // 이전 페이지로 리다이렉트
+            navigate(-1)
+
         }).catch(error => {
             alert("로그인 실패");
             console.log(error);
         });
-
-
-
     }
 
     return (
@@ -75,7 +74,7 @@ function Login() {
                     <br/>
 
                     <div>
-                        <Link to={"/Register"}>
+                        <Link to={"/RegisterAdult"}>
                                 <button>회원가입</button>
                         </Link>
                     </div>

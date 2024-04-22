@@ -1,13 +1,25 @@
 import ProductType from "./ProductType";
 import QuantityCounter from "./QuantityCounter";
 import addToCart from "../Cart/addToCart";
+import React, {useRef} from "react";
+import DetailScrollToTarget from "./DetailScrollToTarget";
+import ReviewPage from "./review/ReviewPage";
+import {useAuth} from "../../member/Context";
+import LikeBtnClick from "../Like/LikeBtnClick";
+import useCheckUserLikes from "../Like/useCheckUserLikes";
 
 
 function DetailTraditional({product}) {
+    const { payload } = useAuth();
+    const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
 
     const handleAddToCart = () => {
         addToCart(product);
     };
+
+    const contentTopRef = useRef(null);
+    const bottomRef = useRef(null);
+    const reviewRef = useRef(null);
 
     return(
         <>
@@ -19,11 +31,11 @@ function DetailTraditional({product}) {
                     <div className="detailRight">
                         <ProductType productId={product.productId}/>
                         <h1>{product.name}</h1>
-                        <h2>{product.price}</h2>
+                        <h2>{product.price.toLocaleString()}원</h2>
                         <div className="detailRightSpan">
                             <p><span>종류&ensp;:&ensp;</span> {product.type}</p>
                             <p><span>판매자&ensp;:&ensp;</span> {product.company}</p>
-                            <p><span>도수&ensp;:&ensp;</span> {product.alcohol}</p>
+                            <p><span>도수&ensp;:&ensp;</span> {product.alcohol}%</p>
                             <p><span>용량&ensp;:&ensp;</span> {product.volume}</p>
                             <p><span>추천 검색어&ensp;:&ensp;</span>{product.keyword}</p>
                             <p><span>구매수량 : &ensp;</span><QuantityCounter/></p>
@@ -31,20 +43,18 @@ function DetailTraditional({product}) {
 
                         <div className="detailBtn">
                             <div>[예약]</div>
-                            <div>
-                                [찜]
-                            </div>
+                            <LikeBtnClick product={product} payload={payload} likes={likes} setLikes={setLikes} />
                             <button className="cartBtn" onClick={handleAddToCart}>장바구니 담기</button>
                         </div>
                     </div>
                 </div>
                 <div className="detailContent">
-                    <div className="detailContentBtn">
-                        <div>상세정보</div>
-                        <div>후기</div>
-                        <div>상품문의</div>
-                    </div>
-                    <div className="detailContentTop">
+                    <DetailScrollToTarget
+                        contentTopRef={contentTopRef}
+                        bottomRef={bottomRef}
+                        reviewRef={reviewRef}
+                    />
+                    <div className="detailContentTop" ref={contentTopRef}>
                         <div>[와인] {product.name}</div>
                         <p>{product.description}</p>
                     </div>
@@ -61,12 +71,15 @@ function DetailTraditional({product}) {
                         <p><span>추천 잔 | </span>{product.recommendGlass}</p>
                     </div>
                 </div>
-                <div className="detailBottom">
+                <div className="detailBottom" ref={bottomRef}>
                     <div>
                         <p><span>와이너리 | </span>{product.winery}</p>
                         <p>{product.countryDescription}</p>
                     </div>
                 </div>
+            </div>
+            <div ref={reviewRef}>
+                <ReviewPage product={product}/>
             </div>
         </>
     )

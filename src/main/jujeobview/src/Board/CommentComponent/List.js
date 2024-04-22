@@ -2,7 +2,9 @@ import React from "react";
 
 
 function List({ commentsList }){
-
+/*    if(commentsList.boardId == null){
+        return <div className="Comment-List2">첫 번째 댓글이 되어주세요! </div>
+    }*/
     return (
         <div className="Comment-List">
             {commentsList.map((comment, index) => (
@@ -18,7 +20,7 @@ function List({ commentsList }){
                     <div className="Comment-AuthorAndContent">
                         <div className="AuthorAndContent-ProfileImgAndAuthor">
                             <div className="AuthorAndContent Comment-ProfileImg">이미지</div>
-                            <div className="AuthorAndContent Comment-Author">{comment.author}</div>
+                            <div className="AuthorAndContent Comment-Author">{comment.memNickname}</div>
                         </div>
                         <div className="AuthorAndContent Comment-Content">{comment.commentContent}</div>
                     </div>
