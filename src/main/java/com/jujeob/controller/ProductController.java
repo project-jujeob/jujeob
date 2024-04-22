@@ -122,9 +122,7 @@ public class ProductController {
     // 사용자가 누른 정렬 버튼에 해당하는 상품 찾아오기
     @PostMapping("api/productListByOrderBy")
     public List<ProductListDto> showProductListByOrderBy (@RequestBody Map<String, Object> orderOptions) {
-        String orderByBtnType = (String) orderOptions.get("orderByBtnType");
-        Integer categoryNo = (Integer) orderOptions.get("selectedCategoryNo");
-        String subCategoryName = (String) orderOptions.get("selectedSubCategoryName");
-        return productService.getProductListByOrderByOrderType(orderByBtnType, categoryNo, subCategoryName);
+
+        return productService.getProductListByOrderByOrderType(orderOptions);
     }
 }

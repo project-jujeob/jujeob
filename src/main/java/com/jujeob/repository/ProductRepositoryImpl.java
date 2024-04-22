@@ -310,11 +310,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         query.orderBy(qProduct.price.desc(), qProduct.name.asc());
     }
 
-
     @Override
-    public List<Product> findProductListByOrderByOrderType(String orderByBtnType, Integer categoryNo, String subCategoryName) {
+    public List<Product> findProductListByOrderByOrderType(String orderByBtnType, Integer categoryNo, String subCategoryName,
+                                                           List<String> mainTypes, List<String> types, List<String> alcoholLevels, List<String> prices) {
         QProduct qProduct = QProduct.product;
-        QCategory qCategory = QCategory.category;
         QSubCategory qSubCategory = QSubCategory.subCategory;
         QLikeProduct qLikeProduct = QLikeProduct.likeProduct;
         QReview qReview = QReview.review;
@@ -342,6 +341,42 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
         if (subCategoryName != null && !subCategoryName.isEmpty()) {
             query.where(qProduct.keyword.like("%" + subCategoryName + "%"));
+        }
+
+        if (mainTypes != null && !mainTypes.isEmpty()) {
+            BooleanBuilder mainTypeBuilder = new BooleanBuilder();
+            mainTypes.forEach(mainType -> mainTypeBuilder.or(qProduct.productId.eq(mainType)));
+            query.where(mainTypeBuilder);
+        }
+
+        // 유형(type)에 따른 필터링
+        if (types != null && !types.isEmpty()) {
+            BooleanBuilder typeBuilder = new BooleanBuilder();
+            types.forEach(type -> typeBuilder.or(qProduct.type.eq(type)));
+            query.where(typeBuilder);
+        }
+
+        if (alcoholLevels != null && !alcoholLevels.isEmpty()) {
+            BooleanBuilder alcoholFilterBuilder = new BooleanBuilder();
+            alcoholLevels.forEach(alcoholLevel -> {
+                BooleanExpression filter = createAlcoholFilter(alcoholLevel);
+                if (filter != null) {
+                    alcoholFilterBuilder.or(filter);
+                }
+            });
+            query.where(alcoholFilterBuilder);
+        }
+
+        // 가격 필터링
+        if (prices != null && !prices.isEmpty()) {
+            BooleanBuilder priceFilterBuilder = new BooleanBuilder();
+            prices.forEach(price -> {
+                BooleanExpression filter = createPriceFilter(price);
+                if (filter != null) {
+                    priceFilterBuilder.or(filter);
+                }
+            });
+            query.where(priceFilterBuilder);
         }
 
         if (orderByBtnType != null && !orderByBtnType.isEmpty()) {

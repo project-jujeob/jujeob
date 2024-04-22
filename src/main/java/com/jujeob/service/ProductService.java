@@ -169,8 +169,17 @@ public class ProductService {
         return productListBySearchKeywordDtos;
     }
 
-    public List<ProductListDto> getProductListByOrderByOrderType(String orderByBtnType, Integer categoryNo, String subCategoryName) {
-        List<Product> products = productRepository.findProductListByOrderByOrderType(orderByBtnType, categoryNo, subCategoryName);
+    public List<ProductListDto> getProductListByOrderByOrderType(Map<String, Object> orderOptions) {
+        String orderByBtnType = (String) orderOptions.get("orderByBtnType");
+        Integer categoryNo = (Integer) orderOptions.get("selectedCategoryNo");
+        String subCategoryName = (String) orderOptions.get("selectedSubCategoryName");
+        List<String> mainTypes = (List<String>) orderOptions.get("mainType");
+        List<String> types = (List<String>) orderOptions.get("types");
+        List<String> alcoholLevels = (List<String>) orderOptions.get("alcoholLevels");
+        List<String> prices = (List<String>) orderOptions.get("prices");
+
+        List<Product> products = productRepository.findProductListByOrderByOrderType(orderByBtnType, categoryNo, subCategoryName,
+                                                                                     mainTypes, types, alcoholLevels, prices);
         List<ProductListDto> productListByOrderByDtos = new ArrayList<>();
 
         for (Product entity : products) {

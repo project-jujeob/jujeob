@@ -130,7 +130,7 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
             mainType: currentMainType,
             types: Object.keys(productTypes).filter(key => productTypes[key]),
             alcoholLevels: Object.keys(alcoholLevels).filter(key => alcoholLevels[key]),
-            prices: Object.keys(prices).filter(key => prices[key]),
+            prices: Object.keys(prices).filter(key => prices[key])
         };
          axios.post('/api/submitSelections', selections)
             .then(response => {
@@ -208,11 +208,14 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
 
     // 상품 정렬 클릭시 해당 데이터 조회
     const OrderByBtn = (orderByBtnType, selectedId) => {
-        console.log(orderByBtnType);
          const orderOptions = {
              orderByBtnType: orderByBtnType,
              selectedCategoryNo : selectedCategoryNo,
-             selectedSubCategoryName : selectedSubCategoryName
+             selectedSubCategoryName : selectedSubCategoryName,
+             mainType: currentMainType,
+             types: Object.keys(productTypes).filter(key => productTypes[key]),
+             alcoholLevels: Object.keys(alcoholLevels).filter(key => alcoholLevels[key]),
+             prices: Object.keys(prices).filter(key => prices[key])
          }
          console.log(orderOptions);
         axios.post('api/productListByOrderBy', orderOptions )
