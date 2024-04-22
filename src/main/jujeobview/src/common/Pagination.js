@@ -18,11 +18,18 @@ export default function Pagination({ totalItems, itemsPerPage, pageCount, curren
 
     return (
         <div className="wrapper">
-            <ul>
+            <ul className="paginationList">
+                {currentPage > 1 && (
+                    <li className="move">
+                        <Link to={`?page=1`} className="link" onClick={() => handlePageChange(1)}>
+                            <span>{'<<'}</span>
+                        </Link>
+                    </li>
+                )}
                 {start > 1 && (
                     <li className="move">
                         <Link to={`?page=${currentPage - 1}`} className="link" onClick={() => handlePageChange(currentPage - 1)}>
-                            <span>{'<<'}</span>
+                            <span>{'<'}</span>
                         </Link>
                     </li>
                 )}
@@ -30,25 +37,13 @@ export default function Pagination({ totalItems, itemsPerPage, pageCount, curren
                     const pageNumber = start + i;
                     return pageNumber <= totalPages ? (
                         <li key={pageNumber} className="page">
-
                             <Link
                                 className={`link ${currentPage === pageNumber && 'active'}`}
                                 to={`?page=${pageNumber}`}
                                 onClick={() => handlePageChange(pageNumber)}
                             >
-                                {/*{pageNumber}*/}
                                 <button className="pageNumber">{pageNumber}</button>
                             </Link>
-
-                            {/*<Link
-                                to={`?page=${pageNumber}`}
-                                onClick={() => handlePageChange(pageNumber)}
-                            >
-                                <div className={`link ${currentPage === pageNumber ? 'active' : ''}`}>
-                                    {pageNumber}
-                                </div>
-                            </Link>*/}
-
                         </li>
                     ) : null;
                 })}
@@ -56,6 +51,14 @@ export default function Pagination({ totalItems, itemsPerPage, pageCount, curren
                     <li className="move">
                         <Link to={`?page=${currentPage + 1}`} className="link"
                               onClick={() => handlePageChange(currentPage + 1)}>
+                            <span>{'>'}</span>
+                        </Link>
+                    </li>
+                )}
+                {currentPage < totalPages && (
+                    <li className="move">
+                        <Link to={`?page=${totalPages}`} className="link"
+                              onClick={() => handlePageChange(totalPages)}>
                             <span>{'>>'}</span>
                         </Link>
                     </li>
