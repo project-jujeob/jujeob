@@ -26,7 +26,6 @@ function DetailBeer({product}) {
     const bottomRef = useRef(null);
     const reviewRef = useRef(null);
 
-
     return(
         <>
             <div className="detail">
