@@ -7,6 +7,7 @@ import ReviewPage from "./review/ReviewPage";
 import {useAuth} from "../../member/Context";
 import LikeBtnClick from "../Like/LikeBtnClick";
 import useCheckUserLikes from "../Like/useCheckUserLikes";
+import DetailScrollToTop from "./DetailScrollToTop";
 
 function DetailBeer({product}) {
     const { payload } = useAuth();
@@ -45,12 +46,12 @@ function DetailBeer({product}) {
                             <p><span>구매수량 : &ensp;</span>
                                 <QuantityCounter initialQuantity={1} // 초기 수량 설정
                                                  onQuantityChange={handleQuantityChange} // 수량 변경 시 addToCart 함수 호출
-                            /></p>
+                                /></p>
                         </div>
 
                         <div className="detailBtn">
                             <div>[예약]</div>
-                            <LikeBtnClick product={product} payload={payload} likes={likes} setLikes={setLikes} />
+                            <LikeBtnClick product={product} payload={payload} likes={likes} setLikes={setLikes}/>
                             <button className="cartBtn" onClick={handleAddToCart}>장바구니 담기</button>
                         </div>
                     </div>
@@ -71,6 +72,9 @@ function DetailBeer({product}) {
             </div>
             <div ref={reviewRef}>
                 <ReviewPage product={product}/>
+            </div>
+            <div>
+                <DetailScrollToTop/>
             </div>
         </>
     )

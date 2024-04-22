@@ -1,6 +1,5 @@
 package com.jujeob.service;
 
-import com.jujeob.entity.CartItemData;
 import com.jujeob.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -6,34 +6,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Table(name="cart")
+@Table(name="stock")
 @EntityListeners(AuditingEntityListener.class)
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Entity
-public class Cart {
+public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cartNo;
+    private Long stockId;
 
-/*    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productno", referencedColumnName = "productno")
+    @OneToOne
+    @JoinColumn(name = "productno", nullable = false, unique = true)
     private Product product;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "memNo", referencedColumnName = "memNo")
-    private Member member;*/
-
-    private Integer productNo;
-    private Long memberNo;
-
-
-    private String name;
-    private Long price;
 
     @Column(nullable = false)
     private int quantity;
-
 }
-

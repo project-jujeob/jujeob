@@ -7,6 +7,7 @@ import ReviewPage from "./review/ReviewPage";
 import LikeBtnClick from "../Like/LikeBtnClick";
 import {useAuth} from "../../member/Context";
 import useCheckUserLikes from "../Like/useCheckUserLikes";
+import DetailScrollToTop from "./DetailScrollToTop";
 
 
 function DetailTraditional({product}) {
@@ -43,7 +44,7 @@ function DetailTraditional({product}) {
 
                         <div className="detailBtn">
                             <div>[예약]</div>
-                            <LikeBtnClick product={product} payload={payload} likes={likes} setLikes={setLikes} />
+                            <LikeBtnClick product={product} payload={payload} likes={likes} setLikes={setLikes}/>
                             <button className="cartBtn" onClick={handleAddToCart}>장바구니 담기</button>
                         </div>
                     </div>
@@ -78,6 +79,9 @@ function DetailTraditional({product}) {
             </div>
             <div ref={reviewRef}>
                 <ReviewPage product={product}/>
+            </div>
+            <div>
+                <DetailScrollToTop/>
             </div>
         </>
     )
