@@ -1,3 +1,4 @@
+/*
 package com.jujeob.config;
 
 import com.jujeob.jwt.JwtUtil;
@@ -17,13 +18,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig {
+public class WebSecurityConfigBackUp {
 
     //AuthenticationManager가 인자로 받을 때 AuthenticationConfiguration 객체 생성자 주입
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtUtil jwtUtil;
 
-    public WebSecurityConfig(AuthenticationConfiguration authenticationConfiguration, JwtUtil jwtUtil) {
+    public WebSecurityConfigBackUp(AuthenticationConfiguration authenticationConfiguration, JwtUtil jwtUtil) {
         this.authenticationConfiguration = authenticationConfiguration;
         this.jwtUtil = jwtUtil;
     }
@@ -88,3 +89,4 @@ public class WebSecurityConfig {
         return httpSecurity.build(); // 빌드되어서 SecurityFilterChain 반환
     }
 }
+*/

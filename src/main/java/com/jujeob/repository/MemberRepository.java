@@ -9,5 +9,9 @@ import java.util.Optional;
 @Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
+    // 로그인
     Optional<Member> findByMemId(String memId);
+
+    // 아이디 중복검사
+    boolean existsByMemId(String memId);
 }

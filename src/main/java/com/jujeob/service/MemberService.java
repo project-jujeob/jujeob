@@ -62,4 +62,12 @@ public class MemberService {
         return null;
     }
 
+    // 아이디 중복검사
+//    public boolean checkMemId(String memId) {
+//        return !memberRepository.existsByMemId(memId);
+//    }
+
+    public boolean checkMemberId(String memId) {
+        return memberRepository.existsByMemId(memId);
+    }
 }
