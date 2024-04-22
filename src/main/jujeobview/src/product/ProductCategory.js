@@ -71,8 +71,6 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
         { id: 'orderLowPrice', label: '가격 낮은 순', orderFunc: 'orderLowPrice' },
         { id: 'orderHighPrice', label: '높은 가격 순', orderFunc: 'orderHighPrice' }
     ];
-
-
     // 전체 버튼 클릭시 실행되는 함수
     const AllCategoryBtn = () => {
         setViewAllProductList(prev => prev + 1);
@@ -217,11 +215,15 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
              alcoholLevels: Object.keys(alcoholLevels).filter(key => alcoholLevels[key]),
              prices: Object.keys(prices).filter(key => prices[key])
          }
-         console.log(orderOptions);
         axios.post('api/productListByOrderBy', orderOptions )
             .then((productListByOrderBy) => {
-                setSelectedOrderOption(productListByOrderBy.data);
-                setSelectedOptionId(selectedId);
+                if (selectedId === selectOptionId) {
+                    setSelectedOrderOption(null);
+                    setSelectedOptionId(null);
+                } else {
+                    setSelectedOrderOption(productListByOrderBy.data);
+                    setSelectedOptionId(selectedId);
+                }
             }).catch(error => {
             console.error('정렬버튼별 상품 조회 실패:', error);
         });
@@ -372,12 +374,6 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
             price5: false,
             price6: false
         });
-
-        // 모든 검증된 데이터 목록 초기화
-        setCheckedType([]);
-        setCheckedMainType([]);
-        setCheckedAlcoholLevel([]);
-        setCheckedPrice([]);
     };
 
 
@@ -408,7 +404,8 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
             <div className="CategoryList">
                 <div className="CategoryItems">
                     <button className={`AllCategory ${viewAllBtn ? 'clicked' : ''}`}
-                            onClick={AllCategoryBtn}>전체</button>
+                            onClick={AllCategoryBtn}>전체
+                    </button>
                     {productCategory.map((category) => (
                         <div className="CategoryItem" key={category.categoryNo}>
                             <button
@@ -422,7 +419,7 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
                         <div className="SubCategoryItem" key={subCategory}>
                             <button
                                 className={`SubCategoryName ${selectedSubCategoryName === subCategory ? 'selected' : ''}`}
-                                onClick={()=> SubCategoryBtn(subCategory)}># {subCategory}</button>
+                                onClick={() => SubCategoryBtn(subCategory)}># {subCategory}</button>
                         </div>
                     ))}
                 </div>
@@ -446,7 +443,7 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
                         <button className="CheckBoxSubmitButton" onClick={submitAllSelections}>필터 검색</button>
                     </div>
                     <div className="ProductListSidebarSubContainer1">
-                    <h4 className="ProductListSidebarAlcoholType">[주종]</h4>
+                        <h4 className="ProductListSidebarAlcoholType">[주종]</h4>
                         {productMainType.map((mainType) => (
                             <React.Fragment key={mainType}>
                                 <div
