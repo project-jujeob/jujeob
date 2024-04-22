@@ -249,8 +249,8 @@ console.log("선택된아이템",selectedItems);
                             state: { selectedItems: selectedItems } }}>
                             <div className="orderBtn">구매하기</div>
                         </Link>*/}
-                        {/*<Link to={"/CustomerOrder"} state={{selectedItems: selectedItems}}>야진짜</Link>*/}
-                        <Link to={{ pathname: "/CustomerOrder", state: selectedItems }}>구매하기</Link>
+                        <Link to={"/CustomerOrder"} state={{selectedItems: selectedItems}}>구매하기</Link>
+                        {/*<Link to={{ pathname: "/CustomerOrder", state: selectedItems }}>구매하기</Link>*/}
                     </div>
                 </div>
             </div>

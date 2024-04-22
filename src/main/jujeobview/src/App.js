@@ -8,19 +8,16 @@ import RegisterComplete from "./member/RegisterComplete";
 import MyPage from "./mypage/MyPage";
 import BbsList from "./Board/BulletinBoardSystem/BbsList";
 import MainPage from "./MainPage";
-
-// import {AuthProvider} from "./member/Context";
 import ProductItemDetail from "./product/Detail/ProductItemDetail";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import CartPage from "./product/Cart/CartPage";
 import ReviewWrite from "./product/Detail/review/ReviewWrite";
-import axios from "axios";
 import {PaginationProvider} from "./common/PaginationContext";
 import Pagination from "./common/Pagination";
 import CustomerOrder from "./product/Cart/CustomerOrder";
 
 
-function App({}) {
+function App() {
 
     return (
         <PaginationProvider>
