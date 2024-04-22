@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Header from "../common/Header";
 import './ProductList.css';
 import ProductListRecommend from "./ProductListRecommend";
@@ -10,7 +10,6 @@ function ProductList() {
     const [searchKeyword, setSearchKeyword] = useState('');
     const inputRef = useRef(null);
     const [searchResult, setSearchResult] = useState([]);
-
     const searchChange = (event) => {
         setSearchKeyword(event.target.value);
     };
@@ -22,16 +21,18 @@ function ProductList() {
             inputRef.current.focus();
             return;
         }
-        axios.post('/api/productListBySearch', { searchKeyword:searchKeyword })
-            .then((productListBySearchKeyword)=>{
+        axios.post('/api/productListBySearch', {searchKeyword: searchKeyword})
+            .then((productListBySearchKeyword) => {
                 setSearchResult(productListBySearchKeyword.data);
                 inputRef.current.focus();
+                // setSearchKeyword('');
 
             })
             .catch(error => {
                 console.error('상품 검색 실패:', error);
             });
     }
+
     return (
         <div className="ProductListContainer">
             <Header/>
@@ -54,7 +55,10 @@ function ProductList() {
                 <ProductListRecommend/>
             </div>
             <div className="ProductCategory">
-                <ProductCategory searchResult={searchResult} searchKeyword={searchKeyword}/>
+                <ProductCategory searchResult={searchResult}
+                                 searchKeyword={searchKeyword}
+                                 setSearchKeyword={setSearchKeyword}
+                />
             </div>
         </div>
     );

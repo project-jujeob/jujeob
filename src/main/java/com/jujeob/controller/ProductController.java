@@ -1,8 +1,10 @@
 package com.jujeob.controller;
 
 import com.jujeob.dto.ProductListDto;
+import com.jujeob.entity.LikeProduct;
 import com.jujeob.entity.Product;
 import com.jujeob.entity.SubCategory;
+import com.jujeob.repository.LikeProductRepository;
 import com.jujeob.service.CategoryService;
 import com.jujeob.service.ProductService;
 import com.jujeob.service.SubCategoryService;
@@ -30,6 +32,7 @@ public class ProductController {
     public List<ProductListDto> showProductList() {
         return productService.showAllProductList();
     }
+
 
     // 오늘의 추천 주류 조회
     @GetMapping("/api/todayRecommend")
@@ -60,6 +63,7 @@ public class ProductController {
     public Optional<Product> getProductDetails(@PathVariable Integer productNo) {
         return productService.getProductByProductNo(productNo);
     }
+
     // 주종 화면에 띄우기
     @GetMapping("/api/showProductMainType")
     public List<String> getProductId() {
@@ -104,15 +108,22 @@ public class ProductController {
     // 필터링 조건에 따라 사용자가 원하는 상품 찾아오기
     @PostMapping("/api/submitSelections")
     public ResponseEntity<List<ProductListDto>> showProductListByFiltering(@RequestBody Map<String, List<String>> filters) {
+        System.out.println(filters);
         List<ProductListDto> products = productService.getProductListByFilterOption(filters);
         return ResponseEntity.ok(products);
     }
 
     // 검색어에 따라 사용자가 원하는 상품 찾아오기
     @PostMapping("/api/productListBySearch")
-    public List<ProductListDto> showProductListBySearchkeyword(@RequestBody Map<String, String> requestBody) {
+    public List<ProductListDto> showProductListBySearchKeyword(@RequestBody Map<String, String> requestBody) {
         String searchKeyword = requestBody.get("searchKeyword");
-        System.out.println(searchKeyword);
         return productService.getProductListBySearchKeyword(searchKeyword);
+    }
+
+    // 사용자가 누른 정렬 버튼에 해당하는 상품 찾아오기
+    @PostMapping("api/productListByOrderBy")
+    public List<ProductListDto> showProductListByOrderBy (@RequestBody Map<String, Object> orderOptions) {
+
+        return productService.getProductListByOrderByOrderType(orderOptions);
     }
 }

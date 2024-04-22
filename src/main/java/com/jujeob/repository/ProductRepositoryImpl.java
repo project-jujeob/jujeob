@@ -1,29 +1,22 @@
 package com.jujeob.repository;
 
-import com.jujeob.entity.Product;
-import com.jujeob.entity.QProduct;
-import com.jujeob.entity.QSubCategory;
-import com.jujeob.entity.SubCategory;
+import com.jujeob.entity.*;
 import com.jujeob.service.SubCategoryService;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @Log4j2
 @Repository
 @RequiredArgsConstructor
-public class ProductRepositoryImpl implements ProductRepositoryCustom{
+public class ProductRepositoryImpl implements ProductRepositoryCustom {
     private final JPAQueryFactory factory;
 
     @Autowired
@@ -47,7 +40,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
 
         List<Product> products = new ArrayList<>();
 
-        for (String  subCategory : subCategories) {
+        for (String subCategory : subCategories) {
             List<Product> productList = factory.select(qProduct)
                     .from(qProduct)
                     .where(qProduct.keyword.like("%" + subCategory + "%"))
@@ -84,7 +77,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
     @Override
     public List<Product> findProductListByMainType(String productId) {
         QProduct qProduct = QProduct.product;
-        List<Product> products =  factory.select(qProduct)
+        List<Product> products = factory.select(qProduct)
                 .from(qProduct)
                 .where(qProduct.productId.eq(productId))
                 .fetch();
@@ -95,7 +88,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
     @Override
     public List<Product> findProductListByType(String type) {
         QProduct qProduct = QProduct.product;
-        List<Product> products= factory.select(qProduct)
+        List<Product> products = factory.select(qProduct)
                 .from(qProduct)
                 .where(qProduct.type.eq(type))
                 .fetch();
@@ -158,13 +151,19 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
     public List<Product> findProductListByFilterOptions(List<String> searchKeyword,
                                                         List<String> categoryNo,
                                                         List<String> subCategoryName,
+                                                        List<String> orderOption,
                                                         List<String> mainTypes,
                                                         List<String> types,
                                                         List<String> alcoholLevels,
                                                         List<String> prices) {
 
         QProduct qProduct = QProduct.product;
+        QLikeProduct qLikeProduct = QLikeProduct.likeProduct;
+        QReview qReview = QReview.review;
         BooleanBuilder finalBuilder = new BooleanBuilder();
+
+        JPAQuery<Product> query = factory.selectFrom(qProduct);
+        String option = orderOption.get(0);
 
         // 검색어 필터
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
@@ -176,7 +175,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
             });
             finalBuilder.and(keywordBuilder);
         }
-
 
         // 카테고리 번호 필터
         if (categoryNo != null && !categoryNo.isEmpty()) {
@@ -202,18 +200,41 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
             }
         }
 
-
         // 하위 카테고리 이름 필터
         if (subCategoryName != null && !subCategoryName.isEmpty()) {
             BooleanBuilder subCategoryBuilder = new BooleanBuilder();
             subCategoryName.forEach(keyword -> {
-                if (keyword != null) {  // keyword가 null이 아닐 때만 contains 메소드 호출
+                if (keyword != null) {
                     subCategoryBuilder.or(qProduct.keyword.contains(keyword));
                 }
             });
-            finalBuilder.and(subCategoryBuilder);  // 하위 카테고리 조건을 최종 빌더에 추가
+            finalBuilder.and(subCategoryBuilder);
         }
 
+        // 정렬 필터
+        if (option != null && !option.isEmpty()) {
+                switch (option) {
+                    case "orderLike":
+                        query.leftJoin(qLikeProduct)
+                                .on(qProduct.productNo.eq(qLikeProduct.productId)
+                                        .and(qLikeProduct.likeStatus.eq("Y")))
+                                .groupBy(qProduct.productNo)
+                                .orderBy(qLikeProduct.count().desc().nullsLast());
+                        break;
+                    case "orderReview":
+                        query.leftJoin(qReview)
+                                .on(qProduct.productNo.eq(qReview.product.productNo))
+                                .groupBy(qProduct.productNo)
+                                .orderBy(qReview.count().desc().nullsLast());
+                        break;
+                    case "orderLowPrice":
+                        query.orderBy(qProduct.price.asc(), qProduct.name.asc());
+                        break;
+                    case "orderHighPrice":
+                        query.orderBy(qProduct.price.desc(), qProduct.name.asc());
+                        break;
+                }
+        }
 
         // 주종 필터
         if (mainTypes != null && !mainTypes.isEmpty()) {
@@ -229,7 +250,6 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
             finalBuilder.and(typeBuilder);
         }
 
-
         // 알코올 도수 필터
         if (alcoholLevels != null && !alcoholLevels.isEmpty()) {
             BooleanBuilder alcoholLevelBuilder = new BooleanBuilder();
@@ -244,7 +264,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
             finalBuilder.and(priceRangeBuilder);
         }
 
-        List<Product> productList = factory.select(qProduct)
+        List<Product> productList = query
                 .from(qProduct)
                 .where(finalBuilder)
                 .fetch();
@@ -264,4 +284,120 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom{
 
         return new ArrayList<>(new HashSet<>(productList));
     }
+
+    private void orderByLike(JPAQuery<Product> query, QProduct qProduct, QLikeProduct qLikeProduct) {
+        query.from(qProduct)
+                .leftJoin(qLikeProduct)
+                .on(qProduct.productNo.eq(qLikeProduct.productId)
+                        .and(qLikeProduct.likeStatus.eq("Y")))
+                .groupBy(qProduct.productNo)
+                .orderBy(qLikeProduct.count().desc().nullsLast());
+    }
+
+    private void orderByReview(JPAQuery<Product> query, QProduct qProduct, QReview qReview) {
+        query.from(qProduct)
+                .leftJoin(qReview)
+                .on(qProduct.productNo.eq(qReview.product.productNo))
+                .groupBy(qProduct.productNo)
+                .orderBy(qReview.count().desc().nullsLast());
+    }
+
+    private void orderByLowPrice(JPAQuery<Product> query, QProduct qProduct) {
+        query.orderBy(qProduct.price.asc(), qProduct.name.asc());
+    }
+
+    private void orderByHighPrice(JPAQuery<Product> query, QProduct qProduct) {
+        query.orderBy(qProduct.price.desc(), qProduct.name.asc());
+    }
+
+    @Override
+    public List<Product> findProductListByOrderByOrderType(String orderByBtnType, Integer categoryNo, String subCategoryName,
+                                                           List<String> mainTypes, List<String> types, List<String> alcoholLevels, List<String> prices) {
+        QProduct qProduct = QProduct.product;
+        QSubCategory qSubCategory = QSubCategory.subCategory;
+        QLikeProduct qLikeProduct = QLikeProduct.likeProduct;
+        QReview qReview = QReview.review;
+
+        JPAQuery<Product> query = factory.selectFrom(qProduct);
+
+        // 카테고리와 하위 카테고리에 따른 필터링
+        if (categoryNo != null) {
+            // 하위 카테고리 이름 조회
+            List<String> findSubCategoryNames = factory.select(qSubCategory.subCategoryName)
+                    .from(qSubCategory)
+                    .where(qSubCategory.categoryNo.eq(categoryNo))
+                    .fetch();
+
+            // 상품 테이블에서 카테고리 이름에 해당하는 keyword 조회
+            if (findSubCategoryNames != null && !findSubCategoryNames.isEmpty()) {
+                BooleanExpression orCondition = null;
+                for (String findSubCategoryName : findSubCategoryNames) {
+                    BooleanExpression condition = qProduct.keyword.like("%" + findSubCategoryName + "%");
+                    orCondition = orCondition == null ? condition : orCondition.or(condition);
+                }
+                query.where(orCondition);
+            }
+        }
+
+        if (subCategoryName != null && !subCategoryName.isEmpty()) {
+            query.where(qProduct.keyword.like("%" + subCategoryName + "%"));
+        }
+
+        if (mainTypes != null && !mainTypes.isEmpty()) {
+            BooleanBuilder mainTypeBuilder = new BooleanBuilder();
+            mainTypes.forEach(mainType -> mainTypeBuilder.or(qProduct.productId.eq(mainType)));
+            query.where(mainTypeBuilder);
+        }
+
+        // 유형(type)에 따른 필터링
+        if (types != null && !types.isEmpty()) {
+            BooleanBuilder typeBuilder = new BooleanBuilder();
+            types.forEach(type -> typeBuilder.or(qProduct.type.eq(type)));
+            query.where(typeBuilder);
+        }
+
+        if (alcoholLevels != null && !alcoholLevels.isEmpty()) {
+            BooleanBuilder alcoholFilterBuilder = new BooleanBuilder();
+            alcoholLevels.forEach(alcoholLevel -> {
+                BooleanExpression filter = createAlcoholFilter(alcoholLevel);
+                if (filter != null) {
+                    alcoholFilterBuilder.or(filter);
+                }
+            });
+            query.where(alcoholFilterBuilder);
+        }
+
+        // 가격 필터링
+        if (prices != null && !prices.isEmpty()) {
+            BooleanBuilder priceFilterBuilder = new BooleanBuilder();
+            prices.forEach(price -> {
+                BooleanExpression filter = createPriceFilter(price);
+                if (filter != null) {
+                    priceFilterBuilder.or(filter);
+                }
+            });
+            query.where(priceFilterBuilder);
+        }
+
+        if (orderByBtnType != null && !orderByBtnType.isEmpty()) {
+            switch (orderByBtnType) {
+                case "orderLike":
+                    orderByLike(query, qProduct, qLikeProduct);
+                    break;
+                case "orderReview":
+                    orderByReview(query, qProduct, qReview);
+                    break;
+                case "orderLowPrice":
+                    orderByLowPrice(query, qProduct);
+                    break;
+                case "orderHighPrice":
+                    orderByHighPrice(query, qProduct);
+                    break;
+            }
+        }
+        return query.fetch();
+    }
 }
+
+
+

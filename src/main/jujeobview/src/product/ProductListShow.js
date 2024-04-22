@@ -1,55 +1,78 @@
 import './ProductList.css';
-import React, {useState, useEffect, useRef} from "react";
-import axios from "axios";
+import React, {useState, useEffect} from "react";
 import Pagination from '../common/Pagination';
-import {Link} from "react-router-dom";
-import likeIcon from '../img/icon/likeIcon.png';
-import basketIcon from '../img/icon/basketIcon.png';
-import addToCart from "./Cart/addToCart";
+import ProductItem from "./ProductItem";
+import {useAuth} from "../member/Context";
+import useCheckUserLikes from "./Like/useCheckUserLikes";
+import {useLocation, useParams} from "react-router-dom";
 
 function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList,
-                             ProductListByFilterOption, searchResult}) {
+                             ProductListByFilterOption, searchResult, selectOrderOption}) {
+    const { payload } = useAuth();
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-
+    const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+    const page = queryParams.get('page') ;
 
     useEffect(() => {
         if (viewAllProductList) {
             setProductList(viewAllProductList);
+            setCurrentPage(1);
         }
     }, [viewAllProductList]);
-
 
     useEffect(() => {
         if (selectedSubCategoryData) {
             setProductList(selectedSubCategoryData);
+            setCurrentPage(1);
         }
     }, [selectedSubCategoryData]);
 
     useEffect(() => {
         if (selectedCategoryData) {
             setProductList(selectedCategoryData);
+            setCurrentPage(1);
         }
     }, [selectedCategoryData]);
 
     useEffect(() => {
         if (ProductListByFilterOption) {
             setProductList(ProductListByFilterOption);
+            setCurrentPage(1);
         }
     }, [ProductListByFilterOption]);
 
     useEffect(() => {
-        if (Array.isArray(searchResult)) {
+        if (searchResult) {
             setProductList(searchResult);
+            setCurrentPage(1);
         }
     }, [searchResult]);
+
+    useEffect(() => {
+        if(selectOrderOption) {
+            setProductList(selectOrderOption);
+            setCurrentPage(1);
+        }
+    }, [selectOrderOption]);
 
     const itemsPerPage = 9;
     const itemsPerRow = 3;
 
     const handlePageChange = (page) => {
+        //console.log(page)
         setCurrentPage(page);
     };
+
+    useEffect(() =>{
+        if(page > 0) {
+            console.log(page)
+            setCurrentPage(page);
+        }
+    },[])
+
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -59,42 +82,26 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const rows = [];
     for (let i = 0; i < currentItems.length; i += itemsPerRow) {
         rows.push(currentItems.slice(i, i + itemsPerRow));
-     }
-
-    const handleClick = (e, product) => {
-        e.preventDefault();
-        addToCart(product);
-    };
+    }
 
     return (
         <div className="ProductListShowContainer">
             <div className="ProductListShowHeader">
-                <div className="ProductListCount">상품 수 : {productList.length} 개</div>
+                <div className="ProductListCount">총 : {productList.length} 건</div>
             </div>
             <div className="ProductItems">
                 {productList.length > 0 ? (
                     rows.map((row, index) => (
                         <div key={index} className="ProductRow">
-                            {row.map((product) => (
-                                <div key={product.productNo} className="ProductItem">
-                                    <Link to={`/ProductItemDetail/${product.productNo}`} className="link">
-                                        <div className="ProductImgContainer">
-                                            <img className="ProductImg" src={product.img} alt={product.name}/>
-                                            <div className="ProductBtns">
-                                                <div className="ProductLikeBtn"><img src={likeIcon}/></div>
-                                                <div className="ProductBasketBtn"
-                                                     onClick={(e) => handleClick(e, product)}>
-                                                    <img src={basketIcon}/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="ProductName">{product.name}</div>
-                                        <div
-                                            className="ProductDescription">{product.description.length > 18 ? `${product.description.substring(0, 18)}...` : product.description}</div>
-                                        <div className="ProductAlcohol">{product.alcohol}%</div>
-                                        <div className="ProductPrice">{product.price.toLocaleString()}원</div>
-                                    </Link>
-                                </div>
+
+                            {row.map(product => (
+                                <ProductItem
+                                    key={product.productNo}
+                                    product={product}
+                                    payload={payload}
+                                    likes={likes}
+                                    setLikes={setLikes}
+                                />
                             ))}
                         </div>
                     ))

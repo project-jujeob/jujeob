@@ -1,11 +1,11 @@
 package com.jujeob.service;
 
 import com.jujeob.dto.ProductListDto;
+import com.jujeob.entity.LikeProduct;
 import com.jujeob.entity.Product;
-import com.jujeob.entity.SubCategory;
+import com.jujeob.repository.LikeProductRepository;
 import com.jujeob.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 public class ProductService {
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    LikeProductRepository likeProductRepository;
 
     // 기본 생성자
     public ProductService() {
@@ -145,12 +148,13 @@ public class ProductService {
         List<String> searchKeyword = filters.get("keyword");
         List<String> categoryNo = filters.get("category");
         List<String> subCategoryName = filters.get("subCategory");
+        List<String> orderOption = filters.get("orderOption");
         List<String> mainTypes = filters.get("mainType");
         List<String> types = filters.get("types");
         List<String> alcoholLevels = filters.get("alcoholLevels");
         List<String> prices = filters.get("prices");
 
-        List<Product> productsListByFilterOption = productRepository.findProductListByFilterOptions(searchKeyword, categoryNo, subCategoryName, mainTypes, types, alcoholLevels, prices);
+        List<Product> productsListByFilterOption = productRepository.findProductListByFilterOptions(searchKeyword, categoryNo, subCategoryName, orderOption, mainTypes, types, alcoholLevels, prices);
 
         return productsListByFilterOption.stream().map(this::mapProductToDto).collect(Collectors.toList());
     }
@@ -163,5 +167,24 @@ public class ProductService {
             productListBySearchKeywordDtos.add(mapProductToDto(entity));
         }
         return productListBySearchKeywordDtos;
+    }
+
+    public List<ProductListDto> getProductListByOrderByOrderType(Map<String, Object> orderOptions) {
+        String orderByBtnType = (String) orderOptions.get("orderByBtnType");
+        Integer categoryNo = (Integer) orderOptions.get("selectedCategoryNo");
+        String subCategoryName = (String) orderOptions.get("selectedSubCategoryName");
+        List<String> mainTypes = (List<String>) orderOptions.get("mainType");
+        List<String> types = (List<String>) orderOptions.get("types");
+        List<String> alcoholLevels = (List<String>) orderOptions.get("alcoholLevels");
+        List<String> prices = (List<String>) orderOptions.get("prices");
+
+        List<Product> products = productRepository.findProductListByOrderByOrderType(orderByBtnType, categoryNo, subCategoryName,
+                                                                                     mainTypes, types, alcoholLevels, prices);
+        List<ProductListDto> productListByOrderByDtos = new ArrayList<>();
+
+        for (Product entity : products) {
+            productListByOrderByDtos.add(mapProductToDto(entity));
+        }
+        return productListByOrderByDtos;
     }
 }
