@@ -107,21 +107,24 @@ public class ProductController {
     // 필터링 조건에 따라 사용자가 원하는 상품 찾아오기
     @PostMapping("/api/submitSelections")
     public ResponseEntity<List<ProductListDto>> showProductListByFiltering(@RequestBody Map<String, List<String>> filters) {
+        System.out.println(filters);
         List<ProductListDto> products = productService.getProductListByFilterOption(filters);
         return ResponseEntity.ok(products);
     }
 
     // 검색어에 따라 사용자가 원하는 상품 찾아오기
     @PostMapping("/api/productListBySearch")
-    public List<ProductListDto> showProductListBySearchkeyword(@RequestBody Map<String, String> requestBody) {
+    public List<ProductListDto> showProductListBySearchKeyword(@RequestBody Map<String, String> requestBody) {
         String searchKeyword = requestBody.get("searchKeyword");
         return productService.getProductListBySearchKeyword(searchKeyword);
     }
 
     // 사용자가 누른 정렬 버튼에 해당하는 상품 찾아오기
     @PostMapping("api/productListByOrderBy")
-    public List<ProductListDto> showProductListByOrderBy (@RequestBody Map<String, String> requestBody) {
-        String orderType = requestBody.get("orderByBtnType");
-        return productService.getProductListByOrderByOrderType(orderType);
+    public List<ProductListDto> showProductListByOrderBy (@RequestBody Map<String, Object> orderOptions) {
+        String orderByBtnType = (String) orderOptions.get("orderByBtnType");
+        Integer categoryNo = (Integer) orderOptions.get("selectedCategoryNo");
+        String subCategoryName = (String) orderOptions.get("selectedSubCategoryName");
+        return productService.getProductListByOrderByOrderType(orderByBtnType, categoryNo, subCategoryName);
     }
 }

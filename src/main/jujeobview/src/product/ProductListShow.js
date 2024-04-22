@@ -4,10 +4,9 @@ import Pagination from '../common/Pagination';
 import ProductItem from "./ProductItem";
 import {useAuth} from "../member/Context";
 import useCheckUserLikes from "./Like/useCheckUserLikes";
-import ProductListOrderBy from "./ProductListOrderBy";
 
 function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAllProductList,
-                             ProductListByFilterOption, searchResult}) {
+                             ProductListByFilterOption, searchResult, selectOrderOption}) {
     const { payload } = useAuth();
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -49,6 +48,13 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         }
     }, [searchResult]);
 
+    useEffect(() => {
+        if(selectOrderOption) {
+            setProductList(selectOrderOption);
+            setCurrentPage(1);
+        }
+    }, [selectOrderOption]);
+
     const itemsPerPage = 9;
     const itemsPerRow = 3;
 
@@ -70,7 +76,6 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
         <div className="ProductListShowContainer">
             <div className="ProductListShowHeader">
                 <div className="ProductListCount">총 : {productList.length} 건</div>
-                <ProductListOrderBy setProductList={setProductList} />
             </div>
             <div className="ProductItems">
                 {productList.length > 0 ? (

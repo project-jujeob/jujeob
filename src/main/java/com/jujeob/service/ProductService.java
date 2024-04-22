@@ -148,12 +148,13 @@ public class ProductService {
         List<String> searchKeyword = filters.get("keyword");
         List<String> categoryNo = filters.get("category");
         List<String> subCategoryName = filters.get("subCategory");
+        List<String> orderOption = filters.get("orderOption");
         List<String> mainTypes = filters.get("mainType");
         List<String> types = filters.get("types");
         List<String> alcoholLevels = filters.get("alcoholLevels");
         List<String> prices = filters.get("prices");
 
-        List<Product> productsListByFilterOption = productRepository.findProductListByFilterOptions(searchKeyword, categoryNo, subCategoryName, mainTypes, types, alcoholLevels, prices);
+        List<Product> productsListByFilterOption = productRepository.findProductListByFilterOptions(searchKeyword, categoryNo, subCategoryName, orderOption, mainTypes, types, alcoholLevels, prices);
 
         return productsListByFilterOption.stream().map(this::mapProductToDto).collect(Collectors.toList());
     }
@@ -168,8 +169,8 @@ public class ProductService {
         return productListBySearchKeywordDtos;
     }
 
-    public List<ProductListDto> getProductListByOrderByOrderType(String orderType) {
-        List<Product> products = productRepository.findProductListByOrderByOrderType(orderType);
+    public List<ProductListDto> getProductListByOrderByOrderType(String orderByBtnType, Integer categoryNo, String subCategoryName) {
+        List<Product> products = productRepository.findProductListByOrderByOrderType(orderByBtnType, categoryNo, subCategoryName);
         List<ProductListDto> productListByOrderByDtos = new ArrayList<>();
 
         for (Product entity : products) {

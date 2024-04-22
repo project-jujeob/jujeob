@@ -3,12 +3,7 @@ package com.jujeob.repository;
 import com.jujeob.entity.*;
 import com.jujeob.service.SubCategoryService;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
-import com.querydsl.core.types.dsl.NumberPath;
-import com.querydsl.jpa.JPAExpressions;
-import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Log4j2
 @Repository
@@ -157,13 +151,19 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     public List<Product> findProductListByFilterOptions(List<String> searchKeyword,
                                                         List<String> categoryNo,
                                                         List<String> subCategoryName,
+                                                        List<String> orderOption,
                                                         List<String> mainTypes,
                                                         List<String> types,
                                                         List<String> alcoholLevels,
                                                         List<String> prices) {
 
         QProduct qProduct = QProduct.product;
+        QLikeProduct qLikeProduct = QLikeProduct.likeProduct;
+        QReview qReview = QReview.review;
         BooleanBuilder finalBuilder = new BooleanBuilder();
+
+        JPAQuery<Product> query = factory.selectFrom(qProduct);
+        String option = orderOption.get(0);
 
         // 검색어 필터
         if (searchKeyword != null && !searchKeyword.isEmpty()) {
@@ -204,11 +204,36 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         if (subCategoryName != null && !subCategoryName.isEmpty()) {
             BooleanBuilder subCategoryBuilder = new BooleanBuilder();
             subCategoryName.forEach(keyword -> {
-                if (keyword != null) {  // keyword가 null이 아닐 때만 contains 메소드 호출
+                if (keyword != null) {
                     subCategoryBuilder.or(qProduct.keyword.contains(keyword));
                 }
             });
-            finalBuilder.and(subCategoryBuilder);  // 하위 카테고리 조건을 최종 빌더에 추가
+            finalBuilder.and(subCategoryBuilder);
+        }
+
+        // 정렬 필터
+        if (option != null && !option.isEmpty()) {
+                switch (option) {
+                    case "orderLike":
+                        query.leftJoin(qLikeProduct)
+                                .on(qProduct.productNo.eq(qLikeProduct.productId)
+                                        .and(qLikeProduct.likeStatus.eq("Y")))
+                                .groupBy(qProduct.productNo)
+                                .orderBy(qLikeProduct.count().desc().nullsLast());
+                        break;
+                    case "orderReview":
+                        query.leftJoin(qReview)
+                                .on(qProduct.productNo.eq(qReview.product.productNo))
+                                .groupBy(qProduct.productNo)
+                                .orderBy(qReview.count().desc().nullsLast());
+                        break;
+                    case "orderLowPrice":
+                        query.orderBy(qProduct.price.asc(), qProduct.name.asc());
+                        break;
+                    case "orderHighPrice":
+                        query.orderBy(qProduct.price.desc(), qProduct.name.asc());
+                        break;
+                }
         }
 
         // 주종 필터
@@ -239,7 +264,7 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             finalBuilder.and(priceRangeBuilder);
         }
 
-        List<Product> productList = factory.select(qProduct)
+        List<Product> productList = query
                 .from(qProduct)
                 .where(finalBuilder)
                 .fetch();
@@ -260,35 +285,81 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         return new ArrayList<>(new HashSet<>(productList));
     }
 
+    private void orderByLike(JPAQuery<Product> query, QProduct qProduct, QLikeProduct qLikeProduct) {
+        query.from(qProduct)
+                .leftJoin(qLikeProduct)
+                .on(qProduct.productNo.eq(qLikeProduct.productId)
+                        .and(qLikeProduct.likeStatus.eq("Y")))
+                .groupBy(qProduct.productNo)
+                .orderBy(qLikeProduct.count().desc().nullsLast());
+    }
+
+    private void orderByReview(JPAQuery<Product> query, QProduct qProduct, QReview qReview) {
+        query.from(qProduct)
+                .leftJoin(qReview)
+                .on(qProduct.productNo.eq(qReview.product.productNo))
+                .groupBy(qProduct.productNo)
+                .orderBy(qReview.count().desc().nullsLast());
+    }
+
+    private void orderByLowPrice(JPAQuery<Product> query, QProduct qProduct) {
+        query.orderBy(qProduct.price.asc(), qProduct.name.asc());
+    }
+
+    private void orderByHighPrice(JPAQuery<Product> query, QProduct qProduct) {
+        query.orderBy(qProduct.price.desc(), qProduct.name.asc());
+    }
+
+
     @Override
-    public List<Product> findProductListByOrderByOrderType(String orderType) {
+    public List<Product> findProductListByOrderByOrderType(String orderByBtnType, Integer categoryNo, String subCategoryName) {
         QProduct qProduct = QProduct.product;
+        QCategory qCategory = QCategory.category;
+        QSubCategory qSubCategory = QSubCategory.subCategory;
         QLikeProduct qLikeProduct = QLikeProduct.likeProduct;
         QReview qReview = QReview.review;
 
         JPAQuery<Product> query = factory.selectFrom(qProduct);
 
-        if ("orderLike".equals(orderType)) {
-            query.from(qProduct)
-                    .leftJoin(qLikeProduct)
-                    .on(qProduct.productNo.eq(qLikeProduct.productId)
-                            .and(qLikeProduct.likeStatus.eq("Y")))
-                    .groupBy(qProduct.productNo)
-                    .orderBy(qLikeProduct.count().desc().nullsLast())
+        // 카테고리와 하위 카테고리에 따른 필터링
+        if (categoryNo != null) {
+            // 하위 카테고리 이름 조회
+            List<String> findSubCategoryNames = factory.select(qSubCategory.subCategoryName)
+                    .from(qSubCategory)
+                    .where(qSubCategory.categoryNo.eq(categoryNo))
                     .fetch();
-    } else if ("orderReview".equals(orderType)) {
-            query.from(qProduct)
-                    .leftJoin(qReview)
-                    .on(qProduct.productNo.eq(qReview.product.productNo))
-                    .groupBy(qProduct.productNo)
-                    .orderBy(qReview.count().desc().nullsLast())
-                    .fetch();
-        } else if ("orderLowPrice".equals(orderType)) {
-            query.orderBy(qProduct.price.asc(), qProduct.name.asc());
-        } else if ("orderHighPrice".equals(orderType)) {
-            query.orderBy(qProduct.price.desc(), qProduct.name.asc());
+
+            // 상품 테이블에서 카테고리 이름에 해당하는 keyword 조회
+            if (findSubCategoryNames != null && !findSubCategoryNames.isEmpty()) {
+                BooleanExpression orCondition = null;
+                for (String findSubCategoryName : findSubCategoryNames) {
+                    BooleanExpression condition = qProduct.keyword.like("%" + findSubCategoryName + "%");
+                    orCondition = orCondition == null ? condition : orCondition.or(condition);
+                }
+                query.where(orCondition);
+            }
         }
 
+        if (subCategoryName != null && !subCategoryName.isEmpty()) {
+            query.where(qProduct.keyword.like("%" + subCategoryName + "%"));
+        }
+
+        if (orderByBtnType != null && !orderByBtnType.isEmpty()) {
+            switch (orderByBtnType) {
+                case "orderLike":
+                    orderByLike(query, qProduct, qLikeProduct);
+                    break;
+                case "orderReview":
+                    orderByReview(query, qProduct, qReview);
+                    break;
+                case "orderLowPrice":
+                    orderByLowPrice(query, qProduct);
+                    break;
+                case "orderHighPrice":
+                    orderByHighPrice(query, qProduct);
+                    break;
+            }
+        }
         return query.fetch();
     }
 }

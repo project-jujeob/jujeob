@@ -28,6 +28,7 @@
 .ProductSearchBtn {
     border: none;
     cursor: pointer;
+    background-color: transparent;
 }
 
 .SearchIcon img {
@@ -155,14 +156,7 @@
     align-content: flex-end;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px;
-}
-
-.ProductListOrderBy {
-    display: flex;
-}
-.ProductListOrderBy div {
-    margin-right: 30px;
+    margin-top: 5px;
 }
 
 /*----------productRecommendList.js----------*/
@@ -223,6 +217,24 @@
     font-weight: bold;
 }
 
+
+.ProductListOrderBy {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 120px;
+}
+
+.ProductListOrderBy div {
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+.ProductListOrderByItem.selected {
+    font-weight: bold;
+    color: #FF7E5C;
+}
+
+
 .CheckBoxSubmitButton {
     width: 100%;
     border: solid 0.5px #FF7E5C;
@@ -263,7 +275,6 @@
     position: sticky;
     top: 20px;
     height: 80%;
-    margin-top: 30px;
 }
 
 .ProductListSidebarContainer {

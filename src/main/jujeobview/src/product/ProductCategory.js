@@ -29,6 +29,14 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
         level4: false,
         level5: false,
     });
+    const levelRanges = [
+        { id: 'level1', range: '5도 이하' },
+        { id: 'level2', range: '6도 ~ 15도 이하' },
+        { id: 'level3', range: '16도 ~ 30도 이하' },
+        { id: 'level4', range: '31도 ~ 50도 이하' },
+        { id: 'level5', range: '51도 이상' }
+    ];
+
     const [checkedAlcoholLevel, setCheckedAlcoholLevel] = useState([]);
     const [prices, setPrices] = useState({
         price1: false,
@@ -38,8 +46,15 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
         price5: false,
         price6: false
     })
+    const priceRanges = [
+        { id: 'price1', range: '7,000원 미만' },
+        { id: 'price2', range: '7,000원 ~ 30,000원' },
+        { id: 'price3', range: '30,000원 ~ 70,000원' },
+        { id: 'price4', range: '70,000원 ~ 100,000원' },
+        { id: 'price5', range: '100,000원 ~ 200,000원' },
+        { id: 'price6', range: '200,000원 이상' }
+    ];
     const [checkedPrice, setCheckedPrice] = useState([]);
-
 
     // 주종에 대응하는 이름을 매핑하는 객체
     const alcoholTypeNames = {
@@ -48,6 +63,15 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
         3: '와인',
         4: '위스키/기타',
     };
+    const [selectOrderOption, setSelectedOrderOption] = useState([]);
+    const [selectOptionId, setSelectedOptionId] = useState(null);
+    const orderOptions = [
+        { id: 'orderLike', label: '좋아요순', orderFunc: 'orderLike' },
+        { id: 'orderReview', label: '리뷰 많은 순', orderFunc: 'orderReview' },
+        { id: 'orderLowPrice', label: '가격 낮은 순', orderFunc: 'orderLowPrice' },
+        { id: 'orderHighPrice', label: '높은 가격 순', orderFunc: 'orderHighPrice' }
+    ];
+
 
     // 전체 버튼 클릭시 실행되는 함수
     const AllCategoryBtn = () => {
@@ -62,6 +86,7 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
         setSelectedSubCategoryData([]);
         setProductSubCategory([]);
         setProductListByFilterOption([]);
+        setSelectedOptionId(null);
 
         showAll();
     };
@@ -101,6 +126,7 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
             keyword: [searchKeyword],
             category: [selectedCategoryNo],
             subCategory: [selectedSubCategoryName],
+            orderOption: [selectOptionId],
             mainType: currentMainType,
             types: Object.keys(productTypes).filter(key => productTypes[key]),
             alcoholLevels: Object.keys(alcoholLevels).filter(key => alcoholLevels[key]),
@@ -140,6 +166,7 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
                 setSelectedCategoryData(response.data);
                 // 하위 카테고리 데이터 가져오기
                 fetchSubCategoryData(categoryNo);
+                setSelectedOptionId(null);
             })
             .catch((error) => {
                 console.error('상위 카테고리 데이터 가져오기 실패:', error);
@@ -171,12 +198,32 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
             axios.post('api/selectedSubCategoryName', { subCategory: subCategory })
                 .then((response) => {
                     setSelectedSubCategoryData(response.data);
+                    setSelectedOptionId(null);
                 })
                 .catch((error) => {
                     console.error('데이터 전송 실패:', error);
                 });
         }
     };
+
+    // 상품 정렬 클릭시 해당 데이터 조회
+    const OrderByBtn = (orderByBtnType, selectedId) => {
+        console.log(orderByBtnType);
+         const orderOptions = {
+             orderByBtnType: orderByBtnType,
+             selectedCategoryNo : selectedCategoryNo,
+             selectedSubCategoryName : selectedSubCategoryName
+         }
+         console.log(orderOptions);
+        axios.post('api/productListByOrderBy', orderOptions )
+            .then((productListByOrderBy) => {
+                setSelectedOrderOption(productListByOrderBy.data);
+                setSelectedOptionId(selectedId);
+            }).catch(error => {
+            console.error('정렬버튼별 상품 조회 실패:', error);
+        });
+    };
+
 
     // 주종 버튼 클릭 시 해당 데이터 조회
     const MainTypeBtn = (mainType) => {
@@ -353,7 +400,6 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
             })
     }, []);
 
-
     return (
         <div className="ProductCategory">
             <div className="CategoryList">
@@ -377,6 +423,15 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
                         </div>
                     ))}
                 </div>
+            </div>
+            <div className="ProductListOrderBy">
+                {orderOptions.map(option => (
+                    <div key={option.id}
+                         className={`ProductListOrderByItem ${option.id === selectOptionId ? 'selected' : ''}`}
+                         id={option.id}
+                         onClick={() => OrderByBtn(option.orderFunc, option.id)}>{option.label}
+                    </div>
+                ))}
             </div>
             <div className="ProductList">
                 <div className="ProductListSidebar">
@@ -417,55 +472,33 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
                     <div className="ProductListSidebarSubContainer2">
                         <h4 className="ProductListSidebarAlcoholLevel">[도수]</h4>
                         <div className="AlcoholLevelContainer">
-                            <label className="LevelCheckBoxContainer" htmlFor="level1">
-                                <input type="checkbox" id="level1" className="LevelCheckBox" checked={alcoholLevels.level1}
-                                       onChange={() => handleAlcoholLevelCheckboxChange('level1')}/> 5도 이하
-                            </label>
-                            <label className="LevelCheckBoxContainer" htmlFor="level2">
-                                <input type="checkbox" id="level2" className="LevelCheckBox" checked={alcoholLevels.level2}
-                                       onChange={() => handleAlcoholLevelCheckboxChange('level2')}/> 6도 ~ 15도 이하
-                            </label>
-                            <label className="LevelCheckBoxContainer" htmlFor="level3">
-                                <input type="checkbox" id="level3" className="LevelCheckBox" checked={alcoholLevels.level3}
-                                       onChange={() => handleAlcoholLevelCheckboxChange('level3')}/> 16도 ~ 30도 이하
-                            </label>
-                            <label className="LevelCheckBoxContainer" htmlFor="level4">
-                                <input type="checkbox" id="level4" className="LevelCheckBox" checked={alcoholLevels.level4}
-                                       onChange={() => handleAlcoholLevelCheckboxChange('level4')}/> 31도 ~ 50도 이하
-                            </label>
-                            <label className="LevelCheckBoxContainer" htmlFor="level5">
-                                <input type="checkbox" id="level5" className="LevelCheckBox" checked={alcoholLevels.level5}
-                                       onChange={() => handleAlcoholLevelCheckboxChange('level5')}/> 51도 이상
-                            </label>
+                            {levelRanges.map(level => (
+                                <label className="LevelCheckBoxContainer" htmlFor={level.id} key={level.id}>
+                                    <input
+                                        type="checkbox"
+                                        id={level.id}
+                                        className="LevelCheckBox"
+                                        checked={alcoholLevels[level.id]}
+                                        onChange={() => handleAlcoholLevelCheckboxChange(level.id)}
+                                    /> {level.range}
+                                </label>
+                            ))}
                         </div>
                     </div>
                     <div className="ProductListSidebarSubContainer3">
                         <h4 className="ProductListSidebarPrice">[가격]</h4>
                         <div className="PriceContainer">
-                            <label className="PriceCheckBoxContainer" htmlFor="price1">
-                                <input type="checkbox" id="price1" className="PriceCheckBox" checked={prices.price1}
-                                       onChange={() => handlePriceCheckboxChange('price1')}/> 7,000원 미만
-                            </label>
-                            <label className="PriceCheckBoxContainer" htmlFor="price2">
-                                <input type="checkbox" id="price2" className="PriceCheckBox" checked={prices.price2}
-                                       onChange={() => handlePriceCheckboxChange('price2')}/> 7,000원 ~ 30,000원
-                            </label>
-                            <label className="PriceCheckBoxContainer" htmlFor="price3">
-                                <input type="checkbox" id="price3" className="PriceCheckBox" checked={prices.price3}
-                                       onChange={() => handlePriceCheckboxChange('price3')}/> 30,000원 ~ 70,000원
-                            </label>
-                            <label className="PriceCheckBoxContainer" htmlFor="price4">
-                                <input type="checkbox" id="price4" className="PriceCheckBox" checked={prices.price4}
-                                       onChange={() => handlePriceCheckboxChange('price4')}/> 70,000원 ~ 100,000원
-                            </label>
-                            <label className="PriceCheckBoxContainer" htmlFor="price5">
-                                <input type="checkbox" id="price5" className="PriceCheckBox" checked={prices.price5}
-                                       onChange={() => handlePriceCheckboxChange('price5')}/> 100,000원 ~ 200,000원
-                            </label>
-                            <label className="PriceCheckBoxContainer" htmlFor="price6">
-                                <input type="checkbox" id="price6" className="PriceCheckBox" checked={prices.price6}
-                                       onChange={() => handlePriceCheckboxChange('price6')}/> 200,000원 이상
-                            </label>
+                            {priceRanges.map(price => (
+                                <label className="PriceCheckBoxContainer" htmlFor={price.id} key={price.id}>
+                                    <input
+                                        type="checkbox"
+                                        id={price.id}
+                                        className="PriceCheckBox"
+                                        checked={prices[price.id]}
+                                        onChange={() => handlePriceCheckboxChange(price.id)}
+                                    /> {price.range}
+                                </label>
+                            ))}
                         </div>
                     </div>
 
@@ -480,7 +513,8 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
                                      checkedAlcoholLevel={checkedAlcoholLevel}
                                      checkedPrice={checkedPrice}
                                      ProductListByFilterOption={ProductListByFilterOption}
-                                     searchResult={searchResult}/>
+                                     searchResult={searchResult}
+                                     selectOrderOption={selectOrderOption}/>
                 </div>
             </div>
         </div>
