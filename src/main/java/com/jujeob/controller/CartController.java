@@ -1,6 +1,6 @@
 package com.jujeob.controller;
 
-import com.jujeob.entity.CartItemData;
+import com.jujeob.entity.Cart;
 import com.jujeob.repository.CartRepository;
 import com.jujeob.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +24,12 @@ public class CartController {
 
 
     @PostMapping("/addToCart")
-    public ResponseEntity<String> addToCart(@RequestBody List<CartItemData> cartItems) {
+    public ResponseEntity<String> addToCart(@RequestBody List<Cart> cartItems) {
         System.out.println("카트 내용: " + cartItems);
 
         // DB에 저장하기 전에 각 상품의 수량을 업데이트하거나 새로 추가합니다.
-        for (CartItemData item : cartItems) {
-            CartItemData existingItem = cartRepository.findByMemberNoAndProductNo(item.getMemberNo(), item.getProductNo());
+        for (Cart item : cartItems) {
+            Cart existingItem = cartRepository.findByMemberNoAndProductNo(item.getMemberNo(), item.getProductNo());
             if (existingItem != null) {
                 // 기존에 같은 상품이 있으면 수량을 더해줍니다.
                 existingItem.setQuantity(item.getQuantity());
@@ -68,11 +68,11 @@ public class CartController {
     @PutMapping("/updateCartItemQuantity/{memberNo}/{productNo}")
     public ResponseEntity<String> updateCartItemQuantity(@PathVariable Long memberNo,
                                                          @PathVariable Integer productNo,
-                                                         @RequestBody CartItemData cartItemData) {
+                                                         @RequestBody Cart cart) {
         /*// 클라이언트로부터 받은 데이터를 처리합니다.
-        Long receivedMemberNo = cartItemData.getMemberNo();
-        Integer receivedProductNo = cartItemData.getProductNo();
-        Integer newQuantity = cartItemData.getQuantity();
+        Long receivedMemberNo = cart.getMemberNo();
+        Integer receivedProductNo = cart.getProductNo();
+        Integer newQuantity = cart.getQuantity();
 
         // 여기서 받은 데이터를 이용하여 DB를 업데이트하는 작업을 수행합니다.
         // 예를 들어, 받은 회원 번호와 상품 번호를 사용하여 해당 상품의 수량을 업데이트합니다.
@@ -80,10 +80,10 @@ public class CartController {
         return ResponseEntity.ok("수량이 업데이트되었습니다.");*/
 
         // 클라이언트로부터 받은 데이터
-        int newQuantity = cartItemData.getQuantity();
+        int newQuantity = cart.getQuantity();
 
         // 해당 회원과 상품 번호를 가진 카트 아이템을 찾습니다.
-        CartItemData existingItem = cartRepository.findByMemberNoAndProductNo(memberNo, productNo);
+        Cart existingItem = cartRepository.findByMemberNoAndProductNo(memberNo, productNo);
 
         if (existingItem != null) {
             // 찾은 카트 아이템의 수량을 업데이트합니다.

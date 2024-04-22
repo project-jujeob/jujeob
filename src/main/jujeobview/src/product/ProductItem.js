@@ -1,17 +1,14 @@
-
 import {Link} from "react-router-dom";
-
 import basketIcon from '../img/icon/basketIcon.png';
 import addToCart from "./Cart/addToCart";
+import React from "react";
 import LikeBtnClick from "./Like/LikeBtnClick";
+
 const ProductItem = ({ product, likes, setLikes, payload}) => {
-
-
-    const handleClickAddToCart = (e, product) => {
+    const handleClickAddToCart = (e, product,cartQuantity) => {
         e.preventDefault();
-        addToCart(product,payload.memberNo);
+        addToCart(product,payload.memberNo,cartQuantity);
     };
-
 
     return (
         <div key={product.productNo} className="ProductItem">
@@ -20,7 +17,7 @@ const ProductItem = ({ product, likes, setLikes, payload}) => {
                     <img className="ProductImg" src={product.img} alt={product.name}/>
                     <div className="ProductBtns">
                         <LikeBtnClick product={product} payload={payload} likes={likes} setLikes={setLikes} />
-                        <div className="ProductBasketBtn" onClick={(e) => handleClickAddToCart(e, product)}>
+                        <div className="ProductBasketBtn" onClick={(e) => handleClickAddToCart(e, product,1)}>
                             <img src={basketIcon} alt="Basket Button"/>
                         </div>
                     </div>

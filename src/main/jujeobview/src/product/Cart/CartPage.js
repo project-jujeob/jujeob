@@ -4,13 +4,7 @@ import './CartPage.css';
 import CartQuantityCounter from "./CartQuantityCounter";
 import {useAuth} from "../../member/Context";
 import axios from "axios";
-
-
-// 로컬 스토리지에서 상품 정보를 불러옴
-/*const getCartItems = () => {
-    const cartItems = localStorage.getItem('cart');
-    return cartItems ? JSON.parse(cartItems) : [];
-};*/
+import {Link} from "react-router-dom";
 
 function CartPage() {
     const [cartItems, setCartItems] = useState([]);
@@ -20,6 +14,7 @@ function CartPage() {
     const {payload} = useAuth();
     const memberNo = payload ? payload.memberNo : null;
 
+    //const currentItem = null;
 
     useEffect(() => {
         // 페이지가 로드될 때 현재 로그인된 사용자의 memberNo 값을 얻어옴
@@ -52,20 +47,6 @@ function CartPage() {
                 (parseInt(item.price) * item.quantity) : 0), 0);
         setTotalPrice(totalPrice);
     };
-
-    /* 총 가격 계산 - 되는지 확인 필요
-         useEffect(() => {
-        const items = getCartItems();
-        setCartItems(items);
-        calculateTotalPrice(items); // 총 가격 계산 함수 호출
-    }, []);
-
-    const calculateTotalPrice = (items) => {
-        const totalPrice = items.reduce((acc, item) => acc + parseInt(item.price.replace(/[^\d]/g, '')), 0);
-        setTotalPrice(totalPrice);
-    };
-     */
-
 
     // 개별 체크박스 상태 변경 핸들러
     const handleCheckboxChange = (index) => {
@@ -114,25 +95,7 @@ function CartPage() {
         const allChecked = updatedCart.every(item => item.isChecked);
         setSelectedAll(allChecked);
     };
-    /* 장바구니 삭제 후 총 가격 업데이트 - 되는지 확인 필요
-        const removeItemFromCart = (index) => {
-        const updatedCart = [...cartItems];
-        updatedCart.splice(index, 1);
-        setCartItems(updatedCart);
-        localStorage.setItem('cart', JSON.stringify(updatedCart));
-        calculateTotalPrice(updatedCart); // 총 가격 업데이트
-    };
-     */
 
-    /*const handleDeleteSelected = () => {
-        const updatedCart = cartItems.filter(item => !item.isChecked);
-        setCartItems(updatedCart);
-        localStorage.setItem(memberNo, JSON.stringify(updatedCart));
-        //const totalPrice = updatedCart.reduce((acc, item) => acc + parseInt(item.price.replace(/[^\d]/g, '')), 0);
-        const totalPrice = updatedCart.reduce((acc, item) => acc + (parseInt(item.price) * item.quantity), 0);
-        setTotalPrice(totalPrice);
-        setSelectedAll(false); // 선택된 모든 항목을 삭제한 후 전체 선택 상태를 해제합니다.
-    };*/
 
     const handleDeleteSelected = () => {
         // 선택된 상품들을 필터링하여 새로운 배열로 생성
@@ -183,12 +146,25 @@ function CartPage() {
                 console.error('수량 업데이트 실패:', error);
             });
 
-
         updateTotalPrice(updatedCart);
     };
 
     const paymentAmount = totalPrice + 5000;
 
+    // 선택된 아이템들만 가져오는 함수
+    const getSelectedItems = () => {
+        return cartItems.filter(item => item.isChecked);
+    };
+
+    const selectedItems = getSelectedItems();
+    const currentItem = selectedItems.length > 0 ? selectedItems[0] : null;
+    console.log("바깥아이템",currentItem);
+
+       /* const link = {
+            pathname: '/CustomerOrder',
+            state: {selectedItems: selectedItems}
+        };*/
+console.log("선택된아이템",selectedItems);
     return (
         <div>
             <Header/>
@@ -214,32 +190,38 @@ function CartPage() {
                                 {cartItems.length === 0 ? (
                                     <p className="emptyCart">장바구니에 상품이 없습니다.</p>
                                 ) : (
-                                    cartItems.map((item, index) => (
-                                        <div key={index} className="cartContent">
-                                            <div className="listCheckbox">
-                                                <input type="checkbox"
-                                                       checked={item.isChecked}
-                                                       onChange={() => handleCheckboxChange(index)}
-                                                />
+                                    cartItems.map((item, index) => {
+                                        console.log("Item: ", item) // 아이템 값 콘솔에 출력
+                                        console.log("selectedItems:", selectedItems);
+                                        return(
+                                            <div key={index} className="cartContent">
+                                                <div className="listCheckbox">
+                                                    <input type="checkbox"
+                                                    checked={item.isChecked}
+                                                    onChange={() => handleCheckboxChange(index)}
+                                                    />
+                                                </div>
+                                                <div>
+
+                                                    <img src={item.img} alt="장바구니목록이미지"/>
+                                                </div>
+                                                <div>{item.name}</div>
+                                                <div>
+                                                    <CartQuantityCounter initialQuantity={item.quantity}
+                                                                         index={index}
+                                                                         onQuantityChange={handleQuantityChange}
+                                                    />
+                                                </div>
+
+                                                <div>
+                                                    {(parseInt(item.price) * item.quantity).toLocaleString()}원
+                                                </div>
+                                                <div>
+                                                    <p className="deleteBtn" onClick={() => removeItemFromCart(index)}>X</p>
+                                                </div>
                                             </div>
-                                            <div>
-                                                <img src={item.img} alt="장바구니목록이미지"/>
-                                            </div>
-                                            <div>{item.name}</div>
-                                            <div>
-                                                <CartQuantityCounter initialQuantity={item.quantity}
-                                                                     index={index}
-                                                                     onQuantityChange={handleQuantityChange}
-                                                />
-                                            </div>
-                                            <div>
-                                                {(parseInt(item.price) * item.quantity).toLocaleString()}원
-                                            </div>
-                                            <div>
-                                                <p className="deleteBtn" onClick={() => removeItemFromCart(index)}>X</p>
-                                            </div>
-                                        </div>
-                                    ))
+                                        )
+                                    })
                                 )}
                             </div>
                         </div>
@@ -259,7 +241,16 @@ function CartPage() {
                                 <span className="paymentBold">{paymentAmount.toLocaleString()} 원</span>
                             </div>
                         </div>
-                        <div className="orderBtn">구매하기</div>
+                        {/*<Link to="/CustomerOrder">
+                            <div className="orderBtn" onClick={handlePurchase}>구매하기</div>
+                        </Link>*/}
+                        {/*<Link to={{
+                            pathname: '/CustomerOrder',
+                            state: { selectedItems: selectedItems } }}>
+                            <div className="orderBtn">구매하기</div>
+                        </Link>*/}
+                        {/*<Link to={"/CustomerOrder"} state={{selectedItems: selectedItems}}>야진짜</Link>*/}
+                        <Link to={{ pathname: "/CustomerOrder", state: selectedItems }}>구매하기</Link>
                     </div>
                 </div>
             </div>

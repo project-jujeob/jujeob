@@ -1,15 +1,12 @@
 import ProductType from "./ProductType";
 import QuantityCounter from "./QuantityCounter";
 import addToCart from "../Cart/addToCart";
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import DetailScrollToTarget from "./DetailScrollToTarget";
 import ReviewPage from "./review/ReviewPage";
 import DetailScrollToTop from "./DetailScrollToTop";
 import {useAuth} from "../../member/Context";
 import LikeBtnClick from "../Like/LikeBtnClick";
-import axios from "axios";
-import likeIconChecked from "../../img/icon/likeIconChecked.png";
-import likeIcon from "../../img/icon/likeIcon.png";
 import useCheckUserLikes from "../Like/useCheckUserLikes";
 
 
@@ -44,12 +41,12 @@ function DetailTraditional({product}) {
                     <div className="detailRight">
                         <ProductType productId={product.productId}/>
                         <h1>{product.name}</h1>
-                        <h2>{product.price}</h2>
+                        <h2>{product.price.toLocaleString()}원</h2>
                         <div className="detailRightSpan">
                             <p><span>종류&ensp;:&ensp;</span> {product.type}</p>
                             <p><span>판매자&ensp;:&ensp;</span> {product.company}</p>
                             <p><span>포장타입&ensp;:&ensp;</span> {product.packageType}</p>
-                            <p><span>도수&ensp;:&ensp;</span> {product.alcohol}</p>
+                            <p><span>도수&ensp;:&ensp;</span> {product.alcohol}%</p>
                             <p><span>용량&ensp;:&ensp;</span> {product.volume}</p>
                             <p><span>소비기한&ensp;:&ensp;</span> {product.expDate}</p>
                             <p><span>추천 검색어&ensp;:&ensp;</span> {product.keyword}</p>
