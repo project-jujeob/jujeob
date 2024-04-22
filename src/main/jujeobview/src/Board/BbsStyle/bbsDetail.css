@@ -1,0 +1,172 @@
+.Board-Detail-Container{
+    width: 100%;
+    display: flex;
+}
+/* 게시글 */
+.Board-Detail-Post-Container{
+    width: 60%;
+    height: 827px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 80px;
+}
+
+.DetailNavSearchArea{
+    width: auto;
+}
+.DetailNavSearchArea input{
+    margin-right: 62px;
+}
+/**/
+.Board-Detail-Profile{
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+}
+.Profile{
+    margin-right: 10px;
+}
+.Profile-Setting{
+    margin-left: auto;
+}
+/**/
+.Board-Detail-TitleAndContent{
+    width: 80%;
+    text-align: left;
+}
+
+.TitleAndContent-Title{
+    background-color: rgba(232, 232, 232, 0.35);
+    margin-top: 20px;
+}
+
+.TitleAndContent-Img{
+    margin-bottom: 20px;
+    height: 300px;
+    border: 1px solid black;
+}
+.TitleAndContent-Content{
+    margin-top: 30px;
+    height: 200px;
+}
+/**/
+
+.de{
+    width: 1px;
+    background-color: #b4b4b4;
+}
+
+.Board-Detail-Comment-Container{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.Comment-List{
+    width: 100%;
+    height: 88%;
+    overflow: auto;
+    max-height: 700px;
+}
+.Comment-List2{
+    text-align: center;
+    color: rgba(176, 176, 176, 0.71);
+    width: 100%;
+    height: 88%;
+    overflow: auto;
+    max-height: 700px;
+}
+.Comment-Content{
+    font-size: 12px;
+}
+.Comment-Detail{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflowY: auto;
+    margin-bottom: 8px;
+}
+.Comment-AuthorAndContent{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.AuthorAndContent-ProfileImgAndAuthor{
+    display: flex;
+    flex-direction: row;
+}
+.AuthorAndContent{
+    margin-right: 5px;
+}
+.Comment-Author{
+}
+.Comment-Date{
+    font-size: 11px;
+}
+.Comment-LikeArea{
+    width: 100%;
+    height: 5%;
+}
+.Comment-Write{
+    border-top: 1px solid rgba(157, 157, 157, 0.68);
+    width: 100%;
+    height: 7%;
+}
+.Comment-Write input{
+    margin-top: 5px;
+    margin-right: 5px;
+    width: 85%;
+    height: 40px;
+    border: none;
+}
+.Comment-Write input:focus {
+    outline: none; /* 포커스 시 발생하는 외곽선 제거 */
+}
+.Comment-Write button{
+    cursor: pointer;
+}
+
+.Board-Detail-UpdateAndDelete{
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    line-height: 38px;
+}
+.Comment-SubmitButton{
+    margin-top: 5px;
+    background-color: #FF7E5C;
+    border: none;
+    width: 50px;
+    height: 40px;
+    border-radius: 5px;
+}
+.UpdateButton{
+    width: 80px;
+    height: 40px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 1px solid rgba(222, 222, 222, 0.78);
+    background-color: #FF7E5C;
+}
+.UpdateButton:hover{
+    background-color: rgba(255, 78, 34, 0.86);
+}
+.UpdateButton:active{
+    background-color: rgba(255, 163, 141, 0.86);
+}
+.DeleteButton{
+    width: 80px;
+    height: 40px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 1px solid rgba(222, 222, 222, 0.78);
+}
+.DeleteButton:hover{
+    background-color: #e0e0e0;
+}
+.DeleteButton:active{
+    background-color: #b0b0b0;
+}

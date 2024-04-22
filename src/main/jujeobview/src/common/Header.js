@@ -16,13 +16,18 @@ function Header() {
     }, []); // 컴포넌트가 마운트될 때 한 번만 실행
 
     const checkLoginStatus = () => {
-        const token = JSON.parse(localStorage.getItem('token'));
+        const token = localStorage.getItem('token');
 
-        if (token != null) {
-            const [, payloadBase64] = token.split('.');
-            const payloadString = atob(payloadBase64);
-            const newPayload = JSON.parse(payloadString);
-            setAuthPayload(newPayload); // payload를 Context에 설정
+        if (token) {
+            const [header, payloadBase64] = token.split('.');
+
+            try {
+                const payloadString = atob(payloadBase64);
+                const newPayload = JSON.parse(payloadString);
+                setAuthPayload(newPayload); // payload를 Context에 설정
+            } catch (error) {
+                console.error('Failed to decode payload:', error);
+            }
         }
     };
 
