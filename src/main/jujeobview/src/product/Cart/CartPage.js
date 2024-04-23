@@ -22,7 +22,8 @@ function CartPage() {
             axios.get(`/api/cartPageList/${memberNo}`)
                 .then(response => {
                     // 장바구니 정보를 상태로 설정하여 화면에 표시
-                    setCartItems(response.data);
+                    const cartItemsFromServer = response.data.map(item => ({ ...item, isChecked: selectedAll }));
+                    setCartItems(cartItemsFromServer);
                 })
                 .catch(error => {
                     console.error('장바구니 정보를 가져오는데 실패했습니다:', error);

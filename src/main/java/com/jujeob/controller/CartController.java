@@ -2,6 +2,7 @@ package com.jujeob.controller;
 
 import com.jujeob.dto.CartDto;
 import com.jujeob.entity.Cart;
+import com.jujeob.entity.CustomerOrder;
 import com.jujeob.repository.CartRepository;
 import com.jujeob.repository.ProductRepository;
 import com.jujeob.service.CartService;
@@ -115,4 +116,16 @@ public class CartController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 상품을 찾을 수 없습니다.");
         }
     }
+
+    @PostMapping("/placeOrder")
+    public ResponseEntity<String> purchaseCartItems(@RequestBody CustomerOrder customerOrders){
+        System.out.println("오더내용:"+customerOrders);
+
+       /* for(CustomerOrder cusItem : customerOrders){
+            CustomerOrder orderItem = cartRepository.findByMemberNo();
+        }*/
+
+        return ResponseEntity.ok("주문이 완료 되었습니다");
+    }
+
 }
