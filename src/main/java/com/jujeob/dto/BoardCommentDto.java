@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BoardCommentDto {
-    private int comment_Id;
+    private int commentId;
     private String commentContent;
     private LocalDateTime createDate;
     private Long memNo;

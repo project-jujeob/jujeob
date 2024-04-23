@@ -14,7 +14,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BoardDto {
     private int BoardId;
-    private Member Member;
+    private Long MemNo;
+    private String MemNickname;
     private String BoardTitle;
     private String BoardContent;
     private LocalDateTime CreateDate;

@@ -7,8 +7,10 @@ import '../BbsStyle/bbsDetail.css'
 import BbsModifyModal from "./BbsModify";
 import BbsDeleteModal from "./BbsDelete";
 import Comment from "../Comment/Comment";
+import {useAuth} from "../../member/Context";
 
 function BbsDetail({ isOpen, onRequestClose, boardId }) {
+    const {payload} = useAuth();
     const [board, setBoard] = useState(null);
     const [isModifyModalOpen, setIsModifyModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -36,13 +38,16 @@ function BbsDetail({ isOpen, onRequestClose, boardId }) {
                 console.error('데이터 가져오기 실패:', error);
             });
     };
-
     if (!board) {
         return null;
     }
 
     const openModifyModal = () => {
-        setIsModifyModalOpen(true);
+        if (payload.memberNo === board.memNo){
+            setIsModifyModalOpen(true);
+        }else{
+            alert("자신의 게시물에만 수정이 가능합니다.")
+        }
     };
 
     const closeModifyModal = () => {
@@ -51,12 +56,17 @@ function BbsDetail({ isOpen, onRequestClose, boardId }) {
     };
 
     const openDeleteModal = ()=>{
-        setIsDeleteModalOpen(true);
+        if (payload.memberNo === board.memNo){
+            setIsDeleteModalOpen(true);
+        }else{
+            alert("자신의 게시물에만 삭제가 가능합니다.")
+        }
     }
 
     const closeDeleteModal = ()=>{
         setIsDeleteModalOpen(false);
     }
+
     return (
         <div>
             <Modal
@@ -83,7 +93,7 @@ function BbsDetail({ isOpen, onRequestClose, boardId }) {
                         <div className="Board-Detail-Profile">
                             <div className="Profile">조회수: {board.boardViews}</div>
                             <div className="Profile"><img alt="이미지"/></div>
-                            <div className="Profile">작성자</div>
+                            <div className="Profile MemberNickname">{board.memNickname}</div>
                             <div className="Profile Profile-Setting">편집점</div>
                         </div>
                         <div className="Board-Detail-TitleAndContent">

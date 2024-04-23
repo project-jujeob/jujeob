@@ -8,6 +8,7 @@ import BbsSlideAndBestPost from "../BoardComponent/BbsSlideAndBestPost";
 import {useAuth} from "../../member/Context";
 
 function BbsList() {
+    const {payload} = useAuth();
     return (
         <div>
             <Header />

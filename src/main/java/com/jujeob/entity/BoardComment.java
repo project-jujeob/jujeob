@@ -16,7 +16,7 @@ public class BoardComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Comment_Id")
-    private int Comment_Id;
+    private int CommentId;
 
 
     @Column(name = "Comment_CreateDate")

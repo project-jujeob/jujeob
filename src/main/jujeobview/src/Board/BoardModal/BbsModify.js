@@ -6,6 +6,7 @@ import '../BbsStyle/bbsWrite.css'
 function BbsModify({ isOpen, onRequestClose, boardId }) {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
     Modal.setAppElement('#root');
     /*console.log("아이디: " + boardId);
     console.log("제목 콘솔 1 :" + title + " 입니다 ");
@@ -13,6 +14,7 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
 
     useEffect( () => {
         const fetchData = async () => {
+
             try {
                 const response = await fetch(`/board/Detail/${boardId}`);
                 const data = await response.json();
@@ -23,6 +25,8 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
             } catch(error){
                 console.error("에러!" + error);
                 alert("게시물을 수정할 수 없습니다.")
+            }finally {
+                setIsSubmitting(false); // 버튼 활성화
             }
         };
 
@@ -31,7 +35,7 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        setIsSubmitting(true);
         try{
             await fetch(`/board/Update/${boardId}`, {
                 method: 'PATCH',
@@ -96,7 +100,7 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
                             />
                         </div>
                         <div className="ButtonArea">
-                            <button className="submitButton" type="submit">수정 완료</button>
+                            <button className="submitButton" type="submit" disabled={isSubmitting}>수정 완료</button>
                             <button className="goBackButton" onClick={onRequestClose}>닫기</button>
                         </div>
                     </form>

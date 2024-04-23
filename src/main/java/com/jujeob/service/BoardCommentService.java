@@ -1,6 +1,8 @@
 package com.jujeob.service;
 
+import com.jujeob.Exception.BoardNotFoundException;
 import com.jujeob.dto.BoardCommentDto;
+import com.jujeob.entity.Board;
 import com.jujeob.entity.BoardComment;
 import com.jujeob.repository.BoardCommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ public class BoardCommentService {
     private BoardCommentDto mapCommentDto(BoardComment entity){
         BoardCommentDto CommentDto = new BoardCommentDto();
         CommentDto.setCommentContent(entity.getCommentContent());
-        CommentDto.setComment_Id(entity.getComment_Id());
+        CommentDto.setCommentId(entity.getCommentId());
         CommentDto.setCreateDate(entity.getCreateDate());
         CommentDto.setBoardId(entity.getBoard().getBoardId()); // 수정된 부분
         //CommentDto.setMemNickname(entity);
@@ -44,8 +46,18 @@ public class BoardCommentService {
             String nickname = boardCommentRepository.findNicknameByMemNo(comment.getMemNo());
             commentDto.setMemNickname(nickname);
             commentDto.setMemNo(comment.getMemNo());
+            commentDto.setCommentId(comment.getCommentId()); // 코멘트의 ID 설정
             commentDtoList.add(commentDto);
         }
         return commentDtoList;
+    }
+
+
+    public void deleteComment(int commentId) {
+        BoardComment deleteComment = boardCommentRepository.findById(commentId)
+                .orElseThrow(() -> new BoardNotFoundException("게시물을 찾을 수 없습니다."));
+        System.out.println(deleteComment);
+        boardCommentRepository.delete(deleteComment);
+
     }
 }

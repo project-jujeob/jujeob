@@ -1,20 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import "../BbsStyle/bbsWrite.css"
 import Modal from "react-modal";
+import {useAuth} from "../../member/Context";
 
-function BbsWrite({ isOpen, onRequestClose, boardId }) {
+function BbsWrite({ isOpen, onRequestClose }) {
+    const { payload } = useAuth();
     const [boardTitle, setBoardTitle] = useState('');
     const [boardContent, setBoardContent] = useState('');
     Modal.setAppElement('#root');
 
+
+    let memNo = 0;
+    if (payload !== null) {
+        memNo = payload.memberNo;
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        if (!payload) {
+            alert("로그인한 사용자만 가능합니다!");
+            return;
+        }
         try {
-            const response = await axios.post('/board/Write', { boardTitle, boardContent});
+            const response = await axios.post('/board/Write', { memNo, boardTitle, boardContent});
             console.log(response.data);
             alert('게시물 작성 완료.')
             window.location.reload();

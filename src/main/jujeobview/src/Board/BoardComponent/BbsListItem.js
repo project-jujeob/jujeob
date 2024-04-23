@@ -81,7 +81,7 @@ function BbsListItem() {
             <div className="DetailNavSearchArea">
                 <input
                     type="text"
-                    placeholder="검색어를 입력하세요"
+                    placeholder="검색할 제목을 입력하세요"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -107,7 +107,7 @@ function BbsListItem() {
                                     <h3>{board.boardTitle}</h3>
                                 </div>
                                 <div className="PostDetailBottom">
-                                    <div className="PostDetailBottomAuthor">작성자: 아직 구현 X</div>
+                                    <div className="PostDetailBottomAuthor">작성자: {board.memNickname}</div>
                                     <div className="PostDetailBottomButton">
                                         <button className="LikeButton">♡</button>
                                         <button className="ReplyComment">댓글</button>

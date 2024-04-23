@@ -25,10 +25,15 @@
     flex-direction: row;
 }
 .Profile{
+    width: 65px;
+    font-size: 14px;
     margin-right: 10px;
 }
 .Profile-Setting{
     margin-left: auto;
+}
+.MemberNickname{
+    font-weight: bolder;
 }
 /**/
 .Board-Detail-TitleAndContent{
@@ -102,6 +107,7 @@
     margin-right: 5px;
 }
 .Comment-Author{
+    font-weight: bolder;
 }
 .Comment-Date{
     font-size: 11px;

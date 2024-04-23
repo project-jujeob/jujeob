@@ -44,7 +44,7 @@ public class BoardController {
     }
 
     @GetMapping("/Detail/{boardId}")
-    public Board getBoardDetail(@PathVariable  Integer boardId) {
+    public BoardDto getBoardDetail(@PathVariable  Integer boardId) {
         System.out.println("요청 보냈다");
         System.out.println("보드 아이디:" + boardId);
 

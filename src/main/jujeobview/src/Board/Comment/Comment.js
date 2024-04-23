@@ -6,7 +6,6 @@ import {useAuth} from "../../member/Context";
 function Comment ({ boardId }){
     const { payload } = useAuth();
     const [commentsList, setCommentsList] = useState([]);
-    console.log(payload);
     useEffect(() => {
         if (boardId) {
             commentFetchData();
@@ -25,7 +24,7 @@ function Comment ({ boardId }){
     };
     return (
         <div className="Board-Detail-Comment-Container">
-            <List commentsList={commentsList}/>
+            <List commentsList={commentsList} boardId={boardId} commentFetchData={commentFetchData}/>
             <div className="Comment-LikeArea">하트</div>
             <Write boardId={boardId} commentFetchData={commentFetchData} />
         </div>

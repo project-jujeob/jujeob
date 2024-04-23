@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import BbsDetailModal from "../BoardModal/BbsDetail";
 import BbsWrite from "../BoardModal/BbsWrite";
 import {useAuth} from "../../member/Context";
-function BbsCategory({ onSearch }) {
+function BbsCategory() {
     const {payload} = useAuth();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => {

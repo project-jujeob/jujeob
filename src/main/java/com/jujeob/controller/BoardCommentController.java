@@ -34,5 +34,15 @@ public class BoardCommentController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 작성 중 오류가 발생했습니다.");
         }
     }
-
+    @DeleteMapping("/Delete/{commentId}")
+    public ResponseEntity<String> deleteBoard(@PathVariable int commentId){
+        /*        System.out.println( "컨트롤러에서 요청 받았습니다 아이디는 : " + boardId);*/
+        System.out.println("댓글의 아이디 컨트롤러에서는 : "  + commentId);
+        try{
+            boardCommentService.deleteComment(commentId);
+            return ResponseEntity.ok("게시물이 삭제되었습니다.");
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시물 삭제 중 오류가 발생했습니다.");
+        }
+    }
 }
