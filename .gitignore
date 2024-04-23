@@ -42,3 +42,6 @@ sql-scripts/*
 
 ### YAML ###
 *.yml
+
+# React specific
+node_modules/

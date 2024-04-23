@@ -22,9 +22,11 @@ function Header() {
             const [header, payloadBase64] = token.split('.');
 
             try {
-                const payloadString = atob(payloadBase64);
+                const payloadString = base64DecodeUnicode(payloadBase64);
                 const newPayload = JSON.parse(payloadString);
                 setAuthPayload(newPayload); // payload를 Context에 설정
+
+                console.log("뉴페이",newPayload);
             } catch (error) {
                 console.error('Failed to decode payload:', error);
             }
@@ -82,3 +84,10 @@ function Header() {
 }
 
 export default Header;
+
+function base64DecodeUnicode(str) {
+    // Convert Base64 encoded bytes to percent-encoding, and then get the original string
+    return decodeURIComponent(atob(str).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
