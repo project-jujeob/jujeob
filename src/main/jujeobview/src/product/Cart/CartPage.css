@@ -1,3 +1,7 @@
+a{
+    text-decoration: none;
+}
+
 .cartContainer{
     width:75%;
     margin: 80px auto;
@@ -54,7 +58,6 @@
 .listCheckbox{
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 .emptyCart{
@@ -69,7 +72,7 @@
     align-items: center;
     height:120px;
     padding:10px 0;
-    border-bottom : 1px solid rgb(0, 0, 0);
+    border-bottom : 1px solid rgb(238,238,238);
 }
 
 .cartContent>div:nth-child(1){
@@ -193,4 +196,30 @@
     font-weight: bold;
     border-radius: 5px;
     cursor: pointer;
+}
+
+/* customer order */
+.orderContainer{
+    width:60%;
+    margin:80px auto;
+}
+
+.orderContainer h1{
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.orderTitle{
+
+}
+
+.orderItem{
+    padding-bottom: 10px;
+    border-bottom: 1px solid #000;
+}
+
+.orderUser{
+    margin-top:80px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #000;
 }

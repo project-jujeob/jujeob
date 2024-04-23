@@ -13,18 +13,15 @@ import useCheckUserLikes from "../Like/useCheckUserLikes";
 function DetailTraditional({product}) {
     const { payload } = useAuth();
     const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
-
     const [cartQuantity, setCartQuantity] = useState(1);
 
     const handleAddToCart = () => {
         addToCart(product,cartQuantity);
     };
 
-    /* 이거 안쓰는건지 확인
     const handleQuantityChange = (newQuantity) => {
-        setCartQuantity(newQuantity);
-    }
-    */
+        setCartQuantity(newQuantity); // 수량 변경 시 장바구니에 추가될 수량 업데이트
+    };
 
     const contentTopRef = useRef(null);
     const bottomRef = useRef(null);
@@ -50,12 +47,15 @@ function DetailTraditional({product}) {
                             <p><span>용량&ensp;:&ensp;</span> {product.volume}</p>
                             <p><span>소비기한&ensp;:&ensp;</span> {product.expDate}</p>
                             <p><span>추천 검색어&ensp;:&ensp;</span> {product.keyword}</p>
-                            <p><span>구매수량 : &ensp;</span><QuantityCounter/></p>
+                            <p><span>구매수량 : &ensp;</span>
+                                <QuantityCounter initialQuantity={1} // 초기 수량 설정
+                                                 onQuantityChange={handleQuantityChange} // 수량 변경 시 addToCart 함수 호출
+                                /></p>
                         </div>
 
                         <div className="detailBtn">
                             <div>[예약]</div>
-                            <LikeBtnClick product={product} payload={payload} likes={likes} setLikes={setLikes} />
+                            <LikeBtnClick product={product} payload={payload} likes={likes} setLikes={setLikes}/>
                             <button className="cartBtn" onClick={handleAddToCart}>장바구니 담기</button>
                         </div>
                     </div>

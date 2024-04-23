@@ -17,6 +17,20 @@ function CartPage() {
     //const currentItem = null;
 
     useEffect(() => {
+        if (memberNo) {
+            // 회원 번호를 기반으로 서버에서 장바구니 정보를 가져옴
+            axios.get(`/api/cartPageList/${memberNo}`)
+                .then(response => {
+                    // 장바구니 정보를 상태로 설정하여 화면에 표시
+                    setCartItems(response.data);
+                })
+                .catch(error => {
+                    console.error('장바구니 정보를 가져오는데 실패했습니다:', error);
+                });
+        }
+    }, [memberNo]); // memberNo 상태가 변경될 때만 실행됨
+
+    useEffect(() => {
         // 페이지가 로드될 때 현재 로그인된 사용자의 memberNo 값을 얻어옴
         if (memberNo) {
             // 현재 사용자의 memberNo 값을 기준으로 로컬 스토리지에서 장바구니 정보를 가져옴
@@ -85,7 +99,6 @@ function CartPage() {
             .catch(error => {
                 console.error('장바구니 삭제 안됨:', error);
             });
-
 
         // 삭제 후 총 가격 업데이트
         //const totalPrice = updatedCart.reduce((acc, item) => acc + parseInt(item.price.replace(/[^\d]/g, '')), 0);
@@ -164,7 +177,7 @@ function CartPage() {
             pathname: '/CustomerOrder',
             state: {selectedItems: selectedItems}
         };*/
-console.log("선택된아이템",selectedItems);
+    console.log("선택된아이템",selectedItems);
     return (
         <div>
             <Header/>
@@ -202,7 +215,6 @@ console.log("선택된아이템",selectedItems);
                                                     />
                                                 </div>
                                                 <div>
-
                                                     <img src={item.img} alt="장바구니목록이미지"/>
                                                 </div>
                                                 <div>{item.name}</div>
@@ -241,15 +253,9 @@ console.log("선택된아이템",selectedItems);
                                 <span className="paymentBold">{paymentAmount.toLocaleString()} 원</span>
                             </div>
                         </div>
-                        {/*<Link to="/CustomerOrder">
-                            <div className="orderBtn" onClick={handlePurchase}>구매하기</div>
-                        </Link>*/}
-                        {/*<Link to={{
-                            pathname: '/CustomerOrder',
-                            state: { selectedItems: selectedItems } }}>
+                        <Link to={"/CustomerOrder"} state={{selectedItems: selectedItems}} className="link">
                             <div className="orderBtn">구매하기</div>
-                        </Link>*/}
-                        <Link to={"/CustomerOrder"} state={{selectedItems: selectedItems}}>구매하기</Link>
+                        </Link>
                         {/*<Link to={{ pathname: "/CustomerOrder", state: selectedItems }}>구매하기</Link>*/}
                     </div>
                 </div>

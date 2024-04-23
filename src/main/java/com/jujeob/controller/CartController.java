@@ -1,7 +1,9 @@
 package com.jujeob.controller;
 
+import com.jujeob.dto.CartDto;
 import com.jujeob.entity.Cart;
 import com.jujeob.repository.CartRepository;
+import com.jujeob.repository.ProductRepository;
 import com.jujeob.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,8 +23,10 @@ public class CartController {
     CartRepository cartRepository;
 
     @Autowired
-    CartService cartService;
+    ProductRepository productRepository;
 
+    @Autowired
+    CartService cartService;
 
     @PostMapping("/addToCart")
     public ResponseEntity<String> addToCart(@RequestBody List<Cart> cartItems) {
@@ -41,6 +46,22 @@ public class CartController {
         }
 
         return ResponseEntity.ok("장바구니에 상품이 추가되었습니다.");
+    }
+
+    @GetMapping("/cartPageList/{memberNo}")
+    public List<CartDto> cartListUp(@PathVariable Long memberNo){
+        System.out.println("카트내용"+cartRepository.findByMemberNo(memberNo));
+
+        List<Cart> carts = cartRepository.findByMemberNo(memberNo);
+        List<CartDto> cartDtos = new ArrayList<>();
+
+        for(Cart cart : carts){
+            cartDtos.add(cartService.convertToDto(cart));
+        }
+
+        System.out.println("cartDtos:"+cartDtos);
+        //return cartRepository.findAll();
+        return cartDtos;
     }
 
     @Transactional
