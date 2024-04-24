@@ -56,7 +56,7 @@ function Register() {  //회원가입폼에 입력받을 데이터
                         <div className={"MemberId"}>
                             <div className={"MemberLabel"}><label htmlFor={"memId"}>아이디</label></div>
                             <div className={"MemberInput"}>
-                                <input type={"text"} id={"memId"} placeholder={"아이디를 입력해주세요"} name={"memId"}
+                                <input type={"text"} id={"r"} placeholder={"아이디를 입력해주세요"} name={"memId"}
                                        onChange={registerDataChange} required={true}/><br/>
                             </div>
                             <div>

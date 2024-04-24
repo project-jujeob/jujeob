@@ -74,6 +74,8 @@ dependencies {
 //    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 //    implementation 'org.springframework.data:spring-data-redis'
 
+    // 파일 업로드
+    
 
 
 }

@@ -1,13 +1,21 @@
 package com.jujeob.service;
 
 import com.jujeob.dto.ProductListDto;
+import com.jujeob.dto.ProductRegisterDto;
 import com.jujeob.entity.LikeProduct;
 import com.jujeob.entity.Product;
 import com.jujeob.repository.LikeProductRepository;
 import com.jujeob.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -186,5 +194,72 @@ public class ProductService {
             productListByOrderByDtos.add(mapProductToDto(entity));
         }
         return productListByOrderByDtos;
+    }
+
+    public Product registerProduct(ProductRegisterDto productRegisterDto) {
+        MultipartFile img = productRegisterDto.getImg();
+        Product product = new Product();
+        product.setProductId(productRegisterDto.getProductId());
+        product.setName(productRegisterDto.getName());
+        uploadAndSetImage(productRegisterDto.getImg(), product, "img");
+        product.setProductNo(productRegisterDto.getPrice());
+        product.setAlcohol(productRegisterDto.getAlcohol());
+        product.setVolume(productRegisterDto.getVolume());
+        product.setType(productRegisterDto.getType());
+        product.setDescription(productRegisterDto.getDescription());
+        product.setKeyword(productRegisterDto.getKeyword());
+        product.setCompany(productRegisterDto.getCompany());
+        product.setPackageType(productRegisterDto.getPackageType());
+        product.setUnit(productRegisterDto.getUnit());
+        uploadAndSetImage(productRegisterDto.getDetailImg(), product, "detailImg");
+        uploadAndSetImage(productRegisterDto.getTastingImg(), product, "tastingImg");
+        product.setColorAndHomogeneity(productRegisterDto.getColorAndHomogeneity());
+        product.setIncense(productRegisterDto.getIncense());
+        product.setTasting(productRegisterDto.getTasting());
+        product.setMouthfeel(productRegisterDto.getMouthfeel());
+        uploadAndSetImage(productRegisterDto.getBrandImg(), product, "brandImg");
+        product.setWinery(productRegisterDto.getWinery());
+        product.setKind(productRegisterDto.getKind());
+        product.setColor(productRegisterDto.getColor());
+        product.setOpenType(productRegisterDto.getOpenType());
+        product.setAroma(productRegisterDto.getAroma());
+        product.setFoodPairing(productRegisterDto.getFoodPairing());
+        product.setBreeding(productRegisterDto.getBreeding());
+        product.setRecommendGlass(productRegisterDto.getRecommendGlass());
+        product.setCountry(productRegisterDto.getCountry());
+        product.setCountryDescription(productRegisterDto.getCountryDescription());
+        product.setBrand(productRegisterDto.getBrand());
+        product.setCrate(productRegisterDto.getCrate());
+        product.setHowToDrink(product.getHowToDrink());
+        product.setFlavor(product.getFlavor());
+        product.setFinish(product.getFinish());
+
+        return productRepository.save(product);
+    }
+
+    private void uploadAndSetImage(MultipartFile imgFile, Product product, String imageType) {
+        if (imgFile != null && !imgFile.isEmpty()) {
+            String fileName = StringUtils.cleanPath(Objects.requireNonNull(imgFile.getOriginalFilename()));
+            Path path = Paths.get("src", "main", "resources", "static", "productImg", fileName);
+            try {
+                Files.copy(imgFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                switch (imageType) {
+                    case "img" :
+                        product.setImg(path.toString());
+                        break;
+                    case "detailImg":
+                        product.setDetailImg(path.toString());
+                        break;
+                    case "tastingImg":
+                        product.setTastingImg(path.toString());
+                        break;
+                    case "brandImg":
+                        product.setBrandImg(path.toString());
+                        break;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();  // 더 나은 예외 처리 로직 필요
+            }
+        }
     }
 }

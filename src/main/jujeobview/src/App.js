@@ -15,6 +15,10 @@ import ReviewWrite from "./product/Detail/review/ReviewWrite";
 import {PaginationProvider} from "./common/PaginationContext";
 import Pagination from "./common/Pagination";
 import CustomerOrder from "./product/Cart/CustomerOrder";
+import Admin from "./admin/Admin";
+import UserInfo from "./admin/UserInfo";
+import ProductRegistration from "./admin/ProductRegistration";
+import Announcement from "./admin/Announcement";
 
 
 function App() {
@@ -24,6 +28,10 @@ function App() {
             <div>
                 <Routes>
                     <Route path="/" element={<MainPage />} />
+                    <Route path='/Admin' element={<Admin />} />
+                    <Route path='/UserInfo' element={<UserInfo />} />
+                    <Route path='/ProductRegistration' element={<ProductRegistration />} />
+                    <Route path='/Announcement' element={<Announcement />} />
                     <Route path='/ProductList' element={<ProductList />}/>
                     <Route path='/ProductItemDetail/:productNo' element={<ProductItemDetail /> } />
                     <Route path='/Login' element={<Login />} />

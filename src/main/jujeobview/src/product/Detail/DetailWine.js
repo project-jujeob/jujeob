@@ -8,6 +8,7 @@ import {useAuth} from "../../member/Context";
 import LikeBtnClick from "../Like/LikeBtnClick";
 import useCheckUserLikes from "../Like/useCheckUserLikes";
 import DetailScrollToTop from "./DetailScrollToTop";
+import {getImageUrl} from "../../common/ImageUrl";
 
 
 function DetailTraditional({product}) {
@@ -27,7 +28,7 @@ function DetailTraditional({product}) {
             <div className="detail">
                 <div className="detailTop">
                     <div>
-                        <img src={product.img} className="detailImgthumb" alt="술이미지"/>
+                        <img className="detailImgthumb" src={getImageUrl(product.img)} alt="술이미지"/>
                     </div>
                     <div className="detailRight">
                         <ProductType productId={product.productId}/>

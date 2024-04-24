@@ -49,7 +49,7 @@ function Header() {
         <div className="Header">
             <div className="HeaderLogo">
                 <Link className="HeaderLink" to={'/'}>
-                    <img src={CommonLogo} alt="헤더로고" />
+                    <img src={CommonLogo} alt="헤더로고"/>
                     <p>JU JEOB</p>
                 </Link>
             </div>
@@ -60,12 +60,24 @@ function Header() {
                 <Link to={'/BbsList'}>
                     <button>커뮤니티</button>
                 </Link>
-                <button>공지사항</button>
-                <Link to={'/Cart'}>
-                    <button>장바구니</button>
+                <Link to={'/Announcement'}>
+                    <button>공지사항</button>
                 </Link>
-                {payload ? (
+                {payload && payload.memberRole === "admin" ? (
                     <>
+                        <Link to={'/UserInfo'}>
+                            <button>회원정보</button>
+                        </Link>
+                        <Link to={'/ProductRegistration'}>
+                            <button>상품등록</button>
+                        </Link>
+                        <button onClick={logoutAction}>로그아웃</button>
+                    </>
+                ) : payload ? (
+                    <>
+                        <Link to={'/Cart'}>
+                            <button>장바구니</button>
+                        </Link>
                         <Link to={'/MyPage'}>
                             <button>마이페이지</button>
                         </Link>
@@ -78,6 +90,7 @@ function Header() {
                 )}
             </div>
         </div>
+
     );
 }
 

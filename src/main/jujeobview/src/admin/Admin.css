@@ -1,0 +1,186 @@
+.ProductRegistrationContainer {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+.ProductRegistrationContainer h2 {
+    margin: 30px 0px;
+    text-align: center;
+}
+
+.ProductRegistrationForm {
+    display: flex;
+    flex-direction: column;
+}
+
+.ChooseMainType {
+    display: grid;
+    grid-template-columns: 200px auto;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.MainTypeContainer {
+    display: flex;
+    align-items: center;
+}
+
+.MainTypeContainer div {
+    grid-template-columns: 120px 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.MainType {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.MainTypeButtons button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    background-color: #FF7E5C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.CommonFields, .RenderingFields, .MainTypeContainer {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.MainTypeContainer div {
+    margin-left: 100px;
+}
+
+
+.CommonContainer div {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.RenderingFields div {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.CommonContainer label, .CommonFields label,
+.RenderingFields label {
+    display: inline-block;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px 0 0 5px;
+    text-align: left;
+}
+
+.CommonContainer input[type="text"] ,.CommonContainer input[type="file"],
+.CommonContainer input[type="number"], .CommonContainer textarea ,
+.CommonFields input[type="text"] ,.CommonFields input[type="file"],
+.CommonFields input[type="number"], .CommonFields textarea,
+.RenderingFields input[type="text"] ,.RenderingFields input[type="file"],
+.RenderingFields input[type="number"], .RenderingFields textarea {
+    padding: 10px;
+    border: 2px solid #ced4da;
+    border-radius: 0 5px 5px 0;
+    width: 100%;
+}
+
+.CommonContainer input[type="text"]:focus,
+.CommonFields input[type="text"]:focus,
+.RenderingFields input[type="text"]:focus {
+    border-color: #FF7E5C;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem #dad8d8;
+}
+
+.ProductRegistrationForm button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #FF7E5C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: center;
+    font-size: 16px;
+}
+
+.ProductRegistrationForm button[type="submit"]:hover {
+    background-color: #ff5c2f;
+    color: #0a0a0a;
+}
+
+
+
+/*-------------------UserInfo.js------------------------*/
+.UserInfoContainer {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.UserInfoContainer h2 {
+    text-align: center;
+    margin: 30px 0px;
+}
+
+.MemberInfoList {
+    width: 100%;
+    overflow-y: auto;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.MemberInfoListHeader {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.MemberInfoListContent {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.MemberInfoListHeader div {
+    padding: 15px;
+    font-weight: bold;
+}
+
+.MemberInfoListContent div {
+    margin: 10px 0px;
+}
+
+.MemberInfoId, .MemberInfoNickname, .MemberInfoName, .MemberInfoCreateDate {
+    width: 20%;
+}
+
+.MemberInfoEmail, .MemberInfoPhone {
+    width: 25%;
+}
+
+.MemberInfoAddr {
+    width: 25%;
+}
+
+.MemberInfoNo {
+    width: 10%;
+}
+
+.MemberDeleteStatus {
+    width: 15%;
+}

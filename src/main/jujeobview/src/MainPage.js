@@ -50,6 +50,9 @@ function MainPage() {
             <div className="MainContainer">
                 <div className="MainHeader">
                     <div className="MainMenu">
+                        <Link to="/Admin">
+                            <button>관리자</button>
+                        </Link>
                         <Link to="/ProductList">
                             <button>술 정보</button>
                         </Link>
