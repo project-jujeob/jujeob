@@ -2,7 +2,7 @@ import Modal from "react-modal";
 import React from "react";
 import {useAuth} from "../../member/Context";
 
-function Delete({ isOpen, onRequestClose, commentId ,  commentFetchData }) {
+function Delete({ isOpen, onRequestClose, commentId ,  commentFetchData, onDeleteComplete }) {
 
     console.log("프론트에서 커멘트 아이디: " + commentId)
     Modal.setAppElement('#root');
@@ -16,7 +16,9 @@ function Delete({ isOpen, onRequestClose, commentId ,  commentFetchData }) {
             });
             alert('댓글이 삭제되었습니다.');
             onRequestClose();
+            onDeleteComplete();
             commentFetchData();
+
         } catch(error){
             console.error("에러!", error)
             alert('댓글 삭제 실패!')

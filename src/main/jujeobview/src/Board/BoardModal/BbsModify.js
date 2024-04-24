@@ -24,7 +24,7 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
                 console.log("내용 콘솔 2 :" + content + " 입니다 ");*/
             } catch(error){
                 console.error("에러!" + error);
-                alert("게시물을 수정할 수 없습니다.")
+                alert("게시물을 수정할 수 없습니다.");
             }finally {
                 setIsSubmitting(false); // 버튼 활성화
             }

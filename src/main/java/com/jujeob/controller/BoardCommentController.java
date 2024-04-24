@@ -45,4 +45,14 @@ public class BoardCommentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시물 삭제 중 오류가 발생했습니다.");
         }
     }
+    @PatchMapping("/Update/{commentId}")
+    public ResponseEntity<String> updateComment(@PathVariable int commentId, @RequestBody String updatedContent) {
+        System.out.println("업데이트 컨트롤러" + updatedContent);
+        try {
+            boardCommentService.updateComment(commentId, updatedContent);
+            return ResponseEntity.ok("댓글이 성공적으로 수정되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 수정에 실패했습니다.");
+        }
+    }
 }

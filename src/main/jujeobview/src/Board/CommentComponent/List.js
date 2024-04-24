@@ -1,63 +1,129 @@
-import React, {useState, useEffect} from "react";
+
+import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import DeleteModal from "../CommentComponent/Delete";
-import {useAuth} from "../../member/Context";
+import { useAuth } from "../../member/Context";
 
-function List({ commentsList , commentFetchData}){
-    const {payload} = useAuth();
+function List({ commentsList, commentFetchData }) {
+    const { payload } = useAuth();
     Modal.setAppElement('#root');
-    // 삭제 모달의 상태를 관리하는 useState 훅
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [selectedCommentId, setSelectedCommentId] = useState(null);
-    const [selectedCommentMemNo, setSelectedCommentMemNo]= useState(null);
-    // 삭제할 댓글의 id를 관리하는 useState 훅
-
-    // 삭제 모달을 열기 위한 함수
+    const [selectedCommentMemNo, setSelectedCommentMemNo] = useState(null);
+    const [editMode, setEditMode] = useState({ id: null, content: null});
     useEffect(() => {
-        // selectedCommentMemNo가 null이 아닌 경우에만 실행
         if (selectedCommentMemNo !== null) {
-            console.log("셀렉티멤넘" + selectedCommentMemNo);
             if (payload.memberNo === selectedCommentMemNo) {
                 setIsDeleteModalOpen(true);
             } else {
                 alert("자신의 게시물에만 삭제가 가능합니다.");
+                setSelectedCommentId(null);
+                setSelectedCommentMemNo(null);
             }
         }
     }, [payload.memberNo, selectedCommentMemNo]);
+
     const openDeleteModal = (commentId, memNo) => {
         setSelectedCommentId(commentId);
         setSelectedCommentMemNo(memNo);
-        console.log("페이로드" + payload.memberNo);
     };
 
-    if (commentsList && Array.isArray(commentsList)) {
-        if (commentsList.length === 0) {
-            return <div className="Comment-List">첫 댓글의 주인공이 되어라.</div>
+    const closeDeleteModal = (cancelled) => {
+        setIsDeleteModalOpen(false);
+        if (cancelled) {
+            setSelectedCommentId(null);
+            setSelectedCommentMemNo(null);
         }
-    }
+    };
+    const onDeleteComplete = () => {
+        setIsDeleteModalOpen(false);
+        setSelectedCommentId(null);
+        setSelectedCommentMemNo(null);
+    };
+    const handleEdit = (commentId, commentContent, memNo) => {
+        if (payload.memberNo !== memNo) {
+            alert("자신의 댓글만 수정할 수 있습니다.");
+            return;
+        }
+        setEditMode({ id: commentId, content: commentContent });
+    };
+
+    const handleSave = async (commentId, updatedContent) => {
+        console.log(updatedContent)
+
+        try {
+            await fetch(`/boardComment/Update/${commentId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: updatedContent
+            });
+        } catch (error) {
+            console.error("에러!" + error);
+            alert("댓글을 수정할 수 없습니다.");
+        } finally {
+            setEditMode({id: null, content: null}); // 수정 종료
+            commentFetchData();
+        }
+    };
+
+    const cancel = () =>{
+        setEditMode({ id: null, content: null });
+    };
     return (
         <div className="Comment-List">
             {commentsList.map((comment, index) => (
                 <div className="Comment-Detail" key={index}>
-                    <button onClick={() => openDeleteModal(comment.commentId, comment.memNo)}>삭제</button>
-                    <div className="Comment-Date"> {new Date(comment.createDate).toLocaleString('ko-KR', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit',
-                    })}</div>
-                    <div className="Comment-AuthorAndContent">
-                        <div className="AuthorAndContent-ProfileImgAndAuthor">
-                            <div className="AuthorAndContent Comment-ProfileImg">이미지</div>
-                            <div className="AuthorAndContent Comment-Author">{comment.memNickname}</div>
+                    {editMode.id === comment.commentId ? ( // 수정 모드
+                        <div>
+                            <input
+                                type="text"
+                                value={editMode.content} // 수정된 내용을 입력 필드에 표시합니다.
+                                onChange={(e) => setEditMode({ ...editMode, content: e.target.value })}
+                            />
+                            <button onClick={()=> cancel()}>취소</button>
+                            <button onClick={() => handleSave(comment.commentId, editMode.content)}>저장</button>
                         </div>
-                        <div className="AuthorAndContent Comment-Content">{comment.commentContent}</div>
-                    </div>
+                    ) : (
+                        <div>
+                            <div className="Comment-Detail-UpdateAndDelete">
+                                <div
+                                    className="Comment-Detail-Item Comment-Detail-DeleteButton"
+                                    onClick={() => openDeleteModal(comment.commentId, comment.memNo)}
+                                >
+                                    삭제
+                                </div>
+                                <div className="Comment-Detail-Item Comment-Detail-Divide"></div>
+                                <div
+                                    className="Comment-Detail-Item Comment-Detail-UpdateButton"
+                                    onClick={() => handleEdit(comment.commentId, comment.commentContent, comment.memNo)}
+                                >
+                                    수정
+                                </div>
+                            </div>
+                            <div className="Comment-Date">
+                                {new Date(comment.createDate).toLocaleString('ko-KR', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    second: '2-digit',
+                                })}
+                            </div>
+                            <div className="Comment-AuthorAndContent">
+                                <div className="AuthorAndContent-ProfileImgAndAuthor">
+                                    <div className="AuthorAndContent Comment-ProfileImg">이미지</div>
+                                    <div className="AuthorAndContent Comment-Author">{comment.memNickname}</div>
+                                </div>
+                                <div className="AuthorAndContent Comment-Content">{comment.commentContent}</div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             ))}
-            <DeleteModal isOpen={isDeleteModalOpen} onRequestClose={() => setIsDeleteModalOpen(false)} commentId={selectedCommentId} commentFetchData={commentFetchData}  />
+            <DeleteModal isOpen={isDeleteModalOpen} onRequestClose={closeDeleteModal} commentId={selectedCommentId} commentFetchData={commentFetchData} onDeleteComplete={onDeleteComplete}/>
         </div>
     );
 }

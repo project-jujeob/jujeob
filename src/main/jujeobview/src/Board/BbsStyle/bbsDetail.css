@@ -134,7 +134,26 @@
 .Comment-Write button{
     cursor: pointer;
 }
-
+.Comment-Detail-UpdateAndDelete{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.Comment-Detail-Item{
+    margin-left: 3px;
+    color: #555555;
+}
+.Comment-Detail-Divide{
+    border: 1px solid rgba(169, 169, 169, 0.73);
+    width: 1px;
+}
+.Comment-Detail-UpdateButton{
+    font-size: 10px;
+    text-align: right;
+}
+.Comment-Detail-DeleteButton{
+    font-size: 10px;
+    text-align: right;
+}
 .Board-Detail-UpdateAndDelete{
     display: flex;
     flex-direction: row;

@@ -2,7 +2,6 @@ package com.jujeob.service;
 
 import com.jujeob.Exception.BoardNotFoundException;
 import com.jujeob.dto.BoardCommentDto;
-import com.jujeob.entity.Board;
 import com.jujeob.entity.BoardComment;
 import com.jujeob.repository.BoardCommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +58,18 @@ public class BoardCommentService {
         System.out.println(deleteComment);
         boardCommentRepository.delete(deleteComment);
 
+    }
+
+
+
+    public void updateComment(int commentId, String updatedContent) {
+        // commentId에 해당하는 댓글을 데이터베이스에서 조회하고, 업데이트된 내용으로 수정
+        System.out.println("업콘 반응 : " + updatedContent);
+        BoardComment boardComment = boardCommentRepository.findById(commentId)
+                        .orElseThrow(() -> new BoardNotFoundException("댓글 Not Found"));
+        boardComment.setCommentContent(updatedContent);
+        boardComment.setUpdateDate(LocalDateTime.now());
+
+        boardCommentRepository.save(boardComment);
     }
 }
