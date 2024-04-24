@@ -1,8 +1,8 @@
+/*
 import Header from "../../common/Header";
 import {useLocation} from "react-router-dom";
 import React, {useState} from "react";
 import {useAuth} from "../../member/Context";
-import axios from "axios";
 
 function CustomerOrder() {
     const {payload} = useAuth();
@@ -10,7 +10,21 @@ function CustomerOrder() {
     const location = useLocation();
     console.log(" 로케이션",location);
     const { selectedItems} = location.state;
+
+    /!*console.log("주문자 정보:", selectedItems);
+
     console.log("selectedItems:",selectedItems);
+    console.log("location:"+JSON.stringify(location) );
+    const location2 = JSON.stringify(location);
+    console.log("location2:"+location2);
+
+    const selectedItem = location.state?.state?.selectedItems;
+    console.log("셀렉트아이템",selectedItem);*!/
+    //const selectedItem = location.state.state.selectedItems;
+    // 이거 무조건 풀어서 받는 수 밖에 없는듯
+
+    /!*const decodedName = decodeURIComponent(escape(payload.memberName));
+    console.log("한글",decodedName);*!/
 
     const [newAddress, setNewAddress] = useState('');
     const [paymentMethod, setPaymentMethod] = useState('BANK');
@@ -23,43 +37,58 @@ function CustomerOrder() {
         setPaymentMethod(event.target.value);
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmit = (event) => {
+        event.preventDefault();
 
-        try {
-            const addressToUse = newAddress ? newAddress : payload.memberAddr;
-            console.log("오더주소:",addressToUse);
+        // 새로운 주소가 있는지 확인하고, 없는 경우 기존 주소를 사용
+        const addressToUse = newAddress ? newAddress : payload.memberAddr;
 
-            const orderItems = selectedItems.map((item) => ({
-                productNo: item.productNo,
-                quantity: item.quantity,
-                price: item.price,
-            }));
-            console.log("오더아이템즈:",orderItems);
+        const orderItems = selectedItems.map((item) => ({
+            productNo: item.productNo,
+            quantity: item.quantity,
+            price: item.price,
+        }));
 
-            const response = await axios.post(`/api/customerOrder`, {
-                orderItems: orderItems,
-                address: addressToUse,
-                memNo: payload.memberNo,
-                memberName: payload.memberName,
-                memberPhone: payload.memberPhone,
-                memberEmail: payload.memberEmail,
-                orderStatus: "Y",
-                paymentMethod: paymentMethod
+        // 서버로 전송할 주문 정보 객체 생성
+        const orderData = {
+            orderItems: orderItems,
+            address: addressToUse,
+            memberNo : payload.memberNo,
+            memberName: payload.memberName,
+            memberPhone: payload.memberPhone,
+            memberEmail: payload.memberEmail,
+            orderStatus: "Y",
+            paymentMethod: paymentMethod // 결제 방법 추가
+        };
+        console.log("오더데이터:",orderData);
+        console.log("오더주소:",orderData.address);
+
+        // 주문 정보를 서버로 전송
+        /!*axios.post(`/api/customerOrder/${payload.memberNo}`, orderData)
+            .then((response) => {
+                console.log("order:",response.data);
+                // 성공적으로 주문을 처리한 경우 추가 작업 수행
+            })
+            .catch((error) => {
+                console.error("주문 처리 실패:", error);
+            });*!/
+        // 서버에 orderData를 전송하는 코드
+        //fetch('/api/customerOrder/' + orderData.memberNo, {
+        fetch(`/api/customerOrder/${orderData.memberNo}` ,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
             });
-
-            console.log("response:",response);
-            if (response.status === 200 || response.status === 201) {
-                alert("상품 주문 완료");
-            } else {
-                console.error('상품 주문 실패');
-            }
-        } catch (error) {
-            console.error('요청 보내기 실패:', error);
-        }
-
     };
-    console.log("페이먼트",paymentMethod);
 
     return (
         <>
@@ -119,13 +148,13 @@ function CustomerOrder() {
                                     <div><span>요청사항</span>
                                         <input/>
                                     </div>
-                                    {/* 결제 방법 선택 */}
+                                    {/!* 결제 방법 선택 *!/}
                                     <div>
                                         <span>결제 방법</span>
                                         <select value={paymentMethod} onChange={handlePaymentMethodChange}>
                                             <option value="CARD">카드 결제</option>
                                             <option value="MOBILE">모바일 결제</option>
-                                            <option value="BANK" selected>은행 송금</option>
+                                            <option value="BANK">은행 송금</option>
                                         </select>
                                     </div>
                                 </div>
@@ -136,9 +165,10 @@ function CustomerOrder() {
                 ) : (
                     <p>선택된 항목이 없습니다.</p>
                 )}
+
             </div>
         </>
     );
 }
 
-export default CustomerOrder;
+export default CustomerOrder;*/

@@ -67,7 +67,7 @@ function ReviewPage({product}) {
 
             {modal && (
                 <div className="modal">
-                <div className="modalContent">
+                    <div className="modalContent">
                         <span className="modalClose" onClick={toggleModal}>&times;</span>
                         <ReviewWrite product={product} onReviewSubmitted={handleReviewSubmitted} closeModal={toggleModal}/>
                     </div>

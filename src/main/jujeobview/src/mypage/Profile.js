@@ -110,13 +110,14 @@ function Profile() {
         <form>
             <div className={"MemberInfo"}>
                 {userData ? (
+                    <div>
+
                 <div className={"MemberId"}>
                     <div className={"MemberLabel"}><label htmlFor="memId">아이디</label></div>
                     <div className={"MemberInput"}>
                         <input type="text" id="memId" name={"memId"} value={ userData.memberId } readOnly/>
                     </div>
                 </div>
-                ) : ('')}
 
                 {/*<div className={"MemberPw"}>*/}
                 {/*    <div className={"MemberLabel"}><label htmlFor="memPw">비밀번호</label></div>*/}
@@ -140,8 +141,6 @@ function Profile() {
                 {/*        <p>동일한 비밀번호를 입력해주세요</p>*/}
                 {/*    )}*/}
                 {/*</div>*/}
-
-
                 <div className={"MemberNickname"}>
                     <div className={"MemberLabel"}><label htmlFor="memNickname">닉네임</label></div>
                     <div className={"MemberInput"}>
@@ -149,44 +148,34 @@ function Profile() {
                     </div>
                 </div>
 
-
-                {userData ? (
                 <div className={"MemberName"}>
                     <div className={"MemberLabel"}><label htmlFor="memName">이름</label></div>
                     <div className={"MemberInput"}>
                         <input type="text" id="memName" name={"memName"} defaultValue={ userData.memberName } />
                     </div>
                 </div>
-                ) : ('')}
 
-                {userData ? (
                 <div className={"MemberEmail"}>
                     <div className={"MemberLabel"}><label htmlFor="memEmail">이메일</label></div>
                     <div className={"MemberInput"}>
                         <input type="email" id="memEmail" name={"memEmail"} defaultValue={ userData.memberEmail } />
                     </div>
                 </div>
-                ) : ('')}
 
-                {userData ? (
                 <div className={"MemberPhone"}>
                     <div className={"MemberLabel"}><label htmlFor="memPhone">전화번호</label></div>
                     <div className={"MemberInput"}>
                         <input type="text" id="memPhone" name={"memPhone"} defaultValue={ userData.memberPhone } />
                     </div>
                 </div>
-                ) : ('')}
 
-                {userData ? (
                 <div className={"MemberAddr"}>
                     <div className={"MemberLabel"}><label htmlFor="memAddr">주소</label></div>
                     <div className={"MemberInput"}>
                         <input type="text" id="memAddr" name={"memAddr"} defaultValue={ userData.memberAddr } />
                     </div>
                 </div>
-                ) : ('')}
 
-                {userData ? (
                 <div className={"BtnGroup"}>
                     <div className={"SubmitBtn"}>
                         <button type="submit">탈퇴하기</button>
@@ -195,7 +184,8 @@ function Profile() {
                         <button type="submit">회원정보수정</button>
                     </div>
                 </div>
-                ) : ('')}
+                    </div>
+            ) : ('')}
 
             </div>
         </form>
