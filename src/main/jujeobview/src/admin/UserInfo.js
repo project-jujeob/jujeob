@@ -21,9 +21,7 @@ const UserInfo = () => {
 
     return (
         <div>
-            <Header />
             <div className="UserInfoContainer">
-                <h2>주접 회원 목록</h2>
                 <div className="MemberInfoList">
                     <div className="MemberInfoListHeader">
                         <div className="MemberInfoNo">NO.</div>

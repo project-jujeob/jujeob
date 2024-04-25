@@ -1,0 +1,88 @@
+/*-------------------Announcement.js------------------------*/
+.AnnouncementContainer {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.AnnouncementHeader h2{
+    text-align: center;
+    margin: 30px 0px;
+}
+
+.AnnouncementWrite {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.AnnouncementWrite button {
+    padding: 7px 10px;
+    background-color: #FF7E5C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: center;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.AnnouncementListHeader, .AnnouncementListContent {
+    display: flex;
+}
+
+.AnnouncementNo {
+    width: 7%;
+}
+
+.AnnouncementTitle {
+    width: 50%;
+}
+
+.AnnouncementWriter, .AnnouncementCreateAt {
+    width: 20%
+}
+
+.AnnouncementDetail {
+    width: 5%;
+
+}
+
+.AnnouncementContent {
+    background-color: #ece9e9;
+    padding: 20px 70px;
+}
+
+.AnnouncementBtn {
+    width: 13%;
+}
+
+.AnnouncementList {
+    width: 100%;
+    overflow-y: auto;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.AnnouncementListHeader {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    background-color: #FF7E5C;
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+}
+
+.AnnouncementListContent1 {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.AnnouncementBtn button{
+    border: none;
+    background-color: transparent;
+    padding: 2px;
+}

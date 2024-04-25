@@ -2,8 +2,10 @@ package com.jujeob.controller;
 
 import com.jujeob.dto.GetMemberDto;
 import com.jujeob.dto.ProductRegisterDto;
+import com.jujeob.entity.Announcement;
 import com.jujeob.entity.Member;
 import com.jujeob.entity.Product;
+import com.jujeob.repository.AnnouncementRepository;
 import com.jujeob.repository.MemberRepository;
 import com.jujeob.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -21,10 +24,11 @@ public class AdminController {
    @Autowired
     MemberRepository memberRepository;
 
+   @Autowired
+    AnnouncementRepository announcementRepository;
+
     @PostMapping("api/registerProduct")
     public Product registerProduct(@ModelAttribute ProductRegisterDto productRegisterDto) {
-        System.out.println(productRegisterDto.toString());
-        System.out.println(productRegisterDto.getImg());
         return productService.registerProduct(productRegisterDto);
     }
 
@@ -39,5 +43,28 @@ public class AdminController {
             memberDto.add(dto);
         }
         return memberDto;
+    }
+
+    @PostMapping("/api/AnnouncementWrite")
+    public Announcement writeAnnouncement(@RequestBody Announcement announcement) {
+
+        return announcementRepository.save(announcement);
+    }
+
+    @GetMapping("/api/AnnouncementList")
+    public List<Announcement> getAnnouncementList () {
+        return announcementRepository.findAll();
+    }
+
+    @PostMapping("api/AnnouncementDelete")
+    public void deleteAnnouncement(@RequestBody Map<String, Integer> requestBody) {
+        long announcementNo = requestBody.get("announcementNo");
+        announcementRepository.deleteById(announcementNo);
+    }
+
+    @PostMapping("/api/AnnouncementUpdate")
+    public Announcement editAnnouncement(@RequestBody Announcement announcement) {
+        System.out.println(announcement);
+        return announcementRepository.save(announcement);
     }
 }

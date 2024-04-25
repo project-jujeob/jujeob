@@ -230,9 +230,9 @@ public class ProductService {
         product.setCountryDescription(productRegisterDto.getCountryDescription());
         product.setBrand(productRegisterDto.getBrand());
         product.setCrate(productRegisterDto.getCrate());
-        product.setHowToDrink(product.getHowToDrink());
-        product.setFlavor(product.getFlavor());
-        product.setFinish(product.getFinish());
+        product.setHowToDrink(productRegisterDto.getHowToDrink());
+        product.setFlavor(productRegisterDto.getFlavor());
+        product.setFinish(productRegisterDto.getFinish());
 
         return productRepository.save(product);
     }
@@ -258,7 +258,7 @@ public class ProductService {
                         break;
                 }
             } catch (IOException e) {
-                e.printStackTrace();  // 더 나은 예외 처리 로직 필요
+                e.printStackTrace();
             }
         }
     }

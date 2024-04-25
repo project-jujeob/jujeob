@@ -18,7 +18,7 @@ import CustomerOrder from "./product/Cart/CustomerOrder";
 import Admin from "./admin/Admin";
 import UserInfo from "./admin/UserInfo";
 import ProductRegistration from "./admin/ProductRegistration";
-import Announcement from "./admin/Announcement";
+import Announcement from "./Announcement/Announcement";
 
 
 function App() {

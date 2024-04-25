@@ -11,20 +11,6 @@ const ProductRegistration = () => {
         4: '위스키/기타',
     };
 
-    const [imageSrc, setImageSrc] = useState('');
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-
-        reader.onload = (loadEvent) => {
-            setImageSrc(loadEvent.target.result);
-        };
-
-        if (file) {
-            reader.readAsDataURL(file);
-        }
-    };
-
     const [productMainType, setProductMainType] = useState([]);
     useEffect(() => {
         axios.get('/api/showProductMainType')
@@ -46,7 +32,7 @@ const ProductRegistration = () => {
             </div>
             <div>
                 <label htmlFor="img">이미지 </label>
-                <input type="file" id="img" name="img" onChange={handleFileChange} />
+                <input type="file" id="img" name="img" />
             </div>
             <div>
                 <label htmlFor="price">가격 </label>
@@ -256,15 +242,16 @@ const ProductRegistration = () => {
 
     return (
         <div>
-            <Header/>
             <div className="ProductRegistrationContainer">
-                <h2>🥂🍺상품 등록 페이지입니다🍷🍸</h2>
                 <form className="ProductRegistrationForm" onSubmit={handleSubmitRegisterForm}>
                     <div className="MainTypeContainer">
                         <label htmlFor="MainType" className="MainType">주종 </label>
                         <div className="MainTypeButtons">
                             {productMainType.map((mainType) => (
-                                <button type="button" id="mainType" onClick={() => setSelectedMainType(mainType)}>
+                                <button type="button"
+                                        id="mainType"
+                                        onClick={() => setSelectedMainType(mainType)}
+                                        className={selectedMainType === mainType ? 'active' : ''}>
                                     {alcoholTypeNames[mainType]}
                                 </button>
                             ))}

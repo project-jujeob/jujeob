@@ -65,11 +65,8 @@ function Header() {
                 </Link>
                 {payload && payload.memberRole === "admin" ? (
                     <>
-                        <Link to={'/UserInfo'}>
-                            <button>회원정보</button>
-                        </Link>
-                        <Link to={'/ProductRegistration'}>
-                            <button>상품등록</button>
+                        <Link to="/Admin">
+                            <button>관리자</button>
                         </Link>
                         <button onClick={logoutAction}>로그아웃</button>
                     </>
