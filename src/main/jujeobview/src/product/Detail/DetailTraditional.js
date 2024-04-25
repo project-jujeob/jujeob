@@ -16,7 +16,7 @@ function DetailTraditional({product}) {
     const [cartQuantity, setCartQuantity] = useState(1);
 
     const handleAddToCart = () => {
-        addToCart(product,cartQuantity);
+        addToCart(product,payload.memberNo,cartQuantity);
     };
 
     const handleQuantityChange = (newQuantity) => {
@@ -26,7 +26,6 @@ function DetailTraditional({product}) {
     const contentTopRef = useRef(null);
     const bottomRef = useRef(null);
     const reviewRef = useRef(null);
-
 
     return(
         <>

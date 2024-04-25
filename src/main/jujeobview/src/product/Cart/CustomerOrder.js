@@ -48,6 +48,22 @@ function CustomerOrder() {
                 paymentMethod: paymentMethod
             });
 
+            //
+
+            // 선택된 항목들의 productNo를 추출하여 배열로 생성
+            const selectedProductNos = selectedItems.map(item => item.productNo);
+
+            // 로컬 스토리지에서 현재 사용자의 장바구니 정보를 가져옴
+            const currentCartItems = JSON.parse(localStorage.getItem(payload.memberNo));
+
+            // 선택된 항목들을 제외한 새로운 장바구니 정보 생성
+            const updatedCartItems = currentCartItems.filter(item => !selectedProductNos.includes(item.productNo));
+
+            // 새로운 장바구니 정보를 로컬 스토리지에 저장
+            localStorage.setItem(payload.memberNo, JSON.stringify(updatedCartItems));
+
+            //
+
             console.log("response:",response);
             if (response.status === 200 || response.status === 201) {
                 alert("상품 주문 완료");

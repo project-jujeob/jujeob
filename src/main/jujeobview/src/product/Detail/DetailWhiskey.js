@@ -15,12 +15,12 @@ function DetailTraditional({product}) {
     const [cartQuantity, setCartQuantity] = useState(1);
     const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
 
-    const handleQuantityChange = (newQuantity) => {
-        setCartQuantity(newQuantity); // 수량 변경 시 장바구니에 추가될 수량 업데이트
-    };
-
     const handleAddToCart = () => {
         addToCart(product,payload.memberNo,cartQuantity);
+    };
+
+    const handleQuantityChange = (newQuantity) => {
+        setCartQuantity(newQuantity); // 수량 변경 시 장바구니에 추가될 수량 업데이트
     };
 
     const contentTopRef = useRef(null);
