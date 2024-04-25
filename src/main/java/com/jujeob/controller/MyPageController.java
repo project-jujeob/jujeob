@@ -1,14 +1,25 @@
 package com.jujeob.controller;
 
+
 import com.jujeob.repository.MemberRepository;
 import com.jujeob.repository.OrderRepository;
+
+import com.jujeob.dto.UpdateMemberDto;
+import com.jujeob.entity.Member;
+
 import com.jujeob.service.MyPageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
+
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
+
 
 @RestController
 public class MyPageController {
@@ -17,10 +28,10 @@ public class MyPageController {
     MyPageService myPageService;
 
     @Autowired
-    private MemberRepository memberRepository;
+    MemberRepository memberRepository;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     OrderRepository orderRepository;
@@ -34,11 +45,17 @@ public class MyPageController {
         return ResponseEntity.ok().body(memberInfo);
     }
 
+
     // 회원정보수정
-//    @GetMapping("/api/updateProfile")
-//    public List<RegisterDto> memberProfileInfo(){
-//        return myPageService.getMemberProfileInfo();
-//    }
+    @PutMapping("/api/member/updateProfile")
+    public ResponseEntity<?> updateProfile(@RequestBody UpdateMemberDto updateDto, Principal principal) {
+        try {
+            Member updatedMember = myPageService.updateProfile(updateDto, principal.getName());
+            return ResponseEntity.ok(updatedMember);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Update 실패 : " + e.getMessage());
+        }
+    }
 
     /*@GetMapping("/api/orderDelivery/{memberNo}")
     public ResponseEntity<?> orderDeliveryInfo(@PathVariable Long memberNo){

@@ -1,5 +1,6 @@
 package com.jujeob.controller;
 
+import com.jujeob.dto.ApiResponse;
 import com.jujeob.dto.LoginDto;
 import com.jujeob.dto.RegisterDto;
 import com.jujeob.entity.Member;
@@ -12,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -88,6 +91,14 @@ public class MemberController {
 //        tokenBlacklistService.blacklist(token, remainingTime); // 토큰을 블랙리스트에 추가
 //        return ResponseEntity.ok().body("로그아웃 되었습니다.");
 //    }
+
+    // 아이디 중복검사
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/checkMemId")
+    public ResponseEntity<?> checkMemId(@RequestParam String memId) {
+        boolean isAvailable = memberService.checkMemberId(memId);
+        return ResponseEntity.ok().body(new ApiResponse(true, "isAvailable"));
+    }
 
 
 
