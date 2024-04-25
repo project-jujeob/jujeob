@@ -15,9 +15,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long stockId;
+    private Integer stockId;
 
-    @Column(nullable = false)
+    @Column(name ="productno", nullable = false)
     private Integer productNo;
 
     @Column(nullable = false)

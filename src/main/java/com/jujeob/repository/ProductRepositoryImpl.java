@@ -1,8 +1,10 @@
 package com.jujeob.repository;
 
+import com.jujeob.dto.ProductAdminDto;
 import com.jujeob.entity.*;
 import com.jujeob.service.SubCategoryService;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -396,6 +398,24 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
             }
         }
         return query.fetch();
+    }
+
+    @Override
+    public List<ProductAdminDto> findAllAndStock() {
+        QProduct qProduct = QProduct.product;
+        QStock qStock = QStock.stock;
+
+        return factory.select(Projections.constructor(
+                        ProductAdminDto.class,
+                        qProduct.productNo,
+                        qProduct.name,
+                        qProduct.img,
+                        qProduct.price,
+                        qStock.quantity
+                ))
+                .from(qProduct)
+                .leftJoin(qStock).on(qProduct.productNo.eq(qStock.productNo))
+                .fetch();
     }
 }
 

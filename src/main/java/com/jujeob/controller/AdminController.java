@@ -1,19 +1,25 @@
 package com.jujeob.controller;
 
 import com.jujeob.dto.GetMemberDto;
+import com.jujeob.dto.ProductAdminDto;
+import com.jujeob.dto.ProductListDto;
 import com.jujeob.dto.ProductRegisterDto;
 import com.jujeob.entity.Announcement;
 import com.jujeob.entity.Member;
 import com.jujeob.entity.Product;
 import com.jujeob.repository.AnnouncementRepository;
 import com.jujeob.repository.MemberRepository;
+import com.jujeob.repository.ProductRepository;
+import com.jujeob.repository.StockRepository;
 import com.jujeob.service.ProductService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
@@ -26,6 +32,12 @@ public class AdminController {
 
    @Autowired
     AnnouncementRepository announcementRepository;
+
+   @Autowired
+    ProductRepository productRepository;
+
+   @Autowired
+    StockRepository stockRepository;
 
     @PostMapping("api/registerProduct")
     public Product registerProduct(@ModelAttribute ProductRegisterDto productRegisterDto) {
@@ -47,7 +59,6 @@ public class AdminController {
 
     @PostMapping("/api/AnnouncementWrite")
     public Announcement writeAnnouncement(@RequestBody Announcement announcement) {
-
         return announcementRepository.save(announcement);
     }
 
@@ -66,5 +77,23 @@ public class AdminController {
     public Announcement editAnnouncement(@RequestBody Announcement announcement) {
         System.out.println(announcement);
         return announcementRepository.save(announcement);
+    }
+
+    @GetMapping("/api/getProductListForAdmin")
+    public List<ProductAdminDto> getProductListForAdmin() {
+        return productService.showAllProductListAndStock();
+    }
+
+    @PostMapping("api/productDelete")
+    @Transactional
+    public void deleteProductListByAdmin(@RequestBody Map<String, Integer> requestBody) {
+        Integer productNo = requestBody.get("productNo");
+        productRepository.deleteById(productNo);
+        stockRepository.deleteByProductNo(productNo);
+    }
+
+    @GetMapping("/api/getProductDetails/{productNo}")
+    public Product getProductDetailsByProductNo(@PathVariable Integer productNo) {
+        return productService.getProductByProductNo(productNo).get();
     }
 }

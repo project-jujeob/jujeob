@@ -19,6 +19,7 @@ import Admin from "./admin/Admin";
 import UserInfo from "./admin/UserInfo";
 import ProductRegistration from "./admin/ProductRegistration";
 import Announcement from "./Announcement/Announcement";
+import ProductEdit from "./admin/ProductEdit";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
                     <Route path='/UserInfo' element={<UserInfo />} />
                     <Route path='/ProductRegistration' element={<ProductRegistration />} />
                     <Route path='/Announcement' element={<Announcement />} />
+                    <Route path='/ProductEdit/:productNo' element={<ProductEdit />} />
                     <Route path='/ProductList' element={<ProductList />}/>
                     <Route path='/ProductItemDetail/:productNo' element={<ProductItemDetail /> } />
                     <Route path='/Login' element={<Login />} />

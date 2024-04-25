@@ -67,14 +67,14 @@ function DetailTraditional({product}) {
                         reviewRef={reviewRef}
                     />
                     <div className="detailContentImg" ref={contentTopRef}>
-                        <img src={product.detailImg} alt="술디테일이미지"/>
+                        <img src={getImageUrl(product.detailImg)} alt="술디테일이미지"/>
                     </div>
                     <div className="detailContentTop">
                         <div>[전통주] {product.name}</div>
                         <p>{product.description}</p>
                     </div>
                     <div>
-                        <img src={product.tastingImg} alt="술테이스팅노트" className="tastingNote"/>
+                        <img src={getImageUrl(product.tastingImg)} alt="술테이스팅노트" className="tastingNote"/>
                     </div>
                     <div className="detailContentInfo">
                         <p><span>색&균질도 | </span>{product.colorAndHomogeneity}</p>
@@ -84,7 +84,7 @@ function DetailTraditional({product}) {
                     </div>
                 </div>
                 <div className="detailBottom" ref={bottomRef}>
-                    <img src={product.brandImg} alt="술브랜드이미지"/>
+                    <img src={getImageUrl(product.brandImg)} alt="술브랜드이미지"/>
                 </div>
             </div>
             <div ref={reviewRef}>
