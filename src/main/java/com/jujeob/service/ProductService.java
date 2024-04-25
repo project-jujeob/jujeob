@@ -4,8 +4,10 @@ import com.jujeob.dto.ProductListDto;
 import com.jujeob.dto.ProductRegisterDto;
 import com.jujeob.entity.LikeProduct;
 import com.jujeob.entity.Product;
+import com.jujeob.entity.Stock;
 import com.jujeob.repository.LikeProductRepository;
 import com.jujeob.repository.ProductRepository;
+import com.jujeob.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -26,6 +28,9 @@ public class ProductService {
 
     @Autowired
     LikeProductRepository likeProductRepository;
+
+    @Autowired
+    StockRepository stockRepository;
 
     // 기본 생성자
     public ProductService() {
@@ -197,7 +202,6 @@ public class ProductService {
     }
 
     public Product registerProduct(ProductRegisterDto productRegisterDto) {
-        MultipartFile img = productRegisterDto.getImg();
         Product product = new Product();
         product.setProductId(productRegisterDto.getProductId());
         product.setName(productRegisterDto.getName());
@@ -234,7 +238,14 @@ public class ProductService {
         product.setFlavor(productRegisterDto.getFlavor());
         product.setFinish(productRegisterDto.getFinish());
 
-        return productRepository.save(product);
+        product = productRepository.save(product);
+
+        Stock stock = new Stock();
+        stock.setProductNo(product.getProductNo()); // 재고 테이블에 상품 번호 넣기
+        stock.setQuantity(productRegisterDto.getQuantity()); // 재고 테이블에 재고 넣기
+        stockRepository.save(stock);
+
+        return product;
     }
 
     private void uploadAndSetImage(MultipartFile imgFile, Product product, String imageType) {

@@ -32,11 +32,15 @@ const ProductRegistration = () => {
             </div>
             <div>
                 <label htmlFor="img">이미지 </label>
-                <input type="file" id="img" name="img" />
+                <input type="file" id="img" name="img"/>
             </div>
             <div>
                 <label htmlFor="price">가격 </label>
                 <input type="text" id="price" name="price"/>
+            </div>
+            <div>
+                <label htmlFor="stock">재고 </label>
+                <input type="number" id="stock" name="stock"/>
             </div>
             <div>
                 <label htmlFor="alcohol">도수 </label>
@@ -193,6 +197,7 @@ const ProductRegistration = () => {
             name: formData.get('name'),
             img: formData.get('img'),
             price: formData.get('price'),
+            quantity:formData.get('stock'),
             alcohol: formData.get('alcohol'),
             volume: formData.get('volume'),
             type: formData.get('type'),

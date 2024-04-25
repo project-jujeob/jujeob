@@ -1,8 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import Header from "../common/Header";
 import axios from "axios";
+import Pagination from "../common/Pagination";
+
+const PAGE_SIZE = 5;
 
 const UserInfo = () => {
+    const [totalUserInfo, setTotalUserInfo] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(0);
+
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
@@ -18,6 +25,10 @@ const UserInfo = () => {
                 console.log('회원 목록 가져오기 실패:', error);
         })
     }, []);
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
 
     return (
         <div>
@@ -40,15 +51,23 @@ const UserInfo = () => {
                             <div className="MemberInfoId">{member.memId}</div>
                             <div className="MemberInfoNickname">{member.memNickname}</div>
                             <div className="MemberInfoName">{member.memName}</div>
-                            <div className="MemberInfoEmail">{member.memEmail}</div>
-                            <div className="MemberInfoPhone">{member.memPhone}</div>
-                            <div className="MemberInfoAddr">{member.memAddr}</div>
+                            <div className="MemberInfoEmail" title={member.memEmail}>{member.memEmail}</div>
+                            <div className="MemberInfoPhone" title={member.memPhone}>{member.memPhone}</div>
+                            <div className="MemberInfoAddr" title={member.memAddr}>{member.memAddr}</div>
                             <div className="MemberInfoCreateDate">{formatDate(member.createDate)}</div>
                             <div className="MemberDeleteStatus">{member.memDeleted}</div>
                         </div>
                     ))}
                 </div>
             </div>
+            <Pagination
+                totalItems={totalUserInfo}
+                itemsPerPage={PAGE_SIZE}
+                pageCount={5}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+            />
         </div>
     );
 };

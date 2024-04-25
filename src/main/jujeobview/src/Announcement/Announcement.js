@@ -7,7 +7,7 @@ import {useAuth} from "../member/Context";
 import Pagination from "../common/Pagination";
 import AnnouncementEdit from "../admin/AnnouncementEdit";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 3;
 
 const Announcement = () => {
     const { payload } = useAuth();
@@ -152,7 +152,7 @@ const Announcement = () => {
             <Pagination
                 totalItems={totalAnnouncement}
                 itemsPerPage={PAGE_SIZE}
-                pageCount={5}
+                pageCount={2}
                 currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={handlePageChange}

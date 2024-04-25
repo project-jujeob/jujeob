@@ -49,7 +49,8 @@
 
 .AnnouncementContent {
     background-color: #ece9e9;
-    padding: 20px 70px;
+    padding: 20px 75px;
+    white-space: pre-wrap;
 }
 
 .AnnouncementBtn {
@@ -79,6 +80,9 @@
     align-items: center;
     padding: 15px 0;
     border-bottom: 1px solid #eee;
+}
+.AnnouncementListContent1 .AnnouncementTitle{
+    text-align: left;
 }
 
 .AnnouncementBtn button{

@@ -1,5 +1,6 @@
 package com.jujeob.dto;
 
+import com.jujeob.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,8 @@ public class ProductRegisterDto {
     private MultipartFile img;
 
     private int price;
+
+    private int quantity;
 
     private double alcohol;
 
@@ -82,4 +85,5 @@ public class ProductRegisterDto {
     private String finish;
 
     private String keyword;
+
 }

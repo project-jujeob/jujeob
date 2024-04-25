@@ -31,7 +31,7 @@
 
 .AdminWorkBtn1, .AdminWorkBtn2,
 .AdminWorkBtn3, .AdminWorkBtn4 {
-    background-color: rgba(253, 98, 57, 0.60);
+    background-color: #FF7E5C;
     border: none;
     color: white;
     font-size: 20px;
@@ -42,8 +42,14 @@
     margin: 5px 10px;
 }
 
+/*.selected {*/
+/*    border: solid 2px;*/
+/*    box-shadow: 0 0 10px rgb(252, 69, 20);*/
+/*    background-color: #ff4f21;*/
+/*}*/
+
 .AdminWorkShow {
-    width: 85%; 
+    width: 85%;
 }
 
 
@@ -199,25 +205,36 @@
     align-items: center;
     background-color: #f9f9f9;
     border-bottom: 1px solid #ddd;
-    padding: 10px 0;
+    padding: 5px 0;
+
 }
 
 .MemberInfoListContent {
     display: flex;
     text-align: center;
     align-items: center;
-    padding: 10px 0;
+    padding: 5px 0;
     border-bottom: 1px solid #eee;
 }
 
 .MemberInfoListHeader div {
     padding: 15px;
     font-weight: bold;
+    font-size: 15px;
+    overflow: hidden; /* 필요에 따라 주석 처리 */
+    white-space: normal;
+    text-overflow: ellipsis;
+    flex-shrink: 1; /* 너비를 고정 */
 }
 
 .MemberInfoListContent div {
     margin: 10px 0px;
     padding: 5px;
+    font-size: 14px;
+    overflow: hidden; /* 필요에 따라 주석 처리 */
+    white-space: normal;
+    text-overflow: ellipsis;
+    flex-shrink: 1; /* 너비를 고정 */
 }
 
 .MemberInfoId, .MemberInfoNickname, .MemberInfoName, .MemberInfoCreateDate {

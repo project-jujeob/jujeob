@@ -43,12 +43,28 @@ const Admin = () => {
                 <div className="AdminWorkHeader"><h2>{getHeaderTitle()}</h2></div>
                 <div className="AdminWork">
                     <div className="AdminWorkBtns">
-                        <button className="AdminWorkBtn1" onClick={() => setSelectedTab('userinfo')}>회원 관리</button>
-                        <button className="AdminWorkBtn2" onClick={() => setSelectedTab('productRegistration')}>상품 등록
+                        <button
+                            className={`AdminWorkBtn1 ${selectedTab === 'userinfo' ? 'selected' : ''}`}
+                            onClick={() => setSelectedTab('userinfo')}>
+                            회원 관리
                         </button>
-                        <button className="AdminWorkBtn3" onClick={() => setSelectedTab('orderList')}>주문 확인</button>
-                        <button className="AdminWorkBtn4" onClick={() => handleNavigation('announcementWrite')}>공지 관리</button>
+                        <button
+                            className={`AdminWorkBtn2 ${selectedTab === 'productRegistration' ? 'selected' : ''}`}
+                            onClick={() => setSelectedTab('productRegistration')}>
+                            상품 등록
+                        </button>
+                        <button
+                            className={`AdminWorkBtn3 ${selectedTab === 'orderList' ? 'selected' : ''}`}
+                            onClick={() => setSelectedTab('orderList')}>
+                            주문 확인
+                        </button>
+                        <button
+                            className={`AdminWorkBtn4 ${selectedTab === 'announcementWrite' ? 'selected' : ''}`}
+                            onClick={() => handleNavigation('announcementWrite')}>
+                            공지 관리
+                        </button>
                     </div>
+
                     <div className="AdminWorkShow">
                         {renderComponent()}
                     </div>
