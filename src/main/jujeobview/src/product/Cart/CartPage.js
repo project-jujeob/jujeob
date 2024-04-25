@@ -94,7 +94,7 @@ function CartPage() {
 
         axios.delete(`/api/cartDelete/${memberNo}/${productNo}`)
             .then(response => {
-                alert(response.data.message); // 서버로부터의 응답 메시지를 처리
+                console.log(response.data.message); // 서버로부터의 응답 메시지를 처리
                 // 삭제에 성공했을 경우, 화면을 갱신하거나 다른 작업을 수행할 수 있음
             })
             .catch(error => {
@@ -125,7 +125,7 @@ function CartPage() {
             }
         })
             .then(response => {
-                alert(response.data.message); // 서버로부터의 응답 메시지를 처리
+                console.log(response.data.message); // 서버로부터의 응답 메시지를 처리
                 // 삭제에 성공했을 경우, 화면을 갱신하거나 다른 작업을 수행할 수 있음
             })
             .catch(error => {

@@ -54,6 +54,9 @@ public class CustomerOrder {
     @Column(nullable = false)
     private Long totalPrice;
 
+    @Column(nullable = false)
+    private String deliveryRequest;
+
     @CreatedDate
     @Column(nullable = false)
     private LocalDateTime createdAt;

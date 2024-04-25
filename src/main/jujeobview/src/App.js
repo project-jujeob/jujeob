@@ -19,6 +19,7 @@ import Admin from "./admin/Admin";
 import UserInfo from "./admin/UserInfo";
 import ProductRegistration from "./admin/ProductRegistration";
 import Announcement from "./Announcement/Announcement";
+import CustomerOrderComplete from "./product/Cart/CustomerOrderComplete";
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
                     <Route path='/ReviewWrite/:productNo' element={<ReviewWrite/>} />
                     <Route path='/Pagination' element={<Pagination />} />
                     <Route path='/CustomerOrder' element={<CustomerOrder />} />
+                    <Route path='/CustomerOrderComplete' element={<CustomerOrderComplete />} />
                 </Routes>
             </div>
         </PaginationProvider>

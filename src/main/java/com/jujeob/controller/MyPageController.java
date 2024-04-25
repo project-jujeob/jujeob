@@ -1,21 +1,15 @@
 package com.jujeob.controller;
 
-import com.jujeob.dto.ApiResponse;
-import com.jujeob.dto.PasswordVerificationDto;
-import com.jujeob.dto.RegisterDto;
-import com.jujeob.entity.LikeProduct;
-import com.jujeob.entity.Member;
 import com.jujeob.repository.MemberRepository;
-import com.jujeob.service.MemberService;
+import com.jujeob.repository.OrderRepository;
 import com.jujeob.service.MyPageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MyPageController {
@@ -28,6 +22,9 @@ public class MyPageController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    OrderRepository orderRepository;
 
 
 
@@ -43,6 +40,12 @@ public class MyPageController {
 //    public List<RegisterDto> memberProfileInfo(){
 //        return myPageService.getMemberProfileInfo();
 //    }
+
+    @GetMapping("/api/orderDelivery/{memberNo}")
+    public ResponseEntity<?> orderDeliveryInfo(@PathVariable Long memberNo){
+
+        return orderRepository.findAllByMemberNo(memberNo);
+    }
 
 
 }

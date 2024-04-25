@@ -2,7 +2,6 @@ package com.jujeob.service;
 
 import com.jujeob.dto.ProductListDto;
 import com.jujeob.dto.ProductRegisterDto;
-import com.jujeob.entity.LikeProduct;
 import com.jujeob.entity.Product;
 import com.jujeob.entity.Stock;
 import com.jujeob.repository.LikeProductRepository;
@@ -206,7 +205,7 @@ public class ProductService {
         product.setProductId(productRegisterDto.getProductId());
         product.setName(productRegisterDto.getName());
         uploadAndSetImage(productRegisterDto.getImg(), product, "img");
-        product.setProductNo(productRegisterDto.getPrice());
+        product.setPrice(productRegisterDto.getPrice());
         product.setAlcohol(productRegisterDto.getAlcohol());
         product.setVolume(productRegisterDto.getVolume());
         product.setType(productRegisterDto.getType());

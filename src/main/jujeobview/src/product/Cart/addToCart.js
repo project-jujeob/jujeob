@@ -32,7 +32,7 @@ const addToCart = (product,memberNo,cartQuantity) => {
         alert('상품이 장바구니에 추가되었습니다.');
     } else {
         // 중복된 상품이 이미 장바구니에 있음을 알림
-        alert('이미 장바구니에 있는 상품으로 1개를 추가합니다.');
+        alert('이미 장바구니에 있는 상품으로 수량을 추가합니다.');
 
         // 중복된 상품의 개수를 1개 늘림
         cartItems[existingItemIndex].quantity += 1;
@@ -44,7 +44,7 @@ const addToCart = (product,memberNo,cartQuantity) => {
     // 서버에 데이터 전송
     axios.post('/api/addToCart', cartItems)
         .then(response => {
-            alert(response.data.message); // 서버로부터의 응답 메시지를 처리
+            console.log(response.data.message); // 서버로부터의 응답 메시지를 처리
         })
         .catch(error => {
             console.error('Error adding to cart:', error);

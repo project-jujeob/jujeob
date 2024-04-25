@@ -110,7 +110,7 @@ const ProductRegistration = () => {
                         <input type="text" id="mouthfeel" name="mouthfeel"/>
 
                         <label htmlFor="brandImg">상표 </label>
-                        <input type="text" id="brandImg" name="brandImg"/>
+                        <input type="file" id="brandImg" name="brandImg"/>
                     </div>
                 );
             case '3':

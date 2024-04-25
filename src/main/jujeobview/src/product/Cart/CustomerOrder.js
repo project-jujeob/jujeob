@@ -1,5 +1,5 @@
 import Header from "../../common/Header";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {useAuth} from "../../member/Context";
 import axios from "axios";
@@ -15,6 +15,9 @@ function CustomerOrder() {
     const [newAddress, setNewAddress] = useState('');
     const [totalPrice, setTotalPrice] = useState(0);
     const [paymentMethod, setPaymentMethod] = useState('BANK');
+    const [deliveryRequest, setDeliveryRequest] = useState('');
+    const [customDeliveryRequest, setCustomDeliveryRequest] = useState('');
+    const navigate = useNavigate();
 
     // 선택된 상품들의 총 가격 계산
     useEffect(() => {
@@ -36,6 +39,18 @@ function CustomerOrder() {
 
     const handlePaymentMethodChange = (event) => {
         setPaymentMethod(event.target.value);
+    };
+
+    const handleDeliveryRequestChange = (event) => {
+        const value = event.target.value;
+        setDeliveryRequest(value);
+        if (value !== "기타") {
+            setCustomDeliveryRequest('');
+        }
+    };
+
+    const handleCustomDeliveryRequestChange = (event) => {
+        setCustomDeliveryRequest(event.target.value);
     };
 
     const handleSubmit = async (e) => {
@@ -61,8 +76,13 @@ function CustomerOrder() {
                 memberEmail: payload.memberEmail,
                 orderStatus: "Y",
                 paymentMethod: paymentMethod,
-                totalPrice:totalPrice
+                totalPrice:totalPrice,
+                deliveryRequest: deliveryRequest === "기타" ? customDeliveryRequest : deliveryRequest,
             });
+
+            const orderResponseInfo ={
+                totalPrice:totalPrice
+            };
 
             //
 
@@ -83,6 +103,8 @@ function CustomerOrder() {
             console.log("response:",response);
             if (response.status === 200 || response.status === 201) {
                 alert("상품 주문 완료");
+                navigate("/CustomerOrderComplete",{state:{orderCompleteResponse:orderItems,totalPrice:totalPrice}});
+                console.log("orderCompleteInfo:",response.data);
             } else {
                 console.error('상품 주문 실패');
             }
@@ -143,13 +165,26 @@ function CustomerOrder() {
                                 <div className="orderInfoDetail">
                                     <div><span>배송지</span>
                                         <div>
-                                            {payload.memberAddr}
-                                            <input type="text" value={newAddress} onChange={handleAddressChange}/>
-                                            <button onClick={handleSubmit}>주소 저장</button>
+                                            <div>
+                                                {payload.memberAddr}
+                                            </div>
+                                            <div>
+                                                <span>배송지 변경</span>
+                                                <input type="text" value={newAddress} onChange={handleAddressChange}/>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div><span>요청사항</span>
-                                        <input/>
+                                        <select value={deliveryRequest} onChange={handleDeliveryRequestChange}>
+                                            <option value="택배함에 넣어주세요">택배함에 넣어주세요</option>
+                                            <option value="배송 전 연락주세요">배송 전 연락주세요</option>
+                                            <option value="문앞에 놓고 가주세요">문앞에 놓고 가주세요</option>
+                                            <option value="기타">기타</option>
+                                        </select>
+                                        {deliveryRequest === "기타" && (
+                                            <input type="text" value={customDeliveryRequest} onChange={handleCustomDeliveryRequestChange} />
+                                        )}
                                     </div>
                                     <div>
                                         <span>총 주문 금액:</span> {totalPrice.toLocaleString()}원

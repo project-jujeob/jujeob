@@ -235,3 +235,76 @@ a{
 .orderInfoDetail div{
     display: flex;
 }
+
+/* CustomerOrderComplte*/
+.orderCompleteContainer{
+    width: 25%;
+    position: absolute; /* 절대 위치 지정 */
+    top: 45%; /* 화면 상단에서 중앙으로 이동 */
+    left: 50%; /* 화면 좌측에서 중앙으로 이동 */
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding:20px;
+    border: 1px solid #FF7E5C;
+    border-radius: 5px;
+}
+
+.orderCompleteTop{
+
+}
+
+.orderCompleteContent>div:nth-child(1){
+
+}
+
+.orderCompleteContent>div:nth-child(1) span{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.orderCompleteContent{
+    width:100%;
+}
+
+.orderCompleteTop{
+    margin-bottom:40px
+}
+
+.orderCompleteView>div>p{
+    font-size: 13px;
+    color: #8c8c8c;
+    font-weight: bold;
+}
+
+.orderCompleteView>div>span{
+    font-weight: bold;
+    font-size:20px
+}
+
+.orderCompleteBtn{
+    width:100%;
+    text-align: center;
+    margin-top:10px;
+}
+
+.orderCompleteHome{
+    background-color: #FD4818;
+    color:#FFF;
+    width: 100%;
+    padding:13px;
+    margin-bottom: 7px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.orderCompleteDetail{
+    background-color: #FFF;
+    color:#FD4818;
+    width: 100%;
+    padding:13px;
+    border: 1px solid;
+    border-radius: 5px;
+    cursor: pointer;
+}
