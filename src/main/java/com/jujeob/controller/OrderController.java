@@ -2,12 +2,14 @@ package com.jujeob.controller;
 
 import com.jujeob.entity.CustomerOrder;
 import com.jujeob.entity.OrderItem;
+import com.jujeob.repository.CartRepository;
 import com.jujeob.repository.MemberRepository;
 import com.jujeob.repository.OrderItemRepository;
 import com.jujeob.repository.OrderRepository;
 import com.jujeob.service.MemberService;
 import com.jujeob.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,22 +37,16 @@ public class OrderController {
     @Autowired
     OrderItemRepository orderItemRepository;
 
-    @PostMapping("/customerOrder")
+    @Autowired
+    CartRepository cartRepository;
+
+    /*@PostMapping("/customerOrder")
     public ResponseEntity<String> createOrder(@RequestBody CustomerOrder customerOrder) {
         System.out.println("주문 내용: " + customerOrder);
         System.out.println("주문 내용 getOrderItems(): " + customerOrder.getOrderItems());
 
-        // CustomerOrder 객체에서 OrderItem 리스트를 가져옴
-       /* for (OrderItem orderItem : customerOrder.getOrderItems()) {
-            System.out.println("Product No: " + orderItem.getProduct().getProductNo());
-            // 다른 필요한 정보들을 여기서 처리
-        }*/
-
         List<OrderItem> orderItems = customerOrder.getOrderItems();
 
-        //Long memNo = customerOrder.get
-
-        // CustomerOrder를 먼저 저장
         CustomerOrder savedCustomerOrder = orderRepository.save(customerOrder);
 
         for (OrderItem orderItem : orderItems) {
@@ -72,5 +68,60 @@ public class OrderController {
         //orderRepository.save(customerOrder);
 
         return ResponseEntity.ok("주문이 완료 되었습니다");
+    }*/
+
+    /*@PostMapping("/customerOrder")
+    public ResponseEntity<String> createOrder(@RequestBody CustomerOrder customerOrder) {
+        try {
+
+            // OrderItem 리스트를 가져와서 저장
+            List<OrderItem> orderItems = customerOrder.getOrderItems();
+
+            //CustomerOrder 객체 저장
+            CustomerOrder saveCustomerOrder = orderRepository.save(customerOrder);
+
+            for(OrderItem orderItem : orderItems){
+                orderItem.setCustomerOrder(saveCustomerOrder);
+                orderItemRepository.save(orderItem);
+
+                Integer productNo = orderItem.getProductNo();
+                System.out.println("productNo:"+productNo);
+
+                List<Cart> cartsToRemove = cartRepository.findByMemberNoAndProductNo(customerOrder.getMemNo(),productNo);
+                for(Cart cart : cartsToRemove){
+                    cartRepository.delete(cart);
+                }
+
+                cartRepository.removeByMemberNoAndProductNo(customerOrder.getMemNo(),productNo);
+            }
+
+            // 주문 처리 완료 후 Cart에서 해당 상품들을 삭제
+            *//*for(OrderItem orderItem : orderItems){
+                Integer productNo = orderItem.getProductNo();
+                // 해당 상품번호(productNo)에 해당하는 Cart 아이템값 삭제
+                cartRepository.removeByMemberNoAndProductNo(customerOrder.getMemNo(),productNo);
+            }*//*
+            return ResponseEntity.ok("주문이 완료되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("주문에 실패하였습니다.");
+        }
+    }*/
+    @PostMapping("/customerOrder")
+    public ResponseEntity<String> createOrder(@RequestBody CustomerOrder customerOrder) {
+        try {
+            // CustomerOrder 객체를 저장
+            CustomerOrder savedCustomerOrder = orderRepository.save(customerOrder);
+
+            // OrderItem 리스트를 가져와서 저장
+            List<OrderItem> orderItems = customerOrder.getOrderItems();
+            for (OrderItem orderItem : orderItems) {
+                orderItem.setCustomerOrder(savedCustomerOrder);
+                orderItemRepository.save(orderItem);
+            }
+
+            return ResponseEntity.ok("주문이 완료되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("주문 처리 중 오류가 발생했습니다.");
+        }
     }
 }

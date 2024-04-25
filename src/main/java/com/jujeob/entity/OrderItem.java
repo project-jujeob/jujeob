@@ -25,7 +25,7 @@ public class OrderItem {
     @JoinColumn(name = "productno", referencedColumnName = "productno") // 수정
     private Product product; // 수정*/
 
-    private Long productNo;
+    private Integer productNo;
     private int quantity;
     private double price;
 

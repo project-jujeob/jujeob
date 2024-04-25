@@ -26,15 +26,15 @@ public class CustomerOrder {
     @OneToMany(mappedBy = "customerOrder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @ManyToOne // 수정
+    /*@ManyToOne // 수정
     @JoinColumn(name = "memNo", nullable = false) // 수정
-    private Member member;
+    private Member member;*/
+
+    @Column(nullable = false)
+    private Long memNo;
 
     @Column(nullable = false)
     private String address;
-
-    /*@Column(nullable = false)
-    private Long memberNo;*/
 
     @Column(nullable = false)
     private String memberName;
