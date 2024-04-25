@@ -1,6 +1,6 @@
 import Header from "../../common/Header";
 import {useLocation} from "react-router-dom";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useAuth} from "../../member/Context";
 import axios from "axios";
 
@@ -13,7 +13,22 @@ function CustomerOrder() {
     console.log("selectedItems:",selectedItems);
 
     const [newAddress, setNewAddress] = useState('');
+    const [totalPrice, setTotalPrice] = useState(0);
     const [paymentMethod, setPaymentMethod] = useState('BANK');
+
+    // 선택된 상품들의 총 가격 계산
+    useEffect(() => {
+        if (selectedItems && selectedItems.length > 0) {
+            // 각 상품의 총 가격 계산
+            const total = selectedItems.reduce((acc, item) => {
+                // 상품의 가격과 수량을 곱하여 합산
+                return acc + (item.price * item.quantity);
+            }, 0);
+
+            // 총 가격 설정
+            setTotalPrice(total);
+        }
+    }, [selectedItems]);
 
     const handleAddressChange = (event) => {
         setNewAddress(event.target.value);
@@ -33,7 +48,7 @@ function CustomerOrder() {
             const orderItems = selectedItems.map((item) => ({
                 productNo: item.productNo,
                 quantity: item.quantity,
-                price: item.price,
+                price: item.price
             }));
             console.log("오더아이템즈:",orderItems);
 
@@ -45,7 +60,8 @@ function CustomerOrder() {
                 memberPhone: payload.memberPhone,
                 memberEmail: payload.memberEmail,
                 orderStatus: "Y",
-                paymentMethod: paymentMethod
+                paymentMethod: paymentMethod,
+                totalPrice:totalPrice
             });
 
             //
@@ -134,6 +150,9 @@ function CustomerOrder() {
                                     </div>
                                     <div><span>요청사항</span>
                                         <input/>
+                                    </div>
+                                    <div>
+                                        <span>총 주문 금액:</span> {totalPrice.toLocaleString()}원
                                     </div>
                                     {/* 결제 방법 선택 */}
                                     <div>

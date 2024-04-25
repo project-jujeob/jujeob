@@ -51,6 +51,9 @@ public class CustomerOrder {
     @Column(nullable = false)
     private String paymentMethod;
 
+    @Column(nullable = false)
+    private Long totalPrice;
+
     @CreatedDate
     @Column(nullable = false)
     private LocalDateTime createdAt;

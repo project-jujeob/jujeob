@@ -2,10 +2,8 @@ package com.jujeob.controller;
 
 import com.jujeob.entity.CustomerOrder;
 import com.jujeob.entity.OrderItem;
-import com.jujeob.repository.CartRepository;
-import com.jujeob.repository.MemberRepository;
-import com.jujeob.repository.OrderItemRepository;
-import com.jujeob.repository.OrderRepository;
+import com.jujeob.entity.Stock;
+import com.jujeob.repository.*;
 import com.jujeob.service.MemberService;
 import com.jujeob.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +40,9 @@ public class OrderController {
     @Autowired
     CartRepository cartRepository;
 
+    @Autowired
+    StockRepository stockRepository;
+
     @Transactional
     @PostMapping("/customerOrder")
     public ResponseEntity<String> createOrder(@RequestBody CustomerOrder customerOrder) {
@@ -51,7 +52,7 @@ public class OrderController {
             // CustomerOrder 객체를 저장
             CustomerOrder savedCustomerOrder = orderRepository.save(customerOrder);
 
-            // OrderItem 리스트를 가져와서 저장
+            // 주문 상품 정보
             List<OrderItem> orderItems = customerOrder.getOrderItems();
             System.out.println("orderItems:"+orderItems);
 
@@ -65,6 +66,20 @@ public class OrderController {
 
                 // Cart 테이블에서 삭제할 상품 번호 추가
                 productNos.add(orderItem.getProductNo());
+
+                // 재고 업데이트
+                Stock stock = stockRepository.findByProductNo(orderItem.getProductNo());
+                System.out.println("stock = " + stock);
+                if (stock != null) {
+                    boolean stockUpdated = stock.decreaseStock(orderItem.getQuantity());
+                    if (!stockUpdated) {
+                        // 재고가 부족한 경우 롤백하고 오류 반환
+                        throw new RuntimeException("재고가 부족합니다.");
+                    }
+                } else {
+                    // 해당 상품의 재고 정보가 없는 경우 롤백하고 오류 반환
+                    throw new RuntimeException("재고 정보를 찾을 수 없습니다.");
+                }
             }
 
             System.out.println("프넘productNos:"+productNos);
