@@ -3,6 +3,7 @@ import Header from "../common/Header";
 import {Link, useNavigate} from "react-router-dom";
 import UserInfo from "./UserInfo";
 import ProductRegistration from "./ProductRegistration";
+import ProductManagement from "./ProductManagement";
 
 const Admin = () => {
     const [selectedTab, setSelectedTab] = useState('');
@@ -10,7 +11,8 @@ const Admin = () => {
 
     const tabTitles = {
         userinfo: "주접 회원 목록",
-        productRegistration: "🥂🍺상품 등록 페이지입니다🍷🍸"
+        productRegistration: "🥂🍺상품 등록 페이지입니다🍷🍸",
+        productManagement: "상품 관리"
     };
 
     const renderComponent = () => {
@@ -18,7 +20,9 @@ const Admin = () => {
             case 'userinfo':
                 return <UserInfo />;
             case 'productRegistration':
-                return <ProductRegistration />; 
+                return <ProductRegistration />;
+            case 'productManagement':
+             return <ProductManagement />;
             // case 'orderList':
             //     return <OrderHistory />;
         }
@@ -54,12 +58,17 @@ const Admin = () => {
                             상품 등록
                         </button>
                         <button
-                            className={`AdminWorkBtn3 ${selectedTab === 'orderList' ? 'selected' : ''}`}
+                            className={`AdminWorkBtn3 ${selectedTab === 'productManagement' ? 'selected' : ''}`}
+                            onClick={() => setSelectedTab('productManagement')}>
+                            상품 관리
+                        </button>
+                        <button
+                            className={`AdminWorkBtn4 ${selectedTab === 'orderList' ? 'selected' : ''}`}
                             onClick={() => setSelectedTab('orderList')}>
                             주문 확인
                         </button>
                         <button
-                            className={`AdminWorkBtn4 ${selectedTab === 'announcementWrite' ? 'selected' : ''}`}
+                            className={`AdminWorkBtn5 ${selectedTab === 'announcementWrite' ? 'selected' : ''}`}
                             onClick={() => handleNavigation('announcementWrite')}>
                             공지 관리
                         </button>

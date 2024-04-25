@@ -1,5 +1,6 @@
 package com.jujeob.service;
 
+import com.jujeob.dto.ProductAdminDto;
 import com.jujeob.dto.ProductListDto;
 import com.jujeob.dto.ProductRegisterDto;
 import com.jujeob.entity.Product;
@@ -271,5 +272,9 @@ public class ProductService {
                 e.printStackTrace();
             }
         }
+    }
+
+    public List<ProductAdminDto> showAllProductListAndStock() {
+        return productRepository.findAllAndStock();
     }
 }

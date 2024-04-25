@@ -69,7 +69,7 @@ function DetailTraditional({product}) {
                         <p>{product.description}</p>
                     </div>
                     <div>
-                        <img src={product.tastingImg} alt="술테이스팅노트" className="tastingNote"/>
+                        <img src={getImageUrl(product.tastingImg)} alt="술테이스팅노트" className="tastingNote"/>
                     </div>
                     <div className="detailContentInfo">
                         <p><span>색 | </span>{product.color}</p>

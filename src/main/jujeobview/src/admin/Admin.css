@@ -30,7 +30,7 @@
 }
 
 .AdminWorkBtn1, .AdminWorkBtn2,
-.AdminWorkBtn3, .AdminWorkBtn4 {
+.AdminWorkBtn3, .AdminWorkBtn4, .AdminWorkBtn5 {
     background-color: #FF7E5C;
     border: none;
     color: white;
@@ -40,13 +40,17 @@
     border-radius: 10px;
     outline: none;
     margin: 5px 10px;
+    cursor: pointer;
 }
 
-/*.selected {*/
-/*    border: solid 2px;*/
-/*    box-shadow: 0 0 10px rgb(252, 69, 20);*/
-/*    background-color: #ff4f21;*/
-/*}*/
+.AdminWorkBtn1.selected, .AdminWorkBtn2.selected,
+.AdminWorkBtn3.selected, .AdminWorkBtn4.selected,
+.AdminWorkBtn5.selected{
+    border: solid 2px;
+    box-shadow: 0 0 10px rgb(252, 69, 20);
+    background-color: #ff4f21;
+}
+
 
 .AdminWorkShow {
     width: 85%;
@@ -413,5 +417,78 @@ textarea {
     background-color: #dc2836;
 }
 
+/*-------------------ProductManagement.css------------------------*/
+.ProductAdminContainer {
+    width: 95%;
+    margin: 0 auto;
+}
 
+.ProductAdminList {
+    width: 100%;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.ProductAdminListHeader {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+    padding: 5px 0;
+}
+
+.ProductAdminListContent {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.ProductAdminListHeader div,
+.ProductAdminListContent div {
+    padding: 15px;
+    font-weight: bold;
+    font-size: 15px;
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+}
+
+.ProductAdminNo {
+    width: 10%;
+}
+
+.productAdminImg {
+    width: 20%;
+}
+
+.productAdminImg .ProductImg {
+    width: 60%;
+    height: 100%;
+}
+
+.productAdminName, .productAdminPrice {
+    width: 25%;
+}
+
+.productAdminStock {
+    width: 15%;
+}
+
+.productAdminBtns {
+    width: 20%;
+}
+
+.productAdminBtns button {
+    margin-right:  10px;
+    border: none;
+    background-color: #FF7E5C;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+}
 
