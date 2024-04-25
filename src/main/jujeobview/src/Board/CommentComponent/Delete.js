@@ -3,8 +3,6 @@ import React from "react";
 import {useAuth} from "../../member/Context";
 
 function Delete({ isOpen, onRequestClose, commentId ,  commentFetchData, onDeleteComplete }) {
-
-    console.log("프론트에서 커멘트 아이디: " + commentId)
     Modal.setAppElement('#root');
     const handleDelete = async () => {
         try{
@@ -31,6 +29,11 @@ function Delete({ isOpen, onRequestClose, commentId ,  commentFetchData, onDelet
             isOpen={isOpen}
             onRequestClose={onRequestClose}
             contentLabel="Delete Modal"
+            className={{
+                base: 'ModalContent',
+                afterOpen: 'ModalContent open',
+                beforeClose: 'ModalContent'
+            }}
             style={{
                 overlay: {
                     backgroundColor: 'rgba(0, 0, 0, 0.6)'

@@ -11,12 +11,15 @@ function List({ commentsList, commentFetchData }) {
     const [selectedCommentId, setSelectedCommentId] = useState(null);
     const [selectedCommentMemNo, setSelectedCommentMemNo] = useState(null);
     const [editMode, setEditMode] = useState({ id: null, content: null});
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [selectedMenuId, setSelectedMenuId] = useState(null);
+
     useEffect(() => {
         if (selectedCommentMemNo !== null) {
             if (payload.memberNo === selectedCommentMemNo) {
                 setIsDeleteModalOpen(true);
             } else {
-                alert("자신의 게시물에만 삭제가 가능합니다.");
+                alert("자신의 댓글만 삭제할 수 있습니다.");
                 setSelectedCommentId(null);
                 setSelectedCommentMemNo(null);
             }
@@ -71,6 +74,12 @@ function List({ commentsList, commentFetchData }) {
     const cancel = () =>{
         setEditMode({ id: null, content: null });
     };
+
+    const toggleMenu = (commentId) => {
+        setSelectedMenuId(commentId === selectedMenuId ? null : commentId);
+        setIsMenuOpen(!isMenuOpen);
+    };
+
     return (
         <div className="Comment-List">
             {commentsList.map((comment, index) => (
@@ -88,19 +97,31 @@ function List({ commentsList, commentFetchData }) {
                     ) : (
                         <div>
                             <div className="Comment-Detail-UpdateAndDelete">
-                                <div
-                                    className="Comment-Detail-Item Comment-Detail-DeleteButton"
-                                    onClick={() => openDeleteModal(comment.commentId, comment.memNo)}
-                                >
-                                    삭제
+                                <div className="dropdown-toggle" onClick={() => toggleMenu(comment.commentId)}>
+                                    메뉴
                                 </div>
-                                <div className="Comment-Detail-Item Comment-Detail-Divide"></div>
-                                <div
-                                    className="Comment-Detail-Item Comment-Detail-UpdateButton"
-                                    onClick={() => handleEdit(comment.commentId, comment.commentContent, comment.memNo)}
-                                >
-                                    수정
-                                </div>
+                                {selectedMenuId === comment.commentId && (
+                                    <div
+                                        className={`dropdown-menu ${selectedMenuId === comment.commentId ? 'open' : ''}`}>
+                                        <div
+                                            className="Comment-Detail-Item Comment-Detail-DeleteButton"
+                                            onClick={() => openDeleteModal(comment.commentId, comment.memNo)}
+                                        >
+                                            삭제
+                                        </div>
+                                        <div className="Comment-Detail-Item Comment-Detail-Divide"></div>
+                                        <div
+                                            className="Comment-Detail-Item Comment-Detail-UpdateButton"
+                                            onClick={() => handleEdit(comment.commentId, comment.commentContent, comment.memNo)}
+                                        >
+                                            수정
+                                        </div>
+                                        <div className="Comment-Detail-Item Comment-Detail-Divide"></div>
+                                        <div className="Comment-Detail-Item Comment-Detail-Reply">
+                                            답글
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                             <div className="Comment-Date">
                                 {new Date(comment.createDate).toLocaleString('ko-KR', {
@@ -118,6 +139,9 @@ function List({ commentsList, commentFetchData }) {
                                     <div className="AuthorAndContent Comment-Author">{comment.memNickname}</div>
                                 </div>
                                 <div className="AuthorAndContent Comment-Content">{comment.commentContent}</div>
+                            </div>
+                            <div>
+                                <div className="Comment-Reply">답글보기</div>
                             </div>
                         </div>
                     )}

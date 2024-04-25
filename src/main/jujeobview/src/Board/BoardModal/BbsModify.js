@@ -62,6 +62,11 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
                 isOpen={isOpen}
                 onRequestClose={onRequestClose}
                 contentLabel="Bbs Modify Modal"
+                className={{
+                    base: 'ModalContent',
+                    afterOpen: 'ModalContent open',
+                    beforeClose: 'ModalContent'
+                }}
                 style={{
                     overlay: {
                         backgroundColor: 'rgba(0, 0, 0, 0.6)'

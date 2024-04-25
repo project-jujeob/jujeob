@@ -9,7 +9,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 80px;
+    padding: 60px;
 }
 
 .DetailNavSearchArea{
@@ -25,14 +25,14 @@
     flex-direction: row;
 }
 .Profile{
-    width: 65px;
+    width: 70px;
     font-size: 14px;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 .Profile-Setting{
     margin-left: auto;
 }
-.MemberNickname{
+.ProfileMemberNickname{
     font-weight: bolder;
 }
 /**/
@@ -133,6 +133,10 @@
 }
 .Comment-Write button{
     cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.Comment-Write button:hover{
+    transform: scale(1.05);
 }
 .Comment-Detail-UpdateAndDelete{
     display: flex;
@@ -154,6 +158,17 @@
     font-size: 10px;
     text-align: right;
 }
+.Comment-Detail-Reply{
+    font-size: 10px;
+    text-align: right;
+}
+.Comment-Reply{
+    font-size: 10px;
+    color: #555555;
+    display: flex;
+    flex-direction: row-reverse;
+    cursor: pointer;
+}
 .Board-Detail-UpdateAndDelete{
     display: flex;
     flex-direction: row;
@@ -161,12 +176,12 @@
     line-height: 38px;
 }
 .Comment-SubmitButton{
-    margin-top: 5px;
     background-color: #FF7E5C;
     border: none;
     width: 50px;
     height: 40px;
     border-radius: 5px;
+    transition: transform 0.3s ease;
 }
 .UpdateButton{
     width: 80px;
@@ -175,9 +190,12 @@
     cursor: pointer;
     border: 1px solid rgba(222, 222, 222, 0.78);
     background-color: #FF7E5C;
+    transition: transform 0.3s ease;
+    margin-right: 5px;
 }
 .UpdateButton:hover{
     background-color: rgba(255, 78, 34, 0.86);
+    transform: scale(1.05);
 }
 .UpdateButton:active{
     background-color: rgba(255, 163, 141, 0.86);
@@ -188,10 +206,47 @@
     border-radius: 12px;
     cursor: pointer;
     border: 1px solid rgba(222, 222, 222, 0.78);
+    transition: transform 0.3s ease;
 }
 .DeleteButton:hover{
     background-color: #e0e0e0;
+    transform: scale(1.05);
 }
 .DeleteButton:active{
     background-color: #b0b0b0;
+}
+.ModalContent {
+    background-color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    outline: none;
+    border-radius: 35px ;
+}
+
+.ModalContent.open {
+    border: none;
+    opacity: 1;
+}
+.dropdown-toggle{
+    cursor: pointer;
+    font-size: 12px;
+}
+.dropdown-menu{
+    display: flex;
+    margin-right: 10px;
+
+/*    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: relative;
+    top: -10px; */
+}
+.dropdown-menu.open {
+/*    opacity: 1;
+    transform: translateY(0);
+    top: 0;*/
 }

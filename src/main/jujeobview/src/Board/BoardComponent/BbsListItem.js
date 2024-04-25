@@ -67,7 +67,6 @@ function BbsListItem() {
     const closeModal = () => {
         setSelectedBoardId(null);
         setIsModalOpen(false);
-        window.location.reload();
     };
 
 

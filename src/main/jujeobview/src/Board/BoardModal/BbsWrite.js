@@ -40,6 +40,11 @@ function BbsWrite({ isOpen, onRequestClose }) {
             isOpen={isOpen}
             onRequestClose={onRequestClose}
             contentLabel="Bbs Detail Modal"
+            className={{
+                base: 'ModalContent',
+                afterOpen: 'ModalContent open',
+                beforeClose: 'ModalContent'
+            }}
             style={{
                 overlay: {
                     backgroundColor: 'rgba(0, 0, 0, 0.6)'

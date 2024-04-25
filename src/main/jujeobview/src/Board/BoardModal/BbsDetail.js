@@ -73,10 +73,16 @@ function BbsDetail({ isOpen, onRequestClose, boardId }) {
                 isOpen={isOpen}
                 onRequestClose={onRequestClose}
                 contentLabel="Bbs Detail Modal"
+                className={{
+                    base: 'ModalContent',
+                    afterOpen: 'ModalContent open',
+                    beforeClose: 'ModalContent'
+                }}
                 style={{
                     overlay: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.6)'
+                        backgroundColor: 'rgba(0, 0, 0, 0.6)',
                     },
+
                     content: {
                         width: '65%',
                         height: '90%',
@@ -93,8 +99,8 @@ function BbsDetail({ isOpen, onRequestClose, boardId }) {
                         <div className="Board-Detail-Profile">
                             <div className="Profile">조회수: {board.boardViews}</div>
                             <div className="Profile"><img alt="이미지"/></div>
-                            <div className="Profile MemberNickname">{board.memNickname}</div>
-                            <div className="Profile Profile-Setting">편집점</div>
+                            <div className="Profile ProfileMemberNickname">{board.memNickname}</div>
+                            <div className="Profile-Setting">편집점</div>
                         </div>
                         <div className="Board-Detail-TitleAndContent">
                         <div className="TitleAndContent TitleAndContent-Title"><h3>{board.boardTitle}</h3></div>
@@ -114,18 +120,23 @@ function BbsDetail({ isOpen, onRequestClose, boardId }) {
                                 minute: '2-digit',
                                 second: '2-digit',
                             })}</div>
-                            <div className="Date">수정일 : {new Date(board.boardUpdate).toLocaleString('ko-KR', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                                second: '2-digit',
-                            })}</div>
+
+                            <div className="Date">수정일 : {
+                                board.boardUpdate ?
+                                    new Date(board.boardUpdate).toLocaleString('ko-KR', {
+                                        year: 'numeric',
+                                        month: 'long',
+                                        day: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                        second: '2-digit',
+                                    }) :
+                                    "수정되지 않음"
+                            }</div>
                         </div>
                     </div>
                     <div className="de"></div>
-                    <Comment boardId={boardId} />
+                    <Comment boardId={boardId}/>
                 </div>
             </Modal>
             <BbsModifyModal

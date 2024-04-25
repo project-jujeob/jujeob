@@ -25,11 +25,10 @@
     cursor: pointer;
     border: 1px solid rgba(128, 128, 128, 0.63);
     border-radius: 8px;
+    transition: transform 0.3s ease;
 }
-.CategoryNewPost a{
-    text-decoration: none;
-    font-weight: bold;
-    color: black;
+.NewPostDiv:hover{
+    transform: scale(1.05);
 }
 .DetailNavContainer{
     width: 100%;

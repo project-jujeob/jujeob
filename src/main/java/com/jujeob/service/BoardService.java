@@ -72,6 +72,8 @@ public class BoardService {
         boardDto.setBoardTitle(board.getBoardTitle());
         boardDto.setBoardContent(board.getBoardContent());
         boardDto.setMemNickname(nickname);
+        boardDto.setBoardUpdate(board.getBoardUpdate());
+        boardDto.setCreateDate(board.getCreateDate());
 
         return boardDto;
     }
