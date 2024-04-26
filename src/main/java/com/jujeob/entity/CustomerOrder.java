@@ -31,7 +31,7 @@ public class CustomerOrder {
     private Member member;*/
 
     @Column(nullable = false)
-    private Long memNo;
+    private Long memberNo;
 
     @Column(nullable = false)
     private String address;

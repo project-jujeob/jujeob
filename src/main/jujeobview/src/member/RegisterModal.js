@@ -5,8 +5,8 @@ function RegisterModal({ isOpen, message, onClose }) {
     if (!isOpen) return null;
 
     return (
-        <div className="modal">
-            <div className="modalContent">
+        <div className="modalRegister">
+            <div className="modalRegisterContent">
                 <span className="closeButton" onClick={onClose}>&times;</span>
                 <p>{message}</p>
             </div>

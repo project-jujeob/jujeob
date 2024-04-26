@@ -58,7 +58,7 @@ public class OrderController {
 
             // Cart 테이블에서 삭제할 상품 번호와 회원 번호를 담을 리스트 생성
             List<Integer> productNos = new ArrayList<>();
-            Long memberNo = customerOrder.getMemNo();
+            Long memberNo = customerOrder.getMemberNo();
 
             for (OrderItem orderItem : orderItems) {
                 orderItem.setCustomerOrder(savedCustomerOrder);
