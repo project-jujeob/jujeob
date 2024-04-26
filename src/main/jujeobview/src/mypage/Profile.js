@@ -33,7 +33,7 @@ function Profile() {
                 console.log("응답", response.data)
 
                 const[, payloadBase64] = memberToken.split(".")
-                const payloadString = atob(payloadBase64)
+                const payloadString = base64DecodeUnicode(payloadBase64)
                 const payload = JSON.parse(payloadString)
 
                 console.log(payload)
@@ -226,3 +226,10 @@ function Profile() {
 }
 
 export default Profile
+
+function base64DecodeUnicode(str) {
+    // Convert Base64 encoded bytes to percent-encoding, and then get the original string
+    return decodeURIComponent(atob(str).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}

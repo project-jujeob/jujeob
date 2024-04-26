@@ -1,24 +1,20 @@
 package com.jujeob.controller;
 
 
-import com.jujeob.repository.MemberRepository;
-import com.jujeob.repository.OrderRepository;
-
+import com.jujeob.dto.OrderDeliveriesDto;
 import com.jujeob.dto.UpdateMemberDto;
 import com.jujeob.entity.Member;
-
+import com.jujeob.repository.MemberRepository;
+import com.jujeob.repository.OrderRepository;
 import com.jujeob.service.MyPageService;
+import com.jujeob.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
-
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 
 @RestController
@@ -35,6 +31,9 @@ public class MyPageController {
 
     @Autowired
     OrderRepository orderRepository;
+
+    @Autowired
+    OrderService orderService;
 
 
 
@@ -57,11 +56,13 @@ public class MyPageController {
         }
     }
 
-    /*@GetMapping("/api/orderDelivery/{memberNo}")
-    public ResponseEntity<?> orderDeliveryInfo(@PathVariable Long memberNo){
+    @GetMapping("/api/orderDeliveries/{memberNo}")
+    public ResponseEntity<List<OrderDeliveriesDto>> getAllOrderDeliveriesWithItems(@PathVariable Long memberNo){
 
-        return orderRepository.findAllByMemberNo(memberNo);
-    }*/
+        List<OrderDeliveriesDto> orderDeliveries = orderService.getAllOrderDeliveriesWithItems(memberNo);
 
+        System.out.println("orderDeliveries:"+orderDeliveries);
 
+        return ResponseEntity.ok(orderDeliveries);
+    }
 }

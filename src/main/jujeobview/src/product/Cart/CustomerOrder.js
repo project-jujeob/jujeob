@@ -70,7 +70,7 @@ function CustomerOrder() {
             const response = await axios.post(`/api/customerOrder`, {
                 orderItems: orderItems,
                 address: addressToUse,
-                memNo: payload.memberNo,
+                memberNo: payload.memberNo,
                 memberName: payload.memberName,
                 memberPhone: payload.memberPhone,
                 memberEmail: payload.memberEmail,
@@ -79,12 +79,6 @@ function CustomerOrder() {
                 totalPrice:totalPrice,
                 deliveryRequest: deliveryRequest === "기타" ? customDeliveryRequest : deliveryRequest,
             });
-
-            const orderResponseInfo ={
-                totalPrice:totalPrice
-            };
-
-            //
 
             // 선택된 항목들의 productNo를 추출하여 배열로 생성
             const selectedProductNos = selectedItems.map(item => item.productNo);
@@ -97,8 +91,6 @@ function CustomerOrder() {
 
             // 새로운 장바구니 정보를 로컬 스토리지에 저장
             localStorage.setItem(payload.memberNo, JSON.stringify(updatedCartItems));
-
-            //
 
             console.log("response:",response);
             if (response.status === 200 || response.status === 201) {
