@@ -1,14 +1,13 @@
-// LoadingModal.js
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-const LoadingModal = () => {
+const Loading = () => {
     return (
-        <div className="modal">
-            <div className="modal-content">
-                <p>Loading...</p>
-            </div>
+        <div>
+            <FontAwesomeIcon icon={faSpinner} spin />
         </div>
     );
 };
 
-export default LoadingModal;
+export default Loading;

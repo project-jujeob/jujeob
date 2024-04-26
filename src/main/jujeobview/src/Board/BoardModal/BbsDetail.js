@@ -8,6 +8,7 @@ import BbsModifyModal from "./BbsModify";
 import BbsDeleteModal from "./BbsDelete";
 import Comment from "../Comment/Comment";
 import {useAuth} from "../../member/Context";
+import { FiEye } from "react-icons/fi";
 
 function BbsDetail({ isOpen, onRequestClose, boardId }) {
     const {payload} = useAuth();
@@ -97,10 +98,13 @@ function BbsDetail({ isOpen, onRequestClose, boardId }) {
                 <div className="Board-Detail-Container">
                     <div className="Board-Detail-Post-Container">
                         <div className="Board-Detail-Profile">
-                            <div className="Profile">조회수: {board.boardViews}</div>
+                            <div className="Profile Profile-Views">
+                                <FiEye />
+                                <p>{board.boardViews}</p>
+                            </div>
                             <div className="Profile"><img alt="이미지"/></div>
                             <div className="Profile ProfileMemberNickname">{board.memNickname}</div>
-                            <div className="Profile-Setting">편집점</div>
+                            <div className="Profile-Setting">ㆍㆍㆍ</div>
                         </div>
                         <div className="Board-Detail-TitleAndContent">
                         <div className="TitleAndContent TitleAndContent-Title"><h3>{board.boardTitle}</h3></div>

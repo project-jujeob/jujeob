@@ -55,4 +55,5 @@ public class BoardCommentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 수정에 실패했습니다.");
         }
     }
+
 }

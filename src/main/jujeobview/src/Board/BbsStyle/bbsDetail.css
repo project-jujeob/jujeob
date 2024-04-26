@@ -35,6 +35,18 @@
 .ProfileMemberNickname{
     font-weight: bolder;
 }
+.Profile-Views{
+    display: flex;
+    flex-direction: row;
+    color: rgba(121, 121, 121, 0.94);
+    font-size: 18px;
+}
+.Profile-Views p{
+    margin-right: 8px;
+    color: rgba(121, 121, 121, 0.94);
+    font-size: 14px;
+    margin-left: 5px;
+}
 /**/
 .Board-Detail-TitleAndContent{
     width: 80%;
@@ -140,27 +152,30 @@
 }
 .Comment-Detail-UpdateAndDelete{
     display: flex;
-    flex-direction: row-reverse;
 }
 .Comment-Detail-Item{
-    margin-left: 3px;
     color: #555555;
+    margin: auto;
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    font-weight: bolder;
 }
 .Comment-Detail-Divide{
     border: 1px solid rgba(169, 169, 169, 0.73);
-    width: 1px;
+    height: 1px;
+    width: 100%;
 }
 .Comment-Detail-UpdateButton{
-    font-size: 10px;
-    text-align: right;
+    cursor: pointer;
+    width: 100%;
 }
 .Comment-Detail-DeleteButton{
-    font-size: 10px;
-    text-align: right;
+    cursor: pointer;
+    width: 100%;
+    color: rgba(246, 18, 18, 0.63);
 }
 .Comment-Detail-Reply{
-    font-size: 10px;
-    text-align: right;
 }
 .Comment-Reply{
     font-size: 10px;
@@ -168,6 +183,7 @@
     display: flex;
     flex-direction: row-reverse;
     cursor: pointer;
+    margin-left: 55px;
 }
 .Board-Detail-UpdateAndDelete{
     display: flex;
@@ -232,8 +248,11 @@
     opacity: 1;
 }
 .dropdown-toggle{
+    font-weight: bolder;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 10px;
+    margin-left: 10px;
+    display: none;
 }
 .dropdown-menu{
     display: flex;
@@ -249,4 +268,7 @@
 /*    opacity: 1;
     transform: translateY(0);
     top: 0;*/
+}
+.Comment-Detail-UpdateAndDelete:hover .dropdown-toggle {
+    display: block;
 }

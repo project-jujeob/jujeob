@@ -20,8 +20,9 @@ public class BoardDto {
     private String BoardContent;
     private LocalDateTime CreateDate;
     private LocalDateTime BoardUpdate;
-    private String BoardViews;
+    private int BoardViews;
     private String ImageUrl;
     private int Image_size;
     private int ImageId;
+    private int commentCount;
 }

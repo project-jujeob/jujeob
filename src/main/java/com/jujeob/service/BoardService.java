@@ -7,6 +7,7 @@ import com.jujeob.entity.Board;
 import com.jujeob.entity.BoardComment;
 import com.jujeob.repository.BoardCommentRepository;
 import com.jujeob.repository.BoardRepository;
+import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,8 @@ public class BoardService {
         dto.setBoardViews(entity.getBoardViews());
         dto.setCreateDate(entity.getCreateDate());
         dto.setMemNickname(entity.getMember().getMemNickname());
-
+        dto.setCommentCount(boardCommentRepository.countByBoardId(entity.getBoardId()));
+        System.out.println("댓글개수: "  + boardCommentRepository.countByBoardId(entity.getBoardId()));
         return dto;
     }
 
@@ -74,6 +76,7 @@ public class BoardService {
         boardDto.setMemNickname(nickname);
         boardDto.setBoardUpdate(board.getBoardUpdate());
         boardDto.setCreateDate(board.getCreateDate());
+        boardDto.setBoardViews(board.getBoardViews());
 
         return boardDto;
     }
@@ -111,4 +114,11 @@ public class BoardService {
 
         boardRepository.delete(deleteBoard);
     }
+
+    public void increaseViews(Integer boardId) throws NotFoundException {
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new NotFoundException("게시물을 찾을 수 없습니다."));
+        board.setBoardViews(board.getBoardViews() + 1); // 조회수 증가
+        boardRepository.save(board); // 변경된 조회수를 데이터베이스에 저장
+    }
+
 }

@@ -38,7 +38,7 @@ public class Board {
     private LocalDateTime CreateDate;
 
     @Column(name = "Board_Views")
-    private String BoardViews = "0";
+    private int BoardViews = 0;
 
     @Column(name = "Board_Update" )
     private LocalDateTime BoardUpdate;

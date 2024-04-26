@@ -72,4 +72,5 @@ public class BoardCommentService {
 
         boardCommentRepository.save(boardComment);
     }
+
 }

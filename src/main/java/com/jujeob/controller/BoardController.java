@@ -83,4 +83,14 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시물 삭제 중 오류가 발생했습니다.");
         }
     }
+    @PostMapping("/IncreaseViews/{boardId}")
+    public ResponseEntity<String> increaseViews(@PathVariable("boardId") Integer boardId) {
+        System.out.println("뷰요청받음");
+        try {
+            boardService.increaseViews(boardId);
+            return new ResponseEntity<>("조회수 증가 완료", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("조회수 증가 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
