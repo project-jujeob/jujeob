@@ -1,6 +1,7 @@
 package com.jujeob.service;
 
 import com.jujeob.dto.ProductAdminDto;
+import com.jujeob.dto.ProductEditDto;
 import com.jujeob.dto.ProductListDto;
 import com.jujeob.dto.ProductRegisterDto;
 import com.jujeob.entity.Product;
@@ -275,6 +276,59 @@ public class ProductService {
     }
 
     public List<ProductAdminDto> showAllProductListAndStock() {
-        return productRepository.findAllAndStock();
+        return productRepository.findProductListAndStock();
+    }
+
+    public ProductEditDto getProductAndStockByProductNo(Integer productNo) {
+        return productRepository.findAllAndStockByProductNo(productNo);
+    }
+
+    public Product updateProductDetail(ProductRegisterDto productRegisterDto) {
+        Product product = productRepository.findById(productRegisterDto.getProductNo()).get();
+        System.out.println("상품루루"+product.getProductNo());
+
+        product.setProductId(productRegisterDto.getProductId());
+        product.setName(productRegisterDto.getName());
+        uploadAndSetImage(productRegisterDto.getImg(), product, "img");
+        product.setPrice(productRegisterDto.getPrice());
+        product.setAlcohol(productRegisterDto.getAlcohol());
+        product.setVolume(productRegisterDto.getVolume());
+        product.setType(productRegisterDto.getType());
+        product.setDescription(productRegisterDto.getDescription());
+        product.setKeyword(productRegisterDto.getKeyword());
+        product.setCompany(productRegisterDto.getCompany());
+        product.setPackageType(productRegisterDto.getPackageType());
+        product.setUnit(productRegisterDto.getUnit());
+        uploadAndSetImage(productRegisterDto.getDetailImg(), product, "detailImg");
+        uploadAndSetImage(productRegisterDto.getTastingImg(), product, "tastingImg");
+        product.setColorAndHomogeneity(productRegisterDto.getColorAndHomogeneity());
+        product.setIncense(productRegisterDto.getIncense());
+        product.setTasting(productRegisterDto.getTasting());
+        product.setMouthfeel(productRegisterDto.getMouthfeel());
+        uploadAndSetImage(productRegisterDto.getBrandImg(), product, "brandImg");
+        product.setWinery(productRegisterDto.getWinery());
+        product.setKind(productRegisterDto.getKind());
+        product.setColor(productRegisterDto.getColor());
+        product.setOpenType(productRegisterDto.getOpenType());
+        product.setAroma(productRegisterDto.getAroma());
+        product.setFoodPairing(productRegisterDto.getFoodPairing());
+        product.setBreeding(productRegisterDto.getBreeding());
+        product.setRecommendGlass(productRegisterDto.getRecommendGlass());
+        product.setCountry(productRegisterDto.getCountry());
+        product.setCountryDescription(productRegisterDto.getCountryDescription());
+        product.setBrand(productRegisterDto.getBrand());
+        product.setCrate(productRegisterDto.getCrate());
+        product.setHowToDrink(productRegisterDto.getHowToDrink());
+        product.setFlavor(productRegisterDto.getFlavor());
+        product.setFinish(productRegisterDto.getFinish());
+
+        product =  productRepository.save(product);
+
+        Stock stock = stockRepository.findByProductNo(productRegisterDto.getProductNo());
+        stock.setProductNo(productRegisterDto.getProductNo()); // 재고 테이블에 상품 번호 넣기
+        stock.setQuantity(productRegisterDto.getQuantity()); // 재고 테이블에 재고 넣기
+        stockRepository.save(stock);
+
+        return product;
     }
 }

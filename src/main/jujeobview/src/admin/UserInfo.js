@@ -20,11 +20,28 @@ const UserInfo = () => {
         axios.get('/api/showUserInfo')
             .then((response) => {
                 setMemberInfo(response.data);
-                console.log(response.data);
+                setTotalUserInfo(response.data.length);
+                setTotalPages(Math.ceil(totalUserInfo / PAGE_SIZE));
             }).catch((error) => {
                 console.log('회원 목록 가져오기 실패:', error);
         })
     }, []);
+
+    useEffect(() => {
+        loadUserInfoList();
+    }, [currentPage]);
+
+    const loadUserInfoList = () => {
+        const startIndex = (currentPage - 1) * PAGE_SIZE;
+        const endIndex = startIndex + PAGE_SIZE;
+        axios.get('/api/showUserInfo')
+            .then((response) => {
+                setMemberInfo(response.data.slice(startIndex, endIndex));
+            })
+            .catch((error) => {
+                console.error('데이터 가져오기 실패:', error);
+            });
+    };
 
     const handlePageChange = (page) => {
         setCurrentPage(page);

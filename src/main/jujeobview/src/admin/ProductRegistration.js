@@ -12,6 +12,44 @@ const ProductRegistration = () => {
         4: '위스키/기타',
     };
 
+    const [productDetails, setProductDetails] = useState({
+        name: '',
+        img: '',
+        price: '',
+        stock: '',
+        alcohol: '',
+        volume: '',
+        type: '',
+        description: '',
+        keyword: '',
+        company: '',
+        packageType: '',
+        unit: '',
+        expDate: '',
+        detailImg: '',
+        tastingImg: '',
+        colorAndHomogeneity: '',
+        incense: '',
+        tasting: '',
+        mouthfeel: '',
+        brandImg: '',
+        winery: '',
+        kind: '',
+        color: '',
+        openType: '',
+        aroma: '',
+        foodPairing: '',
+        breeding: '',
+        recommendGlass: '',
+        country: '',
+        countryDescription: '',
+        brand: '',
+        crate: '',
+        howToDrink: '',
+        flavor: '',
+        finish: '',
+    });
+
     const [productMainType, setProductMainType] = useState([]);
     useEffect(() => {
         axios.get('/api/showProductMainType')
@@ -25,6 +63,13 @@ const ProductRegistration = () => {
 
 
     const [selectedMainType, setSelectedMainType] = useState(null);
+
+    const handleChange = (name, value) => {
+        setProductDetails(prevDetails => ({
+            ...prevDetails,
+            [name]: value
+        }));
+    };
 
     const handleSubmitRegisterForm = (event) => {
         event.preventDefault();
@@ -76,6 +121,7 @@ const ProductRegistration = () => {
             .then((response)=>{
                 console.log(response.data);
                 alert("상품 등록이 완료되었습니다.")
+                window.location.reload();
             }).catch(error => {
                 alert("상품 등록에 실패하였습니다.")
                 console.log(error);
@@ -100,10 +146,10 @@ const ProductRegistration = () => {
                         </div>
                     </div>
                     <div className="CommonFields">
-                        {commonFields()}
+                        {commonFields(productDetails, handleChange)}
                     </div>
                     <div className="RenderingFields">
-                        {renderingFields(selectedMainType)}
+                        {renderingFields(selectedMainType, productDetails, handleChange)}
                     </div>
                     <button type="submit">상품 등록</button>
                 </form>

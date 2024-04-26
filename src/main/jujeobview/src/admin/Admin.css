@@ -58,17 +58,17 @@
 
 
 /*-------------ProductRegister.js----------------*/
-.ProductRegistrationContainer {
+.ProductRegistrationContainer, .ProductEditContainer {
     width: 95%;
     margin: 0 auto;
 }
 
-.ProductRegistrationContainer h2 {
+.ProductRegistrationContainer h2, .ProductEditContainer h2 {
     text-align: center;
     margin: 30px 0px;
 }
 
-.ProductRegistrationForm {
+.ProductRegistrationForm, .ProductEditForm {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -172,7 +172,22 @@
     box-shadow: 0 0 0 0.2rem #dad8d8;
 }
 
-.ProductRegistrationForm button[type="submit"] {
+
+
+.ProductEditBtns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ProductEditBtns button {
+    margin: 0px 10px;
+}
+
+
+.ProductRegistrationForm button[type="submit"],
+.ProductEditForm button[type="submit"],
+.ProductEditBtns button {
     padding: 10px 20px;
     background-color: #FF7E5C;
     color: white;
@@ -183,11 +198,12 @@
     font-size: 16px;
 }
 
-.ProductRegistrationForm button[type="submit"]:hover {
+.ProductRegistrationForm button[type="submit"]:hover,
+.ProductEditForm button[type="submit"]:hover,
+.ProductEditBtns button:hover {
     background-color: #ff5c2f;
     color: #0a0a0a;
 }
-
 
 
 /*-------------------UserInfo.js------------------------*/

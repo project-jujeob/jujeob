@@ -1,9 +1,6 @@
 package com.jujeob.controller;
 
-import com.jujeob.dto.GetMemberDto;
-import com.jujeob.dto.ProductAdminDto;
-import com.jujeob.dto.ProductListDto;
-import com.jujeob.dto.ProductRegisterDto;
+import com.jujeob.dto.*;
 import com.jujeob.entity.Announcement;
 import com.jujeob.entity.Member;
 import com.jujeob.entity.Product;
@@ -93,7 +90,12 @@ public class AdminController {
     }
 
     @GetMapping("/api/getProductDetails/{productNo}")
-    public Product getProductDetailsByProductNo(@PathVariable Integer productNo) {
-        return productService.getProductByProductNo(productNo).get();
+    public ProductEditDto getProductDetailsByProductNo(@PathVariable Integer productNo) {
+        return productService.getProductAndStockByProductNo(productNo);
+    }
+
+    @PostMapping("/api/updateProductDetails")
+    public Product updateProductDetailsAndStock(@ModelAttribute ProductRegisterDto productRegisterDto) {
+        return productService.updateProductDetail(productRegisterDto);
     }
 }

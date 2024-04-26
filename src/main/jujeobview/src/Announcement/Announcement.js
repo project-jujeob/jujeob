@@ -123,14 +123,14 @@ const Announcement = () => {
                                     <button onClick={() =>  showEditModal(announcement,index)}>[수정]</button>
                                     {(editModal[0] && index === editModal[1]) ? (
                                         <div className="modal">
-                                        <div className="modalContent">
-                                            <span className="modalClose" onClick={closeEditModal}>&times;</span>
-                                            <AnnouncementEdit
-                                                announcement={currentAnnouncement}
-                                                closeModal={closeEditModal}
-                                                onAnnouncementUpdated={fetchAnnouncements}
-                                            />
-                                        </div>
+                                            <div className="modalContent">
+                                                <span className="modalClose" onClick={closeEditModal}>&times;</span>
+                                                <AnnouncementEdit
+                                                    announcement={currentAnnouncement}
+                                                    closeModal={closeEditModal}
+                                                    onAnnouncementUpdated={fetchAnnouncements}
+                                                />
+                                            </div>
                                         </div>
                                     ) : ""}
                                     <button onClick={() => deleteAnnouncement(announcement.announcementNo)}>[삭제]</button>

@@ -4,6 +4,7 @@ import {Link, useNavigate} from "react-router-dom";
 import UserInfo from "./UserInfo";
 import ProductRegistration from "./ProductRegistration";
 import ProductManagement from "./ProductManagement";
+import OrderListByAdmin from "./OrderListByAdmin";
 
 const Admin = () => {
     const [selectedTab, setSelectedTab] = useState('');
@@ -23,8 +24,8 @@ const Admin = () => {
                 return <ProductRegistration />;
             case 'productManagement':
              return <ProductManagement />;
-            // case 'orderList':
-            //     return <OrderHistory />;
+            case 'orderListByAdmin':
+                return <OrderListByAdmin />;
         }
     };
 
@@ -63,8 +64,8 @@ const Admin = () => {
                             상품 관리
                         </button>
                         <button
-                            className={`AdminWorkBtn4 ${selectedTab === 'orderList' ? 'selected' : ''}`}
-                            onClick={() => setSelectedTab('orderList')}>
+                            className={`AdminWorkBtn4 ${selectedTab === 'orderListByAdmin' ? 'selected' : ''}`}
+                            onClick={() => setSelectedTab('orderListByAdmin')}>
                             주문 확인
                         </button>
                         <button
