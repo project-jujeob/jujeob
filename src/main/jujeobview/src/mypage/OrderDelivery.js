@@ -61,52 +61,62 @@ function OrderDelivery() {
                     <div key={order.orderId}>
                         {/* 주문 번호를 클릭할 때 toggleOrderDetails 함수 호출 */}
                         <div onClick={() => toggleOrderDetails(order.orderId)}
-                             className="orderDeliveryTitle">
-                            주문 번호: {order.orderId}
+                             className={`orderDeliveryTitle${expandedOrderId === order.orderId ? ' expanded' : ''}`}>
+                            <div>
+                                주문 번호: {order.orderId}
+                            </div>
+                            <div className={`orderDeliveryCancelNotice${order.orderStatus !== 'Y' ? ' redText' : ''}`}>
+                                {order.orderStatus === 'Y' ? null : '주문 취소'}
+                            </div>
                         </div>
                         {/* 펼쳐진 주문의 세부 정보만 표시 */}
                         {expandedOrderId === order.orderId && (
-                            <div>
-                                <div onClick={() => cancelOrder(order.orderId)}
-                                     className="orderCancelBtn">주문취소</div>
-                                [주문 상품]
+                            <div className="orderDeliveryContent">
+                                <div>
                                 {order.orderItems.map((item, index) => {
-                                    console.log("아이템:",item); // 주문 상품에 대한 로그 출력
-                                    return (
-                                        <div key={index}>
-                                            <img src={item.img} alt="주문내역상품이미지"/>
-                                            상품 번호: {item.productNo}, 수량: {item.quantity}, 가격: {item.price}
-                                        </div>
-                                    );
-                                })}
-                                <div>
-                                    배송 주소: {order.address}
+                                        console.log("아이템:", item); // 주문 상품에 대한 로그 출력
+                                        return (
+                                            <div key={index}>
+                                                <img src={item.img} alt="주문내역상품이미지"/>
+                                                상품 번호: {item.productNo}, 수량: {item.quantity}, 가격: {item.price}
+                                            </div>
+                                        );
+                                    })}
+                                    <div>
+                                        배송 주소: {order.address}
+                                    </div>
+                                    <div>
+                                        주문자: {order.memberName}
+                                    </div>
+                                    <div>
+                                        주문 상태: {order.orderStatus === 'Y' ? '주문 완료' : '주문 취소'}
+                                    </div>
+                                    <div>
+                                        결제 방법: {order.paymentMethod}
+                                    </div>
+                                    <div>
+                                        총 가격: {order.totalPrice}
+                                    </div>
+                                    <div>
+                                        배송 요청 사항: {order.deliveryRequest}
+                                    </div>
+                                    <div>
+                                        주문일시: {new Date(order.createdAt).toLocaleDateString('ko-KR', {
+                                        year: 'numeric',
+                                        month: '2-digit',
+                                        day: '2-digit',
+                                    })}
+                                        ({new Date(order.createdAt).toLocaleTimeString('ko-KR', {
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                    })})
+                                    </div>
                                 </div>
                                 <div>
-                                    주문자: {order.memberName}
-                                </div>
-                                <div>
-                                    주문 상태: {order.orderStatus === 'Y' ? '주문 완료' : '주문 취소'}
-                                </div>
-                                <div>
-                                    결제 방법: {order.paymentMethod}
-                                </div>
-                                <div>
-                                    총 가격: {order.totalPrice}
-                                </div>
-                                <div>
-                                    배송 요청 사항: {order.deliveryRequest}
-                                </div>
-                                <div>
-                                    주문일시: {new Date(order.createdAt).toLocaleDateString('ko-KR', {
-                                    year: 'numeric',
-                                    month: '2-digit',
-                                    day: '2-digit',
-                                })}
-                                    ({new Date(order.createdAt).toLocaleTimeString('ko-KR', {
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                })})
+                                    {order.orderStatus === 'Y' ? <div onClick={() => cancelOrder(order.orderId)}
+                                                                      className="orderCancelBtn">주문 취소
+                                    </div> : null}
+
                                 </div>
                             </div>
                         )}
