@@ -31,4 +31,9 @@ public class Stock {
         }
         return false; // 재고가 부족하여 차감 불가능
     }
+
+
+    public void increaseStock(int quantityToIncrease) {
+        this.quantity += quantityToIncrease;
+    }
 }

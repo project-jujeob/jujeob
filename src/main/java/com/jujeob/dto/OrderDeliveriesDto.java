@@ -11,9 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDeliveriesDto {
-    // OrderItem
-    //private Integer productNo;
-    //private int quantity;
     private List<OrderItemDto> orderItems;
 
     // CustomerOrder
@@ -27,5 +24,4 @@ public class OrderDeliveriesDto {
     private Long totalPrice;
     private String deliveryRequest;
     private LocalDateTime createdAt;
-
 }

@@ -6,6 +6,7 @@ import com.jujeob.entity.CustomerOrder;
 import com.jujeob.entity.OrderItem;
 import com.jujeob.repository.OrderItemRepository;
 import com.jujeob.repository.OrderRepository;
+import com.jujeob.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,9 @@ public class OrderService {
     @Autowired
     OrderItemRepository orderItemRepository;
 
+    @Autowired
+    ProductRepository productRepository;
+
     @Transactional
     public void processOrder(CustomerOrder customerOrder) {
         // CustomerOrder 저장
@@ -35,17 +39,6 @@ public class OrderService {
         }
     }
 
-    /*public List<CustomerOrder> getAllCustomerOrdersByMemberNoOrderByCreatedAt(Long memberNo) {
-        return orderRepository.findCustomerOrdersByMemberNoOrderByCreatedAt(memberNo);
-    }*/
-
-   /* public OrderDeliveriesDto convertToDto(CustomerOrder customerOrder) {
-        OrderDeliveriesDto dto = new OrderDeliveriesDto();
-        dto.setOrderId(customerOrder.getOrderId());
-
-        return dto;
-    }*/
-
     public List<OrderDeliveriesDto> getAllOrderDeliveriesWithItems(Long memberNo) {
         List<CustomerOrder> customerOrders = orderRepository.findCustomerOrdersByMemberNoOrderByCreatedAt(memberNo);
         List<OrderDeliveriesDto> orderDeliveriesDtos = new ArrayList<>();
@@ -55,7 +48,6 @@ public class OrderService {
             List<OrderItem> orderItems = orderItemRepository.findByCustomerOrder(customerOrder);
             OrderDeliveriesDto orderDeliveriesDto = convertToDto(customerOrder, orderItems);
             orderDeliveriesDtos.add(orderDeliveriesDto);
-
         }
         return orderDeliveriesDtos;
     }
@@ -79,6 +71,8 @@ public class OrderService {
             itemDto.setProductNo(orderItem.getProductNo());
             itemDto.setQuantity(orderItem.getQuantity());
             itemDto.setPrice(orderItem.getPrice());
+            String img = productRepository.findImgByProductNo(orderItem.getProductNo());
+            itemDto.setImg(img);
             orderItemDtos.add(itemDto);
         }
         dto.setOrderItems(orderItemDtos);
