@@ -55,10 +55,10 @@ public class WebSecurityConfig {
         httpSecurity.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // stateless 세션 생성 비활성화
 
         // 특정경로 허용 - 아이디 중복체크
-        httpSecurity.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/checkMemId", "/api/register", "/api/login", "/api/logout").permitAll()  // 중복 검사 API 접근 허용
-                .anyRequest().authenticated()  // 나머지 요청은 인증 필요
-        );
+//        httpSecurity.authorizeHttpRequests(auth -> auth
+//                .requestMatchers("/api/checkMemId", "/api/register", "/api/login", "/api/logout").permitAll()  // 중복 검사 API 접근 허용
+//                .anyRequest().authenticated()  // 나머지 요청은 인증 필요
+//        );
 
 
         // 폼 기반 로그인 비활성화 (아이디, 비밀번호만 입력하면 로그인 되는 방식)

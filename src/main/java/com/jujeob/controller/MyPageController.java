@@ -34,15 +34,15 @@ public class MyPageController {
 
 
     // 회원정보수정
-    @PutMapping("/api/member/updateProfile")
-    public ResponseEntity<?> updateProfile(@RequestBody UpdateMemberDto updateDto, Principal principal) {
-        try {
-            Member updatedMember = myPageService.updateProfile(updateDto, principal.getName());
-            return ResponseEntity.ok(updatedMember);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Update 실패 : " + e.getMessage());
-        }
-    }
+//    @PutMapping("/api/member/updateProfile")
+//    public ResponseEntity<?> updateProfile(@RequestBody UpdateMemberDto updateDto, Principal principal) {
+//        try {
+//            Member updatedMember = myPageService.updateProfile(updateDto, principal.getName());
+//            return ResponseEntity.ok(updatedMember);
+//        } catch (Exception e) {
+//            return ResponseEntity.badRequest().body("Update 실패 : " + e.getMessage());
+//        }
+//    }
 
 
 }

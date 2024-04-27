@@ -13,5 +13,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByMemId(String memId);
 
     // 아이디 중복검사
-    boolean existsByMemId(String memId);
+//    boolean existsByMemId(String memId);
 }

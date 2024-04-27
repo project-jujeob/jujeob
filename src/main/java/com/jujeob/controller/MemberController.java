@@ -93,12 +93,12 @@ public class MemberController {
 //    }
 
     // 아이디 중복검사
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @GetMapping("/checkMemId")
-    public ResponseEntity<?> checkMemId(@RequestParam String memId) {
-        boolean isAvailable = memberService.checkMemberId(memId);
-        return ResponseEntity.ok().body(new ApiResponse(true, "isAvailable"));
-    }
+//    @CrossOrigin(origins = "*", allowedHeaders = "*")
+//    @GetMapping("/checkMemId")
+//    public ResponseEntity<?> checkMemId(@RequestParam String memId) {
+//        boolean isAvailable = memberService.checkMemberId(memId);
+//        return ResponseEntity.ok().body(new ApiResponse(true, "isAvailable"));
+//    }
 
 
 

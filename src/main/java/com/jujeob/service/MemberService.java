@@ -67,7 +67,7 @@ public class MemberService {
 //        return !memberRepository.existsByMemId(memId);
 //    }
 
-    public boolean checkMemberId(String memId) {
-        return memberRepository.existsByMemId(memId);
-    }
+//    public boolean checkMemberId(String memId) {
+//        return memberRepository.existsByMemId(memId);
+//    }
 }

@@ -42,3 +42,7 @@ sql-scripts/*
 
 ### YAML ###
 *.yml
+/src/main/resources/application-oauth.yml
+
+/# React specific
+node_modules/
