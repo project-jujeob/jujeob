@@ -1,44 +1,22 @@
 package com.jujeob.service;
 
-import com.jujeob.dto.RegisterDto;
-import com.jujeob.entity.Member;
-import com.jujeob.jwt.JwtUtil;
 import com.jujeob.repository.MemberRepository;
 import com.jujeob.repository.MyPageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
-import java.util.Optional;
 
 @Service
 public class MyPageService {
+
     @Autowired
     MemberRepository memberRepository;
 
     @Autowired
     MyPageRepository myPageRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private JwtUtil jwtUtil;
-
-        // 회원가입
-        public RegisterDto mapRegisterDto(Member member) {
-        RegisterDto registerDto = new RegisterDto();
-        registerDto.setMemId(member.getMemId());
-        registerDto.setMemNickname(member.getMemNickname());
-        registerDto.setMemName(member.getMemName());
-        registerDto.setMemEmail(member.getMemEmail());
-        registerDto.setMemPhone(member.getMemPhone());
-        registerDto.setMemAddr(member.getMemAddr());
-
-        return registerDto;
-    }
-
-    // 토큰 해석(분리) 회원 정보조회
+    // 회원 정보조회(토큰 해석(분리))
     public String getMemberInfo(String token) {
         // "Bearer " 부분 제거
         String jwt = token.replace("Bearer ", "");
@@ -60,7 +38,4 @@ public class MyPageService {
         byte[] decodedBytes = Base64.getUrlDecoder().decode(encoded);
         return new String(decodedBytes);
     }
-
-
-
 }

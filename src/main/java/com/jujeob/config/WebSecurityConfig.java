@@ -63,7 +63,7 @@ public class WebSecurityConfig {
                 UsernamePasswordAuthenticationFilter.class);
 
 //        httpSecurity.authorizeHttpRequests((auth) -> auth
-//                .requestMatchers("/", "/api/login2", "/api/register2", "api/member/info2").permitAll() // 메인페이지, 로그인페이지, 회원가입페이지 모두 허용
+//                .requestMatchers("/", "/api/login", "/api/register", "api/member/info").permitAll() // 메인페이지, 로그인페이지, 회원가입페이지 모두 허용
 ////                .requestMatchers(PathRequest.toH2Console()).permitAll()
 //                .requestMatchers("/admin").hasRole("admin") // admin페이지는 admin만
 //                .anyRequest().authenticated() // 모든 요청에 대해 인증된 사용자만 가능

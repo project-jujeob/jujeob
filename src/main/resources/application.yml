@@ -5,7 +5,12 @@ com:
   jujeob:
     secret-key: "|+<T%0h;[G97|I$5Lr?h]}`8rUX.7;0gw@bF<R/|\"-U0n:_6j={'.T'GHs~<AxU9"
 
-#spring:
-#  redis:
-#    host: localhost
-#    port: 6379
+# Redis 호스트 및 포트
+spring:
+  cache:
+    type: redis
+  data:
+    redis:
+      port: 6379
+      host: localhost
+#      password: 1234

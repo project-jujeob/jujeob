@@ -31,7 +31,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+    testImplementation 'io.projectreactor:reactor-test'
     //compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     implementation 'mysql:mysql-connector-java:8.0.33'
@@ -65,14 +67,18 @@ dependencies {
     // TEST
     testImplementation 'org.mockito:mockito-core:3.12.4'
 
-    // Spring Boot 시큐리티 의존성
+    // security
 //    implementation 'org.springframework.boot:spring-boot-starter-security'
 
 //    implementation 'jakarta.servlet:jakarta.servlet-api:5.0.0'
 
-    // Redis 의존성 추가
-//    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-//    implementation 'org.springframework.data:spring-data-redis'
+    // Redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.data:spring-data-redis'
+
+    // 캐시
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
 
 
 
