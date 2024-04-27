@@ -1,7 +1,7 @@
 
 
 .MemberInfo input {
-    padding: 15px 20px;
+    padding: 10px 20px;
     border: 1px solid lightgray;
     border-radius: 5px;
     width: 100%;
@@ -9,7 +9,7 @@
 
 .MemberLabel {
     width: 160px;
-    padding-top: 14px;
+    padding-top: 8px;
     padding-left: 30px;
 }
 .MemberInput {
@@ -63,24 +63,26 @@
     border: none;
     border-radius: 5px;
     background-color: #FF7E5C;
+    color: white;
+    font-weight: bold;
     margin-right: 20px;
 }
 .BtnGroup {
     display: flex;
-    margin-top: 20px;
-    padding-top: 20px;
+    margin-top: 10px;
+    padding-top: 10px;
     padding-left: 180px;
     border-top: 1px solid rgb(244, 244, 244);
 }
 .MemberPw p {
     font-size: 12px;
     color: rgb(240, 63, 64);
-    margin-top: 14px;
-    margin-left: 10px;
+    margin-top: 3px;
+    margin-left: 5px;
 }
 .MemberPwConfirm p {
     font-size: 12px;
     color: rgb(240, 63, 64);
-    margin-top: 14px;
-    margin-left: 10px;
+    margin-top: 3px;
+    margin-left: 5px;
 }

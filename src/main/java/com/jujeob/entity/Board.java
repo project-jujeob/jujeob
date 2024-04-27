@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -18,38 +19,36 @@ public class Board {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Board_Id")
-    private int boardId;
+    private int BoardId;
 
 
     @Column(name = "Board_Category")
-    private String boardCategory;
+    private String BoardCategory;
 
 
     @Column(name = "Board_Title")
-    private String boardTitle;
+    private String BoardTitle;
 
 
     @Column(name = "Board_Content")
-    private String boardContent;
+    private String BoardContent;
 
 
     @Column(name = "Board_CreateDate")
-    private LocalDate CreateDate;
+    private LocalDateTime CreateDate;
 
     @Column(name = "Board_Views")
-    private String boardViews;
+    private String BoardViews = "0";
 
     @Column(name = "Board_Update" )
-    private LocalDate boardUpdate;
+    private LocalDateTime BoardUpdate;
 
 
     @Column(name = "Board_isDeleted" )
-    private int isDeleted;
+    private int IsDeleted = 0; ;
 
     @ManyToOne
     @JoinColumn(name = "memNo")
     private Member member;
-
-
 
 }

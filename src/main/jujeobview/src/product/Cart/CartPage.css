@@ -1,0 +1,310 @@
+a{
+    text-decoration: none;
+}
+
+.cartContainer{
+    width:75%;
+    margin: 80px auto;
+}
+
+.cartTitle{
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.cartTotal{
+    display: flex;
+}
+
+.cartContentList{
+    width:70%;
+}
+
+.cartCheckTotalBox{
+    padding-bottom: 10px;
+    border-bottom : 1px solid rgb(51, 51, 51);
+    display: flex;
+}
+
+.cartCheckTotalBox label{
+    display: flex;
+    align-items: center;
+}
+
+.cartCheckTotalBox label span{
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.cartCheckTotalBox >span{
+    color: #eeeeee;
+}
+
+.checkDeleteBtn{
+    cursor: pointer;
+}
+
+.cartTotal input[type="checkbox"]{
+    width:20px;
+    height:20px;
+}
+
+.cartTotal input[type="checkbox"]:checked {
+    accent-color: #FD4818;
+    width:20px;
+    height:20px;
+}
+
+.listCheckbox{
+    display: flex;
+    align-items: center;
+}
+
+.emptyCart{
+    padding:200px 0;
+    font-size: 16px;
+    text-align: center;
+}
+
+.cartContent{
+    width:100%;
+    display: flex;
+    align-items: center;
+    height:120px;
+    padding:10px 0;
+    border-bottom : 1px solid rgb(238,238,238);
+}
+
+.cartContent>div:nth-child(1){
+    text-align: center;
+    width:8%;
+    height:30%;
+}
+
+.cartContent>div:nth-child(2){
+    width:8%;
+    height:90%;
+    position: relative;
+}
+
+.cartContent>div:nth-child(3){
+    width:48%;
+    padding-left:15px;
+    height:90%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.cartContent>div:nth-child(4){
+    width:15%;
+    height:90%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cartContent>div:nth-child(5){
+    font-weight: bold;
+    width:15%;
+    height:90%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cartContent>div:nth-child(6){
+    width:6%;
+    height:90%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cartContent img{
+    height:100%;
+    max-width:100%;
+    position: absolute;
+    /* 부모 div의 중앙을 기준으로 위치 조정 */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.deleteBtn{
+    cursor: pointer;
+}
+
+.cartContentRight{
+    width:25%;
+    margin-left:15px;
+
+    position: sticky;
+    top: 100px; /* 적절한 값으로 조정해야 적절한 위치에 고정됩니다. */
+    align-self: flex-start; /* 부모 요소에서 위쪽에 정렬되도록 합니다. */
+}
+
+.cartTotalPrice{
+    margin-top:30px;
+
+    padding:15px;
+    max-width:100%;
+    border: 1px solid rgb(242, 242, 242);
+    background-color: rgb(250, 250, 250);
+    display: flex;
+    flex-direction: column;
+}
+
+.cartPaymentAmount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* 세로 중앙 정렬을 위해 추가 */
+}
+
+.cartPaymentAmount:nth-child(3) {
+    padding-top: 25px; /* 세 번째 cartPaymentAmount에 패딩 적용 */
+}
+
+.cartPaymentAmount span{
+    line-height: 35px;
+}
+
+.cartPaymentAmount span:first-child {
+    text-align: left; /* 왼쪽 정렬 */
+}
+
+.cartPaymentAmount span:last-child {
+    text-align: right; /* 오른쪽 정렬 */
+}
+
+.paymentBold{
+    font-weight: bold;
+}
+
+.orderBtn{
+    margin-top:20px;
+    background-color: #FD4818;
+    padding:20px;
+    text-align: center;
+    color:#FFF;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* customer order */
+.orderContainer{
+    width:60%;
+    margin:80px auto;
+}
+
+.orderContainer h1{
+    text-align: center;
+    margin-bottom: 70px;
+}
+
+.orderTitle{
+
+}
+
+.orderItem{
+    padding-bottom: 10px;
+    border-bottom: 1px solid #000;
+}
+
+.orderInfo{
+    margin-top:80px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #000;
+}
+
+.orderInfoDetail{
+    margin-top:15px;
+    background-color: red;
+}
+
+.orderInfoDetail span{
+    font-weight: bold;
+    width:20%;
+    margin:6px 0;
+}
+
+.orderInfoDetail div{
+    display: flex;
+}
+
+/* CustomerOrderComplte*/
+.orderCompleteContainer{
+    width: 25%;
+    position: absolute; /* 절대 위치 지정 */
+    top: 45%; /* 화면 상단에서 중앙으로 이동 */
+    left: 50%; /* 화면 좌측에서 중앙으로 이동 */
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding:20px;
+    border: 1px solid #FF7E5C;
+    border-radius: 5px;
+}
+
+.orderCompleteTop{
+
+}
+
+.orderCompleteContent>div:nth-child(1){
+
+}
+
+.orderCompleteContent>div:nth-child(1) span{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.orderCompleteContent{
+    width:100%;
+}
+
+.orderCompleteTop{
+    margin-bottom:40px
+}
+
+.orderCompleteView>div>p{
+    font-size: 13px;
+    color: #8c8c8c;
+    font-weight: bold;
+}
+
+.orderCompleteView>div>span{
+    font-weight: bold;
+    font-size:20px
+}
+
+.orderCompleteBtn{
+    width:100%;
+    text-align: center;
+    margin-top:10px;
+}
+
+.orderCompleteHome{
+    background-color: #FD4818;
+    color:#FFF;
+    width: 100%;
+    padding:13px;
+    margin-bottom: 7px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.orderCompleteDetail{
+    background-color: #FFF;
+    color:#FD4818;
+    width: 100%;
+    padding:13px;
+    border: 1px solid;
+    border-radius: 5px;
+    cursor: pointer;
+}

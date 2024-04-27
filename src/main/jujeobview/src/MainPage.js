@@ -5,7 +5,7 @@ import axios from "axios";
 
 function MainPage() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const history = useNavigate(); // useHistory 훅 추가
+    const navigate = useNavigate(); // useHistory 훅 추가
 
     useEffect(() => {
         checkLoginStatus();
@@ -15,6 +15,13 @@ function MainPage() {
     const checkLoginStatus = () => {
         const token = JSON.parse(localStorage.getItem('token'));
         setIsLoggedIn(token != null);
+
+        if (token != null) {
+            const [, payloadBase64] = token.split(".");
+            const payloadString = atob(payloadBase64);
+            const payload = JSON.parse(payloadString);
+            console.log(payload);
+        }
     };
 
     // 로그아웃 처리
@@ -28,8 +35,10 @@ function MainPage() {
                 setIsLoggedIn(false);
                 console.log('Logout successful');
 
+                window.location.reload();
+
                 // 이전 페이지로 이동
-                history.goBack();
+                navigate(-1)
             })
             .catch(error => {
                 console.error('Error logging out:', error);
@@ -46,7 +55,9 @@ function MainPage() {
                         </Link>
                         <button>커뮤니티</button>
                         <button>공지사항</button>
-                        <button>장바구니</button>
+                        <Link to={"/Cart"}>
+                            <button>장바구니</button>
+                        </Link>
                         {isLoggedIn ? (
                             <>
                                 <Link to="/MyPage">

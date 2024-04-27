@@ -3,20 +3,19 @@
     justify-content: center;
     align-items: center;
     margin-top: 30px;
+    margin-bottom: 40px;
     font-size: 14px;
 }
 
 .wrapper ul {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: baseline;
     list-style: none;
     padding: 0;
 }
 
 .move {
-    display: flex;
-    align-items: center;
     margin: 0 5px;
 }
 
@@ -40,8 +39,13 @@
     margin: 0 5px;
 }
 
+.page{
+    display: flex;
+}
+
 .page .link{
     color:#FFF;
+    margin-bottom:10px;
 }
 .page button{
     background: transparent;

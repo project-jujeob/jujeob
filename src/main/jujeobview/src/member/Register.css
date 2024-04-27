@@ -1,5 +1,5 @@
 .RegisterPage {
-    width: 700px;
+    width: 750px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -10,69 +10,94 @@
 .RegisterForm {
     margin-top: -30px;
     padding: 60px 50px;
-
-
     height: 100%;
-
 }
 
 .RegisterForm h1 {
     text-align: center;
-
 }
 
 .hr {
     border: 1px solid black;
     height: 1px;
-
 }
 
-.MemberLabel {
-    width: 10px;
+.RegisterMemberLabel {
+    width: 150px;
     padding-top: 14px;
     padding-left: 30px;
 }
 
-.MemberId {
+.RegisterMemberInput {
+    width: 310px;
+}
+
+.RegisterMemberId {
     display: flex;
     width: 100%;
     padding: 10px 20px;
 }
-.MemberPw {
+.RegisterMemberPw {
     display: flex;
     width: 100%;
     padding: 10px 20px;
 }
-.MemberPwConfirm {
+.RegisterMemberPwDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.RegisterMemberPwConfirm {
     display: flex;
     width: 100%;
     padding: 10px 20px;
 }
-.MemberNickname {
+.RegisterMemberNickname {
     display: flex;
     width: 100%;
     padding: 10px 20px;
 }
-.MemberName {
+.RegisterMemberName {
     display: flex;
     width: 100%;
     padding: 10px 20px;
 }
-.MemberEmail {
+.RegisterMemberEmail {
     display: flex;
     width: 100%;
     padding: 10px 20px;
 }
-.MemberPhone {
+.RegisterMemberPhone {
     display: flex;
     width: 100%;
     padding: 10px 20px;
 }
-.MemberAddr {
+.RegisterMemberAddr {
     display: flex;
     width: 100%;
     padding: 10px 20px;
 }
+
+.RegisterMemberId button {
+    cursor: pointer;
+    margin: 10px 20px 8px 20px;
+
+    width: 100px;
+    height: 37px;
+    border-radius: 5px;
+    border: 2px solid #FF7E5C;
+    color: #FF7E5C;
+    font-weight: bold;
+}
+
+.MemberPwRegister {
+    padding-top: 5px;
+}
+.MemberPwRegister p {
+    font-size: 12px;
+    color: rgb(240, 63, 64);
+}
+
 
 .RegisterForm input {
     padding: 10px;
@@ -82,14 +107,25 @@
     margin: 9px 20px 8px 0px;
 }
 
-.BtnGroup button {
+
+
+.RegisterFormSubmitBtn {
+    border-top: 1px solid;
+    display: flex;
+    justify-content: center;
+}
+
+.RegisterFormBtnGroup button {
+
     cursor: pointer;
-    margin: 10px 20px 8px 0px;
-    width: 60%;
+    margin: 10px 20px 8px 20px;
+    width: 200px;
     height: 50px;
     border: none;
     border-radius: 5px;
     background-color: #FF7E5C;
     color: white;
+    font-weight: bold;
+    font-size: 15px;
 }
 

@@ -80,6 +80,8 @@ dependencies {
     // 캐시
     implementation 'org.springframework.boot:spring-boot-starter-cache'
 
+    // 파일 업로드
+    
 
 
 }

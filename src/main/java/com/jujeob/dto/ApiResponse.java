@@ -3,7 +3,7 @@ package com.jujeob.dto;
 public class ApiResponse {
     private boolean success;
     private String message;
-//    private Object data;
+    private Object data;
 
     public ApiResponse(boolean success, String message) {
         this.success = success;
@@ -13,7 +13,7 @@ public class ApiResponse {
     public ApiResponse(boolean success, String message, Object data) {
         this.success = success;
         this.message = message;
-//        this.data = data;
+        this.data = data;
     }
 
     // Getters and Setters
@@ -33,11 +33,11 @@ public class ApiResponse {
         this.message = message;
     }
 
-//    public Object getData() {
-//        return data;
-//    }
-//
-//    public void setData(Object data) {
-//        this.data = data;
-//    }
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
+    }
 }

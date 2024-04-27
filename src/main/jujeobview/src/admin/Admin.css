@@ -1,0 +1,510 @@
+/*-------------Admin.js----------------*/
+.AdminContainer {
+    width: 90%;
+    margin: 0 auto;
+    padding: 50px;
+    text-align: center;
+}
+
+.AdminWorkHeader {
+    margin-left: 100px;
+}
+
+.AdminWork {
+    display: flex;
+    margin-top: 20px;
+}
+
+.AdminWorkBtns a {
+    width: 100%;
+}
+
+.AdminWorkBtns {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 15%;
+    position: sticky;
+    top: 100px; /* 적절한 값으로 조정해야 적절한 위치에 고정됩니다. */
+    align-self: flex-start; /* 부모 요소에서 위쪽에 정렬되도록 합니다. */
+}
+
+.AdminWorkBtn1, .AdminWorkBtn2,
+.AdminWorkBtn3, .AdminWorkBtn4, .AdminWorkBtn5 {
+    background-color: #FF7E5C;
+    border: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 20px 30px;
+    border-radius: 10px;
+    outline: none;
+    margin: 5px 10px;
+    cursor: pointer;
+}
+
+.AdminWorkBtn1.selected, .AdminWorkBtn2.selected,
+.AdminWorkBtn3.selected, .AdminWorkBtn4.selected,
+.AdminWorkBtn5.selected{
+    border: solid 2px;
+    box-shadow: 0 0 10px rgb(252, 69, 20);
+    background-color: #ff4f21;
+}
+
+
+.AdminWorkShow {
+    width: 85%;
+}
+
+
+/*-------------ProductRegister.js----------------*/
+.ProductRegistrationContainer, .ProductEditContainer {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.ProductRegistrationContainer h2, .ProductEditContainer h2 {
+    text-align: center;
+    margin: 30px 0px;
+}
+
+.ProductRegistrationForm, .ProductEditForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 30px;
+    margin-top: 10px;
+}
+
+.ChooseMainType {
+    display: grid;
+    grid-template-columns: 200px auto;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.MainTypeContainer {
+    display: flex;
+    align-items: center;
+}
+
+.MainTypeContainer div {
+    grid-template-columns: 120px 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.MainType {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.MainTypeButtons button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    background-color: #FF7E5C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.MainTypeButtons button.active {
+    border-color: #FF7E5C;
+    outline: 0;
+    box-shadow: 0 0 0 0.12rem #464545;
+}
+
+.CommonFields, .RenderingFields, .MainTypeContainer {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.MainTypeContainer div {
+    margin-left: 100px;
+}
+
+
+.CommonContainer div {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.RenderingFields div {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.CommonContainer label, .CommonFields label,
+.RenderingFields label {
+    display: inline-block;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px 0 0 5px;
+    text-align: left;
+}
+
+.CommonContainer input[type="text"] ,.CommonContainer input[type="file"],
+.CommonContainer input[type="number"], .CommonContainer textarea ,
+.CommonFields input[type="text"] ,.CommonFields input[type="file"],
+.CommonFields input[type="number"], .CommonFields textarea,
+.RenderingFields input[type="text"] ,.RenderingFields input[type="file"],
+.RenderingFields input[type="number"], .RenderingFields textarea {
+    padding: 10px;
+    border: 2px solid #ced4da;
+    border-radius: 0 5px 5px 0;
+    width: 100%;
+}
+
+.CommonContainer input[type="text"]:focus,
+.CommonFields input[type="text"]:focus,
+.RenderingFields input[type="text"]:focus {
+    border-color: #FF7E5C;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem #dad8d8;
+}
+
+
+
+.ProductEditBtns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ProductEditBtns button {
+    margin: 0px 10px;
+}
+
+
+.ProductRegistrationForm button[type="submit"],
+.ProductEditForm button[type="submit"],
+.ProductEditBtns button {
+    padding: 10px 20px;
+    background-color: #FF7E5C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: center;
+    font-size: 16px;
+}
+
+.ProductRegistrationForm button[type="submit"]:hover,
+.ProductEditForm button[type="submit"]:hover,
+.ProductEditBtns button:hover {
+    background-color: #ff5c2f;
+    color: #0a0a0a;
+}
+
+
+/*-------------------UserInfo.js------------------------*/
+.UserInfoContainer {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.MemberInfoList {
+    width: 100%;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.MemberInfoListHeader {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+    padding: 5px 0;
+
+}
+
+.MemberInfoListContent {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.MemberInfoListHeader div {
+    padding: 15px;
+    font-weight: bold;
+    font-size: 15px;
+    overflow: hidden; /* 필요에 따라 주석 처리 */
+    white-space: normal;
+    text-overflow: ellipsis;
+    flex-shrink: 1; /* 너비를 고정 */
+}
+
+.MemberInfoListContent div {
+    margin: 10px 0px;
+    padding: 5px;
+    font-size: 14px;
+    overflow: hidden; /* 필요에 따라 주석 처리 */
+    white-space: normal;
+    text-overflow: ellipsis;
+    flex-shrink: 1; /* 너비를 고정 */
+}
+
+.MemberInfoId, .MemberInfoNickname, .MemberInfoName, .MemberInfoCreateDate {
+    width: 20%;
+}
+
+.MemberInfoEmail, .MemberInfoPhone {
+    width: 25%;
+}
+
+.MemberInfoAddr {
+    width: 25%;
+}
+
+.MemberInfoNo {
+    width: 10%;
+}
+
+.MemberDeleteStatus {
+    width: 15%;
+}
+
+/*-------------------AnnouncementWrite.js------------------------*/
+.AnnouncementWriteContainer {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin: auto;
+    width: 100%;
+}
+
+.AnnouncementWriteContainer h4 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.AnnouncementWriteTitle, .AnnouncementWriteWriter, .AnnouncementTextarea {
+    display: flex;
+    margin-bottom: 15px;
+    padding: 5px;
+}
+
+.AnnouncementWriteTitle input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.AnnouncementWriteWriter {
+    width: 100%;
+}
+
+.AC1, .AW1, .AT1 {
+    width: 10%;
+}
+
+.AC2, .AW2, .AT2 {
+    width: 87%;
+}
+
+.AC2 textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: none;
+}
+
+.AnnouncementCharacterCount {
+    text-align: right;
+    color: #666;
+    margin-top: 5px;
+}
+
+.AnnouncementPrepareOrNot {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.AnnouncementPrepareOrNot div {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    background-color: #FF7E5C;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.AnnouncementPrepareOrNot div:hover {
+    background-color: #fd5022;
+}
+
+.AnnouncementPrepareOrNot div:last-child {
+    background-color: #f44336;
+}
+
+.AnnouncementPrepareOrNot div:last-child:hover {
+    background-color: #dc2836;
+}
+
+/*-------------------AnnouncementEdit.css------------------------*/
+.AnnouncementEditContainer {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin: auto;
+    width: 100%;
+}
+
+.AnnouncementEditContainer h4 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.AnnouncementEditTitle, .AnnouncementEditWriter, .AnnouncementEditTextarea {
+    display: flex;
+    margin-bottom: 15px;
+    padding: 5px;
+    text-align: left;
+}
+
+
+.AnnouncementEditTitle input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.AnnouncementCharacterCount {
+    text-align: right;
+    color: #666;
+    margin-top: 5px;
+}
+
+.AnnouncementEditOrNot {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.AnnouncementBtn .AnnouncementEditOrNot button {
+    display: inline-block;
+    padding: 7px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    background-color: #FF7E5C;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.AnnouncementEditOrNot button:hover {
+    background-color: #fd5022;
+}
+
+.AnnouncementEditOrNot button:last-child {
+    background-color: #f44336;
+}
+
+.AnnouncementEditOrNot button:last-child:hover {
+    background-color: #dc2836;
+}
+
+/*-------------------ProductManagement.css------------------------*/
+.ProductAdminContainer {
+    width: 95%;
+    margin: 0 auto;
+}
+
+.ProductAdminList {
+    width: 100%;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.ProductAdminListHeader {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+    padding: 5px 0;
+}
+
+.ProductAdminListContent {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.ProductAdminListHeader div,
+.ProductAdminListContent div {
+    padding: 15px;
+    font-weight: bold;
+    font-size: 15px;
+    overflow: hidden;
+    white-space: normal;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+}
+
+.ProductAdminNo {
+    width: 10%;
+}
+
+.productAdminImg {
+    width: 20%;
+}
+
+.productAdminImg .ProductImg {
+    width: 60%;
+    height: 100%;
+}
+
+.productAdminName, .productAdminPrice {
+    width: 25%;
+}
+
+.productAdminStock {
+    width: 15%;
+}
+
+.productAdminBtns {
+    width: 20%;
+}
+
+.productAdminBtns button {
+    margin-right:  10px;
+    border: none;
+    background-color: #FF7E5C;
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+}
+

@@ -1,0 +1,39 @@
+.DeleteContainer{
+    margin: auto;
+    text-align: center;
+    padding: 3px;
+}
+.ButtonContainer{
+    margin-top: 6px;
+}
+.ButtonContainer button{
+    margin-right: 5px;
+}
+.submitButton{
+    margin-left: 5px;
+    width: 80px;
+    height: 40px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 1px solid rgba(222, 222, 222, 0.78);
+    background-color: #FF7E5C;
+}
+.submitButton:hover{
+    background-color: rgba(255, 78, 34, 0.86);
+}
+.submitButton:active{
+    background-color: rgba(255, 163, 141, 0.86);
+}
+.goBackButton{
+    width: 80px;
+    height: 40px;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 1px solid rgba(222, 222, 222, 0.78);
+}
+.goBackButton:hover{
+    background-color: #e0e0e0;
+}
+.goBackButton:active{
+    background-color: #b0b0b0;
+}
