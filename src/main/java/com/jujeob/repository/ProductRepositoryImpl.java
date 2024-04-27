@@ -1,8 +1,11 @@
 package com.jujeob.repository;
 
+import com.jujeob.dto.ProductAdminDto;
+import com.jujeob.dto.ProductEditDto;
 import com.jujeob.entity.*;
 import com.jujeob.service.SubCategoryService;
 import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -397,7 +400,75 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
         }
         return query.fetch();
     }
-}
 
+    @Override
+    public List<ProductAdminDto> findProductListAndStock() {
+        QProduct qProduct = QProduct.product;
+        QStock qStock = QStock.stock;
+
+        return factory.select(Projections.constructor(
+                        ProductAdminDto.class,
+                        qProduct.productNo,
+                        qProduct.name,
+                        qProduct.img,
+                        qProduct.price,
+                        qStock.quantity
+                ))
+                .from(qProduct)
+                .leftJoin(qStock).on(qProduct.productNo.eq(qStock.productNo))
+                .fetch();
+    }
+
+    @Override
+    public ProductEditDto findAllAndStockByProductNo(Integer productNo) {
+        QProduct qProduct = QProduct.product;
+        QStock qStock = QStock.stock;
+
+        return factory.select(Projections.bean(
+                        ProductEditDto.class,
+                        qProduct.productNo,
+                        qProduct.productId,
+                        qProduct.name,
+                        qProduct.img,
+                        qProduct.price,
+                        qProduct.alcohol,
+                        qProduct.volume,
+                        qProduct.type,
+                        qProduct.description,
+                        qProduct.company,
+                        qProduct.packageType,
+                        qProduct.unit,
+                        qProduct.expDate,
+                        qProduct.detailImg,
+                        qProduct.tastingImg,
+                        qProduct.colorAndHomogeneity,
+                        qProduct.incense,
+                        qProduct.tasting,
+                        qProduct.mouthfeel,
+                        qProduct.brandImg,
+                        qProduct.winery,
+                        qProduct.kind,
+                        qProduct.color,
+                        qProduct.openType,
+                        qProduct.aroma,
+                        qProduct.foodPairing,
+                        qProduct.breeding,
+                        qProduct.recommendGlass,
+                        qProduct.country,
+                        qProduct.countryDescription,
+                        qProduct.brand,
+                        qProduct.crate,
+                        qProduct.howToDrink,
+                        qProduct.flavor,
+                        qProduct.finish,
+                        qProduct.keyword,
+                        qStock.quantity.as("quantity")
+                ))
+                .from(qProduct)
+                .leftJoin(qStock).on(qProduct.productNo.eq(qStock.productNo))
+                .where(qProduct.productNo.eq(productNo))
+                .fetchOne();
+    }
+}
 
 

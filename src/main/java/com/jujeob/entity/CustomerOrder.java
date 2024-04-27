@@ -5,45 +5,63 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@Table(name="customerorder")
 @EntityListeners(AuditingEntityListener.class)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "customerorder")
 public class CustomerOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    @ManyToOne
-    @JoinColumn(name = "memNo", nullable = false)
-    private Member member;
+    @OneToMany(mappedBy = "customerOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "productno", nullable = false)
-    private Product product;
-
-    @Column(nullable = false)
-    private int quantity;
+    /*@ManyToOne // 수정
+    @JoinColumn(name = "memNo", nullable = false) // 수정
+    private Member member;*/
 
     @Column(nullable = false)
-    private int totalPrice;
+    private Long memberNo;
 
     @Column(nullable = false)
     private String address;
 
-    @CreatedDate
-    private LocalDateTime orderDate;
+    @Column(nullable = false)
+    private String memberName;
 
-    @Column(nullable = false, columnDefinition = "varchar(1) default 'Y'")
+    @Column(nullable = false)
+    private String memberPhone;
+
+    @Column(nullable = false)
+    private String memberEmail;
+
+    @Column(nullable = false)
     private String orderStatus;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private PaymentMethod PaymentMethod; // enum
+    private String paymentMethod;
+
+    @Column(nullable = false)
+    private Long totalPrice;
+
+    @Column(nullable = false)
+    private String deliveryRequest;
+
+    @CreatedDate
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 }

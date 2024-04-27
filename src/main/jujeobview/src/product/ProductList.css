@@ -15,7 +15,7 @@
     justify-content: space-between;
 }
 
-.SearchInput {
+.ProductListSearch .SearchInput {
     border: none;
     font-size: 16px;
     margin-left: 10px;

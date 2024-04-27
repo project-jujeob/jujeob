@@ -1,6 +1,6 @@
 .MyPageForm {
     width: 65%;
-    height: 100%;
+    height: auto;
     margin: 0 auto;
     display: flex;
     gap: 30px;
@@ -39,7 +39,49 @@
 }
 
 .SubTitleDetail {
-    height: 595px;
+    height: auto;
     padding-top: 20px;
     padding-left: 10px;
+}
+
+/* OrderDelivery */
+.orderDeliveryTitle{
+    padding:10px;
+    margin:10px 0;
+
+    cursor: pointer;
+    border: 1px solid #FD4818;
+    border-radius: 5px;
+    background-color: #FFF;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.redText {
+    color: red;
+    font-weight: bold;
+}
+
+.orderDeliveryCancelNotice{
+
+}
+
+.orderDeliveryTitle.expanded {
+    background-color: #FF7E5C;
+    border: none;
+}
+
+.orderDeliveryContent{
+    display: flex;
+    justify-content: space-between;
+}
+
+.orderCancelBtn{
+    cursor: pointer;
+    background-color: #FD4818;
+    color:#FFF;
+    border-radius: 5px;
+    padding:7px;
+    font-size:15px;
 }

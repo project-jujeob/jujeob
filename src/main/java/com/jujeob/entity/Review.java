@@ -40,7 +40,7 @@ public class Review {
     private Member member;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productno", nullable = false)
+    @JoinColumn(name = "productno", referencedColumnName = "productno")
     private Product product;
 
 }

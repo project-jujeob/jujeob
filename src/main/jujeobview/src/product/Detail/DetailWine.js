@@ -1,21 +1,27 @@
 import ProductType from "./ProductType";
 import QuantityCounter from "./QuantityCounter";
 import addToCart from "../Cart/addToCart";
-import React, {useRef} from "react";
+import React, {useRef, useState} from "react";
 import DetailScrollToTarget from "./DetailScrollToTarget";
 import ReviewPage from "./review/ReviewPage";
 import {useAuth} from "../../member/Context";
 import LikeBtnClick from "../Like/LikeBtnClick";
 import useCheckUserLikes from "../Like/useCheckUserLikes";
 import DetailScrollToTop from "./DetailScrollToTop";
+import {getImageUrl} from "../../common/ImageUrl";
 
 
 function DetailTraditional({product}) {
     const { payload } = useAuth();
     const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
+    const [cartQuantity, setCartQuantity] = useState(1);
+
+    const handleQuantityChange = (newQuantity) => {
+        setCartQuantity(newQuantity); // 수량 변경 시 장바구니에 추가될 수량 업데이트
+    };
 
     const handleAddToCart = () => {
-        addToCart(product);
+        addToCart(product,payload.memberNo,cartQuantity);
     };
 
     const contentTopRef = useRef(null);
@@ -27,7 +33,7 @@ function DetailTraditional({product}) {
             <div className="detail">
                 <div className="detailTop">
                     <div>
-                        <img src={product.img} className="detailImgthumb" alt="술이미지"/>
+                        <img className="detailImgthumb" src={getImageUrl(product.img)} alt="술이미지"/>
                     </div>
                     <div className="detailRight">
                         <ProductType productId={product.productId}/>
@@ -39,7 +45,10 @@ function DetailTraditional({product}) {
                             <p><span>도수&ensp;:&ensp;</span> {product.alcohol}%</p>
                             <p><span>용량&ensp;:&ensp;</span> {product.volume}</p>
                             <p><span>추천 검색어&ensp;:&ensp;</span>{product.keyword}</p>
-                            <p><span>구매수량 : &ensp;</span><QuantityCounter/></p>
+                            <p><span>구매수량 : &ensp;</span>
+                                <QuantityCounter initialQuantity={1} // 초기 수량 설정
+                                                 onQuantityChange={handleQuantityChange} // 수량 변경 시 addToCart 함수 호출
+                                /></p>
                         </div>
 
                         <div className="detailBtn">
@@ -60,7 +69,7 @@ function DetailTraditional({product}) {
                         <p>{product.description}</p>
                     </div>
                     <div>
-                        <img src={product.tastingImg} alt="술테이스팅노트" className="tastingNote"/>
+                        <img src={getImageUrl(product.tastingImg)} alt="술테이스팅노트" className="tastingNote"/>
                     </div>
                     <div className="detailContentInfo">
                         <p><span>색 | </span>{product.color}</p>

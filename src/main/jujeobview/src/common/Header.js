@@ -22,9 +22,11 @@ function Header() {
             const [header, payloadBase64] = token.split('.');
 
             try {
-                const payloadString = atob(payloadBase64);
+                const payloadString = base64DecodeUnicode(payloadBase64);
                 const newPayload = JSON.parse(payloadString);
                 setAuthPayload(newPayload); // payload를 Context에 설정
+
+                console.log("뉴페이",newPayload);
             } catch (error) {
                 console.error('Failed to decode payload:', error);
             }
@@ -49,7 +51,7 @@ function Header() {
         <div className="Header">
             <div className="HeaderLogo">
                 <Link className="HeaderLink" to={'/'}>
-                    <img src={CommonLogo} alt="헤더로고" />
+                    <img src={CommonLogo} alt="헤더로고"/>
                     <p>JU JEOB</p>
                 </Link>
             </div>
@@ -60,12 +62,21 @@ function Header() {
                 <Link to={'/BbsList'}>
                     <button>커뮤니티</button>
                 </Link>
-                <button>공지사항</button>
-                <Link to={'/Cart'}>
-                    <button>장바구니</button>
+                <Link to={'/Announcement'}>
+                    <button>공지사항</button>
                 </Link>
-                {payload ? (
+                {payload && payload.memberRole === "admin" ? (
                     <>
+                        <Link to="/Admin">
+                            <button>관리자</button>
+                        </Link>
+                        <button onClick={logoutAction}>로그아웃</button>
+                    </>
+                ) : payload ? (
+                    <>
+                        <Link to={'/Cart'}>
+                            <button>장바구니</button>
+                        </Link>
                         <Link to={'/MyPage'}>
                             <button>마이페이지</button>
                         </Link>
@@ -78,7 +89,15 @@ function Header() {
                 )}
             </div>
         </div>
+
     );
 }
 
 export default Header;
+
+function base64DecodeUnicode(str) {
+    // Convert Base64 encoded bytes to percent-encoding, and then get the original string
+    return decodeURIComponent(atob(str).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}

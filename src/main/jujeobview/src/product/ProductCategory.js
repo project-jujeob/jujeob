@@ -94,6 +94,7 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
         axios.get('/api/productList')
             .then(response => {
                 setViewAllProductList(response.data);
+                console.log(response.data);
             })
             .catch(error => {
                 console.error('데이터 가져오기 실패:', error);

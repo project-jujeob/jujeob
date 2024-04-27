@@ -3,6 +3,7 @@ import basketIcon from '../img/icon/basketIcon.png';
 import addToCart from "./Cart/addToCart";
 import React from "react";
 import LikeBtnClick from "./Like/LikeBtnClick";
+import {getImageUrl} from "../common/ImageUrl";
 
 const ProductItem = ({ product, likes, setLikes, payload}) => {
     const handleClickAddToCart = (e, product,cartQuantity) => {
@@ -14,10 +15,10 @@ const ProductItem = ({ product, likes, setLikes, payload}) => {
         <div key={product.productNo} className="ProductItem">
             <Link to={`/ProductItemDetail/${product.productNo}`} className="link">
                 <div className="ProductImgContainer">
-                    <img className="ProductImg" src={product.img} alt={product.name}/>
+                    <img className="ProductImg" src={getImageUrl(product.img)} alt={product.name}/>
                     <div className="ProductBtns">
-                        <LikeBtnClick product={product} payload={payload} likes={likes} setLikes={setLikes} />
-                        <div className="ProductBasketBtn" onClick={(e) => handleClickAddToCart(e, product,1)}>
+                        <LikeBtnClick product={product} payload={payload} likes={likes} setLikes={setLikes}/>
+                        <div className="ProductBasketBtn" onClick={(e) => handleClickAddToCart(e, product, 1)}>
                             <img src={basketIcon} alt="Basket Button"/>
                         </div>
                     </div>

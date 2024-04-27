@@ -11,4 +11,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, Prod
     @Query(value = "SELECT * FROM product ORDER BY RAND() LIMIT 5", nativeQuery = true)
     List<Product> findRandom5();
 
+    @Query("SELECT p.img FROM Product p WHERE p.productNo = ?1")
+    String findImgByProductNo(Integer productNo);
 }
