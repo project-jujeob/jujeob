@@ -19,7 +19,11 @@ public class ReviewDto {
     private Integer productNo;
     private String productName;
 
-    // member
-    private Long memNo;
-    private String memNickname;
+//    // member
+//    private Long memNo;
+//    private String memNickname;
+
+    // user
+    private Long userNo;
+    private String nickname;
 }

@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import BbsListItem from "../BoardComponent/BbsListItem";
 import BbsCategory from "../BoardComponent/BbsCategory";
 import BbsSlideAndBestPost from "../BoardComponent/BbsSlideAndBestPost";
-import {useAuth} from "../../member/Context";
+import {useAuth} from "../../user/Context";
 
 function BbsList() {
     return (

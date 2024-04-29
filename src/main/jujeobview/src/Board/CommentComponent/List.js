@@ -20,7 +20,9 @@ function List({ commentsList }){
                     <div className="Comment-AuthorAndContent">
                         <div className="AuthorAndContent-ProfileImgAndAuthor">
                             <div className="AuthorAndContent Comment-ProfileImg">이미지</div>
-                            <div className="AuthorAndContent Comment-Author">{comment.memNickname}</div>
+                            {/*<div className="AuthorAndContent Comment-Author">{comment.memNickname}</div>*/}
+                            <div className="AuthorAndContent Comment-Author">{comment.nickname}</div>
+
                         </div>
                         <div className="AuthorAndContent Comment-Content">{comment.commentContent}</div>
                     </div>

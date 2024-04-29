@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {useAuth} from "../../member/Context";
+import {useAuth} from "../../user/Context";
 
 function Write({ boardId, commentFetchData }){
     const [commentContent, setCommentContent] = useState(null);
     const [d,setD] = useState([boardId, commentContent]);
     const {payload} = useAuth();
-    const memNo = payload.memberNo.toString();
+    // const memNo = payload.memberNo.toString();
+    const userNo = payload.userNo.toString();
     const handleSubmit = async (e) =>{
         e.preventDefault();
         if (!payload) {
@@ -15,7 +16,8 @@ function Write({ boardId, commentFetchData }){
         }
         try{
             const response = await axios.post(`/boardComment/Write`, {
-                memNo,
+                // memNo,
+                userNo,
                 boardId,
                 commentContent});
             alert('댓글 성공!')

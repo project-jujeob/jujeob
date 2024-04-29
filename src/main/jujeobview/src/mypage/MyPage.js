@@ -12,7 +12,7 @@ import axios from "axios";
 
 
 function MyPage() {
-    const memberToken = JSON.parse(localStorage.getItem('token'));
+    // const accessToken = JSON.parse(localStorage.getItem('accessToken'));
     // const [showPasswordCheck, setShowPasswordCheck] = useState(false)
 
     const [passwordVerified, setPasswordVerified] = useState(false)
@@ -75,7 +75,7 @@ function MyPage() {
                 return <ReviewHistory />
             case "내가 쓴 게시글":
                 return <MyPosts />
-            case "회원 정보 수정":
+            case "회원 정보":
                 return <Profile />
             default: return null
         }
@@ -93,7 +93,7 @@ function MyPage() {
                         <h3 onClick={() => subTitleChange("찜 목록")}>찜 목록</h3>
                         <h3 onClick={() => subTitleChange("리뷰 내역")}>리뷰 내역</h3>
                         <h3 onClick={() => subTitleChange("내가 쓴 게시글")}>내가 쓴 게시글</h3>
-                        <h3 onClick={() => subTitleChange("회원 정보 수정")}>회원 정보 수정</h3>
+                        <h3 onClick={() => subTitleChange("회원 정보")}>회원 정보</h3>
                     </div>
                 </div>
 
@@ -108,5 +108,7 @@ function MyPage() {
         </div>
     )
 }
+
+
 
 export default MyPage;

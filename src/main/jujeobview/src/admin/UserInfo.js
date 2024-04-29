@@ -15,15 +15,88 @@ const UserInfo = () => {
         return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
     };
 
-    const [memberInfo, setMemberInfo] = useState([]);
+    // const [memberInfo, setMemberInfo] = useState([]);
+    // useEffect(() => {
+    //     axios.get('/api/showUserInfo')
+    //         .then((response) => {
+    //             setMemberInfo(response.data);
+    //             setTotalUserInfo(response.data.length);
+    //             setTotalPages(Math.ceil(totalUserInfo / PAGE_SIZE));
+    //         }).catch((error) => {
+    //             console.log('회원 목록 가져오기 실패:', error);
+    //     })
+    // }, []);
+    //
+    // useEffect(() => {
+    //     loadUserInfoList();
+    // }, [currentPage]);
+    //
+    // const loadUserInfoList = () => {
+    //     const startIndex = (currentPage - 1) * PAGE_SIZE;
+    //     const endIndex = startIndex + PAGE_SIZE;
+    //     axios.get('/api/showUserInfo')
+    //         .then((response) => {
+    //             setMemberInfo(response.data.slice(startIndex, endIndex));
+    //         })
+    //         .catch((error) => {
+    //             console.error('데이터 가져오기 실패:', error);
+    //         });
+    // };
+    //
+    // const handlePageChange = (page) => {
+    //     setCurrentPage(page);
+    // };
+    //
+    // return (
+    //     <div>
+    //         <div className="UserInfoContainer">
+    //             <div className="MemberInfoList">
+    //                 <div className="MemberInfoListHeader">
+    //                     <div className="MemberInfoNo">NO.</div>
+    //                     <div className="MemberInfoId">아이디</div>
+    //                     <div className="MemberInfoNickname">닉네임</div>
+    //                     <div className="MemberInfoName">이름</div>
+    //                     <div className="MemberInfoEmail">이메일</div>
+    //                     <div className="MemberInfoPhone">전화번호</div>
+    //                     <div className="MemberInfoAddr">주소</div>
+    //                     <div className="MemberInfoCreateDate">가입일</div>
+    //                     <div className="MemberDeleteStatus">탈퇴여부</div>
+    //                 </div>
+    //                 {memberInfo.map((member, index) => (
+    //                     <div className="MemberInfoListContent" key={index}>
+    //                         <div className="MemberInfoNo">{index + 1}</div>
+    //                         <div className="MemberInfoId">{member.memId}</div>
+    //                         <div className="MemberInfoNickname">{member.memNickname}</div>
+    //                         <div className="MemberInfoName">{member.memName}</div>
+    //                         <div className="MemberInfoEmail" title={member.memEmail}>{member.memEmail}</div>
+    //                         <div className="MemberInfoPhone" title={member.memPhone}>{member.memPhone}</div>
+    //                         <div className="MemberInfoAddr" title={member.memAddr}>{member.memAddr}</div>
+    //                         <div className="MemberInfoCreateDate">{formatDate(member.createDate)}</div>
+    //                         <div className="MemberDeleteStatus">{member.memDeleted}</div>
+    //                     </div>
+    //                 ))}
+    //             </div>
+    //         </div>
+    //         <Pagination
+    //             totalItems={totalUserInfo}
+    //             itemsPerPage={PAGE_SIZE}
+    //             pageCount={5}
+    //             currentPage={currentPage}
+    //             totalPages={totalPages}
+    //             onPageChange={handlePageChange}
+    //         />
+    //     </div>
+    // );
+
+    const [userInfo, setUserInfo] = useState([]);
     useEffect(() => {
         axios.get('/api/showUserInfo')
             .then((response) => {
-                setMemberInfo(response.data);
+                setUserInfo(response.data);
                 setTotalUserInfo(response.data.length);
                 setTotalPages(Math.ceil(totalUserInfo / PAGE_SIZE));
             }).catch((error) => {
-                console.log('회원 목록 가져오기 실패:', error);
+            console.log('회원 목록 가져오기 실패:', error);
         })
     }, []);
 
@@ -36,7 +109,7 @@ const UserInfo = () => {
         const endIndex = startIndex + PAGE_SIZE;
         axios.get('/api/showUserInfo')
             .then((response) => {
-                setMemberInfo(response.data.slice(startIndex, endIndex));
+                setUserInfo(response.data.slice(startIndex, endIndex));
             })
             .catch((error) => {
                 console.error('데이터 가져오기 실패:', error);
@@ -51,7 +124,7 @@ const UserInfo = () => {
         <div>
             <div className="UserInfoContainer">
                 <div className="MemberInfoList">
-                    <div className="MemberInfoListHeader">
+                    <div className="userInfoListHeader">
                         <div className="MemberInfoNo">NO.</div>
                         <div className="MemberInfoId">아이디</div>
                         <div className="MemberInfoNickname">닉네임</div>
@@ -62,17 +135,17 @@ const UserInfo = () => {
                         <div className="MemberInfoCreateDate">가입일</div>
                         <div className="MemberDeleteStatus">탈퇴여부</div>
                     </div>
-                    {memberInfo.map((member, index) => (
+                    {userInfo.map((user, index) => (
                         <div className="MemberInfoListContent" key={index}>
                             <div className="MemberInfoNo">{index + 1}</div>
-                            <div className="MemberInfoId">{member.memId}</div>
-                            <div className="MemberInfoNickname">{member.memNickname}</div>
-                            <div className="MemberInfoName">{member.memName}</div>
-                            <div className="MemberInfoEmail" title={member.memEmail}>{member.memEmail}</div>
-                            <div className="MemberInfoPhone" title={member.memPhone}>{member.memPhone}</div>
-                            <div className="MemberInfoAddr" title={member.memAddr}>{member.memAddr}</div>
-                            <div className="MemberInfoCreateDate">{formatDate(member.createDate)}</div>
-                            <div className="MemberDeleteStatus">{member.memDeleted}</div>
+                            <div className="MemberInfoId">{user.userId}</div>
+                            <div className="MemberInfoNickname">{user.nickname}</div>
+                            <div className="MemberInfoName">{user.name}</div>
+                            <div className="MemberInfoEmail" title={user.email}>{user.email}</div>
+                            <div className="MemberInfoPhone" title={user.phone}>{user.phone}</div>
+                            <div className="MemberInfoAddr" title={user.address}>{user.address}</div>
+                            <div className="MemberInfoCreateDate">{formatDate(user.createDate)}</div>
+                            <div className="MemberDeleteStatus">{user.deleted}</div>
                         </div>
                     ))}
                 </div>
