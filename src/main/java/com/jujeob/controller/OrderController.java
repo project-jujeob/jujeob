@@ -12,9 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @RestController
 @RequestMapping("/api")
 public class OrderController {
@@ -40,7 +37,7 @@ public class OrderController {
     @Autowired
     StockRepository stockRepository;
 
-    @Transactional
+    /*@Transactional
     @PostMapping("/customerOrder")
     public ResponseEntity<String> createOrder(@RequestBody CustomerOrder customerOrder) {
         try {
@@ -92,6 +89,11 @@ public class OrderController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("주문 처리 중 오류가 발생했습니다.");
         }
+    }*/
+
+    @PostMapping("/customerOrder")
+    public ResponseEntity<String> createOrder(@RequestBody CustomerOrder customerOrder) {
+        return orderService.createOrder(customerOrder);
     }
 
     @Transactional
@@ -118,4 +120,5 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("주문 취소 중 오류가 발생했습니다.");
         }
     }
+
 }

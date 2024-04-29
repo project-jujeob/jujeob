@@ -101,7 +101,12 @@ function CustomerOrder() {
                 console.error('상품 주문 실패');
             }
         } catch (error) {
-            console.error('요청 보내기 실패:', error);
+            // 서버 오류 메시지 확인
+            if (error.response && error.response.data) {
+                alert(`주문 실패: ${error.response.data}`);
+            } else {
+                alert('요청 보내기 실패');
+            }
         }
 
     };
@@ -113,7 +118,7 @@ function CustomerOrder() {
             <div className="orderContainer">
                 {selectedItems && selectedItems.length > 0 ? (
                     <form onSubmit={handleSubmit}>
-                        <div>
+                        <div className="orderContainerInner">
                             <div className="orderTitle">
                                 <h1>주문서</h1>
                             </div>
@@ -155,21 +160,20 @@ function CustomerOrder() {
                                     <h2>배송 정보</h2>
                                 </div>
                                 <div className="orderInfoDetail">
-                                    <div><span>배송지</span>
-                                        <div>
-                                            <div>
-                                                {payload.memberAddr}
-                                            </div>
-                                            <div>
-                                                <span>배송지 변경</span>
-                                                <input type="text" value={newAddress} onChange={handleAddressChange}/>
-                                            </div>
-
-                                        </div>
+                                    <div>
+                                        <span>배송지</span>
+                                            {payload.memberAddr}
                                     </div>
-                                    <div><span>요청사항</span>
+                                    <div className="changeAddr">
+                                        <span>배송지 변경</span>
+                                        <input type="text" value={newAddress} onChange={handleAddressChange}
+                                               placeholder="배송지 변경시 입력해주세요"/>
+                                    </div>
+
+                                    <div>
+                                        <span>요청사항</span>
                                         <select value={deliveryRequest} onChange={handleDeliveryRequestChange}>
-                                            <option value="택배함에 넣어주세요">택배함에 넣어주세요</option>
+                                            <option value="택배함에 넣어주세요" selected>택배함에 넣어주세요</option>
                                             <option value="배송 전 연락주세요">배송 전 연락주세요</option>
                                             <option value="문앞에 놓고 가주세요">문앞에 놓고 가주세요</option>
                                             <option value="기타">기타</option>
@@ -193,7 +197,9 @@ function CustomerOrder() {
                                 </div>
                             </div>
                         </div>
-                        <button type="submit">주문하기</button>
+                        <div className="orderSubmitBtn">
+                            <button type="submit">주문하기</button>
+                        </div>
                     </form>
                 ) : (
                     <p>선택된 항목이 없습니다.</p>
