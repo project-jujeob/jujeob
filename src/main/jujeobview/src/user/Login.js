@@ -32,19 +32,23 @@ function Login() {
                 "Content-Type": "application/json"
             }
         }). then((response) => {
-            alert("로그인 성공");
-            console.log(response.data)
+            const { accessToken, refreshToken } = response.data;
+
+            // 여기서 추가된 부분: 탈퇴된 계정이거나 없는 계정일 경우의 처리
+            if (accessToken === 'Y') {
+                alert('탈퇴된 계정입니다.');
+                return;
+            }
 
             // 저장할 때 구조 분해 할당을 사용하여 직접 저장
-            const { accessToken, refreshToken } = response.data;
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
+            alert("로그인 성공");
+
             setAuthPayload(response.data);
-            // 이전 페이지로 리다이렉트
-            // navigate(-1)
 
         }).catch(error => {
-            alert("로그인 실패");
+            alert("아이디 또는 비밀번호를 다시 확인해 주세요");
             console.log(error);
         });
     }

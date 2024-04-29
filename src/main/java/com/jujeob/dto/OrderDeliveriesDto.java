@@ -16,9 +16,6 @@ public class OrderDeliveriesDto {
     // CustomerOrder
     private Long orderId;
     private String address;
-//    private String memberName;
-//    private String memberPhone;
-//    private String memberEmail;
     private String name;
     private String phone;
     private String email;

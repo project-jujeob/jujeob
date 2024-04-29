@@ -47,10 +47,6 @@ public class Board {
     @Column(name = "Board_isDeleted" )
     private int IsDeleted = 0; ;
 
-//    @ManyToOne
-//    @JoinColumn(name = "memNo")
-//    private Member member;
-
     @ManyToOne
     @JoinColumn(name = "userNo")
     private User user;

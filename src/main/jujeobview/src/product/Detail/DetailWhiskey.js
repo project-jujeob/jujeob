@@ -14,11 +14,9 @@ import {getImageUrl} from "../../common/ImageUrl";
 function DetailTraditional({product}) {
     const { payload } = useAuth();
     const [cartQuantity, setCartQuantity] = useState(1);
-    // const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
     const [likes, setLikes] = useCheckUserLikes(payload?.userNo);
 
     const handleAddToCart = () => {
-        // addToCart(product, payload.memberNo, cartQuantity);
         addToCart(product, payload.userNo, cartQuantity);
     };
 

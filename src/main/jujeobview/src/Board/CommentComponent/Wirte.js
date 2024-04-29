@@ -6,7 +6,6 @@ function Write({ boardId, commentFetchData }){
     const [commentContent, setCommentContent] = useState(null);
     const [d,setD] = useState([boardId, commentContent]);
     const {payload} = useAuth();
-    // const memNo = payload.memberNo.toString();
     const userNo = payload.userNo.toString();
     const handleSubmit = async (e) =>{
         e.preventDefault();
@@ -16,7 +15,6 @@ function Write({ boardId, commentFetchData }){
         }
         try{
             const response = await axios.post(`/boardComment/Write`, {
-                // memNo,
                 userNo,
                 boardId,
                 commentContent});

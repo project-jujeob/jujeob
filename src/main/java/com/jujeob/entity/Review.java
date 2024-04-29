@@ -35,10 +35,6 @@ public class Review {
     @Column(nullable = false)
     private LocalDateTime reviewUpdateDate;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "memNo", nullable = false)
-//    private Member member;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userNo", nullable = false)
     private User user;

@@ -19,6 +19,13 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public boolean verifyUserPassword(String userId, String password) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + userId));
+
+        return passwordEncoder.matches(password, user.getPassword());
+    }
+
     public boolean deleteUser(String userId) {
         User user = userRepository.findByUserId(userId).orElse(null);
         if (user == null || "Y".equals(user.getDeleted())) {
@@ -30,10 +37,5 @@ public class UserService {
         return true;
     }
 
-    public boolean verifyUserPassword(String userId, String password) {
-        User user = userRepository.findByUserId(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + userId));
 
-        return passwordEncoder.matches(password, user.getPassword());
-    }
 }

@@ -23,9 +23,6 @@ public class LikeProduct {
     @Column(name = "productId", nullable = false)
     private Integer productId;
 
-//    @Column(name = "memberNo", nullable = false)
-//    private Long memberNo;
-
     @Column(name = "userNo", nullable = false)
     private Long userNo;
 

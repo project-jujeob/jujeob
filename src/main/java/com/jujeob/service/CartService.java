@@ -12,8 +12,6 @@ public class CartService {
     @Autowired
     CartRepository cartRepository;
 
-//    @Autowired
-//    MemberRepository memberRepository;
 
     /*public void convertToDto(Cart cart) {
         cartRepository.save(cart);

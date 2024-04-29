@@ -25,7 +25,6 @@ function CustomerOrderComplete() {
             <div className="orderCompleteContainer">
                 <div className="orderCompleteContent">
                     <div className="orderCompleteTop">
-                        {/*<span>{payload.memberName}</span>님*/}
                         <span>{payload.name}</span>님
                         <p>주문이 완료되었습니다.</p>
                         <p>빠르게 배송해드릴게요!</p>

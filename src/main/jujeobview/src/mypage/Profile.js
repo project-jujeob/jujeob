@@ -2,14 +2,19 @@ import './Profile.css'
 import './PasswordCheckModal.css'
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 function Profile() {
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [userData, setUserData] = useState(null);
     const [editable, setEditable] = useState(false);
     const [showModal, setShowModal] = useState(false);
+    const [showDeleteButton, setShowDeleteButton] = useState(false);
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
     const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
 
     useEffect(() => {
         if (!accessToken) return;
@@ -36,12 +41,34 @@ function Profile() {
             .then(response => {
                 setShowModal(false);
                 setEditable(true);
+                setShowDeleteButton(true);
                 console.log('비밀번호가 일치합니다')
             })
             .catch(error => {
                 alert('비밀번호가 일치하지 않습니다.');
                 console.log('비밀번호가 일치하지 않습니다')
             });
+    };
+
+    const handleDeleteAccount = () => {
+        if (window.confirm('정말로 회원 탈퇴하시겠습니까?')) {
+            // 탈퇴 처리
+            axios.delete('/api/user/delete-account', {
+                headers: { 'Authorization': `Bearer ${accessToken}` }
+            })
+                .then(response => {
+                    alert('회원 탈퇴가 완료되었습니다.');
+                    localStorage.removeItem('accessToken');
+                    localStorage.removeItem('refreshToken');
+                    setIsLoggedIn(false);
+                    navigate("/");
+
+                    // 로그아웃 처리 등 추가 작업 가능
+                })
+                .catch(error => {
+                    console.error('회원 탈퇴 오류:', error);
+                });
+        }
     };
 
     const handleProfileUpdate = (e) => {
@@ -126,6 +153,11 @@ function Profile() {
                                 <button type="submit">변경 사항 저장</button>
                             )}
                         </div>
+                        {showDeleteButton && (
+                            <div className={"SubmitBtn"}>
+                                <button type="button" onClick={handleDeleteAccount}>회원 탈퇴</button>
+                            </div>
+                        )}
                     </div>
                 </form>
 

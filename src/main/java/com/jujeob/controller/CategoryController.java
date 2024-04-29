@@ -14,7 +14,6 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-
     // 상품 카테고리 조회
     @GetMapping("/api/category")
     public List<Category> getCategoryList() {

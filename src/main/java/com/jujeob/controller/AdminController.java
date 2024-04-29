@@ -26,9 +26,6 @@ public class AdminController {
     @Autowired
      ProductService productService;
 
-//   @Autowired
-//   MemberRepository memberRepository;
-
    @Autowired
     UserRepository userRepository;
 
@@ -45,19 +42,6 @@ public class AdminController {
     public Product registerProduct(@ModelAttribute ProductRegisterDto productRegisterDto) {
         return productService.registerProduct(productRegisterDto);
     }
-
-//    @GetMapping("/api/showUserInfo")
-//    public List<GetMemberDto> getUserInfo() {
-//        List<Member> members = memberRepository.findAll();
-//        List<GetMemberDto> memberDto = new ArrayList<>();
-//        for (Member member : members) {
-//            GetMemberDto dto = new GetMemberDto(member.getMemId(), member.getMemNickname(), member.getMemName(),
-//                                                member.getMemEmail(), member.getMemPhone(), member.getMemAddr(),
-//                                                member.getCreateDate(), member.getMemDeleted());
-//            memberDto.add(dto);
-//        }
-//        return memberDto;
-//    }
 
     @GetMapping("/api/showUserInfo")
     public List<GetUsersDto> getUsers() {

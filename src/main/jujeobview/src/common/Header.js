@@ -83,7 +83,6 @@ function Header() {
                 <Link to={'/Announcement'}>
                     <button>공지사항</button>
                 </Link>
-                {/*{payload && payload.memberRole === "admin" ? (*/}
                 {isLoggedIn && payload.role === "ADMIN" ? (
                     <>
                         <Link to="/Admin">

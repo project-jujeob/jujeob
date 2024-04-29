@@ -39,9 +39,6 @@ public class OrderService {
         }
     }
 
-//    public List<OrderDeliveriesDto> getAllOrderDeliveriesWithItems(Long memberNo) {
-//        List<CustomerOrder> customerOrders = orderRepository.findCustomerOrdersByMemberNoOrderByCreatedAt(memberNo);
-//        List<OrderDeliveriesDto> orderDeliveriesDtos = new ArrayList<>();
 
     public List<OrderDeliveriesDto> getAllOrderDeliveriesWithItems(Long userNo) {
         List<CustomerOrder> customerOrders = orderRepository.findCustomerOrdersByUserNoOrderByCreatedAt(userNo);
@@ -60,9 +57,6 @@ public class OrderService {
         OrderDeliveriesDto dto = new OrderDeliveriesDto();
         dto.setOrderId(customerOrder.getOrderId());
         dto.setAddress(customerOrder.getAddress());
-//        dto.setMemberName(customerOrder.getMemberName());
-//        dto.setMemberPhone(customerOrder.getMemberPhone());
-//        dto.setMemberEmail(customerOrder.getMemberEmail());
         dto.setName(customerOrder.getName());
         dto.setPhone(customerOrder.getPhone());
         dto.setEmail(customerOrder.getEmail());
