@@ -81,8 +81,8 @@ function MainPage() {
                             <button>오늘의 추천 주류</button>
                         </Link>
                     </div>
-                </div>
-            </div>
+                </div> 
+            </div> 
         </div>
     );
 }

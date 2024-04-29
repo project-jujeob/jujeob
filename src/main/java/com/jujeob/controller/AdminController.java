@@ -43,7 +43,7 @@ public class AdminController {
 
     @GetMapping("/api/showUserInfo")
     public List<GetMemberDto> getUserInfo() {
-        List<Member> members = memberRepository.findAll();
+        List<Member> members = memberRepository.findAllNonAdminUsers();
         List<GetMemberDto> memberDto = new ArrayList<>();
         for (Member member : members) {
             GetMemberDto dto = new GetMemberDto(member.getMemId(), member.getMemNickname(), member.getMemName(),

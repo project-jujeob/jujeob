@@ -508,3 +508,32 @@ textarea {
     color: white;
 }
 
+/*-------------------OrderListByAdmin.css------------------------*/
+.OrderListByAdmin {
+    width: 90%;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.OrderListByAdminHeader > div {
+    margin-bottom: 5px;
+}
+.OrderListByAdminContent table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+.OrderListByAdminContent th, .OrderListByAdminContent td {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+.OrderListByAdminContent th {
+    background-color: #333;
+    color: white;
+}
+.OrderListByAdminContent tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.OrderListByAdminContent tr.highlight {
+    background-color: #ffc0cb; /* 핑크색 배경 */
+}
