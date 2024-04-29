@@ -1,5 +1,8 @@
 //package com.jujeob.service;
 //
+//import com.jujeob.repository.MemberRepository;
+//import com.jujeob.repository.MyPageRepository;
+//import org.springframework.beans.factory.annotation.Autowired;
 //import com.jujeob.dto.UpdateMemberDto;
 //import com.jujeob.entity.Member;
 //import com.jujeob.repository.MemberRepository;
@@ -13,12 +16,14 @@
 //
 //@Service
 //public class MyPageService {
+//
 //    @Autowired
 //    MemberRepository memberRepository;
 //
 //    @Autowired
 //    MyPageRepository myPageRepository;
 //
+//    // 회원 정보조회(토큰 해석(분리))
 //    @Autowired
 //    BCryptPasswordEncoder bCryptPasswordEncoder;
 //
@@ -47,23 +52,23 @@
 //    }
 //
 //
-////    public Member updateProfile(UpdateMemberDto updateDto, String memId) {
-////        // 현재 로그인한 사용자 조회
-////        Member member = memberRepository.findByMemId(memId)
-////                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-////
-////        // 정보 업데이트
-////        // 비밀번호칸이 비어있으면 변경되지 않게
-////        if (updateDto.getMemPw() != null && !updateDto.getMemPw().isEmpty()) {
-////            member.setMemPw(bCryptPasswordEncoder.encode(updateDto.getMemPw()));
-////        }
-////        member.setMemNickname(updateDto.getMemNickname());
-////        member.setMemName(updateDto.getMemName());
-////        member.setMemEmail(updateDto.getMemEmail());
-////        member.setMemPhone(updateDto.getMemPhone());
-////        member.setMemAddr(updateDto.getMemAddr());
-////
-////        return memberRepository.save(member);
-////
-////    }
+//    public Member updateProfile(UpdateMemberDto updateDto, String memId) {
+//        // 현재 로그인한 사용자 조회
+//        Member member = memberRepository.findByMemId(memId)
+//                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+//
+//        // 정보 업데이트
+//        // 비밀번호칸이 비어있으면 변경되지 않게
+//        if (updateDto.getMemPw() != null && !updateDto.getMemPw().isEmpty()) {
+//            member.setMemPw(bCryptPasswordEncoder.encode(updateDto.getMemPw()));
+//        }
+//        member.setMemNickname(updateDto.getMemNickname());
+//        member.setMemName(updateDto.getMemName());
+//        member.setMemEmail(updateDto.getMemEmail());
+//        member.setMemPhone(updateDto.getMemPhone());
+//        member.setMemAddr(updateDto.getMemAddr());
+//
+//        return memberRepository.save(member);
+//
+//    }
 //}

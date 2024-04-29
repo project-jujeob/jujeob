@@ -44,8 +44,7 @@ function ReviewWrite({ product, closeModal }){
                 body: JSON.stringify({
                     reviewContent: reviewContent,
                     star: rating,
-                    // member: { memNo: payload.memberNo}, // todo : 로그인유저정보 가져와야함
-                    user: { userNo: payload.userNo },
+                    user: { userNo: payload.userNo }, // todo : 로그인유저정보 가져와야함
                     product: { productNo: productNo } // 수정된 필드명
                 })
             });

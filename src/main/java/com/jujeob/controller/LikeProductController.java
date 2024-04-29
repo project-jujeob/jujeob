@@ -36,7 +36,6 @@ public class LikeProductController {
 
     @PostMapping("api/checkedUserLikes")
     public List<LikeProduct> getLikeProduct(@RequestParam long userNo) {
-//        return likeProductRepository.findAllByMemberNo(memberNo);
         return likeProductRepository.findAllByUserNo(userNo);
     }
 

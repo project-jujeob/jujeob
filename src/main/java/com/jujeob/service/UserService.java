@@ -3,6 +3,8 @@ package com.jujeob.service;
 import com.jujeob.entity.User;
 import com.jujeob.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,7 +14,17 @@ import java.time.LocalDateTime;
 public class UserService {
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private UserRepository userRepository;
+
+    public boolean verifyUserPassword(String userId, String password) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + userId));
+
+        return passwordEncoder.matches(password, user.getPassword());
+    }
 
     public boolean deleteUser(String userId) {
         User user = userRepository.findByUserId(userId).orElse(null);
@@ -24,4 +36,6 @@ public class UserService {
         userRepository.save(user);
         return true;
     }
+
+
 }

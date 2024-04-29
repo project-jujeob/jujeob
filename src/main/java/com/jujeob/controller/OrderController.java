@@ -24,11 +24,6 @@ public class OrderController {
     @Autowired
     OrderService orderService;
 
-//    @Autowired
-//    MemberService memberService;
-//
-//    @Autowired
-//    MemberRepository memberRepository;
 
     @Autowired
     OrderRepository orderRepository;
@@ -57,7 +52,6 @@ public class OrderController {
 
             // Cart 테이블에서 삭제할 상품 번호와 회원 번호를 담을 리스트 생성
             List<Integer> productNos = new ArrayList<>();
-//            Long memberNo = customerOrder.getMemberNo();
             Long userNo = customerOrder.getUserNo();
 
             for (OrderItem orderItem : orderItems) {
@@ -83,15 +77,12 @@ public class OrderController {
             }
 
             System.out.println("프넘productNos:"+productNos);
-//            System.out.println("멤넘memberNo:"+memberNo);
             System.out.println("멤넘userNo:"+userNo);
 
             //cartRepository.removeByProductNosAndMemberNo(productNos, memberNo);
-//            cartRepository.deleteAllByMemberNoAndProductNoIn(memberNo, productNos);
             cartRepository.deleteAllByUserNoAndProductNoIn(userNo, productNos);
 
             // 확인용 로그 추가
-//            System.out.println("deleteAllByMemberNoAndProductNoIn 호출됨 - memberNo: " + memberNo + ", productNos: " + productNos);
             System.out.println("deleteAllByUserNoAndProductNoIn 호출됨 - userNo: " + userNo + ", productNos: " + productNos);
 
 

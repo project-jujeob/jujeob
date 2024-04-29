@@ -31,7 +31,6 @@ public class Cart {
 //    private Long memberNo;
     private Long userNo;
 
-
     private String name;
     private Long price;
 

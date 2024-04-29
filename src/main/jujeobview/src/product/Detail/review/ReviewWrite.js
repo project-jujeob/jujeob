@@ -34,7 +34,6 @@ function ReviewWrite({ product, closeModal, onReviewSubmitted }){
             const response = await axios.post('/api/ReviewWrite/createReview', {
                 reviewContent: reviewContent,
                 star: rating,
-                // member: { memNo: payload.memberNo },
                 user: { userNo: payload.userNo },
                 product: { productNo: productNo }
             });

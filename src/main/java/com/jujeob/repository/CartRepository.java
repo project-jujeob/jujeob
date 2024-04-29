@@ -27,18 +27,18 @@ public interface CartRepository extends JpaRepository<Cart,Long> {
 //    @Query("DELETE FROM Cart c WHERE c.productNo IN :productNos AND c.memberNo = :memberNo")
 //    void removeByProductNosAndMemberNo(@Param("productNos") List<Integer> productNos, @Param("memberNo") Long memberNo);
 
+
     Cart findByUserNoAndProductNo(Long userNo, Integer productNo);
     void removeByUserNoAndProductNo(Long userNo, Integer productNo);
 
     void deleteByUserNoAndProductNoIn(Long userNo, List<Long> productNos);
-
 
     void deleteAllByUserNoAndProductNoIn(Long userNo, List<Integer> productNos);
 
     List<Cart> findByUserNo(Long userNo);
     List<Cart> findAllByUserNoAndProductNo(Long userNo, Integer productNo);
 
-    //void removeByProductNosAndMemberNo(List<Integer> productNos, Long UserNo);
+    //void removeByProductNosAndUserNo(List<Integer> productNos, Long UserNo);
 
     // Custom method in CartRepository interface
     @Modifying

@@ -212,7 +212,7 @@ function CustomerOrder() {
                                     <h2>배송 정보</h2>
                                 </div>
                                 <div className="orderInfoDetail">
-                                    <div><span>배송지</span>
+                                <div><span>배송지</span>
                                         <div>
                                             <div>
                                                 {/*{payload.memberAddr}*/}

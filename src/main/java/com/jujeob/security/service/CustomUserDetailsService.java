@@ -4,6 +4,7 @@ import com.jujeob.dto.Profile;
 import com.jujeob.dto.ProfileUpdateRequest;
 import com.jujeob.entity.User;
 import com.jujeob.repository.UserRepository;
+import com.jujeob.security.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,11 +29,12 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("해당 계정은 탈퇴된 계정입니다.");
         }
 
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getUserId())
-                .password(user.getPassword())
-                .roles(user.getRole().name())
-                .build();
+        return new CustomUserDetails(user);
+//        return org.springframework.security.core.userdetails.User.builder()
+//                .username(user.getUserId())
+//                .password(user.getPassword())
+//                .roles(user.getRole().name())
+//                .build();
 
 //        return new org.springframework.security.core.userdetails.User(user.getUserId(), user.getPassword(), user.getRoles());
     }

@@ -14,6 +14,7 @@ public class BoardCommentDto {
     private String commentContent;
     private LocalDateTime createDate;
     private int boardId;
+
     //    private Long memNo;
 //    private String memNickname;
     private Long userNo;

@@ -86,7 +86,6 @@ const Announcement = () => {
                 <div className="AnnouncementHeader">
                     <h2 className="AnnouncementHeaderTitle">공지사항</h2>
                 </div>
-                {/*{payload && payload.memberRole === "admin" && (*/}
                 {payload && payload.role === "ADMIN" && (
                     <div className="AnnouncementWrite">
                         <button onClick={toggleModal}>글 작성</button>
@@ -107,7 +106,6 @@ const Announcement = () => {
                         <div className="AnnouncementWriter">작성자</div>
                         <div className="AnnouncementCreateAt">작성일</div>
                         <div className="AnnouncementDetail">+</div>
-                        {/*{payload && payload.memberRole === "admin" && (*/}
                         {payload && payload.role === "ADMIN" && (
                             <div className="AnnouncementBtn"></div>
                         )}
@@ -120,7 +118,6 @@ const Announcement = () => {
                                 <div className="AnnouncementWriter">{announcement.announcementWriter}</div>
                                 <div className="AnnouncementCreateAt">{formatDate(announcement.createdAt)}</div>
                                 <div className="AnnouncementDetail" onClick={() => toggleContent(index)}>+</div>
-                                {/*{payload && payload.memberRole === "admin" && (*/}
                                 {payload && payload.role === "ADMIN" && (
                                     <div className="AnnouncementBtn">
                                         <button onClick={() =>  showEditModal(announcement,index)}>[수정]</button>

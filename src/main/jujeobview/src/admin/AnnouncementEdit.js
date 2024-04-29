@@ -27,6 +27,7 @@ const AnnouncementEdit = ({ announcement, closeModal, onAnnouncementUpdated }) =
         try {
             const response = await axios.post('/api/AnnouncementUpdate', {
                 announcementNo: announcement.announcementNo,
+                announcementWriter : payload.userId,
                 // announcementWriter : payload.memberId,
                 announcementWriter : payload.userId,
                 announcementTitle: editTitle,
@@ -56,6 +57,7 @@ const AnnouncementEdit = ({ announcement, closeModal, onAnnouncementUpdated }) =
                 </div>
                 <div className="AnnouncementEditWriter">
                     <div className="AW1">작성자</div>
+                    <div className="AW2">{payload.userId}</div>
                     {/*<div className="AW2">{payload.memberId}</div>*/}
                     <div className="AW2">{payload.userId}</div>
                 </div>

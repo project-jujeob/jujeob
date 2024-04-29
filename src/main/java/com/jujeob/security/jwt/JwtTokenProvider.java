@@ -1,6 +1,8 @@
 package com.jujeob.security.jwt;
 
 import com.jujeob.controller.AuthController;
+import com.jujeob.entity.User;
+import com.jujeob.security.CustomUserDetails;
 import com.jujeob.security.service.CustomUserDetailsService;
 import com.jujeob.security.service.TokenStorageService;
 import io.jsonwebtoken.Claims;
@@ -17,6 +19,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.crypto.SecretKey;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -54,12 +57,26 @@ public class JwtTokenProvider {
 
     public String createAccessToken(String userId) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(userId);
+        CustomUserDetails customUserDetails = (CustomUserDetails) userDetails;
+        User user = customUserDetails.getUser();
 
+        // 사용자 정보 추가
         Map<String, Object> claimsMap = new HashMap<>();
         claimsMap.put("sub", userId); // 'sub'는 subject를 의미
         claimsMap.put("auth", userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList()));
+        claimsMap.put("userNo", user.getUserNo());
+        claimsMap.put("userId", user.getUserId());
+        claimsMap.put("nickname", user.getNickname());
+        claimsMap.put("name", user.getName());
+        claimsMap.put("phone", user.getPhone());
+        claimsMap.put("email", user.getEmail());
+        claimsMap.put("address", user.getAddress());
+        claimsMap.put("createDate", user.getCreateDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        claimsMap.put("profileImage", user.getProfileImage());
+        claimsMap.put("role", user.getRole());
+        claimsMap.put("deleted", user.getDeleted());
 
         Date now = new Date();
         Date validity = new Date(System.currentTimeMillis() + accessExpiration);

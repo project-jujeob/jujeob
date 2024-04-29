@@ -4,6 +4,11 @@ import com.jujeob.dto.JwtResponse;
 import com.jujeob.dto.LoginRequest;
 import com.jujeob.dto.LogoutRequest;
 import com.jujeob.dto.Register;
+import com.jujeob.entity.User;
+import com.jujeob.security.CustomUserDetails;
+import com.jujeob.security.dto.TokenRefreshRequest;
+import com.jujeob.security.dto.TokenRefreshResponse;
+import com.jujeob.security.service.TokenService;
 import com.jujeob.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +31,9 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private TokenService tokenService;
+
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody Register register) {
         try {
@@ -36,26 +44,34 @@ public class AuthController {
         }
     }
 
+    @PostMapping("/token/refresh")
+    public ResponseEntity<TokenRefreshResponse> refreshAccessToken(@RequestBody TokenRefreshRequest tokenRefreshRequest) {
+        String refreshToken = tokenRefreshRequest.getRefreshToken();
+        TokenRefreshResponse response = tokenService.refreshAccessToken(refreshToken);
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
             // 사용자 인증 시도
-            Authentication authentication = authService.authenticate(loginRequest.getUserId(), loginRequest.getPassword());
+            Authentication authentication = authService.login(loginRequest.getUserId(), loginRequest.getPassword());
 
-//            // 탈퇴한 회원 여부 확인
-//            User user = (User) authentication.getPrincipal();
-//            if ("Y".equals(user.getDeleted())) {
-//                logger.info("Attempt to login with deactivated account: {}", loginRequest.getUserId());
-//                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("탈퇴된 계정입니다");
-//            }
+            // 탈퇴한 회원 여부 확인
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            User user = userDetails.getUser();
+            if ("Y".equals(user.getDeleted())) {
+                logger.info("Attempt to login with deactivated account: {}", loginRequest.getUserId());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("탈퇴된 계정입니다");
+            }
 
             // Authentication 객체를 SecurityContextHolder에 저장
             SecurityContextHolder.getContext().setAuthentication(authentication);
             logger.info("Authentication successful for user: {}", authentication.getName());
 
             // JWT 토큰 생성
-            String accessToken = authService.createAccessToken(authentication.getName());
-            String refreshToken = authService.createRefreshToken(authentication.getName());
+            String accessToken = tokenService.createAccessToken(authentication.getName());
+            String refreshToken = tokenService.createRefreshToken(authentication.getName());
 
             // JWT 토큰과 함께 응답 반환
             return ResponseEntity.ok(new JwtResponse(accessToken, refreshToken));

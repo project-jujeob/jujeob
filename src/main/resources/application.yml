@@ -5,6 +5,7 @@ spring:
       port: 6379
       host: localhost
 
+
 jwt:
   secret: abcdefghijklmnopqrstuvffefefaefaefaefaefaefaefafefafeaefaefafefadfdasfadfafdfdaffafdasdfadfadfadfadsfasdfadfafdfasdf
   accessExpiration: 86400000

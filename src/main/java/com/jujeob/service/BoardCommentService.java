@@ -21,6 +21,7 @@ public class BoardCommentService {
 //        boardComment.setMemNo(boardCommentDto.getMemNo());
 
         System.out.println("댓글 Write 서비스입니다 userNo은: "+boardCommentDto.getUserNo());
+        System.out.println("댓글 Write 서비스입니다 userNo은: "+boardCommentDto.getUserNo());
         BoardComment boardComment = new BoardComment();
         boardComment.setUserNo(boardCommentDto.getUserNo());
 

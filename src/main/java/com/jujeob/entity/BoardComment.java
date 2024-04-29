@@ -48,6 +48,7 @@ public class BoardComment {
     @Column(name = "board_id")
     private int boardId;
 
+
 //    @Column(name = "mem_no")
 //    private Long memNo;
 

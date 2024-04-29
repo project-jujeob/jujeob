@@ -61,7 +61,7 @@ public class AuthService {
 
 
     @Transactional
-    public Authentication authenticate(String userId, String password) {
+    public Authentication login(String userId, String password) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(userId, password)
         );

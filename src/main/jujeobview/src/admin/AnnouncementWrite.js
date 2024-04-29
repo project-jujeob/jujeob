@@ -22,6 +22,7 @@ const AnnouncementWrite = ({closeModal, onAnnouncementAdded}) => {
         try {
             const response = await axios.post('/api/AnnouncementWrite', {
                 announcementTitle: announcementTitle,
+                announcementWriter: payload.userId,
                 // announcementWriter: payload.memberId,
                 announcementWriter: payload.userId,
                 announcementContent: announcementContent
@@ -54,6 +55,7 @@ const AnnouncementWrite = ({closeModal, onAnnouncementAdded}) => {
                 </div>
                 <div className="AnnouncementWriteWriter">
                     <div className="AW1">작성자</div>
+                    <div className="AW2">{payload.userId}</div>
                     {/*<div className="AW2">{payload.memberId}</div>*/}
                     <div className="AW2">{payload.userId}</div>
                 </div>

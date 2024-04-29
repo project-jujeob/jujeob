@@ -34,8 +34,8 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     // MyBatis
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
-    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+//    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
+//    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
 
     // Database
     implementation 'mysql:mysql-connector-java:8.0.33'
@@ -53,6 +53,7 @@ dependencies {
     implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.20.0'
     implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.20.0'
 
+
     // Jwt
     implementation 'com.auth0:java-jwt:4.2.1'
 
@@ -61,6 +62,7 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-impl:0.12.5'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.12.5'
 
+    // Spring Configuration Processor
     //Oauth2.0
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 
@@ -92,28 +94,23 @@ dependencies {
 }
 
 
-
-
 tasks.named('test') {
     useJUnitPlatform()
-
-    // OpenJDK 64-Bit Server VM warning:
-    // Sharing is only supported for boot loader classes because bootstrap classpath has been appended
-    // 경고 방지
     jvmArgs("-Xshare:off")
 }
 
-// === ⭐ QueryDsl 빌드 옵션 (선택) ===
+// QueryDsl 빌드 옵션 (선택)
 def querydslDir = "$buildDir/generated/querydsl"
 
 sourceSets {
     main.java.srcDirs += [ querydslDir ]
 }
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
 }
 
 clean.doLast {
     file(querydslDir).deleteDir()
 }
+
