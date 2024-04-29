@@ -8,7 +8,6 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<CustomerOrder, Long> {
-
-
     List<CustomerOrder> findCustomerOrdersByUserNoOrderByCreatedAt(Long userNo);
 }
+

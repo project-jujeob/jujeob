@@ -1,11 +1,9 @@
 package com.jujeob.controller;
 
 import com.jujeob.dto.OrderDeliveriesDto;
-import com.jujeob.repository.OrderRepository;
 import com.jujeob.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,14 +14,7 @@ import java.util.List;
 public class MyPageController {
 
     @Autowired
-    PasswordEncoder passwordEncoder;
-
-    @Autowired
-    OrderRepository orderRepository;
-
-    @Autowired
     OrderService orderService;
-
 
     @GetMapping("/api/orderDeliveries/{userNo}")
     public ResponseEntity<List<OrderDeliveriesDto>> getAllOrderDeliveriesWithItems(@PathVariable Long userNo){
@@ -34,4 +25,6 @@ public class MyPageController {
 
         return ResponseEntity.ok(orderDeliveries);
     }
+
 }
+

@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BoardDto {
     private int BoardId;
+
     private User user;
     private String BoardTitle;
     private String BoardContent;

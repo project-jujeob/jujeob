@@ -18,13 +18,13 @@ public class MemberService {
 
     public List<GetUsersDto> getUserInfoByKeyword(String searchType, String keyword) {
         List <User> userList = userRepository.findAllBySearchTypeAndKeyword(searchType, keyword);
-        List<GetUsersDto> memberDto = new ArrayList<>();
+        List<GetUsersDto> userDto = new ArrayList<>();
         for (User user : userList) {
             GetUsersDto dto = new GetUsersDto(user.getUserId(), user.getNickname(), user.getName(),
                     user.getEmail(), user.getPhone(), user.getAddress(),
                     user.getDeleted(), user.getCreateDate());
-            memberDto.add(dto);
+            userDto.add(dto);
         }
-        return memberDto;
+        return userDto;
     }
 }

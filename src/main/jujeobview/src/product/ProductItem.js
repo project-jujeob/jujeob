@@ -8,7 +8,9 @@ import {getImageUrl} from "../common/ImageUrl";
 const ProductItem = ({ product, likes, setLikes, payload}) => {
     const handleClickAddToCart = (e, product,cartQuantity) => {
         e.preventDefault();
+
         addToCart(product,payload.userNo, cartQuantity);
+
     };
 
     return (

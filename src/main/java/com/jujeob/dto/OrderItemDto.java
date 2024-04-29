@@ -15,4 +15,7 @@ public class OrderItemDto {
     // Product
     //private String img;
     private String img;
+    private String productName;
+    private double alcohol;
+    private String volume;
 }

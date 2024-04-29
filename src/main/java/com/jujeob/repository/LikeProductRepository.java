@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface LikeProductRepository extends JpaRepository<LikeProduct, Integer>, LikeProductRepositoryCustom{
+
     Optional<LikeProduct> findByUserNoAndProductId(Long userNo, Integer productId);
 
-    List<LikeProduct> findAllByUserNo(long userNo);
+    List<LikeProduct> findAllByUserNo(long UserNo);
 }

@@ -6,9 +6,6 @@ import com.jujeob.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -31,8 +28,10 @@ public class ReviewService {
         dto.setReviewContent(review.getReviewContent());
         dto.setStar(review.getStar());
         dto.setReviewDate(review.getReviewDate());
+
         dto.setUserNo(review.getUser().getUserNo());
         dto.setNickname(review.getUser().getNickname());
+
         dto.setProductNo(review.getProduct().getProductNo());
         dto.setProductName(review.getProduct().getName());
 

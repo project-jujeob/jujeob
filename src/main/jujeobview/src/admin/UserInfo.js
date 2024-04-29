@@ -19,6 +19,7 @@ const UserInfo = () => {
     };
 
     const [userInfo, setUserInfo] = useState([]);
+
     useEffect(() => {
         axios.get('/api/admin/showUserInfo')
             .then((response) => {

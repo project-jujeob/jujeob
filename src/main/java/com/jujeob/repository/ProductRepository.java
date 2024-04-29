@@ -13,4 +13,13 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, Prod
 
     @Query("SELECT p.img FROM Product p WHERE p.productNo = ?1")
     String findImgByProductNo(Integer productNo);
+
+    @Query("SELECT p.name FROM Product p WHERE p.productNo = ?1")
+    String findNameByProductNo(Integer productNo);
+
+    @Query("SELECT p.alcohol FROM Product p WHERE p.productNo = ?1")
+    double findAlcoholByProductNo(Integer productNo);
+
+    @Query("SELECT p.volume FROM Product p WHERE p.productNo = ?1")
+    String findVolumeByProductNo(Integer productNo);
 }

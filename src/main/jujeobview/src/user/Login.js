@@ -64,14 +64,14 @@ function Login() {
                         <div className={"LoginInput"}>
                             <input type={"text"}
                                    placeholder={"아이디"}
-                                   // name={"memId"}
+                                // name={"memId"}
                                    name={"userId"}
-                                   // onChange={(e) => setMemId(e.target.value)}
+                                // onChange={(e) => setMemId(e.target.value)}
                                    onChange={(e) => setUserId(e.target.value)}
                             /><br/>
                             <input type={"password"}
                                    placeholder={"비밀번호"}
-                                   // name={"memPw"}
+                                // name={"memPw"}
                                    name={"password"}
                                    onChange={(e) => setPassword(e.target.value)}
                             />
@@ -93,7 +93,7 @@ function Login() {
 
                     <div>
                         <Link to={"/RegisterAdult"}>
-                                <button>회원가입</button>
+                            <button>회원가입</button>
                         </Link>
                     </div>
                 </div>

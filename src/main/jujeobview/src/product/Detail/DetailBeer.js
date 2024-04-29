@@ -13,7 +13,9 @@ import {getImageUrl} from "../../common/ImageUrl";
 function DetailBeer({product}) {
     const { payload } = useAuth();
     const [cartQuantity, setCartQuantity] = useState(1); // 장바구니에 추가될 수량 상태
+
     const [likes, setLikes] = useCheckUserLikes(payload?.userNo);
+
 
     const handleQuantityChange = (newQuantity) => {
         setCartQuantity(newQuantity); // 수량 변경 시 장바구니에 추가될 수량 업데이트
@@ -21,7 +23,9 @@ function DetailBeer({product}) {
 
     const handleAddToCart = () => {
         console.log("카트수량"+cartQuantity);
+
         addToCart(product,payload.userNo,cartQuantity);
+
     };
 
     const contentTopRef = useRef(null);

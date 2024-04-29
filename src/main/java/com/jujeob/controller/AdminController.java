@@ -23,21 +23,22 @@ import java.util.Map;
 @RestController
 public class AdminController {
     @Autowired
-     ProductService productService;
+    ProductService productService;
 
     @Autowired
     MemberService memberService;
 
    @Autowired
-    UserRepository userRepository;
+   UserRepository userRepository;
 
    @Autowired
+
     AnnouncementRepository announcementRepository;
 
-   @Autowired
+    @Autowired
     ProductRepository productRepository;
 
-   @Autowired
+    @Autowired
     StockRepository stockRepository;
 
    @Autowired

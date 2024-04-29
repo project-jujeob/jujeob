@@ -15,3 +15,4 @@ public interface BoardCommentRepository extends JpaRepository<BoardComment, Inte
     String findNicknameByUserNo(Long userNo);
 }
 
+

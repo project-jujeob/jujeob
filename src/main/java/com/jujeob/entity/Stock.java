@@ -23,6 +23,9 @@ public class Stock {
     @Column(nullable = false)
     private int quantity;
 
+    @Version
+    private int version;
+
     // 재고 차감 메소드 추가
     public boolean decreaseStock(int quantityToDecrease) {
         if (quantity >= quantityToDecrease) {

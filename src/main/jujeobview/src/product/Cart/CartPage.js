@@ -211,8 +211,8 @@ function CartPage() {
                                             <div key={index} className="cartContent">
                                                 <div className="listCheckbox">
                                                     <input type="checkbox"
-                                                    checked={item.isChecked}
-                                                    onChange={() => handleCheckboxChange(index)}
+                                                           checked={item.isChecked}
+                                                           onChange={() => handleCheckboxChange(index)}
                                                     />
                                                 </div>
                                                 <div>

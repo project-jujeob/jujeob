@@ -26,7 +26,7 @@ function Header() {
         if (accessToken) {
             try {
                 const [, payloadBase64] = accessToken.split(".");
-                const payloadString = atob(payloadBase64);
+                const payloadString = base64DecodeUnicode(payloadBase64);
                 const newPayload = JSON.parse(payloadString);
                 setAuthPayload(newPayload);
             } catch (error) {

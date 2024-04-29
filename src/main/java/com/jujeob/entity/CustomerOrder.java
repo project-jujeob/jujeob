@@ -31,12 +31,14 @@ public class CustomerOrder {
     private Member member;*/
 
     @Column(nullable = false)
+
     private Long userNo;
 
     @Column(nullable = false)
     private String address;
 
     @Column(nullable = false)
+
     private String name;
 
     @Column(nullable = false)

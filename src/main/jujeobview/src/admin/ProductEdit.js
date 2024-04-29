@@ -119,7 +119,6 @@ const ProductEdit = () => {
             }
         })
             .then((response)=>{
-                console.log(response.data);
                 alert("상품 수정이 완료되었습니다.")
                 window.location.reload();
             }).catch(error => {
@@ -142,7 +141,8 @@ const ProductEdit = () => {
                             <label htmlFor="MainType" className="MainType">주종 </label>
                             <div className="MainTypeButtons">
                                 {productMainType.map((mainType) => (
-                                    <button type="button"
+                                    <button key={mainType.id}
+                                            type="button"
                                             id="mainType"
                                             onClick={() => setSelectedMainType(mainType)}
                                             className={selectedMainType === mainType ? 'active' : ''}>

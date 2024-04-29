@@ -1,5 +1,5 @@
 import './App.css';
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import ProductList from "./product/ProductList";
 import Login from "./user/Login";
 import RegisterAdult from "./user/RegisterAdult";
@@ -45,8 +45,8 @@ function App() {
                     <Route path='/RegisterComplete' element={<RegisterComplete />} />
                     <Route path='/BbsList' element={<BbsList />} />
                     <Route path='/MyPage' element={<MyPage />} />
-                    <Route path='/Cart' element={<PrivateRoute><CartPage/></PrivateRoute>} />
-                    <Route path='/ReviewWrite/:productNo' element={<ReviewWrite />} />
+                    <Route path='/Cart' element={<CartPage/>} />
+                    <Route path='/ReviewWrite/:productNo' element={<ReviewWrite/>} />
                     <Route path='/Pagination' element={<Pagination />} />
                     <Route path='/CustomerOrder' element={<CustomerOrder />} />
                     <Route path='/CustomerOrderComplete' element={<CustomerOrderComplete />} />

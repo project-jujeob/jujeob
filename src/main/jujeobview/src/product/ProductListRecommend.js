@@ -26,7 +26,7 @@ function ProductListRecommend() {
                         <div className="ProductRecommendItem">
                             <div className="ProductRecommendImg">
                                 <img className="ProductRecommendImg" src={getImageUrl(recommendList.img)}
-                                                                      alt={recommendList.name}/></div>
+                                     alt={recommendList.name}/></div>
                             <div className="ProductRecommendName">{recommendList.name}</div>
                         </div>
                     </Link>

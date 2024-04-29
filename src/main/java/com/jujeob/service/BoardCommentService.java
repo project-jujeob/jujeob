@@ -13,13 +13,14 @@ import java.util.List;
 @Service
 public class BoardCommentService {
     @Autowired
-    private BoardCommentRepository boardCommentRepository;
+    BoardCommentRepository boardCommentRepository;
 
     public void Write(BoardCommentDto boardCommentDto) {
+
         System.out.println("댓글 Write 서비스입니다 userNo은: "+boardCommentDto.getUserNo());
+
         BoardComment boardComment = new BoardComment();
         boardComment.setUserNo(boardCommentDto.getUserNo());
-
         boardComment.setCommentContent(boardCommentDto.getCommentContent());
         boardComment.setCreateDate(LocalDateTime.now());
         boardComment.setBoardId(boardCommentDto.getBoardId()); // 수정된 부분
@@ -46,6 +47,7 @@ public class BoardCommentService {
             String nickname = boardCommentRepository.findNicknameByUserNo(comment.getUserNo());
             commentDto.setNickname(nickname);
             commentDto.setUserNo(comment.getUserNo());
+
             commentDtoList.add(commentDto);
         }
         return commentDtoList;

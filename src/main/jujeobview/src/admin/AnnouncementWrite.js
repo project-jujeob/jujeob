@@ -22,7 +22,9 @@ const AnnouncementWrite = ({closeModal, onAnnouncementAdded}) => {
         try {
             const response = await axios.post('/api/amin/AnnouncementWrite', {
                 announcementTitle: announcementTitle,
+
                 announcementWriter: payload.userId,
+
                 announcementContent: announcementContent
             });
             if (response.status === 200 || response.status === 201) {
@@ -53,7 +55,9 @@ const AnnouncementWrite = ({closeModal, onAnnouncementAdded}) => {
                 </div>
                 <div className="AnnouncementWriteWriter">
                     <div className="AW1">작성자</div>
+
                     <div className="AW2">{payload.userId}</div>
+
                 </div>
                 <div className="AnnouncementWriteContent">
                     <div className="AnnouncementTextarea">

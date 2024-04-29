@@ -112,9 +112,9 @@ const OrderListByAdmin = () => {
                             <tr key={index}>
                                 <td>{order.orderId}</td>
                                 <td>{formatDate(order.createdAt)}</td>
-                                <td>{order.memId}</td>
-                                <td>{order.memberName}</td>
-                                <td>{order.memberPhone}</td>
+                                <td>{order.userId}</td>
+                                <td>{order.name}</td>
+                                <td>{order.phone}</td>
                                 <td className="OrderListAddress">{order.address}</td>
                                 <td>
                                     {order.products.map((product, idx) => (

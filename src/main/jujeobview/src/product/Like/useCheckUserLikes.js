@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
 const useCheckUserLikes = (userNo) => {
+
     const [likes, setLikes] = useState({});
 
     useEffect(() => {

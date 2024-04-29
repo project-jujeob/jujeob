@@ -17,3 +17,4 @@ public class BoardCommentDto {
     private Long userNo;
     private String nickname;
 }
+

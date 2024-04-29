@@ -1,23 +1,13 @@
-import {useParams} from "react-router-dom";
 import ReviewStarRating from "./ReviewStarRating";
 import {useState} from "react";
 import {useAuth} from "../../../user/Context";
 import axios from "axios";
 
-function ReviewWrite({ product, closeModal, onReviewSubmitted }){
+function ReviewWrite({ item, closeModal, onReviewSubmitted }){
 
     const { payload } = useAuth();
-    const { productNo } = useParams(); // 상품 번호 추출
     const [reviewContent, setReviewContent] = useState("");
     const [rating, setRating] = useState(null); // 선택된 별점을 저장하는 state
-
-    //이렇게 가져오면 Object로 넘어옴
-    //console.log("프로덕트"+product);
-    //console.log("로케이션"+location);
-
-    //Object로 가져온 값 확인
-    //console.log("프로덕트"+Object.entri es(product));
-    //console.log("로케이션"+Object.entries(location));
 
     // textarea 내용 변경 시 호출되는 함수
     const handleReviewChange = (event) => {
@@ -35,7 +25,8 @@ function ReviewWrite({ product, closeModal, onReviewSubmitted }){
                 reviewContent: reviewContent,
                 star: rating,
                 user: { userNo: payload.userNo },
-                product: { productNo: productNo }
+                product: { productNo: item.productNo }
+
             });
             if (response.status === 200 || response.status === 201) {
                 alert("리뷰가 작성되었습니다");
@@ -51,18 +42,17 @@ function ReviewWrite({ product, closeModal, onReviewSubmitted }){
     };
 
     return(
-        /*리뷰작성컴포넌트 마이페이지로 옮길지 생각해봐야*/
         <>
             <div className="reviewWriteContainer">
                 <h2>후기 쓰기</h2>
                 <div className="reviewProduct">
                     <div>
-                        <img src={product.img} alt="리뷰썸네일"/>
+                        <img src={item.img} alt="리뷰썸네일"/>
                     </div>
                     <div>
-                        <span>{product.name}</span>
-                        <span>{product.alcohol}도</span>
-                        <span>{product.volume}</span>
+                        <span>{item.productName}</span>
+                        <span>{item.alcohol}도</span>
+                        <span>{item.volume}</span>
                     </div>
 
                 </div>
