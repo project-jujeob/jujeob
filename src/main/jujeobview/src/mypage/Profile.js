@@ -133,91 +133,91 @@ function Profile() {
                 {userData ? (
                     <div>
 
-                <div className={"MemberId"}>
-                    <div className={"MemberLabel"}><label htmlFor="memId">아이디</label></div>
-                    <div className={"MemberInput"}>
-                        <input type="text" id="memId" name={"memId"} value={ userData.memberId } readOnly/>
-                    </div>
-                </div>
-
-                <div className={"MemberPw"}>
-                    <div className={"MemberLabel"}><label htmlFor="memPw">비밀번호</label></div>
-                    <div  className={"ProfileMemberPwDiv"}>
-                        <div className={"MemberInput"}>
-                            <input type={"password"} id={"memPw"} placeholder={"새 비밀번호를 입력해주세요"} name={"memPw"}
-                                   onChange={profileMemPwChange} required={true}/><br/>
+                        <div className={"MemberId"}>
+                            <div className={"MemberLabel"}><label htmlFor="memId">아이디</label></div>
+                            <div className={"MemberInput"}>
+                                <input type="text" id="memId" name={"memId"} value={ userData.memberId } readOnly/>
+                            </div>
                         </div>
-                        <div className={"MemberPwProfile"}>
-                            {profile.memPw && profile.memPw.length < 10 && (
-                                <p>10자리 이상</p>
-                            )}
-                            {profile.memPw.length >= 10 && !/(?=.*[a-zA-Z])(?=.*\d)(?=.*\W).{10,}/.test(profile.memPw) && (
-                                <p>영문/숫자/특수문자를 모두 포함해야 합니다</p>
-                            )}
+
+                        <div className={"MemberPw"}>
+                            <div className={"MemberLabel"}><label htmlFor="memPw">비밀번호</label></div>
+                            <div  className={"ProfileMemberPwDiv"}>
+                                <div className={"MemberInput"}>
+                                    <input type={"password"} id={"memPw"} placeholder={"새 비밀번호를 입력해주세요"} name={"memPw"}
+                                           onChange={profileMemPwChange} required={true}/><br/>
+                                </div>
+                                <div className={"MemberPwProfile"}>
+                                    {profile.memPw && profile.memPw.length < 10 && (
+                                        <p>10자리 이상</p>
+                                    )}
+                                    {profile.memPw.length >= 10 && !/(?=.*[a-zA-Z])(?=.*\d)(?=.*\W).{10,}/.test(profile.memPw) && (
+                                        <p>영문/숫자/특수문자를 모두 포함해야 합니다</p>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={"MemberPwConfirm"}>
+                            <div className={"MemberLabel"}><label htmlFor="memPwConfirm">비밀번호 확인</label></div>
+                            <div  className={"ProfileMemberPwDiv"}>
+                                <div className={"MemberInput"}>
+                                    <input type={"password"} id={"memPwConfirm"} placeholder={"새 비밀번호를 다시 입력해주세요"}
+                                           name={"memPwConfirm"} onChange={profileMemPwChange} required={true}/><br/>
+                                </div>
+                                <div className={"MemberPwProfile"}>
+                                    {profile.memPw && profile.memPwConfirm && !passwordMatch && (
+                                        <p>동일한 비밀번호를 입력해주세요</p>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className={"MemberNickname"}>
+                            <div className={"MemberLabel"}><label htmlFor="memNickname">닉네임</label></div>
+                            <div className={"MemberInput"}>
+                                <input type="text" id="memNickname" name={"memNickname"} defaultValue={ userData && userData.memberNickname ? userData.memberNickname : '' } />
+                            </div>
+                        </div>
+
+                        <div className={"MemberName"}>
+                            <div className={"MemberLabel"}><label htmlFor="memName">이름</label></div>
+                            <div className={"MemberInput"}>
+                                <input type="text" id="memName" name={"memName"} defaultValue={ userData.memberName } />
+                            </div>
+                        </div>
+
+                        <div className={"MemberEmail"}>
+                            <div className={"MemberLabel"}><label htmlFor="memEmail">이메일</label></div>
+                            <div className={"MemberInput"}>
+                                <input type="email" id="memEmail" name={"memEmail"} defaultValue={ userData.memberEmail } />
+                            </div>
+                        </div>
+
+                        <div className={"MemberPhone"}>
+                            <div className={"MemberLabel"}><label htmlFor="memPhone">전화번호</label></div>
+                            <div className={"MemberInput"}>
+                                <input type="text" id="memPhone" name={"memPhone"} defaultValue={ userData.memberPhone } />
+                            </div>
+                        </div>
+
+                        <div className={"MemberAddr"}>
+                            <div className={"MemberLabel"}><label htmlFor="memAddr">주소</label></div>
+                            <div className={"MemberInput"}>
+                                <input type="text" id="memAddr" name={"memAddr"} defaultValue={ userData.memberAddr } />
+                            </div>
+                        </div>
+
+                        <div className={"BtnGroup"}>
+                            <div className={"SubmitBtn"}>
+                                <button type="submit">탈퇴하기</button>
+                            </div>
+                            <div className={"SubmitBtn"}>
+                                <button type="submit">회원정보수정</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div className={"MemberPwConfirm"}>
-                    <div className={"MemberLabel"}><label htmlFor="memPwConfirm">비밀번호 확인</label></div>
-                    <div  className={"ProfileMemberPwDiv"}>
-                        <div className={"MemberInput"}>
-                            <input type={"password"} id={"memPwConfirm"} placeholder={"새 비밀번호를 다시 입력해주세요"}
-                                   name={"memPwConfirm"} onChange={profileMemPwChange} required={true}/><br/>
-                        </div>
-                        <div className={"MemberPwProfile"}>
-                            {profile.memPw && profile.memPwConfirm && !passwordMatch && (
-                                <p>동일한 비밀번호를 입력해주세요</p>
-                            )}
-                        </div>
-                    </div>
-                </div>
-
-                <div className={"MemberNickname"}>
-                    <div className={"MemberLabel"}><label htmlFor="memNickname">닉네임</label></div>
-                    <div className={"MemberInput"}>
-                        <input type="text" id="memNickname" name={"memNickname"} defaultValue={ userData && userData.memberNickname ? userData.memberNickname : '' } />
-                    </div>
-                </div>
-
-                <div className={"MemberName"}>
-                    <div className={"MemberLabel"}><label htmlFor="memName">이름</label></div>
-                    <div className={"MemberInput"}>
-                        <input type="text" id="memName" name={"memName"} defaultValue={ userData.memberName } />
-                    </div>
-                </div>
-
-                <div className={"MemberEmail"}>
-                    <div className={"MemberLabel"}><label htmlFor="memEmail">이메일</label></div>
-                    <div className={"MemberInput"}>
-                        <input type="email" id="memEmail" name={"memEmail"} defaultValue={ userData.memberEmail } />
-                    </div>
-                </div>
-
-                <div className={"MemberPhone"}>
-                    <div className={"MemberLabel"}><label htmlFor="memPhone">전화번호</label></div>
-                    <div className={"MemberInput"}>
-                        <input type="text" id="memPhone" name={"memPhone"} defaultValue={ userData.memberPhone } />
-                    </div>
-                </div>
-
-                <div className={"MemberAddr"}>
-                    <div className={"MemberLabel"}><label htmlFor="memAddr">주소</label></div>
-                    <div className={"MemberInput"}>
-                        <input type="text" id="memAddr" name={"memAddr"} defaultValue={ userData.memberAddr } />
-                    </div>
-                </div>
-
-                <div className={"BtnGroup"}>
-                    <div className={"SubmitBtn"}>
-                        <button type="submit">탈퇴하기</button>
-                    </div>
-                    <div className={"SubmitBtn"}>
-                        <button type="submit">회원정보수정</button>
-                    </div>
-                </div>
-                    </div>
-            ) : ('')}
+                ) : ('')}
 
             </div>
         </form>

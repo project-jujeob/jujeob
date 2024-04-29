@@ -24,16 +24,16 @@ public class AdminController {
     @Autowired
     ProductService productService;
 
-   @Autowired
+    @Autowired
     MemberRepository memberRepository;
 
-   @Autowired
+    @Autowired
     AnnouncementRepository announcementRepository;
 
-   @Autowired
+    @Autowired
     ProductRepository productRepository;
 
-   @Autowired
+    @Autowired
     StockRepository stockRepository;
 
     @PostMapping("api/registerProduct")
@@ -47,8 +47,8 @@ public class AdminController {
         List<GetMemberDto> memberDto = new ArrayList<>();
         for (Member member : members) {
             GetMemberDto dto = new GetMemberDto(member.getMemId(), member.getMemNickname(), member.getMemName(),
-                                                member.getMemEmail(), member.getMemPhone(), member.getMemAddr(),
-                                                member.getCreateDate(), member.getMemDeleted());
+                    member.getMemEmail(), member.getMemPhone(), member.getMemAddr(),
+                    member.getCreateDate(), member.getMemDeleted());
             memberDto.add(dto);
         }
         return memberDto;

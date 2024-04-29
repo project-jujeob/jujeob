@@ -29,7 +29,7 @@ public interface ProductRepositoryCustom {
 
 //    List<Product> findProductListByOrderByOrderType(String orderType);
 
- //   List<Product> findProductListByOrderByOrderType(String orderByBtnType, Integer categoryNo, String subCategoryName);
+    //   List<Product> findProductListByOrderByOrderType(String orderByBtnType, Integer categoryNo, String subCategoryName);
 
     List<Product> findProductListByOrderByOrderType(String orderByBtnType, Integer categoryNo, String subCategoryName, List<String> mainTypes, List<String> types, List<String> alcoholLevels, List<String> prices);
 

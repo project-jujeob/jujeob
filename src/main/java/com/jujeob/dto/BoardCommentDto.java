@@ -1,11 +1,9 @@
 package com.jujeob.dto;
 
-import com.jujeob.entity.Board;
-import com.jujeob.entity.BoardComment;
-import com.jujeob.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Data

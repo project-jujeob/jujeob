@@ -4,7 +4,6 @@ import com.jujeob.entity.CustomerOrder;
 import com.jujeob.entity.OrderItem;
 import com.jujeob.entity.Stock;
 import com.jujeob.repository.*;
-import com.jujeob.service.MemberService;
 import com.jujeob.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

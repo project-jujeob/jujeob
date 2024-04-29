@@ -174,10 +174,10 @@ function CartPage() {
     const currentItem = selectedItems.length > 0 ? selectedItems[0] : null;
     console.log("바깥아이템",currentItem);
 
-       /* const link = {
-            pathname: '/CustomerOrder',
-            state: {selectedItems: selectedItems}
-        };*/
+    /* const link = {
+         pathname: '/CustomerOrder',
+         state: {selectedItems: selectedItems}
+     };*/
     console.log("선택된아이템",selectedItems);
     return (
         <div>
@@ -211,8 +211,8 @@ function CartPage() {
                                             <div key={index} className="cartContent">
                                                 <div className="listCheckbox">
                                                     <input type="checkbox"
-                                                    checked={item.isChecked}
-                                                    onChange={() => handleCheckboxChange(index)}
+                                                           checked={item.isChecked}
+                                                           onChange={() => handleCheckboxChange(index)}
                                                     />
                                                 </div>
                                                 <div>

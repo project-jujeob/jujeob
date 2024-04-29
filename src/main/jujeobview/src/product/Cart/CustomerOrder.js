@@ -162,7 +162,7 @@ function CustomerOrder() {
                                 <div className="orderInfoDetail">
                                     <div>
                                         <span>배송지</span>
-                                            {payload.memberAddr}
+                                        {payload.memberAddr}
                                     </div>
                                     <div className="changeAddr">
                                         <span>배송지 변경</span>

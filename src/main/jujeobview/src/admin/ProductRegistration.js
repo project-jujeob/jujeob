@@ -123,8 +123,8 @@ const ProductRegistration = () => {
                 alert("상품 등록이 완료되었습니다.")
                 window.location.reload();
             }).catch(error => {
-                alert("상품 등록에 실패하였습니다.")
-                console.log(error);
+            alert("상품 등록에 실패하였습니다.")
+            console.log(error);
         })
     };
 

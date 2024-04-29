@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "react-native": "^0.64.0",
+    "iamport-react-native": "^2.0.12",
+    "query-string": "^8.2.0",
     "@ckeditor/ckeditor5-build-classic": "^41.2.1",
     "@ckeditor/ckeditor5-react": "^6.2.0",
     "buffer": "^6.0.3",

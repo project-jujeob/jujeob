@@ -23,7 +23,7 @@ const Admin = () => {
             case 'productRegistration':
                 return <ProductRegistration />;
             case 'productManagement':
-             return <ProductManagement />;
+                return <ProductManagement />;
             case 'orderListByAdmin':
                 return <OrderListByAdmin />;
         }

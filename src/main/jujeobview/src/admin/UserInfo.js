@@ -23,7 +23,7 @@ const UserInfo = () => {
                 setTotalUserInfo(response.data.length);
                 setTotalPages(Math.ceil(totalUserInfo / PAGE_SIZE));
             }).catch((error) => {
-                console.log('회원 목록 가져오기 실패:', error);
+            console.log('회원 목록 가져오기 실패:', error);
         })
     }, []);
 

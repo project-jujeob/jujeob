@@ -216,27 +216,27 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
         // 정렬 필터
         if (option != null && !option.isEmpty()) {
-                switch (option) {
-                    case "orderLike":
-                        query.leftJoin(qLikeProduct)
-                                .on(qProduct.productNo.eq(qLikeProduct.productId)
-                                        .and(qLikeProduct.likeStatus.eq("Y")))
-                                .groupBy(qProduct.productNo)
-                                .orderBy(qLikeProduct.count().desc().nullsLast());
-                        break;
-                    case "orderReview":
-                        query.leftJoin(qReview)
-                                .on(qProduct.productNo.eq(qReview.product.productNo))
-                                .groupBy(qProduct.productNo)
-                                .orderBy(qReview.count().desc().nullsLast());
-                        break;
-                    case "orderLowPrice":
-                        query.orderBy(qProduct.price.asc(), qProduct.name.asc());
-                        break;
-                    case "orderHighPrice":
-                        query.orderBy(qProduct.price.desc(), qProduct.name.asc());
-                        break;
-                }
+            switch (option) {
+                case "orderLike":
+                    query.leftJoin(qLikeProduct)
+                            .on(qProduct.productNo.eq(qLikeProduct.productId)
+                                    .and(qLikeProduct.likeStatus.eq("Y")))
+                            .groupBy(qProduct.productNo)
+                            .orderBy(qLikeProduct.count().desc().nullsLast());
+                    break;
+                case "orderReview":
+                    query.leftJoin(qReview)
+                            .on(qProduct.productNo.eq(qReview.product.productNo))
+                            .groupBy(qProduct.productNo)
+                            .orderBy(qReview.count().desc().nullsLast());
+                    break;
+                case "orderLowPrice":
+                    query.orderBy(qProduct.price.asc(), qProduct.name.asc());
+                    break;
+                case "orderHighPrice":
+                    query.orderBy(qProduct.price.desc(), qProduct.name.asc());
+                    break;
+            }
         }
 
         // 주종 필터
@@ -470,5 +470,3 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .fetchOne();
     }
 }
-
-

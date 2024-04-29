@@ -10,12 +10,12 @@ import {AuthProvider} from "./member/Context";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-    <Footer />
-  </BrowserRouter>
+    <BrowserRouter>
+        <AuthProvider>
+            <App />
+        </AuthProvider>
+        <Footer />
+    </BrowserRouter>
 );
 
 reportWebVitals();

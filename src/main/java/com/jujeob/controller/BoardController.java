@@ -10,8 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @CrossOrigin("*")
@@ -75,7 +73,7 @@ public class BoardController {
     }
     @DeleteMapping("/Delete/{boardId}")
     public ResponseEntity<String> deleteBoard(@PathVariable int boardId){
-/*        System.out.println( "컨트롤러에서 요청 받았습니다 아이디는 : " + boardId);*/
+        /*        System.out.println( "컨트롤러에서 요청 받았습니다 아이디는 : " + boardId);*/
         try{
             boardService.deleteBoard(boardId);
             return ResponseEntity.ok("게시물이 삭제되었습니다.");
