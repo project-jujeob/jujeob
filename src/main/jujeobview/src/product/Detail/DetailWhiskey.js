@@ -5,7 +5,7 @@ import DetailScrollToTarget from "./DetailScrollToTarget";
 import React, {useRef, useState} from "react";
 import ReviewPage from "./review/ReviewPage";
 import LikeBtnClick from "../Like/LikeBtnClick";
-import {useAuth} from "../../member/Context";
+import {useAuth} from "../../user/Context";
 import useCheckUserLikes from "../Like/useCheckUserLikes";
 import DetailScrollToTop from "./DetailScrollToTop";
 import {getImageUrl} from "../../common/ImageUrl";
@@ -14,10 +14,12 @@ import {getImageUrl} from "../../common/ImageUrl";
 function DetailTraditional({product}) {
     const { payload } = useAuth();
     const [cartQuantity, setCartQuantity] = useState(1);
-    const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
+    // const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
+    const [likes, setLikes] = useCheckUserLikes(payload?.userNo);
 
     const handleAddToCart = () => {
-        addToCart(product,payload.memberNo,cartQuantity);
+        // addToCart(product, payload.memberNo, cartQuantity);
+        addToCart(product, payload.userNo, cartQuantity);
     };
 
     const handleQuantityChange = (newQuantity) => {

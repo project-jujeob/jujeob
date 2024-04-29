@@ -1,10 +1,10 @@
 import './App.css';
 import {Route, Routes, useNavigate} from "react-router-dom";
 import ProductList from "./product/ProductList";
-import Login from "./member/Login";
-import RegisterAdult from "./member/RegisterAdult";
-import Register from "./member/Register";
-import RegisterComplete from "./member/RegisterComplete";
+import Login from "./user/Login";
+import RegisterAdult from "./user/RegisterAdult";
+import Register from "./user/Register";
+import RegisterComplete from "./user/RegisterComplete";
 import MyPage from "./mypage/MyPage";
 import BbsList from "./Board/BulletinBoardSystem/BbsList";
 import MainPage from "./MainPage";
@@ -21,7 +21,7 @@ import ProductRegistration from "./admin/ProductRegistration";
 import Announcement from "./Announcement/Announcement";
 import CustomerOrderComplete from "./product/Cart/CustomerOrderComplete";
 import ProductEdit from "./admin/ProductEdit";
-
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
 
@@ -43,8 +43,8 @@ function App() {
                     <Route path='/RegisterComplete' element={<RegisterComplete />} />
                     <Route path='/BbsList' element={<BbsList />} />
                     <Route path='/MyPage' element={<MyPage />} />
-                    <Route path='/Cart' element={<CartPage/>} />
-                    <Route path='/ReviewWrite/:productNo' element={<ReviewWrite/>} />
+                    <Route path='/Cart' element={<PrivateRoute><CartPage/></PrivateRoute>} />
+                    <Route path='/ReviewWrite/:productNo' element={<ReviewWrite />} />
                     <Route path='/Pagination' element={<Pagination />} />
                     <Route path='/CustomerOrder' element={<CustomerOrder />} />
                     <Route path='/CustomerOrderComplete' element={<CustomerOrderComplete />} />

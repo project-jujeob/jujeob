@@ -3,24 +3,30 @@ import './Login.css';
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import axios from "axios";
 import Header from "../common/Header";
+import {useAuth} from "./Context";
 
 
 function Login() {
-    const [memId, setMemId] = useState('');
-    const [memPw, setMemPw] = useState('');
-
-
+    const [userId, setUserId] = useState('');
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
     const location = useLocation();
-    // location 객체에서 state 속성을 추출하고, 만약 state 속성이 존재하지 않으면 기본값으로 { from: { pathname: "/" } }
-    const { from } = location.state || { from: { pathname: "/" } };
+    const from = location.state?.from?.pathname || '/'; // 로그인 후 리다이렉트할 경로
+    const { setAuthPayload, isLoggedIn } = useAuth();
 
+    useEffect(() => {
+        if (isLoggedIn) {
+            navigate(from, { replace: true }); // 로그인 후 from 경로로 리다이렉트
+        }
+    }, [isLoggedIn, from, navigate]);
 
     const loginAction = () => {
         axios({
             method: "post",
-            url: "/api/login",
-            data: JSON.stringify({ memId, memPw }),
+            // url: "/api/login",
+            url: "/api/auth/login",
+            // data: JSON.stringify({ memId, memPw }),
+            data: JSON.stringify({ userId, password }),
             headers: {
                 "Accept": "application/json, text/plain, */*",
                 "Content-Type": "application/json"
@@ -28,9 +34,14 @@ function Login() {
         }). then((response) => {
             alert("로그인 성공");
             console.log(response.data)
-            localStorage.setItem('token', JSON.stringify(response.data)); // 로그인 정보를 로컬 스토리지에 저장
+
+            // 저장할 때 구조 분해 할당을 사용하여 직접 저장
+            const { accessToken, refreshToken } = response.data;
+            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('refreshToken', refreshToken);
+            setAuthPayload(response.data);
             // 이전 페이지로 리다이렉트
-            navigate(-1)
+            // navigate(-1)
 
         }).catch(error => {
             alert("로그인 실패");
@@ -49,13 +60,16 @@ function Login() {
                         <div className={"LoginInput"}>
                             <input type={"text"}
                                    placeholder={"아이디"}
-                                   name={"memId"}
-                                   onChange={(e) => setMemId(e.target.value)}
+                                   // name={"memId"}
+                                   name={"userId"}
+                                   // onChange={(e) => setMemId(e.target.value)}
+                                   onChange={(e) => setUserId(e.target.value)}
                             /><br/>
                             <input type={"password"}
                                    placeholder={"비밀번호"}
-                                   name={"memPw"}
-                                   onChange={(e) => setMemPw(e.target.value)}
+                                   // name={"memPw"}
+                                   name={"password"}
+                                   onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
                         <button id={"LoginBtn"} onClick={loginAction}>로그인</button>
@@ -78,9 +92,6 @@ function Login() {
                                 <button>회원가입</button>
                         </Link>
                     </div>
-
-
-
                 </div>
             </div>
         </div>

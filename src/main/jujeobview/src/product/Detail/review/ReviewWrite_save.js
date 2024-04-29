@@ -2,7 +2,7 @@ import Header from "../../../common/Header";
 import {useLocation, useParams} from "react-router-dom";
 import ReviewStarRating from "./ReviewStarRating";
 import {useState} from "react";
-import {useAuth} from "../../../member/Context";
+import {useAuth} from "../../../user/Context";
 
 function ReviewWrite({ product, closeModal }){
 
@@ -44,7 +44,8 @@ function ReviewWrite({ product, closeModal }){
                 body: JSON.stringify({
                     reviewContent: reviewContent,
                     star: rating,
-                    member: { memNo: payload.memberNo}, // todo : 로그인유저정보 가져와야함
+                    // member: { memNo: payload.memberNo}, // todo : 로그인유저정보 가져와야함
+                    user: { userNo: payload.userNo },
                     product: { productNo: productNo } // 수정된 필드명
                 })
             });

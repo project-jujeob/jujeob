@@ -39,8 +39,12 @@ public class OrderService {
         }
     }
 
-    public List<OrderDeliveriesDto> getAllOrderDeliveriesWithItems(Long memberNo) {
-        List<CustomerOrder> customerOrders = orderRepository.findCustomerOrdersByMemberNoOrderByCreatedAt(memberNo);
+//    public List<OrderDeliveriesDto> getAllOrderDeliveriesWithItems(Long memberNo) {
+//        List<CustomerOrder> customerOrders = orderRepository.findCustomerOrdersByMemberNoOrderByCreatedAt(memberNo);
+//        List<OrderDeliveriesDto> orderDeliveriesDtos = new ArrayList<>();
+
+    public List<OrderDeliveriesDto> getAllOrderDeliveriesWithItems(Long userNo) {
+        List<CustomerOrder> customerOrders = orderRepository.findCustomerOrdersByUserNoOrderByCreatedAt(userNo);
         List<OrderDeliveriesDto> orderDeliveriesDtos = new ArrayList<>();
 
         for(CustomerOrder customerOrder : customerOrders){
@@ -56,9 +60,12 @@ public class OrderService {
         OrderDeliveriesDto dto = new OrderDeliveriesDto();
         dto.setOrderId(customerOrder.getOrderId());
         dto.setAddress(customerOrder.getAddress());
-        dto.setMemberName(customerOrder.getMemberName());
-        dto.setMemberPhone(customerOrder.getMemberPhone());
-        dto.setMemberEmail(customerOrder.getMemberEmail());
+//        dto.setMemberName(customerOrder.getMemberName());
+//        dto.setMemberPhone(customerOrder.getMemberPhone());
+//        dto.setMemberEmail(customerOrder.getMemberEmail());
+        dto.setName(customerOrder.getName());
+        dto.setPhone(customerOrder.getPhone());
+        dto.setEmail(customerOrder.getEmail());
         dto.setOrderStatus(customerOrder.getOrderStatus());
         dto.setPaymentMethod(customerOrder.getPaymentMethod());
         dto.setTotalPrice(customerOrder.getTotalPrice());
