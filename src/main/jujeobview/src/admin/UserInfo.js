@@ -10,6 +10,9 @@ const UserInfo = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
 
+    const [selectedSearchType, setSelectedSearchType] = useState('all');
+    const [keyword, setKeyword] = useState('');
+
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
@@ -47,9 +50,45 @@ const UserInfo = () => {
         setCurrentPage(page);
     };
 
+    const setSearchType = (value) => {
+        setSelectedSearchType(value);
+    };
+
+    const setSearchKeyword = (value) => {
+        setKeyword(value);
+    };
+
+    const handleSearch = () => {
+        axios.post('/api/userInfoBySearchOption',
+            { selectedSearchType, keyword })
+            .then((response) => {
+                setMemberInfo(response.data);
+                //setMemberInfo(response.data);
+            }).catch((error) => {
+            console.log('검색 회원 정보 가져오기 실패', error);
+        });
+    }
+
     return (
         <div>
             <div className="UserInfoContainer">
+                <div className="UserInfoSearchContainer">
+                    <div className="UserInfoSearch">
+                        <select onChange={e => setSearchType(e.target.value)}>
+                            <option value="userId">아이디</option>
+                            <option value="userName">이름</option>
+                            <option value="nickname">닉네임</option>
+                            <option value="phone">전화번호</option>
+                        </select>
+                        <input
+                            type="text"
+                            placeholder="검색어를 입력해주세요"
+                            onChange={e => setSearchKeyword(e.target.value)}
+                        />
+                        <button onClick={handleSearch}>검 색</button>
+                    </div>
+                <div className="UserInfoSearchCount">조회된 회원 수 : {memberInfo.length}</div>
+                </div>
                 <div className="MemberInfoList">
                     <div className="MemberInfoListHeader">
                         <div className="MemberInfoNo">NO.</div>

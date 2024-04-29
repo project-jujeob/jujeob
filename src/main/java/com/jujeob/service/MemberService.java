@@ -1,5 +1,6 @@
 package com.jujeob.service;
 
+import com.jujeob.dto.GetMemberDto;
 import com.jujeob.dto.LoginDto;
 import com.jujeob.dto.RegisterDto;
 import com.jujeob.entity.Member;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -70,4 +73,15 @@ public class MemberService {
         return memberRepository.existsByMemId(memId);
     }
 
+    public List<GetMemberDto> getUserInfoByKeyword(String searchType, String keyword) {
+        List <Member> memberList = memberRepository.findAllBySearchTypeAndKeyword(searchType, keyword);
+        List<GetMemberDto> memberDto = new ArrayList<>();
+        for (Member member : memberList) {
+            GetMemberDto dto = new GetMemberDto(member.getMemId(), member.getMemNickname(), member.getMemName(),
+                    member.getMemEmail(), member.getMemPhone(), member.getMemAddr(),
+                    member.getCreateDate(), member.getMemDeleted());
+            memberDto.add(dto);
+        }
+        return memberDto;
+    }
 }

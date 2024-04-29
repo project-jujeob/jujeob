@@ -276,6 +276,68 @@
 .MemberDeleteStatus {
     width: 15%;
 }
+.UserInfoSearchContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.UserInfoSearchContainer .UserInfoSearchCount {
+    padding: 10px 0px;
+}
+
+.UserInfoSearch {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border: 1px solid #FF7E5C;
+    border-radius: 10px;
+    width: 50%;
+
+}
+
+.UserInfoSearch select {
+    border: none;
+    font-size: 13px;
+    margin-left: 10px;
+    background-color: inherit;
+    outline: none;
+    letter-spacing: -0.33px;
+    width: 20%;
+}
+
+.UserInfoSearch input {
+    border: none;
+    font-size: 13px;
+    margin-left: 10px;
+    background-color: inherit;
+    outline: none;
+    letter-spacing: -0.33px;
+    width: 65%;
+}
+
+.UserInfoSearch button {
+    background-color: #FF7E5C;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 15%;
+    border-radius: 40px;
+}
+
+.UserInfoSearch button {
+    padding: 7px;
+}
+
+.UserInfoSearch button:hover {
+    background-color: #ff4c1f;
+    font-weight: bold;
+}
+
+.UserInfoSearch input::placeholder {
+    color: #aaa;
+}
 
 /*-------------------AnnouncementWrite.js------------------------*/
 .AnnouncementWriteContainer {
@@ -437,6 +499,9 @@ textarea {
 .ProductAdminContainer {
     width: 95%;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
 .ProductAdminList {
@@ -459,7 +524,6 @@ textarea {
     display: flex;
     text-align: center;
     align-items: center;
-    padding: 5px 0;
     border-bottom: 1px solid #eee;
 }
 
@@ -508,16 +572,73 @@ textarea {
     color: white;
 }
 
+.ProductAdminListSearchContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.ProductAdminListSearchResult {
+    padding: 10px 0px;
+}
+
+.ProductAdminListSearch {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border: 1px solid #FF7E5C;
+    border-radius: 10px;
+    width: 40%;
+
+}
+
+.ProductAdminListSearch input {
+    border: none;
+    font-size: 13px;
+    margin-left: 10px;
+    background-color: inherit;
+    outline: none;
+    letter-spacing: -0.33px;
+    width: 85%;
+}
+
+.ProductAdminListSearch button {
+    background-color: #FF7E5C;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 15%;
+    border-radius: 40px;
+}
+
+.ProductAdminListSearch button {
+    padding: 7px;
+}
+
+.ProductAdminListSearch button:hover {
+    background-color: #ff4c1f;
+    font-weight: bold;
+}
+
+.ProductAdminListSearch input::placeholder {
+    color: #aaa;
+}
+
 /*-------------------OrderListByAdmin.css------------------------*/
 .OrderListByAdmin {
-    width: 90%;
+    width: 95%;
     margin: 0 auto;
     padding-top: 20px;
+    font-size: 13.5px;
 }
 
 .OrderListByAdminHeader > div {
     margin-bottom: 5px;
+    display: flex;
+    justify-content: flex-end;
 }
+
 .OrderListByAdminContent table {
     width: 100%;
     border-collapse: collapse;
@@ -527,13 +648,71 @@ textarea {
     padding: 8px;
     border: 1px solid #ddd;
 }
+
+.OrderListProductName, .OrderListAddress {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .OrderListByAdminContent th {
-    background-color: #333;
-    color: white;
+    /*background-color: #333;*/
+    /*color: white;*/
 }
 .OrderListByAdminContent tr:nth-child(even) {
     background-color: #f9f9f9;
 }
-.OrderListByAdminContent tr.highlight {
-    background-color: #ffc0cb; /* 핑크색 배경 */
+
+.OrderListSearch {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border: 1px solid #FF7E5C;
+    border-radius: 10px;
+    width: 50%;
+
+}
+
+.OrderListSearch select {
+    border: none;
+    font-size: 13px;
+    margin-left: 10px;
+    background-color: inherit;
+    outline: none;
+    letter-spacing: -0.33px;
+    width: 20%;
+}
+
+.OrderListSearch input {
+    border: none;
+    font-size: 13px;
+    margin-left: 10px;
+    background-color: inherit;
+    outline: none;
+    letter-spacing: -0.33px;
+    width: 65%;
+}
+
+.OrderListSearch button {
+    background-color: #FF7E5C;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 15%;
+    border-radius: 40px;
+}
+
+.OrderListSearch button {
+    padding: 7px;
+}
+
+.OrderListSearch button:hover {
+    background-color: #ff4c1f;
+    font-weight: bold;
+}
+
+.OrderListSearch input::placeholder {
+    color: #aaa;
 }

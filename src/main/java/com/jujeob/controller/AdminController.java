@@ -4,10 +4,9 @@ import com.jujeob.dto.*;
 import com.jujeob.entity.Announcement;
 import com.jujeob.entity.Member;
 import com.jujeob.entity.Product;
-import com.jujeob.repository.AnnouncementRepository;
-import com.jujeob.repository.MemberRepository;
-import com.jujeob.repository.ProductRepository;
-import com.jujeob.repository.StockRepository;
+import com.jujeob.repository.*;
+import com.jujeob.service.MemberService;
+import com.jujeob.service.OrderService;
 import com.jujeob.service.ProductService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +23,9 @@ public class AdminController {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    MemberService memberService;
+
    @Autowired
     MemberRepository memberRepository;
 
@@ -35,6 +37,9 @@ public class AdminController {
 
    @Autowired
     StockRepository stockRepository;
+
+   @Autowired
+    OrderService orderService;
 
     @PostMapping("api/registerProduct")
     public Product registerProduct(@ModelAttribute ProductRegisterDto productRegisterDto) {
@@ -52,6 +57,13 @@ public class AdminController {
             memberDto.add(dto);
         }
         return memberDto;
+    }
+    
+    @PostMapping("/api/userInfoBySearchOption")
+    public List<GetMemberDto> getUserInfoByKeyword(@RequestBody Map<String, String> requestBody) {
+        String searchType = requestBody.get("selectedSearchType");
+        String keyword = requestBody.get("keyword");
+        return memberService.getUserInfoByKeyword(searchType, keyword);
     }
 
     @PostMapping("/api/AnnouncementWrite")
@@ -81,6 +93,12 @@ public class AdminController {
         return productService.showAllProductListAndStock();
     }
 
+    @PostMapping("/api/productListForAdminBySearchOption")
+    public List<ProductAdminDto> getProductListForAdminByKeyword(@RequestBody Map<String, String> requestbody) {
+        String keyword = requestbody.get("keyword");
+        return productService.findProductListAndStockForAdminByKeyword(keyword);
+    }
+
     @PostMapping("api/productDelete")
     @Transactional
     public void deleteProductListByAdmin(@RequestBody Map<String, Integer> requestBody) {
@@ -97,5 +115,17 @@ public class AdminController {
     @PostMapping("/api/updateProductDetails")
     public Product updateProductDetailsAndStock(@ModelAttribute ProductRegisterDto productRegisterDto) {
         return productService.updateProductDetail(productRegisterDto);
+    }
+
+    @GetMapping("/api/orderListForAdmin")
+    public List<CheckOrderListDto> getOrderListByAdmin () {
+        return orderService.getOrderListByAdmin();
+    }
+
+    @PostMapping("/api/orderListBySearchOption")
+    public List<CheckOrderListDto> getOrderListBySearchOption (@RequestBody Map<String, String> requestBody) {
+        String searchType = requestBody.get("selectedSearchType");
+        String keyword = requestBody.get("keyword");
+        return orderService.getOrderListBySearchOption(searchType, keyword);
     }
 }

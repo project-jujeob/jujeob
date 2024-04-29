@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
 
     // 로그인
     Optional<Member> findByMemId(String memId);
@@ -20,4 +20,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query("SELECT m FROM Member m WHERE m.memRole = 'user'")
     List<Member> findAllNonAdminUsers();
 
+    @Query("SELECT m FROM Member m WHERE m.memName = :memberName AND m.memPhone = :memberPhone")
+    Optional<Member> findMemIdByNameAndPhone(String memberName, String memberPhone);
 }

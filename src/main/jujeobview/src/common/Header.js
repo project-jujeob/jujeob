@@ -59,6 +59,9 @@ function Header() {
                 <Link to={'/ProductList'}>
                     <button>술 정보</button>
                 </Link>
+                <Link to="/Info">
+                    <button>소개</button>
+                </Link>
                 <Link to={'/BbsList'}>
                     <button>커뮤니티</button>
                 </Link>

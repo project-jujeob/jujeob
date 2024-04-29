@@ -2,6 +2,7 @@ import './MainPage.css';
 import { Link, useNavigate } from "react-router-dom"; // useHistory 추가
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Info from "./Info/Info";
 
 function MainPage() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -47,14 +48,21 @@ function MainPage() {
 
     return (
         <div className="Main">
-            <div className="MainContainer">
+            <div className="MainContainer1">
                 <div className="MainHeader">
                     <div className="MainMenu">
                         <Link to="/ProductList">
                             <button>술 정보</button>
                         </Link>
-                        <button>커뮤니티</button>
-                        <button>공지사항</button>
+                        <Link to="/Info">
+                            <button>소개</button>
+                        </Link>
+                        <Link to={'/BbsList'}>
+                            <button>커뮤니티</button>
+                        </Link>
+                        <Link to={'/Announcement'}>
+                            <button>공지사항</button>
+                        </Link>
                         <Link to={"/Cart"}>
                             <button>장바구니</button>
                         </Link>
@@ -82,7 +90,7 @@ function MainPage() {
                         </Link>
                     </div>
                 </div> 
-            </div> 
+            </div>
         </div>
     );
 }

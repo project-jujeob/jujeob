@@ -21,6 +21,7 @@ import ProductRegistration from "./admin/ProductRegistration";
 import Announcement from "./Announcement/Announcement";
 import CustomerOrderComplete from "./product/Cart/CustomerOrderComplete";
 import ProductEdit from "./admin/ProductEdit";
+import Info from "./Info/Info";
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
             <div>
                 <Routes>
                     <Route path="/" element={<MainPage />} />
+                    <Route path="/Info" element={<Info />} />
                     <Route path='/Admin' element={<Admin />} />
                     <Route path='/UserInfo' element={<UserInfo />} />
                     <Route path='/ProductRegistration' element={<ProductRegistration />} />
