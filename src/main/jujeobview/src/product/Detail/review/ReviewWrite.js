@@ -1,7 +1,7 @@
 import {useParams} from "react-router-dom";
 import ReviewStarRating from "./ReviewStarRating";
 import {useState} from "react";
-import {useAuth} from "../../../member/Context";
+import {useAuth} from "../../../user/Context";
 import axios from "axios";
 
 function ReviewWrite({ product, closeModal, onReviewSubmitted }){
@@ -34,7 +34,7 @@ function ReviewWrite({ product, closeModal, onReviewSubmitted }){
             const response = await axios.post('/api/ReviewWrite/createReview', {
                 reviewContent: reviewContent,
                 star: rating,
-                member: { memNo: payload.memberNo },
+                user: { userNo: payload.userNo },
                 product: { productNo: productNo }
             });
             if (response.status === 200 || response.status === 201) {

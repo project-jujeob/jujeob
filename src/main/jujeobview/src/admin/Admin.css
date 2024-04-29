@@ -173,7 +173,6 @@
 }
 
 
-
 .ProductEditBtns {
     display: flex;
     align-items: center;
@@ -207,29 +206,29 @@
 
 
 /*-------------------UserInfo.js------------------------*/
-.UserInfoContainer {
+.AdminUserInfoContainer {
     width: 95%;
     margin: 0 auto;
 }
 
-.MemberInfoList {
+.AdminUserInfoList {
     width: 100%;
     box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
     border-radius: 5px;
     margin-top: 10px;
 }
 
-.MemberInfoListHeader {
+.AdminUserInfoListHeader {
     display: flex;
     text-align: center;
     align-items: center;
     background-color: #f9f9f9;
     border-bottom: 1px solid #ddd;
     padding: 5px 0;
-
+    font-size: 11px;
 }
 
-.MemberInfoListContent {
+.AdminUserInfoListContent {
     display: flex;
     text-align: center;
     align-items: center;
@@ -237,7 +236,7 @@
     border-bottom: 1px solid #eee;
 }
 
-.MemberInfoListHeader div {
+.AdminUserInfoListHeader div {
     padding: 15px;
     font-weight: bold;
     font-size: 15px;
@@ -247,7 +246,7 @@
     flex-shrink: 1; /* 너비를 고정 */
 }
 
-.MemberInfoListContent div {
+.AdminUserInfoListContent div {
     margin: 10px 0px;
     padding: 5px;
     font-size: 14px;
@@ -257,46 +256,45 @@
     flex-shrink: 1; /* 너비를 고정 */
 }
 
-.MemberInfoId, .MemberInfoNickname, .MemberInfoName, .MemberInfoCreateDate {
+.AdminUserInfoId, .AdminUserInfoNickname, .AdminUserInfoName, .AdminUserInfoCreateDate {
     width: 20%;
 }
 
-.MemberInfoEmail, .MemberInfoPhone {
+.AdminUserInfoEmail, .AdminUserInfoPhone {
     width: 25%;
 }
 
-.MemberInfoAddr {
+.AdminUserInfoAddr {
     width: 25%;
 }
 
-.MemberInfoNo {
+.AdminUserInfoNo {
     width: 10%;
 }
 
-.MemberDeleteStatus {
+.AdminUserDeleteStatus {
     width: 15%;
 }
-.UserInfoSearchContainer {
+.AdminUserInfoSearchContainer {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
 
-.UserInfoSearchContainer .UserInfoSearchCount {
+.AdminUserInfoSearchContainer .AdminUserInfoSearchCount {
     padding: 10px 0px;
 }
 
-.UserInfoSearch {
+.AdminUserInfoSearch {
     display: flex;
     align-items: center;
     padding: 5px;
     border: 1px solid #FF7E5C;
     border-radius: 10px;
     width: 50%;
-
 }
 
-.UserInfoSearch select {
+.AdminUserInfoSearch select {
     border: none;
     font-size: 13px;
     margin-left: 10px;
@@ -306,7 +304,7 @@
     width: 20%;
 }
 
-.UserInfoSearch input {
+.AdminUserInfoSearch input {
     border: none;
     font-size: 13px;
     margin-left: 10px;
@@ -316,7 +314,7 @@
     width: 65%;
 }
 
-.UserInfoSearch button {
+.AdminUserInfoSearch button {
     background-color: #FF7E5C;
     color: white;
     border: none;
@@ -326,16 +324,16 @@
     border-radius: 40px;
 }
 
-.UserInfoSearch button {
+.AdminUserInfoSearch button {
     padding: 7px;
 }
 
-.UserInfoSearch button:hover {
+.AdminUserInfoSearch button:hover {
     background-color: #ff4c1f;
     font-weight: bold;
 }
 
-.UserInfoSearch input::placeholder {
+.AdminUserInfoSearch input::placeholder {
     color: #aaa;
 }
 

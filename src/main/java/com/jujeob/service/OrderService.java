@@ -5,9 +5,9 @@ import com.jujeob.dto.CheckOrderListDto;
 import com.jujeob.dto.OrderDeliveriesDto;
 import com.jujeob.dto.OrderItemDto;
 import com.jujeob.entity.CustomerOrder;
-import com.jujeob.entity.Member;
 import com.jujeob.entity.OrderItem;
 import com.jujeob.entity.Product;
+import com.jujeob.entity.User;
 import com.jujeob.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class OrderService {
     CustomerOrderRepository customerOrderRepository;
 
     @Autowired
-    MemberRepository memberRepository;
+    UserRepository userRepository;
 
     @Transactional
     public void processOrder(CustomerOrder customerOrder) {
@@ -50,8 +50,9 @@ public class OrderService {
         }
     }
 
-    public List<OrderDeliveriesDto> getAllOrderDeliveriesWithItems(Long memberNo) {
-        List<CustomerOrder> customerOrders = orderRepository.findCustomerOrdersByMemberNoOrderByCreatedAt(memberNo);
+
+    public List<OrderDeliveriesDto> getAllOrderDeliveriesWithItems(Long userNo) {
+        List<CustomerOrder> customerOrders = orderRepository.findCustomerOrdersByUserNoOrderByCreatedAt(userNo);
         List<OrderDeliveriesDto> orderDeliveriesDtos = new ArrayList<>();
 
         for(CustomerOrder customerOrder : customerOrders){
@@ -67,9 +68,9 @@ public class OrderService {
         OrderDeliveriesDto dto = new OrderDeliveriesDto();
         dto.setOrderId(customerOrder.getOrderId());
         dto.setAddress(customerOrder.getAddress());
-        dto.setMemberName(customerOrder.getMemberName());
-        dto.setMemberPhone(customerOrder.getMemberPhone());
-        dto.setMemberEmail(customerOrder.getMemberEmail());
+        dto.setName(customerOrder.getName());
+        dto.setPhone(customerOrder.getPhone());
+        dto.setEmail(customerOrder.getEmail());
         dto.setOrderStatus(customerOrder.getOrderStatus());
         dto.setPaymentMethod(customerOrder.getPaymentMethod());
         dto.setTotalPrice(customerOrder.getTotalPrice());
@@ -105,8 +106,8 @@ public class OrderService {
             List<OrderItem> items = entry.getValue();
             CustomerOrder co = customerOrderMap.get(orderId);
 
-            Optional<Member> member = memberRepository.findMemIdByNameAndPhone(co.getMemberName(), co.getMemberPhone());
-            String memId = member.map(Member::getMemId).orElse(null);
+            Optional<User> user = userRepository.findMemIdByNameAndPhone(co.getName(), co.getPhone());
+            String userId = user.map(User::getUserId).orElse(null);
 
             List<CheckOrderItemDto> productInfos = items.stream().map(item -> {
                 Optional<Product> product = productRepository.findById(item.getProductNo());
@@ -119,9 +120,9 @@ public class OrderService {
 
             return new CheckOrderListDto(
                     orderId,
-                    memId,
-                    co.getMemberName(),
-                    co.getMemberPhone(),
+                    userId,
+                    co.getName(),
+                    co.getPhone(),
                     co.getAddress(),
                     co.getTotalPrice(),
                     co.getOrderStatus(),
@@ -152,9 +153,9 @@ public class OrderService {
             case "all":
                 String finalKeyword = keyword;
                 return (dto.getOrderId() != null && dto.getOrderId().toString().contains(keyword)) ||
-                        (dto.getMemId() != null && dto.getMemId().contains(keyword)) ||
-                        (dto.getMemberName() != null && dto.getMemberName().toLowerCase().contains(keyword)) ||
-                        (dto.getMemberPhone() != null && dto.getMemberPhone().contains(keyword)) ||
+                        (dto.getUserId() != null && dto.getUserId().contains(keyword)) ||
+                        (dto.getName() != null && dto.getName().toLowerCase().contains(keyword)) ||
+                        (dto.getPhone() != null && dto.getPhone().contains(keyword)) ||
                         (dto.getAddress() != null && dto.getAddress().toLowerCase().contains(keyword)) ||
                         (dto.getOrderStatus() != null && dto.getOrderStatus().toLowerCase().contains(keyword)) ||
                         (dto.getPaymentMethod() != null && dto.getPaymentMethod().toLowerCase().contains(keyword)) ||
@@ -162,9 +163,9 @@ public class OrderService {
             case "orderId":
                 return dto.getOrderId() != null && dto.getOrderId().toString().contains(keyword);
             case "memberId":
-                return dto.getMemId() != null && dto.getMemId().contains(keyword);
+                return dto.getUserId() != null && dto.getUserId().contains(keyword);
             case "memberName":
-                return dto.getMemberName() != null && dto.getMemberName().toLowerCase().contains(keyword);
+                return dto.getName() != null && dto.getName().toLowerCase().contains(keyword);
             default:
                 return false;
         }

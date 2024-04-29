@@ -12,9 +12,9 @@ import java.util.List;
 @NoArgsConstructor
 public class CheckOrderListDto {
     private Long orderId;
-    private String memId;
-    private String memberName;
-    private String memberPhone;
+    private String userId;
+    private String name;
+    private String phone;
     private String address;
     private Long totalPrice;
     private String orderStatus;

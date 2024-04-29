@@ -34,7 +34,7 @@ public class CartController {
 
         // DB에 저장하기 전에 각 상품의 수량을 업데이트하거나 새로 추가합니다.
         for (Cart item : cartItems) {
-            Cart existingItem = cartRepository.findByMemberNoAndProductNo(item.getMemberNo(), item.getProductNo());
+            Cart existingItem = cartRepository.findByUserNoAndProductNo(item.getUserNo(), item.getProductNo());
             if (existingItem != null) {
                 // 기존에 같은 상품이 있으면 수량을 더해줍니다.
                 existingItem.setQuantity(item.getQuantity());
@@ -48,11 +48,11 @@ public class CartController {
         return ResponseEntity.ok("장바구니에 상품이 추가되었습니다.");
     }
 
-    @GetMapping("/cartPageList/{memberNo}")
-    public List<CartDto> cartListUp(@PathVariable Long memberNo){
-        System.out.println("카트내용"+cartRepository.findByMemberNo(memberNo));
+    @GetMapping("/cartPageList/{userNo}")
+    public List<CartDto> cartListUp(@PathVariable Long userNo){
+        System.out.println("카트내용"+cartRepository.findByUserNo(userNo));
 
-        List<Cart> carts = cartRepository.findByMemberNo(memberNo);
+        List<Cart> carts = cartRepository.findByUserNo(userNo);
         List<CartDto> cartDtos = new ArrayList<>();
 
         for(Cart cart : carts){
@@ -65,33 +65,33 @@ public class CartController {
     }
 
     @Transactional
-    @DeleteMapping("/cartDelete/{memberNo}/{productNo}")
-    public ResponseEntity<String> removeFromCart(@PathVariable Long memberNo, @PathVariable Integer productNo) {
+    @DeleteMapping("/cartDelete/{userNo}/{productNo}")
+    public ResponseEntity<String> removeFromCart(@PathVariable Long userNo, @PathVariable Integer productNo) {
         //cartRepository.deleteByProductNo(productNo); // 장바구니에서 상품 삭제 로직을 호출
-        cartRepository.removeByMemberNoAndProductNo(memberNo,productNo);
+        cartRepository.removeByUserNoAndProductNo(userNo,productNo);
         return ResponseEntity.ok("상품이 장바구니에서 삭제되었습니다.");
     }
 
     @Transactional
-    @DeleteMapping("/cartDeleteSelected/{memberNo}")
-    public ResponseEntity<?> deleteSelectedProducts(@PathVariable Long memberNo, @RequestBody Map<String, List<Long>> requestData) {
+    @DeleteMapping("/cartDeleteSelected/{userNo}")
+    public ResponseEntity<?> deleteSelectedProducts(@PathVariable Long userNo, @RequestBody Map<String, List<Long>> requestData) {
         System.out.println(requestData);
         List<Long> productNos = requestData.get("productNos");
         System.out.println("프로덕트넘버스"+productNos);
         try {
-            cartRepository.deleteByMemberNoAndProductNoIn(memberNo, productNos);
+            cartRepository.deleteByUserNoAndProductNoIn(userNo, productNos);
             return ResponseEntity.ok("선택된 상품 삭제 성공");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("선택된 상품 삭제 실패: " + e.getMessage());
         }
     }
 
-    @PutMapping("/updateCartItemQuantity/{memberNo}/{productNo}")
-    public ResponseEntity<String> updateCartItemQuantity(@PathVariable Long memberNo,
+    @PutMapping("/updateCartItemQuantity/{userNo}/{productNo}")
+    public ResponseEntity<String> updateCartItemQuantity(@PathVariable Long userNo,
                                                          @PathVariable Integer productNo,
                                                          @RequestBody Cart cart) {
         /*// 클라이언트로부터 받은 데이터를 처리합니다.
-        Long receivedMemberNo = cart.getMemberNo();
+        Long receivedUserNo = cart.getUserNo();
         Integer receivedProductNo = cart.getProductNo();
         Integer newQuantity = cart.getQuantity();
 
@@ -104,7 +104,7 @@ public class CartController {
         int newQuantity = cart.getQuantity();
 
         // 해당 회원과 상품 번호를 가진 카트 아이템을 찾습니다.
-        Cart existingItem = cartRepository.findByMemberNoAndProductNo(memberNo, productNo);
+        Cart existingItem = cartRepository.findByUserNoAndProductNo(userNo, productNo);
 
         if (existingItem != null) {
             // 찾은 카트 아이템의 수량을 업데이트합니다.
@@ -115,5 +115,4 @@ public class CartController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 상품을 찾을 수 없습니다.");
         }
     }
-
 }

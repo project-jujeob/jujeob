@@ -3,7 +3,6 @@ package com.jujeob.service;
 import com.jujeob.dto.CartDto;
 import com.jujeob.entity.Cart;
 import com.jujeob.repository.CartRepository;
-import com.jujeob.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +12,6 @@ public class CartService {
     @Autowired
     CartRepository cartRepository;
 
-    @Autowired
-    MemberRepository memberRepository;
 
     /*public void convertToDto(Cart cart) {
         cartRepository.save(cart);

@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Pagination from "../../common/Pagination";
 import BbsDetailModal from "../BoardModal/BbsDetail";
-import {useAuth} from "../../member/Context";
+import {useAuth} from "../../user/Context";
 function BbsListItem() {
     const { payload } = useAuth();
     const [boardsList, setBoardsList] = useState([]);

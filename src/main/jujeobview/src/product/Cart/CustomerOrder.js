@@ -1,7 +1,7 @@
 import Header from "../../common/Header";
 import {useLocation, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import {useAuth} from "../../member/Context";
+import {useAuth} from "../../user/Context";
 import axios from "axios";
 
 function CustomerOrder() {
@@ -57,7 +57,7 @@ function CustomerOrder() {
         e.preventDefault();
 
         try {
-            const addressToUse = newAddress ? newAddress : payload.memberAddr;
+            const addressToUse = newAddress ? newAddress : payload.address;
             console.log("오더주소:",addressToUse);
 
             const orderItems = selectedItems.map((item) => ({
@@ -70,10 +70,10 @@ function CustomerOrder() {
             const response = await axios.post(`/api/customerOrder`, {
                 orderItems: orderItems,
                 address: addressToUse,
-                memberNo: payload.memberNo,
-                memberName: payload.memberName,
-                memberPhone: payload.memberPhone,
-                memberEmail: payload.memberEmail,
+                userNo: payload.userNo,
+                userName: payload.name,
+                userPhone: payload.phone,
+                userEmail: payload.email,
                 orderStatus: "Y",
                 paymentMethod: paymentMethod,
                 totalPrice:totalPrice,
@@ -84,13 +84,13 @@ function CustomerOrder() {
             const selectedProductNos = selectedItems.map(item => item.productNo);
 
             // 로컬 스토리지에서 현재 사용자의 장바구니 정보를 가져옴
-            const currentCartItems = JSON.parse(localStorage.getItem(payload.memberNo));
+            const currentCartItems = JSON.parse(localStorage.getItem(payload.userNo));
 
             // 선택된 항목들을 제외한 새로운 장바구니 정보 생성
             const updatedCartItems = currentCartItems.filter(item => !selectedProductNos.includes(item.productNo));
 
             // 새로운 장바구니 정보를 로컬 스토리지에 저장
-            localStorage.setItem(payload.memberNo, JSON.stringify(updatedCartItems));
+            localStorage.setItem(payload.userNo, JSON.stringify(updatedCartItems));
 
             console.log("response:",response);
             if (response.status === 200 || response.status === 201) {
@@ -147,18 +147,18 @@ function CustomerOrder() {
                                     <h2>주문자 정보</h2>
                                 </div>
                                 <div className="orderInfoDetail">
-                                    <div><span>받는 사람</span><p>{payload.memberName}</p></div>
-                                    <div><span>휴대폰</span><p>{payload.memberPhone}</p></div>
-                                    <div><span>이메일</span><p>{payload.memberEmail}</p></div>
+                                    <div><span>받는 사람</span><p>{payload.name}</p></div>
+                                    <div><span>휴대폰</span><p>{payload.phone}</p></div>
+                                    <div><span>이메일</span><p>{payload.email}</p></div>
                                 </div>
                                 <div className="orderInfo">
                                     <h2>배송 정보</h2>
                                 </div>
                                 <div className="orderInfoDetail">
-                                    <div><span>배송지</span>
+                                <div><span>배송지</span>
                                         <div>
                                             <div>
-                                                {payload.memberAddr}
+                                                {payload.address}
                                             </div>
                                             <div>
                                                 <span>배송지 변경</span>

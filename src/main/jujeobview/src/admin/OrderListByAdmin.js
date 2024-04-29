@@ -15,7 +15,7 @@ const OrderListByAdmin = () => {
 
 
     useEffect(() => {
-        axios.get('/api/orderListForAdmin')
+        axios.get('/api/admin/orderListForAdmin')
             .then((response) => {
                 setCheckOrderList(response.data);
                 setTotalOrder(response.data.length);
@@ -41,7 +41,7 @@ const OrderListByAdmin = () => {
     const loadProductList = () => {
         const startIndex = (currentPage - 1) * PAGE_SIZE;
         const endIndex = startIndex + PAGE_SIZE;
-        axios.get('/api/orderListForAdmin')
+        axios.get('/api/admin/orderListForAdmin')
             .then((response) => {
                 setCheckOrderList(response.data.slice(startIndex, endIndex));
             }).catch((error) => {
@@ -59,7 +59,7 @@ const OrderListByAdmin = () => {
     };
 
     const handleSearch = () => {
-        axios.post('/api/orderListBySearchOption',
+        axios.post('/api/admin/orderListBySearchOption',
             { selectedSearchType, keyword })
             .then((response) => {
                 setCheckOrderList(response.data);

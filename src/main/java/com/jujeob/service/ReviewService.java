@@ -31,8 +31,8 @@ public class ReviewService {
         dto.setReviewContent(review.getReviewContent());
         dto.setStar(review.getStar());
         dto.setReviewDate(review.getReviewDate());
-        dto.setMemNo(review.getMember().getMemNo());
-        dto.setMemNickname(review.getMember().getMemNickname());
+        dto.setUserNo(review.getUser().getUserNo());
+        dto.setNickname(review.getUser().getNickname());
         dto.setProductNo(review.getProduct().getProductNo());
         dto.setProductName(review.getProduct().getName());
 

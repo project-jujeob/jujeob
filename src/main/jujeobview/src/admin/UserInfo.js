@@ -18,15 +18,15 @@ const UserInfo = () => {
         return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
     };
 
-    const [memberInfo, setMemberInfo] = useState([]);
+    const [userInfo, setUserInfo] = useState([]);
     useEffect(() => {
-        axios.get('/api/showUserInfo')
+        axios.get('/api/admin/showUserInfo')
             .then((response) => {
-                setMemberInfo(response.data);
+                setUserInfo(response.data);
                 setTotalUserInfo(response.data.length);
                 setTotalPages(Math.ceil(totalUserInfo / PAGE_SIZE));
             }).catch((error) => {
-                console.log('회원 목록 가져오기 실패:', error);
+            console.log('회원 목록 가져오기 실패:', error);
         })
     }, []);
 
@@ -37,9 +37,9 @@ const UserInfo = () => {
     const loadUserInfoList = () => {
         const startIndex = (currentPage - 1) * PAGE_SIZE;
         const endIndex = startIndex + PAGE_SIZE;
-        axios.get('/api/showUserInfo')
+        axios.get('/api/admin/showUserInfo')
             .then((response) => {
-                setMemberInfo(response.data.slice(startIndex, endIndex));
+                setUserInfo(response.data.slice(startIndex, endIndex));
             })
             .catch((error) => {
                 console.error('데이터 가져오기 실패:', error);
@@ -59,11 +59,10 @@ const UserInfo = () => {
     };
 
     const handleSearch = () => {
-        axios.post('/api/userInfoBySearchOption',
+        axios.post('/api/admin/userInfoBySearchOption',
             { selectedSearchType, keyword })
             .then((response) => {
-                setMemberInfo(response.data);
-                //setMemberInfo(response.data);
+                setUserInfo(response.data);
             }).catch((error) => {
             console.log('검색 회원 정보 가져오기 실패', error);
         });
@@ -71,9 +70,9 @@ const UserInfo = () => {
 
     return (
         <div>
-            <div className="UserInfoContainer">
-                <div className="UserInfoSearchContainer">
-                    <div className="UserInfoSearch">
+            <div className="AdminUserInfoContainer">
+                <div className="AdminUserInfoSearchContainer">
+                    <div className="AdminUserInfoSearch">
                         <select onChange={e => setSearchType(e.target.value)}>
                             <option value="userId">아이디</option>
                             <option value="userName">이름</option>
@@ -87,31 +86,31 @@ const UserInfo = () => {
                         />
                         <button onClick={handleSearch}>검 색</button>
                     </div>
-                <div className="UserInfoSearchCount">조회된 회원 수 : {memberInfo.length}</div>
+                <div className="AdminUserInfoSearchCount">조회된 회원 수 : {userInfo.length}</div>
                 </div>
-                <div className="MemberInfoList">
-                    <div className="MemberInfoListHeader">
-                        <div className="MemberInfoNo">NO.</div>
-                        <div className="MemberInfoId">아이디</div>
-                        <div className="MemberInfoNickname">닉네임</div>
-                        <div className="MemberInfoName">이름</div>
-                        <div className="MemberInfoEmail">이메일</div>
-                        <div className="MemberInfoPhone">전화번호</div>
-                        <div className="MemberInfoAddr">주소</div>
-                        <div className="MemberInfoCreateDate">가입일</div>
-                        <div className="MemberDeleteStatus">탈퇴여부</div>
+                <div className="AdminUserInfoList">
+                    <div className="AdminUserInfoListHeader">
+                        <div className="AdminUserInfoNo">NO.</div>
+                        <div className="AdminUserInfoId">아이디</div>
+                        <div className="AdminUserInfoNickname">닉네임</div>
+                        <div className="AdminUserInfoName">이름</div>
+                        <div className="AdminUserInfoEmail">이메일</div>
+                        <div className="AdminUserInfoPhone">전화번호</div>
+                        <div className="AdminUserInfoAddr">주소</div>
+                        <div className="AdminUserInfoCreateDate">가입일</div>
+                        <div className="AdminUserDeleteStatus">탈퇴여부</div>
                     </div>
-                    {memberInfo.map((member, index) => (
-                        <div className="MemberInfoListContent" key={index}>
-                            <div className="MemberInfoNo">{index + 1}</div>
-                            <div className="MemberInfoId">{member.memId}</div>
-                            <div className="MemberInfoNickname">{member.memNickname}</div>
-                            <div className="MemberInfoName">{member.memName}</div>
-                            <div className="MemberInfoEmail" title={member.memEmail}>{member.memEmail}</div>
-                            <div className="MemberInfoPhone" title={member.memPhone}>{member.memPhone}</div>
-                            <div className="MemberInfoAddr" title={member.memAddr}>{member.memAddr}</div>
-                            <div className="MemberInfoCreateDate">{formatDate(member.createDate)}</div>
-                            <div className="MemberDeleteStatus">{member.memDeleted}</div>
+                    {userInfo.map((user, index) => (
+                        <div className="AdminUserInfoListContent" key={index}>
+                            <div className="AdminUserInfoNo">{index + 1}</div>
+                            <div className="AdminUserInfoId">{user.userId}</div>
+                            <div className="AdminUserInfoNickname">{user.nickname}</div>
+                            <div className="AdminUserInfoName">{user.name}</div>
+                            <div className="AdminUserInfoEmail" title={user.email}>{user.email}</div>
+                            <div className="AdminUserInfoPhone" title={user.phone}>{user.phone}</div>
+                            <div className="AdminUserInfoAddr" title={user.address}>{user.address}</div>
+                            <div className="AdminUserInfoCreateDate">{formatDate(user.createDate)}</div>
+                            <div className="AdminUserDeleteStatus">{user.deleted}</div>
                         </div>
                     ))}
                 </div>

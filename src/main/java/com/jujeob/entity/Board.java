@@ -48,7 +48,7 @@ public class Board {
     private int IsDeleted = 0; ;
 
     @ManyToOne
-    @JoinColumn(name = "memNo")
-    private Member member;
+    @JoinColumn(name = "userNo")
+    private User user;
 
 }

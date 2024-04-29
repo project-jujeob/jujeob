@@ -31,19 +31,19 @@ public class CustomerOrder {
     private Member member;*/
 
     @Column(nullable = false)
-    private Long memberNo;
+    private Long userNo;
 
     @Column(nullable = false)
     private String address;
 
     @Column(nullable = false)
-    private String memberName;
+    private String name;
 
     @Column(nullable = false)
-    private String memberPhone;
+    private String phone;
 
     @Column(nullable = false)
-    private String memberEmail;
+    private String email;
 
     @Column(nullable = false)
     private String orderStatus;

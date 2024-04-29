@@ -1,3 +1,4 @@
+
 import './MainPage.css';
 import { Link, useNavigate } from "react-router-dom"; // useHistory 추가
 import { useState, useEffect } from "react";
