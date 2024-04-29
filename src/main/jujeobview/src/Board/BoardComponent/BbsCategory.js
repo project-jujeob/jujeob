@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BbsDetailModal from "../BoardModal/BbsDetail";
 import BbsWrite from "../BoardModal/BbsWrite";
-import {useAuth} from "../../member/Context";
+import {useAuth} from "../../user/Context";
 function BbsCategory({ onSearch }) {
     const {payload} = useAuth();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +29,7 @@ function BbsCategory({ onSearch }) {
                     <div className="Category">모임게시판</div>
                 </div>
                 <div className="CategoryNewPost">
-                        <div className="NewPostDiv"  onClick={() => openModal()}>글 작성하기</div>
+                    <div className="NewPostDiv"  onClick={() => openModal()}>글 작성하기</div>
                 </div>
             </div>
             <div className="DetailNavContainer">

@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Pagination from "../../common/Pagination";
 import BbsDetailModal from "../BoardModal/BbsDetail";
-import {useAuth} from "../../member/Context";
+import {useAuth} from "../../user/Context";
 function BbsListItem() {
     const { payload } = useAuth();
     const [boardsList, setBoardsList] = useState([]);
@@ -93,27 +93,27 @@ function BbsListItem() {
                 {currentItems.map((board, index) => (
                     <div className="bbsPost bbsPostItem" key={index}>
                         {/*<Link to={`/BbsDetail/${board.boardId}`}>*/}
-                            <div className="bbsPostBackground" onClick={() => openModal(board.boardId)}>
-                                <div className="PostDetailTop">
-                                    <p className="PostDetailTop-CreateDate">{new Date(board.createDate).toLocaleString('ko-KR', {
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric',
-                                        hour: '2-digit',
-                                        minute: '2-digit',
-                                        second: '2-digit',
-                                    })}</p>
-                                    <p>게시물 조회수 : {board.boardViews}</p>
-                                    <h3>{board.boardTitle}</h3>
-                                </div>
-                                <div className="PostDetailBottom">
-                                    <div className="PostDetailBottomAuthor">작성자: 아직 구현 X</div>
-                                    <div className="PostDetailBottomButton">
-                                        <button className="LikeButton">♡</button>
-                                        <button className="ReplyComment">댓글</button>
-                                    </div>
+                        <div className="bbsPostBackground" onClick={() => openModal(board.boardId)}>
+                            <div className="PostDetailTop">
+                                <p className="PostDetailTop-CreateDate">{new Date(board.createDate).toLocaleString('ko-KR', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    second: '2-digit',
+                                })}</p>
+                                <p>게시물 조회수 : {board.boardViews}</p>
+                                <h3>{board.boardTitle}</h3>
+                            </div>
+                            <div className="PostDetailBottom">
+                                <div className="PostDetailBottomAuthor">작성자: 아직 구현 X</div>
+                                <div className="PostDetailBottomButton">
+                                    <button className="LikeButton">♡</button>
+                                    <button className="ReplyComment">댓글</button>
                                 </div>
                             </div>
+                        </div>
                         {/*</Link>*/}
                     </div>
                 ))}

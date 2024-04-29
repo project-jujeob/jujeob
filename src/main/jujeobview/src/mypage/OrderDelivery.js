@@ -1,4 +1,4 @@
-import {useAuth} from "../member/Context";
+import {useAuth} from "../user/Context";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
@@ -73,7 +73,7 @@ function OrderDelivery() {
                         {expandedOrderId === order.orderId && (
                             <div className="orderDeliveryContent">
                                 <div>
-                                {order.orderItems.map((item, index) => {
+                                    {order.orderItems.map((item, index) => {
                                         console.log("아이템:", item); // 주문 상품에 대한 로그 출력
                                         return (
                                             <div key={index}>

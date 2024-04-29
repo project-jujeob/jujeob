@@ -3,7 +3,7 @@ import Header from "../common/Header";
 import AnnouncementWrite from "../admin/AnnouncementWrite";
 import axios from "axios";
 import './Announcement.css';
-import {useAuth} from "../member/Context";
+import {useAuth} from "../user/Context";
 import Pagination from "../common/Pagination";
 import AnnouncementEdit from "../admin/AnnouncementEdit";
 
@@ -26,7 +26,7 @@ const Announcement = () => {
         newContentToggleStates[index] = !newContentToggleStates[index];
         setToggleStates(newContentToggleStates);
     }
-    
+
     const [announcement, setAnnouncement] = useState([]);
     const [totalAnnouncement, setTotalAnnouncement] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
@@ -70,13 +70,13 @@ const Announcement = () => {
 
 
     const deleteAnnouncement = (announcementNo) => {
-            axios.post('api/AnnouncementDelete', { announcementNo })
-                .then((response) => {
-                    alert(announcementNo + "번 공지사항이 삭제되었습니다.");
-                    fetchAnnouncements();
-                }).catch((error) => {
-                console.log('공지사항 삭제 실패:', error);
-            })
+        axios.post('api/AnnouncementDelete', { announcementNo })
+            .then((response) => {
+                alert(announcementNo + "번 공지사항이 삭제되었습니다.");
+                fetchAnnouncements();
+            }).catch((error) => {
+            console.log('공지사항 삭제 실패:', error);
+        })
     }
 
     return (
@@ -86,10 +86,11 @@ const Announcement = () => {
                 <div className="AnnouncementHeader">
                     <h2 className="AnnouncementHeaderTitle">공지사항</h2>
                 </div>
-                {payload && payload.memberRole === "admin" && (
-                <div className="AnnouncementWrite">
-                    <button onClick={toggleModal}>글 작성</button>
-                </div>
+                {/*{payload && payload.memberRole === "admin" && (*/}
+                {payload && payload.role === "ADMIN" && (
+                    <div className="AnnouncementWrite">
+                        <button onClick={toggleModal}>글 작성</button>
+                    </div>
                 )}
                 {modal && (
                     <div className="modal">
@@ -106,7 +107,8 @@ const Announcement = () => {
                         <div className="AnnouncementWriter">작성자</div>
                         <div className="AnnouncementCreateAt">작성일</div>
                         <div className="AnnouncementDetail">+</div>
-                        {payload && payload.memberRole === "admin" && (
+                        {/*{payload && payload.memberRole === "admin" && (*/}
+                        {payload && payload.role === "ADMIN" && (
                             <div className="AnnouncementBtn"></div>
                         )}
                     </div>
@@ -118,24 +120,25 @@ const Announcement = () => {
                                 <div className="AnnouncementWriter">{announcement.announcementWriter}</div>
                                 <div className="AnnouncementCreateAt">{formatDate(announcement.createdAt)}</div>
                                 <div className="AnnouncementDetail" onClick={() => toggleContent(index)}>+</div>
-                                {payload && payload.memberRole === "admin" && (
-                                <div className="AnnouncementBtn">
-                                    <button onClick={() =>  showEditModal(announcement,index)}>[수정]</button>
-                                    {(editModal[0] && index === editModal[1]) ? (
-                                        <div className="modal">
-                                            <div className="modalContent">
-                                                <span className="modalClose" onClick={closeEditModal}>&times;</span>
-                                                <AnnouncementEdit
-                                                    announcement={currentAnnouncement}
-                                                    closeModal={closeEditModal}
-                                                    onAnnouncementUpdated={fetchAnnouncements}
-                                                />
+                                {/*{payload && payload.memberRole === "admin" && (*/}
+                                {payload && payload.role === "ADMIN" && (
+                                    <div className="AnnouncementBtn">
+                                        <button onClick={() =>  showEditModal(announcement,index)}>[수정]</button>
+                                        {(editModal[0] && index === editModal[1]) ? (
+                                            <div className="modal">
+                                                <div className="modalContent">
+                                                    <span className="modalClose" onClick={closeEditModal}>&times;</span>
+                                                    <AnnouncementEdit
+                                                        announcement={currentAnnouncement}
+                                                        closeModal={closeEditModal}
+                                                        onAnnouncementUpdated={fetchAnnouncements}
+                                                    />
+                                                </div>
                                             </div>
-                                        </div>
-                                    ) : ""}
-                                    <button onClick={() => deleteAnnouncement(announcement.announcementNo)}>[삭제]</button>
-                                </div>
-                                    )}
+                                        ) : ""}
+                                        <button onClick={() => deleteAnnouncement(announcement.announcementNo)}>[삭제]</button>
+                                    </div>
+                                )}
 
                             </div>
                             <div className="AnnouncementListContent2">

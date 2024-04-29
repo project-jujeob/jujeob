@@ -1,4 +1,4 @@
-import {useAuth} from "../member/Context";
+import {useAuth} from "../user/Context";
 import {useState} from "react";
 import axios from "axios";
 import '../../src/Announcement/Announcement.css';
@@ -22,7 +22,8 @@ const AnnouncementWrite = ({closeModal, onAnnouncementAdded}) => {
         try {
             const response = await axios.post('/api/AnnouncementWrite', {
                 announcementTitle: announcementTitle,
-                announcementWriter: payload.memberId,
+                // announcementWriter: payload.memberId,
+                announcementWriter: payload.userId,
                 announcementContent: announcementContent
             });
             if (response.status === 200 || response.status === 201) {
@@ -53,7 +54,8 @@ const AnnouncementWrite = ({closeModal, onAnnouncementAdded}) => {
                 </div>
                 <div className="AnnouncementWriteWriter">
                     <div className="AW1">작성자</div>
-                    <div className="AW2">{payload.memberId}</div>
+                    {/*<div className="AW2">{payload.memberId}</div>*/}
+                    <div className="AW2">{payload.userId}</div>
                 </div>
                 <div className="AnnouncementWriteContent">
                     <div className="AnnouncementTextarea">

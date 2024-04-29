@@ -1,13 +1,16 @@
 package com.jujeob.controller;
 
-import com.jujeob.dto.*;
+import com.jujeob.dto.GetUsersDto;
+import com.jujeob.dto.ProductAdminDto;
+import com.jujeob.dto.ProductEditDto;
+import com.jujeob.dto.ProductRegisterDto;
 import com.jujeob.entity.Announcement;
-import com.jujeob.entity.Member;
 import com.jujeob.entity.Product;
+import com.jujeob.entity.User;
 import com.jujeob.repository.AnnouncementRepository;
-import com.jujeob.repository.MemberRepository;
 import com.jujeob.repository.ProductRepository;
 import com.jujeob.repository.StockRepository;
+import com.jujeob.repository.UserRepository;
 import com.jujeob.service.ProductService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 
 @RestController
@@ -24,16 +26,19 @@ public class AdminController {
     @Autowired
     ProductService productService;
 
-   @Autowired
-    MemberRepository memberRepository;
+//   @Autowired
+//   MemberRepository memberRepository;
 
-   @Autowired
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     AnnouncementRepository announcementRepository;
 
-   @Autowired
+    @Autowired
     ProductRepository productRepository;
 
-   @Autowired
+    @Autowired
     StockRepository stockRepository;
 
     @PostMapping("api/registerProduct")
@@ -41,14 +46,27 @@ public class AdminController {
         return productService.registerProduct(productRegisterDto);
     }
 
+//    @GetMapping("/api/showUserInfo")
+//    public List<GetMemberDto> getUserInfo() {
+//        List<Member> members = memberRepository.findAll();
+//        List<GetMemberDto> memberDto = new ArrayList<>();
+//        for (Member member : members) {
+//            GetMemberDto dto = new GetMemberDto(member.getMemId(), member.getMemNickname(), member.getMemName(),
+//                                                member.getMemEmail(), member.getMemPhone(), member.getMemAddr(),
+//                                                member.getCreateDate(), member.getMemDeleted());
+//            memberDto.add(dto);
+//        }
+//        return memberDto;
+//    }
+
     @GetMapping("/api/showUserInfo")
-    public List<GetMemberDto> getUserInfo() {
-        List<Member> members = memberRepository.findAll();
-        List<GetMemberDto> memberDto = new ArrayList<>();
-        for (Member member : members) {
-            GetMemberDto dto = new GetMemberDto(member.getMemId(), member.getMemNickname(), member.getMemName(),
-                                                member.getMemEmail(), member.getMemPhone(), member.getMemAddr(),
-                                                member.getCreateDate(), member.getMemDeleted());
+    public List<GetUsersDto> getUsers() {
+        List<User> users = userRepository.findAll();
+        List<GetUsersDto> memberDto = new ArrayList<>();
+        for (User user : users) {
+            GetUsersDto dto = new GetUsersDto(user.getUserId(), user.getNickname(), user.getName(),
+                    user.getEmail(), user.getPhone(), user.getAddress(),
+                    user.getDeleted(), user.getCreateDate());
             memberDto.add(dto);
         }
         return memberDto;
