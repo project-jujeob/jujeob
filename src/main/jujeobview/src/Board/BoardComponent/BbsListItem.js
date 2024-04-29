@@ -9,6 +9,7 @@ import {useAuth} from "../../member/Context";
 import Loading from "../Comment/Loading";
 import { FaRegComment } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
+import DateAndTime from "./DateAndTime";
 function BbsListItem() {
     const { payload } = useAuth();
     const [boardsList, setBoardsList] = useState([]);
@@ -36,7 +37,7 @@ function BbsListItem() {
         axios
             .get(`board/boardData?page=${page}&limit=12`)
             .then((response) => {
-                const newBoards = response.data;
+                const newBoards = response.data.filter(board => board.isDeleted === 0);
                 newBoards.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
                 setBoardsList((prevBoardsList) => [...prevBoardsList, ...newBoards]);
                 setIsLoading(false);
@@ -128,15 +129,7 @@ function BbsListItem() {
                     <div className="bbsPost bbsPostItem" onClick={()=>handleBoardClick(board.boardId)} key={index}>
                         {/*<Link to={`/BbsDetail/${board.boardId}`}>*/}
                         <div className="bbsPostBackground" onClick={() => openModal(board.boardId)}>
-                            <div
-                                className="PostDetailTop-CreateDate">{new Date(board.createDate).toLocaleString('ko-KR', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                                second: '2-digit',
-                            })}</div>
+                            <DateAndTime createDate={board.createDate}/>
                             <div className="PostDetailTop">
                                 <h3>{board.boardTitle}</h3>
                             </div>

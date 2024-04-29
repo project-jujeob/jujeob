@@ -17,5 +17,10 @@ public class BoardCommentDto {
     private LocalDateTime createDate;
     private Long memNo;
     private int boardId;
+    private int commentParent;
     private String memNickname;
+    private int commentOrder;
+    private int isDeleted;
+    private int CommentCount;
+    private String parentMemNickname;
 }

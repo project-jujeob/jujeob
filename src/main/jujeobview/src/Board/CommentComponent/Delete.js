@@ -1,8 +1,7 @@
 import Modal from "react-modal";
 import React from "react";
-import {useAuth} from "../../member/Context";
 
-function Delete({ isOpen, onRequestClose, commentId ,  commentFetchData, onDeleteComplete }) {
+function Delete({ isOpen, onRequestClose, commentId ,  commentFetchData, onDeleteComplete , selectedCommentParent}) {
     Modal.setAppElement('#root');
     const handleDelete = async () => {
         try{
@@ -13,9 +12,13 @@ function Delete({ isOpen, onRequestClose, commentId ,  commentFetchData, onDelet
                 }
             });
             alert('댓글이 삭제되었습니다.');
+            if(selectedCommentParent === 0){
+                commentFetchData();
+            }else{
+
+            }
             onRequestClose();
             onDeleteComplete();
-            commentFetchData();
 
         } catch(error){
             console.error("에러!", error)

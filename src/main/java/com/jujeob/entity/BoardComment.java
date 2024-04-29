@@ -28,7 +28,7 @@ public class BoardComment {
 
 
     @Column(name = "Comment_Parent_No")
-    private int CommentParent;
+    private int commentParent;
 
 
     @Column(name = "Comment_Order")

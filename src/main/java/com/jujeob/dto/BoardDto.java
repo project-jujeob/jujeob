@@ -20,6 +20,7 @@ public class BoardDto {
     private String BoardContent;
     private LocalDateTime CreateDate;
     private LocalDateTime BoardUpdate;
+    private int isDeleted;
     private int BoardViews;
     private String ImageUrl;
     private int Image_size;

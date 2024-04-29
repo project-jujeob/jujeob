@@ -23,6 +23,7 @@
     width: 80%;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 .Profile{
     width: 70px;
@@ -30,11 +31,22 @@
     margin-right: 5px;
 }
 .Profile-Setting{
+    color: #818181;
+    font-weight: bolder;
+    cursor: pointer;
+    font-size: 18px;
     margin-left: auto;
 }
-.ProfileMemberNickname{
-    font-weight: bolder;
+.Profile-Setting:hover{
+    color: #ababab;
 }
+.ProfileMemberNickname {
+    font-size: 16px;
+    width: auto;
+    font-weight: bolder;
+    text-align: center;
+}
+
 .Profile-Views{
     display: flex;
     flex-direction: row;
@@ -46,6 +58,12 @@
     color: rgba(121, 121, 121, 0.94);
     font-size: 14px;
     margin-left: 5px;
+    font-weight: bolder;
+}
+.Profile-ProfileImg{
+    width: auto;
+    font-size: 22px;
+    color: rgba(253, 78, 38, 0.65);
 }
 /**/
 .Board-Detail-TitleAndContent{
@@ -57,7 +75,12 @@
     background-color: rgba(232, 232, 232, 0.35);
     margin-top: 20px;
 }
-
+.TitleAndContent-Profile{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 .TitleAndContent-Img{
     margin-bottom: 20px;
     height: 300px;
@@ -81,7 +104,11 @@
     align-items: center;
     padding: 20px;
 }
-
+.Board-Detail-Date{
+    color: rgba(121, 121, 121, 0.94);
+    font-size: 14px;
+    font-weight: bolder;
+}
 .Comment-List{
     width: 100%;
     height: 88%;
@@ -97,7 +124,7 @@
     max-height: 700px;
 }
 .Comment-Content{
-    font-size: 12px;
+    font-size: 16px;
 }
 .Comment-Detail{
     display: flex;
@@ -105,6 +132,10 @@
     width: 100%;
     overflowY: auto;
     margin-bottom: 8px;
+}
+.Comment-ProfileImg{
+    font-size: 22px;
+    color: rgba(253, 78, 38, 0.65);
 }
 .Comment-AuthorAndContent{
     display: flex;
@@ -123,12 +154,16 @@
 }
 .Comment-Date{
     font-size: 11px;
+    font-weight: inherit;
+    color: rgba(129, 129, 129, 0.91);
+    margin-bottom: 5px;
 }
 .Comment-LikeArea{
     width: 100%;
     height: 5%;
 }
 .Comment-Write{
+    text-align: center;
     border-top: 1px solid rgba(157, 157, 157, 0.68);
     width: 100%;
     height: 7%;
@@ -177,9 +212,11 @@
 }
 .Comment-Detail-Reply{
 }
+
 .Comment-Reply{
-    font-size: 10px;
-    color: #555555;
+    font-weight: bolder;
+    font-size: 12px;
+    color: rgba(128, 128, 128, 0.81);
     display: flex;
     flex-direction: row-reverse;
     cursor: pointer;
@@ -192,12 +229,17 @@
     line-height: 38px;
 }
 .Comment-SubmitButton{
-    background-color: #FF7E5C;
+    color: rgba(253, 78, 38, 0.65);
+    background-color: rgba(255, 255, 255, 0);
+    height: 35px;
     border: none;
-    width: 50px;
-    height: 40px;
+    font-size: 35px;
     border-radius: 5px;
     transition: transform 0.3s ease;
+    vertical-align: bottom;
+}
+.Comment-SubmitButton:disabled{
+    color: rgba(253, 78, 38, 0.25);
 }
 .UpdateButton{
     width: 80px;
@@ -242,15 +284,15 @@
     outline: none;
     border-radius: 35px ;
 }
-
 .ModalContent.open {
     border: none;
     opacity: 1;
 }
 .dropdown-toggle{
+    color: #818181;
     font-weight: bolder;
     cursor: pointer;
-    font-size: 10px;
+    font-size: 12px;
     margin-left: 10px;
     display: none;
 }
@@ -269,6 +311,65 @@
     transform: translateY(0);
     top: 0;*/
 }
-.Comment-Detail-UpdateAndDelete:hover .dropdown-toggle {
+.Comment-Detail:hover .dropdown-toggle {
     display: block;
+}
+.Comment-Detail:hover .Comment-Reply {
+    visibility: visible;
+}
+.Comment-ReplyInput{
+    width: 80%;
+    height: 35px;
+    font-size: 13px;
+    border: none;
+    border-bottom: 1px solid rgba(169, 169, 169, 0.82);
+}
+.Comment-ReplyInput:focus{
+    outline: none;
+}
+.Comment-ReplySubmitButton{
+    color: rgba(253, 78, 38, 0.65);
+    background-color: rgba(255, 255, 255, 0);
+    font-size: 30px;
+    border: none;
+    width: 40px;
+    height: 32px;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    vertical-align: bottom;
+}
+.Comment-ReplySubmitButton:disabled{
+    color: rgba(253, 78, 38, 0.25);
+}
+.Comment-UpdateInput{
+    height: 35px;
+    font-size: 13px;
+    border: none;
+    border-bottom: 1px solid rgba(169, 169, 169, 0.82);
+}
+.Comment-UpdateInput:focus{
+    outline: none;
+}
+.Comment-ReplyArea{
+    padding: 10px;
+    margin-left: 20px;
+    width: 100%;
+}
+.Comment-UpdateSubmit{
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    font-size: 18px;
+    margin-left: 5px;
+    color: rgba(44, 187, 44, 0.77);
+}
+.Comment-UpdateCancel{
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    font-size: 18px;
+    margin-left: 5px;
+    color: rgba(218, 28, 28, 0.81);
+}
+.loading{
+    margin: auto;
 }

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "../../member/Context";
-
+import { FiSend } from "react-icons/fi";
 function Write({ boardId, commentFetchData }) {
     const [commentContent, setCommentContent] = useState("");
     const { payload } = useAuth();
     const memNo = payload.memberNo.toString();
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -44,11 +43,11 @@ function Write({ boardId, commentFetchData }) {
                 />
                 <button
                     className="Comment-SubmitButton"
-                    style={{transform: commentContent ? 'scale(1.2)' : 'scale(0.85)'}}
+                    style={{transform: commentContent ? 'scale(1.15)' : 'scale(1)'}}
                     type="submit"
                     disabled={!commentContent || isSubmitting}
                 >
-                    Send
+                    <FiSend />
                 </button>
             </form>
         </div>

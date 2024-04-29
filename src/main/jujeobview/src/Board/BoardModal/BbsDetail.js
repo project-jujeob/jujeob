@@ -9,12 +9,17 @@ import BbsDeleteModal from "./BbsDelete";
 import Comment from "../Comment/Comment";
 import {useAuth} from "../../member/Context";
 import { FiEye } from "react-icons/fi";
+import DateAndTime from "../BoardComponent/DateAndTime";
+import { CgProfile } from "react-icons/cg";
+import {SlOptions} from "react-icons/sl";
 
 function BbsDetail({ isOpen, onRequestClose, boardId }) {
     const {payload} = useAuth();
     const [board, setBoard] = useState(null);
     const [isModifyModalOpen, setIsModifyModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [selectedBoardIdForMenu, setSelectedBoardIdForMenu] = useState(null);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     Modal.setAppElement('#root');
 
     useEffect(() => {
@@ -44,6 +49,7 @@ function BbsDetail({ isOpen, onRequestClose, boardId }) {
     }
 
     const openModifyModal = () => {
+        setSelectedBoardIdForMenu(null);
         if (payload.memberNo === board.memNo){
             setIsModifyModalOpen(true);
         }else{
@@ -57,6 +63,7 @@ function BbsDetail({ isOpen, onRequestClose, boardId }) {
     };
 
     const openDeleteModal = ()=>{
+        setSelectedBoardIdForMenu(null);
         if (payload.memberNo === board.memNo){
             setIsDeleteModalOpen(true);
         }else{
@@ -66,6 +73,11 @@ function BbsDetail({ isOpen, onRequestClose, boardId }) {
 
     const closeDeleteModal = ()=>{
         setIsDeleteModalOpen(false);
+    }
+
+    const toggleMenu = (boardId) =>{
+        setSelectedBoardIdForMenu(boardId);
+        setIsMenuOpen(!isMenuOpen);
     }
 
     return (
@@ -102,45 +114,63 @@ function BbsDetail({ isOpen, onRequestClose, boardId }) {
                                 <FiEye />
                                 <p>{board.boardViews}</p>
                             </div>
-                            <div className="Profile"><img alt="이미지"/></div>
-                            <div className="Profile ProfileMemberNickname">{board.memNickname}</div>
-                            <div className="Profile-Setting">ㆍㆍㆍ</div>
+                            <div className="Board-Detail-Date">
+                                 <DateAndTime createDate={board.createDate}/>
+                            </div>
                         </div>
                         <div className="Board-Detail-TitleAndContent">
-                        <div className="TitleAndContent TitleAndContent-Title"><h3>{board.boardTitle}</h3></div>
+                            <div className="TitleAndContent TitleAndContent-Title"><h3>{board.boardTitle}</h3></div>
+                            <div className="TitleAndContent TitleAndContent-Profile">
+                                <div className="Profile Profile-ProfileImg"><CgProfile/></div>
+                                <div className="Profile ProfileMemberNickname">{board.memNickname}</div>
+                                <div className="Profile-Setting" onClick={()=>toggleMenu(board.boardId)}><SlOptions/></div>
+                            </div>
                             <div className="TitleAndContent TitleAndContent-Content">{parse(board.boardContent)}</div>
                             <div className="TitleAndContent TitleAndContent-Img"><img alt="이미지"/></div>
                         </div>
-                        <div className="Board-Detail-UpdateAndDelete">
+{/*                        <div className="Board-Detail-UpdateAndDelete">
                             <div className="UpdateButton" onClick={() => openModifyModal(board.boardId)}>수정하기</div>
                             <div className="DeleteButton" onClick={() => openDeleteModal(board.boardId)}>삭제하기</div>
-                        </div>
-                        <div className="Board-Detail-Date">
-                            <div className="Date">작성일 : {new Date(board.createDate).toLocaleString('ko-KR', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit',
-                                second: '2-digit',
-                            })}</div>
-
-                            <div className="Date">수정일 : {
-                                board.boardUpdate ?
-                                    new Date(board.boardUpdate).toLocaleString('ko-KR', {
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric',
-                                        hour: '2-digit',
-                                        minute: '2-digit',
-                                        second: '2-digit',
-                                    }) :
-                                    "수정되지 않음"
-                            }</div>
-                        </div>
+                        </div>*/}
                     </div>
                     <div className="de"></div>
                     <Comment boardId={boardId}/>
+
+                    {selectedBoardIdForMenu === board.boardId && (
+                        <Modal
+                            isOpen={true} onRequestClose={() => setSelectedBoardIdForMenu(null)}
+                            className={{
+                                base: 'ModalContent',
+                                afterOpen: 'ModalContent open',
+                                beforeClose: 'ModalContent'
+                            }}
+                            style={{
+                                overlay: {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.6)'
+                                },
+                                content: {
+                                    width: '15%',
+                                    height: '10%',
+                                    margin: 'auto',
+                                    textAlign: 'center',
+                                    padding: '0',
+                                    borderRadius: '20px',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                }
+                            }}
+                        >
+                            <div className="Comment-Detail-Item Comment-Detail-DeleteButton"
+                                 onClick={() => openDeleteModal(board.boardId)}>
+                                삭제
+                            </div>
+                            <div className="Comment-Detail-Item Comment-Detail-Divide"></div>
+                            <div className="Comment-Detail-Item Comment-Detail-UpdateButton"
+                                 onClick={() => openModifyModal(board.boardId)}>
+                                수정
+                            </div>
+                        </Modal>
+                    )}
                 </div>
             </Modal>
             <BbsModifyModal

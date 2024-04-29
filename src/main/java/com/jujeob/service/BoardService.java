@@ -27,6 +27,7 @@ public class BoardService {
 
     private BoardDto mapBoardToDto(Board entity) {
         BoardDto dto = new BoardDto();
+        dto.setIsDeleted(entity.getIsDeleted());
         dto.setBoardId(entity.getBoardId());
         dto.setBoardTitle(entity.getBoardTitle());
         dto.setBoardContent(entity.getBoardContent());
@@ -105,16 +106,18 @@ public class BoardService {
 
 
     public void deleteBoard(int boardId) {
+        // 게시물 찾기
         Board deleteBoard = boardRepository.findById(boardId)
                 .orElseThrow(() -> new BoardNotFoundException("게시물을 찾을 수 없습니다."));
+
         List<BoardComment> comments = boardCommentRepository.findByBoardId(boardId);
-
-        // 찾은 댓글을 삭제합니다.
-        boardCommentRepository.deleteAll(comments);
-
-        boardRepository.delete(deleteBoard);
+        for (BoardComment comment : comments) {
+            comment.setIsDeleted(1);
+        }
+        boardCommentRepository.saveAll(comments);
+        deleteBoard.setIsDeleted(1);
+        boardRepository.save(deleteBoard);
     }
-
     public void increaseViews(Integer boardId) throws NotFoundException {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> new NotFoundException("게시물을 찾을 수 없습니다."));
         board.setBoardViews(board.getBoardViews() + 1); // 조회수 증가
