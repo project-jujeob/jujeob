@@ -25,7 +25,7 @@
   },
   "proxy": "http://localhost:8080",
   "scripts": {
-    "start": "set PORT=3003 && react-scripts start",
+    "start": "set PORT=3000 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -1,4 +1,4 @@
-import {useAuth} from "../member/Context";
+import {useAuth} from "../user/Context";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
@@ -43,7 +43,7 @@ function OrderDelivery() {
 
     useEffect(() => {
         if(payload){
-            axios.get(`/api/orderDeliveries/${payload.memberNo}`)
+            axios.get(`/api/orderDeliveries/${payload.userNo}`)
                 .then((response)=>{
                     console.log("주문내역 가져온 값:",response.data);
                     setOrderDeliveries(response.data);

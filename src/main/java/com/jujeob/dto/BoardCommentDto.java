@@ -13,7 +13,8 @@ public class BoardCommentDto {
     private int comment_Id;
     private String commentContent;
     private LocalDateTime createDate;
-    private Long memNo;
     private int boardId;
-    private String memNickname;
+    private Long userNo;
+    private String nickname;
 }
+

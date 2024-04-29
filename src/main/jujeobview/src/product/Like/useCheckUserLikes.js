@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const useCheckUserLikes = (memberNo) => {
+
+const useCheckUserLikes = (userNo) => {
+
     const [likes, setLikes] = useState({});
 
     useEffect(() => {
-        if (memberNo) {
+        if (userNo) {
             const fetchUserLikes = async () => {
                 try {
-                    const response = await axios.post(`/api/checkedUserLikes?memberNo=${memberNo}`);
+                    const response = await axios.post(`/api/checkedUserLikes?userNo=${userNo}`);
                     const updatedLikes = response.data.reduce((acc, item) => {
                         acc[item.productId] = item.likeStatus === 'Y';
                         return acc;
@@ -20,7 +22,7 @@ const useCheckUserLikes = (memberNo) => {
             };
             fetchUserLikes();
         }
-    }, [memberNo]);
+    }, [userNo]);
 
     return [likes, setLikes];
 };

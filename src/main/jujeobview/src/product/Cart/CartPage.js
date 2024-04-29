@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from "../../common/Header";
 import './CartPage.css';
 import CartQuantityCounter from "./CartQuantityCounter";
-import {useAuth} from "../../member/Context";
+import {useAuth} from "../../user/Context";
 import axios from "axios";
 import {Link} from "react-router-dom";
 
@@ -12,14 +12,14 @@ function CartPage() {
     const [selectedAll, setSelectedAll] = useState(true); // 전체선택
 
     const {payload} = useAuth();
-    const memberNo = payload ? payload.memberNo : null;
+    const userNo = payload ? payload.userNo : null;
 
     //const currentItem = null;
 
     useEffect(() => {
-        if (memberNo) {
+        if (userNo) {
             // 회원 번호를 기반으로 서버에서 장바구니 정보를 가져옴
-            axios.get(`/api/cartPageList/${memberNo}`)
+            axios.get(`/api/cartPageList/${userNo}`)
                 .then(response => {
                     // 장바구니 정보를 상태로 설정하여 화면에 표시
                     const cartItemsFromServer = response.data.map(item => ({ ...item, isChecked: selectedAll }));
@@ -29,13 +29,13 @@ function CartPage() {
                     console.error('장바구니 정보를 가져오는데 실패했습니다:', error);
                 });
         }
-    }, [memberNo]); // memberNo 상태가 변경될 때만 실행됨
+    }, [userNo]); // userNo 상태가 변경될 때만 실행됨
 
     useEffect(() => {
-        // 페이지가 로드될 때 현재 로그인된 사용자의 memberNo 값을 얻어옴
-        if (memberNo) {
-            // 현재 사용자의 memberNo 값을 기준으로 로컬 스토리지에서 장바구니 정보를 가져옴
-            const cartItemsForCurrentUser = getCartItems(memberNo);
+        // 페이지가 로드될 때 현재 로그인된 사용자의 userNo 값을 얻어옴
+        if (userNo) {
+            // 현재 사용자의 userNo 값을 기준으로 로컬 스토리지에서 장바구니 정보를 가져옴
+            const cartItemsForCurrentUser = getCartItems(userNo);
 
             // 가져온 장바구니 정보를 상태로 설정하여 화면에 표시
             setCartItems(cartItemsForCurrentUser);
@@ -47,11 +47,11 @@ function CartPage() {
             setCartItems(updatedCart);
             updateTotalPrice(updatedCart); // 전체 선택 상태 변경에 따른 총 가격 업데이트
         }
-    }, [memberNo, selectedAll]); // memberNo와 selectedAll 상태가 변경될 때만 실행됨
+    }, [userNo, selectedAll]); // userNo와 selectedAll 상태가 변경될 때만 실행됨
 
     // 로컬 스토리지에서 특정 사용자의 장바구니 정보를 불러오는 함수
-    const getCartItems = (memberNo) => {
-        const cartItems = localStorage.getItem(memberNo);
+    const getCartItems = (userNo) => {
+        const cartItems = localStorage.getItem(userNo);
         return cartItems ? JSON.parse(cartItems) : [];
     };
 
@@ -87,12 +87,12 @@ function CartPage() {
         const updatedCart = [...cartItems];
         updatedCart.splice(index, 1);
         setCartItems(updatedCart);
-        localStorage.setItem(memberNo, JSON.stringify(updatedCart));
+        localStorage.setItem(userNo, JSON.stringify(updatedCart));
 
         const productNo = cartItems[index].productNo; // 삭제할 상품의 productNo를 가져옴
         console.log("프로덕트넘버가져오냐",productNo);
 
-        axios.delete(`/api/cartDelete/${memberNo}/${productNo}`)
+        axios.delete(`/api/cartDelete/${userNo}/${productNo}`)
             .then(response => {
                 console.log(response.data.message); // 서버로부터의 응답 메시지를 처리
                 // 삭제에 성공했을 경우, 화면을 갱신하거나 다른 작업을 수행할 수 있음
@@ -119,7 +119,7 @@ function CartPage() {
         const selectedProductNos = selectedItems.map(item => item.productNo);
 
         // 선택된 상품들의 productNo를 서버로 보내어 삭제 요청
-        axios.delete(`/api/cartDeleteSelected/${memberNo}`, {
+        axios.delete(`/api/cartDeleteSelected/${userNo}`, {
             data: {
                 productNos: selectedProductNos
             }
@@ -135,7 +135,7 @@ function CartPage() {
         // 선택된 상품들을 장바구니에서 제거
         const updatedCart = cartItems.filter(item => !item.isChecked);
         setCartItems(updatedCart);
-        localStorage.setItem(memberNo, JSON.stringify(updatedCart));
+        localStorage.setItem(userNo, JSON.stringify(updatedCart));
 
         // 선택된 상품들을 제거한 후 총 가격 업데이트
         const totalPrice = updatedCart.reduce((acc, item) => acc + (parseInt(item.price) * item.quantity), 0);
@@ -148,11 +148,11 @@ function CartPage() {
         const updatedCart = [...cartItems];
         updatedCart[index].quantity = newQuantity;
         setCartItems(updatedCart);
-        localStorage.setItem(memberNo, JSON.stringify(updatedCart));
+        localStorage.setItem(userNo, JSON.stringify(updatedCart));
 
         // 서버로 변경된 수량을 전송하여 DB를 업데이트합니다.
         const productNo = updatedCart[index].productNo; // 상품 번호를 가져옵니다.
-        axios.put(`/api/updateCartItemQuantity/${memberNo}/${productNo}`, { quantity: newQuantity })
+        axios.put(`/api/updateCartItemQuantity/${userNo}/${productNo}`, { quantity: newQuantity })
             .then(response => {
                 console.log(response.data.message); // 서버 응답 메시지를 처리합니다.
             })

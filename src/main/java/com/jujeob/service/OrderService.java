@@ -34,60 +34,7 @@ public class OrderService {
 
     @Autowired
     CartRepository cartRepository;
-    /*
 
-        @Transactional
-        public ResponseEntity<String> createOrder(CustomerOrder customerOrder) {
-            try {
-                System.out.println("customerOrder:" + customerOrder);
-
-                // CustomerOrder 객체를 저장
-                CustomerOrder savedCustomerOrder = orderRepository.save(customerOrder);
-
-                // 주문 상품 정보
-                List<OrderItem> orderItems = customerOrder.getOrderItems();
-                System.out.println("orderItems:" + orderItems);
-
-                // Cart 테이블에서 삭제할 상품 번호와 회원 번호를 담을 리스트 생성
-                List<Integer> productNos = new ArrayList<>();
-                Long memberNo = customerOrder.getMemberNo();
-
-                for (OrderItem orderItem : orderItems) {
-                    orderItem.setCustomerOrder(savedCustomerOrder);
-                    orderItemRepository.save(orderItem);
-
-                    // Cart 테이블에서 삭제할 상품 번호 추가
-                    productNos.add(orderItem.getProductNo());
-
-                    // 재고 업데이트
-                    Stock stock = stockRepository.findByProductNo(orderItem.getProductNo());
-                    System.out.println("stock = " + stock);
-                    if (stock != null) {
-                        boolean stockUpdated = stock.decreaseStock(orderItem.getQuantity());
-                        if (!stockUpdated) {
-                            // 재고가 부족한 경우 롤백하고 오류 반환
-                            throw new RuntimeException("재고가 부족합니다.");
-                        }
-                    } else {
-                        // 해당 상품의 재고 정보가 없는 경우 롤백하고 오류 반환
-                        throw new RuntimeException("재고 정보를 찾을 수 없습니다.");
-                    }
-                }
-
-                System.out.println("프넘productNos:" + productNos);
-                System.out.println("멤넘memberNo:" + memberNo);
-
-                //cartRepository.removeByProductNosAndMemberNo(productNos, memberNo);
-                cartRepository.deleteAllByMemberNoAndProductNoIn(memberNo, productNos);
-                // 확인용 로그 추가
-                System.out.println("deleteAllByMemberNoAndProductNoIn 호출됨 - memberNo: " + memberNo + ", productNos: " + productNos);
-
-                return ResponseEntity.ok("주문이 완료되었습니다.");
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("주문 처리 중 오류가 발생했습니다.");
-            }
-        }
-    */
     @Transactional
     public ResponseEntity<String> createOrder(CustomerOrder customerOrder) {
         try {
@@ -117,11 +64,11 @@ public class OrderService {
             }
 
             // 장바구니에서 해당 상품 삭제
-            Long memberNo = customerOrder.getMemberNo();
+            Long userNo = customerOrder.getUserNo();
             List<Integer> productNos = orderItems.stream()
                     .map(OrderItem::getProductNo)
                     .collect(Collectors.toList());
-            cartRepository.deleteAllByMemberNoAndProductNoIn(memberNo, productNos);
+            cartRepository.deleteAllByUserNoAndProductNoIn(userNo, productNos);
 
             return ResponseEntity.ok("주문이 완료되었습니다.");
         } catch (RuntimeException e) {
@@ -134,8 +81,9 @@ public class OrderService {
         }
     }
 
-    public List<OrderDeliveriesDto> getAllOrderDeliveriesWithItems(Long memberNo) {
-        List<CustomerOrder> customerOrders = orderRepository.findCustomerOrdersByMemberNoOrderByCreatedAtDesc(memberNo);
+    public List<OrderDeliveriesDto> getAllOrderDeliveriesWithItems(Long userNo) {
+        List<CustomerOrder> customerOrders = orderRepository.findCustomerOrdersByUserNoOrderByCreatedAt(userNo);
+
         List<OrderDeliveriesDto> orderDeliveriesDtos = new ArrayList<>();
 
         for(CustomerOrder customerOrder : customerOrders){
@@ -151,9 +99,11 @@ public class OrderService {
         OrderDeliveriesDto dto = new OrderDeliveriesDto();
         dto.setOrderId(customerOrder.getOrderId());
         dto.setAddress(customerOrder.getAddress());
-        dto.setMemberName(customerOrder.getMemberName());
-        dto.setMemberPhone(customerOrder.getMemberPhone());
-        dto.setMemberEmail(customerOrder.getMemberEmail());
+
+        dto.setName(customerOrder.getName());
+        dto.setPhone(customerOrder.getPhone());
+        dto.setEmail(customerOrder.getEmail());
+
         dto.setOrderStatus(customerOrder.getOrderStatus());
         dto.setPaymentMethod(customerOrder.getPaymentMethod());
         dto.setTotalPrice(customerOrder.getTotalPrice());

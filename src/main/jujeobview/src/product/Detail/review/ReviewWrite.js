@@ -1,6 +1,6 @@
 import ReviewStarRating from "./ReviewStarRating";
 import {useState} from "react";
-import {useAuth} from "../../../member/Context";
+import {useAuth} from "../../../user/Context";
 import axios from "axios";
 
 function ReviewWrite({ item, closeModal, onReviewSubmitted }){
@@ -24,8 +24,9 @@ function ReviewWrite({ item, closeModal, onReviewSubmitted }){
             const response = await axios.post('/api/ReviewWrite/createReview', {
                 reviewContent: reviewContent,
                 star: rating,
-                member: { memNo: payload.memberNo },
+                user: { userNo: payload.userNo },
                 product: { productNo: item.productNo }
+
             });
             if (response.status === 200 || response.status === 201) {
                 alert("리뷰가 작성되었습니다");

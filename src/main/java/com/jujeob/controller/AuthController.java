@@ -4,6 +4,8 @@ import com.jujeob.dto.JwtResponse;
 import com.jujeob.dto.LoginRequest;
 import com.jujeob.dto.LogoutRequest;
 import com.jujeob.dto.Register;
+import com.jujeob.entity.User;
+import com.jujeob.security.CustomUserDetails;
 import com.jujeob.security.dto.TokenRefreshRequest;
 import com.jujeob.security.dto.TokenRefreshResponse;
 import com.jujeob.security.service.TokenService;
@@ -55,12 +57,13 @@ public class AuthController {
             // 사용자 인증 시도
             Authentication authentication = authService.login(loginRequest.getUserId(), loginRequest.getPassword());
 
-//            // 탈퇴한 회원 여부 확인
-//            User user = (User) authentication.getPrincipal();
-//            if ("Y".equals(user.getDeleted())) {
-//                logger.info("Attempt to login with deactivated account: {}", loginRequest.getUserId());
-//                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("탈퇴된 계정입니다");
-//            }
+            // 탈퇴한 회원 여부 확인
+            CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+            User user = userDetails.getUser();
+            if ("Y".equals(user.getDeleted())) {
+                logger.info("Attempt to login with deactivated account: {}", loginRequest.getUserId());
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("탈퇴된 계정입니다");
+            }
 
             // Authentication 객체를 SecurityContextHolder에 저장
             SecurityContextHolder.getContext().setAuthentication(authentication);

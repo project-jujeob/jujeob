@@ -64,7 +64,7 @@ function ReviewPage({product}) {
                             <div key={review.reviewNo} className="reviewContent">
                                 <div className="reviewContentLeft">
                                     <div>
-                                        <span>{review.memNickname}</span>
+                                        <span>{review.nickname}</span>
                                     </div>
                                 </div>
                                 <article className="reviewContentRight">

@@ -1,234 +1,193 @@
 import './Profile.css'
-import React, {useEffect, useState} from "react";
+import './PasswordCheckModal.css'
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 function Profile() {
 
-    const memberToken = JSON.parse(localStorage.getItem('token'));
-    console.log("멤버토큰", memberToken)
-    const [userData, setUserData] =useState(null)
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [userData, setUserData] = useState(null);
+    const [editable, setEditable] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [showDeleteButton, setShowDeleteButton] = useState(false);
+    const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
 
-    const [profile, setProfile] = useState({
-        memId: '',
-        memPw: "",
-        memPwConfirm: "",
-        memNickname: '',
-        memName: '',
-        memPhone: '',
-        memEmail: '',
-        memAddr: ''
-    })
-
-
-    // 회원정보 조회
     useEffect(() => {
-        axios.get('/api/member/info',{
-            headers: {
-                // 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${memberToken}`
-                // 'Authorization': `Bearer ${localStorage.getItem('token')}`
-            }
+        if (!accessToken) return;
+        axios.get('/api/user/profile', {
+            headers: { 'Authorization': `Bearer ${accessToken}` }
         })
             .then(response => {
-                console.log("응답", response.data)
-
-                const[, payloadBase64] = memberToken.split(".")
-                const payloadString = base64DecodeUnicode(payloadBase64)
-                const payload = JSON.parse(payloadString)
-
-                console.log(payload)
-                console.log(payload.memberNo)
-                console.log("memberId", payload.memberId)
-                console.log("memberNickname" + payload.memberNickname)
-                console.log(payload.memberName)
-                console.log(payload.memberEmail)
-                console.log(payload.memberPhone)
-                console.log(payload.memberAddr)
-
-                setUserData({
-                    memberNo : payload.memberNo,
-                    memberId : payload.memberId,
-                    memberRole : payload.memberRole,
-                    memberNickname : payload.memberNickname,
-                    memberName : payload.memberName,
-                    memberEmail : payload.memberEmail,
-                    memberPhone : payload.memberPhone,
-                    memberAddr : payload.memberAddr
-                })
-
-                // const { memId, memNickname, memName, memEmail, memPhone, memAddr } = response.data;
-                // setProfile({
-                //     memId, memNickname, memName, memPhone, memEmail, memAddr
-                // });
+                setUserData(response.data);
             })
             .catch(error => {
-                console.log('조회실패 :', error)
+                console.error('프로필 데이터 가져오기 오류:', error);
             });
-    }, [memberToken]);
+    }, [accessToken]);
 
-    console.log("userData확인하기", userData)
-
-    // 비번제외한 값 관리
-    const showMemberInfo = (e) => {
-        // name은 필드값, value는 사용자 입력값
-        const { name, value } = e.target;
-        setProfile(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
+    const handleEditClick = () => {
+        setShowModal(true);
     };
 
-    const [passwordMatch, setPasswordMatch] = useState(true)
-    // 비번, 비번확인 유효성
-    const profileMemPwChange = (e) => { //
-        const { name, value } = e.target
-
-        setProfile(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-
-        if (name === 'memPw' || name === 'memPwConfirm') {
-            // 비밀번호 또는 비밀번호 확인 필드가 변경되었을 때, 두 필드의 값이 일치하는지 검사
-            const newPassword = name === 'memPw' ? value : profile.memPw;
-            const newPasswordConfirm = name === 'memPwConfirm' ? value : profile.memPwConfirm;
-            setPasswordMatch(newPassword === newPasswordConfirm);
-        }
-
-    }
-
-
-    // 회원정보 수정
-    const updateProfileSubmit = (e) => {
-        e.preventDefault();  // 폼 제출 시 페이지 리로드 방지
-        axios.put('/api/member/updateProfile', profile, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${memberToken}`
-            }
+    const verifyPassword = (e) => {
+        e.preventDefault();
+        axios.post('/api/user/verify-password', { password }, {
+            headers: { 'Authorization': `Bearer ${accessToken}` }
         })
             .then(response => {
-                console.log("업데이트 성공", response)
-                alert('회원 정보가 성공적으로 업데이트되었습니다.');
-                // 로컬 스토리지의 사용자 정보 업데이트
-                localStorage.setItem('userInfo', JSON.stringify(response.data));
-
-                // 토큰 업데이트
-                // localStorage.setItem('token', response.data);
-
-                window.location.reload();  // 현재 페이지 새로 고침
+                setShowModal(false);
+                setEditable(true);
+                setShowDeleteButton(true);
+                console.log('비밀번호가 일치합니다')
             })
             .catch(error => {
-                console.error('회원정보 수정 실패:', error);
-                alert('회원 정보 업데이트에 실패했습니다.');
+                alert('비밀번호가 일치하지 않습니다.');
+                console.log('비밀번호가 일치하지 않습니다')
             });
-    }
+    };
 
+    const handleDeleteAccount = () => {
+        if (window.confirm('정말로 회원 탈퇴하시겠습니까?')) {
+            // 탈퇴 처리
+            axios.delete('/api/user/delete-account', {
+                headers: { 'Authorization': `Bearer ${accessToken}` }
+            })
+                .then(response => {
+                    alert('회원 탈퇴가 완료되었습니다.');
+                    localStorage.removeItem('accessToken');
+                    localStorage.removeItem('refreshToken');
+                    setIsLoggedIn(false);
+                    navigate("/");
 
+                    // 로그아웃 처리 등 추가 작업 가능
+                })
+                .catch(error => {
+                    console.error('회원 탈퇴 오류:', error);
+                });
+        }
+    };
 
+    const handleProfileUpdate = (e) => {
+        e.preventDefault();
+        axios.patch('/api/user/profileUpdate', userData, {
+            headers: { 'Authorization': `Bearer ${accessToken}` }
+        })
+            .then(response => {
+                alert('프로필이 성공적으로 업데이트 되었습니다.');
+                setEditable(false);
+            })
+            .catch(error => {
+                console.error('프로필 업데이트 오류:', error);
+            });
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUserData({ ...userData, [name]: value });
+    };
 
     return (
-        <form onSubmit={updateProfileSubmit}>
-            <div className={"MemberInfo"}>
-                {userData ? (
-                    <div>
-
-                        <div className={"MemberId"}>
-                            <div className={"MemberLabel"}><label htmlFor="memId">아이디</label></div>
-                            <div className={"MemberInput"}>
-                                <input type="text" id="memId" name={"memId"} value={ userData.memberId } readOnly/>
+        <div className={"UserInfo"}>
+            {userData && (
+                <>
+                    <form onSubmit={handleProfileUpdate}>
+                        <div className={"UserId"}>
+                            <div className={"UserLabel"}><label htmlFor="userId">아이디</label></div>
+                            <div className={"UserInput"}>
+                                <input type="text" id="userId" name={"userId"} value={userData.userId} readOnly/>
                             </div>
                         </div>
 
-                        <div className={"MemberPw"}>
-                            <div className={"MemberLabel"}><label htmlFor="memPw">비밀번호</label></div>
-                            <div  className={"ProfileMemberPwDiv"}>
-                                <div className={"MemberInput"}>
-                                    <input type={"password"} id={"memPw"} placeholder={"새 비밀번호를 입력해주세요"} name={"memPw"}
-                                           onChange={profileMemPwChange} required={true}/><br/>
-                                </div>
-                                <div className={"MemberPwProfile"}>
-                                    {profile.memPw && profile.memPw.length < 10 && (
-                                        <p>10자리 이상</p>
-                                    )}
-                                    {profile.memPw.length >= 10 && !/(?=.*[a-zA-Z])(?=.*\d)(?=.*\W).{10,}/.test(profile.memPw) && (
-                                        <p>영문/숫자/특수문자를 모두 포함해야 합니다</p>
-                                    )}
-                                </div>
+                        <div className={"Nickname"}>
+                            <div className={"UserLabel"}><label htmlFor="nickname">닉네임</label></div>
+                            <div className={"UserInput"}>
+                                <input type="text" id="nickname" name="nickname" value={userData.nickname} onChange={handleChange}
+                                       readOnly={!editable}/>
                             </div>
                         </div>
 
-                        <div className={"MemberPwConfirm"}>
-                            <div className={"MemberLabel"}><label htmlFor="memPwConfirm">비밀번호 확인</label></div>
-                            <div  className={"ProfileMemberPwDiv"}>
-                                <div className={"MemberInput"}>
-                                    <input type={"password"} id={"memPwConfirm"} placeholder={"새 비밀번호를 다시 입력해주세요"}
-                                           name={"memPwConfirm"} onChange={profileMemPwChange} required={true}/><br/>
-                                </div>
-                                <div className={"MemberPwProfile"}>
-                                    {profile.memPw && profile.memPwConfirm && !passwordMatch && (
-                                        <p>동일한 비밀번호를 입력해주세요</p>
-                                    )}
-                                </div>
+                        <div className={"Name"}>
+                            <div className={"UserLabel"}><label htmlFor="name">이름</label></div>
+                            <div className={"UserInput"}>
+                                <input type="text" id="name" name={"name"} defaultValue={userData.name} onChange={handleChange}
+                                       readOnly={!editable}/>
                             </div>
                         </div>
 
-                        <div className={"MemberNickname"}>
-                            <div className={"MemberLabel"}><label htmlFor="memNickname">닉네임</label></div>
-                            <div className={"MemberInput"}>
-                                <input type="text" id="memNickname" name={"memNickname"} defaultValue={ userData && userData.memberNickname ? userData.memberNickname : '' } />
+                        <div className={"Email"}>
+                            <div className={"UserLabel"}><label htmlFor="email">이메일</label></div>
+                            <div className={"UserInput"}>
+                                <input type="email" id="email" name={"email"} defaultValue={userData.email} onChange={handleChange}
+                                       readOnly={!editable}/>
                             </div>
                         </div>
 
-                        <div className={"MemberName"}>
-                            <div className={"MemberLabel"}><label htmlFor="memName">이름</label></div>
-                            <div className={"MemberInput"}>
-                                <input type="text" id="memName" name={"memName"} defaultValue={ userData.memberName } />
+                        <div className={"Phone"}>
+                            <div className={"UserLabel"}><label htmlFor="phone">전화번호</label></div>
+                            <div className={"UserInput"}>
+                                <input type="text" id="phone" name={"phone"} defaultValue={userData.phone} onChange={handleChange}
+                                       readOnly={!editable}/>
                             </div>
                         </div>
 
-                        <div className={"MemberEmail"}>
-                            <div className={"MemberLabel"}><label htmlFor="memEmail">이메일</label></div>
-                            <div className={"MemberInput"}>
-                                <input type="email" id="memEmail" name={"memEmail"} defaultValue={ userData.memberEmail } />
-                            </div>
-                        </div>
-
-                        <div className={"MemberPhone"}>
-                            <div className={"MemberLabel"}><label htmlFor="memPhone">전화번호</label></div>
-                            <div className={"MemberInput"}>
-                                <input type="text" id="memPhone" name={"memPhone"} defaultValue={ userData.memberPhone } />
-                            </div>
-                        </div>
-
-                        <div className={"MemberAddr"}>
-                            <div className={"MemberLabel"}><label htmlFor="memAddr">주소</label></div>
-                            <div className={"MemberInput"}>
-                                <input type="text" id="memAddr" name={"memAddr"} defaultValue={ userData.memberAddr } />
+                        <div className={"Address"}>
+                            <div className={"UserLabel"}><label htmlFor="address">주소</label></div>
+                            <div className={"UserInput"}>
+                                <input type="text" id="address" name={"address"} defaultValue={userData.address} onChange={handleChange}
+                                       readOnly={!editable}/>
                             </div>
                         </div>
 
                         <div className={"BtnGroup"}>
                             <div className={"SubmitBtn"}>
-                                <button type="submit">탈퇴하기</button>
+                                {!editable && (
+                                    <button type="button" onClick={handleEditClick}>프로필 편집</button>
+                                )}
                             </div>
                             <div className={"SubmitBtn"}>
-                                <button type="submit">회원정보수정</button>
+                                {editable && (
+                                    <button type="submit">변경 사항 저장</button>
+                                )}
+                            </div>
+                            {showDeleteButton && (
+                                <div className={"SubmitBtn"}>
+                                    <button type="button" onClick={handleDeleteAccount}>회원 탈퇴</button>
+                                </div>
+                            )}
+                        </div>
+                    </form>
+
+                    {showModal && (
+                        <div className="ModalOverlay">
+                            <div className="ModalContent">
+                                <h2>비밀번호 확인</h2>
+                                <form onSubmit={verifyPassword}>
+                                    <input
+                                        type="password"
+                                        value={password}
+                                        onChange={e => setPassword(e.target.value)}
+                                        placeholder="비밀번호 입력"
+                                        required
+                                    />
+                                    <button type="submit">확인</button>
+                                    <button type="button" onClick={() => setShowModal(false)}>취소</button>
+                                </form>
                             </div>
                         </div>
-                    </div>
-                ) : ('')}
-
-            </div>
-        </form>
-
-    )
+                    )}
+                </>
+            )}
+        </div>
+    );
 }
 
 export default Profile
 
 function base64DecodeUnicode(str) {
-    // Convert Base64 encoded bytes to percent-encoding, and then get the original string
     return decodeURIComponent(atob(str).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));

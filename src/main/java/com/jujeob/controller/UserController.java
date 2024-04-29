@@ -99,16 +99,9 @@ public class UserController {
 //        }
 //    }
 
-    @DeleteMapping("/{userId}")
-    @PreAuthorize("hasAuthority('MEMBER') or hasAuthority('ADMIN')")
-    public ResponseEntity<?> userDelete(@PathVariable String userId) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String authenticatedUserId = auth.getName();
-
-        // Check if the request is from the user or an admin
-        if (!userId.equals(String.valueOf(authenticatedUserId)) && auth.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ADMIN"))) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
-        }
+    @DeleteMapping("/delete-account")
+    public ResponseEntity<?> deleteAccount(Authentication authentication) {
+        String userId = authentication.getName();
 
         boolean isDeleted = userService.deleteUser(userId);
         if (!isDeleted) {
@@ -116,6 +109,24 @@ public class UserController {
         }
         return ResponseEntity.ok("User deleted successfully");
     }
+
+//    @DeleteMapping("/{userId}")
+//    @PreAuthorize("hasAuthority('MEMBER') or hasAuthority('ADMIN')")
+//    public ResponseEntity<?> userDelete(@PathVariable String userId) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String authenticatedUserId = auth.getName();
+//
+//        // Check if the request is from the user or an admin
+//        if (!userId.equals(String.valueOf(authenticatedUserId)) && auth.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ADMIN"))) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+//        }
+//
+//        boolean isDeleted = userService.deleteUser(userId);
+//        if (!isDeleted) {
+//            return ResponseEntity.badRequest().body("Failed to delete user or user already deleted");
+//        }
+//        return ResponseEntity.ok("User deleted successfully");
+//    }
 
 }
 

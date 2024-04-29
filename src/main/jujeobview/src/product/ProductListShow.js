@@ -2,7 +2,7 @@ import './ProductList.css';
 import React, {useState, useEffect} from "react";
 import Pagination from '../common/Pagination';
 import ProductItem from "./ProductItem";
-import {useAuth} from "../member/Context";
+import {useAuth} from "../user/Context";
 import useCheckUserLikes from "./Like/useCheckUserLikes";
 import {useLocation, useParams} from "react-router-dom";
 
@@ -11,7 +11,8 @@ function ProductListShow({selectedSubCategoryData, selectedCategoryData, viewAll
     const { payload } = useAuth();
     const [productList, setProductList] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
+
+    const [likes, setLikes] = useCheckUserLikes(payload?.userNo);
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const page = queryParams.get('page') ;

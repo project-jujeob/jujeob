@@ -1,10 +1,10 @@
 import './App.css';
-import {Route, Routes, useNavigate} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import ProductList from "./product/ProductList";
-import Login from "./member/Login";
-import RegisterAdult from "./member/RegisterAdult";
-import Register from "./member/Register";
-import RegisterComplete from "./member/RegisterComplete";
+import Login from "./user/Login";
+import RegisterAdult from "./user/RegisterAdult";
+import Register from "./user/Register";
+import RegisterComplete from "./user/RegisterComplete";
 import MyPage from "./mypage/MyPage";
 import BbsList from "./Board/BulletinBoardSystem/BbsList";
 import MainPage from "./MainPage";

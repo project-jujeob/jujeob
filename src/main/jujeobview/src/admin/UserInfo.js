@@ -15,11 +15,12 @@ const UserInfo = () => {
         return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
     };
 
-    const [memberInfo, setMemberInfo] = useState([]);
+    const [userInfo, setUserInfo] = useState([]);
+
     useEffect(() => {
         axios.get('/api/showUserInfo')
             .then((response) => {
-                setMemberInfo(response.data);
+                setUserInfo(response.data);
                 setTotalUserInfo(response.data.length);
                 setTotalPages(Math.ceil(totalUserInfo / PAGE_SIZE));
             }).catch((error) => {
@@ -36,7 +37,7 @@ const UserInfo = () => {
         const endIndex = startIndex + PAGE_SIZE;
         axios.get('/api/showUserInfo')
             .then((response) => {
-                setMemberInfo(response.data.slice(startIndex, endIndex));
+                setUserInfo(response.data.slice(startIndex, endIndex));
             })
             .catch((error) => {
                 console.error('데이터 가져오기 실패:', error);
@@ -62,7 +63,7 @@ const UserInfo = () => {
                         <div className="MemberInfoCreateDate">가입일</div>
                         <div className="MemberDeleteStatus">탈퇴여부</div>
                     </div>
-                    {memberInfo.map((member, index) => (
+                    {setUserInfo.map((member, index) => (
                         <div className="MemberInfoListContent" key={index}>
                             <div className="MemberInfoNo">{index + 1}</div>
                             <div className="MemberInfoId">{member.memId}</div>

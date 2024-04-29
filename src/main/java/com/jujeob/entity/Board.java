@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -48,7 +46,7 @@ public class Board {
     private int IsDeleted = 0; ;
 
     @ManyToOne
-    @JoinColumn(name = "memNo")
-    private Member member;
+    @JoinColumn(name = "userNo")
+    private User user;
 
 }

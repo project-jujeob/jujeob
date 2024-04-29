@@ -76,6 +76,7 @@ public class JwtTokenProvider {
         claimsMap.put("createDate", user.getCreateDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         claimsMap.put("profileImage", user.getProfileImage());
         claimsMap.put("role", user.getRole());
+        claimsMap.put("deleted", user.getDeleted());
 
         Date now = new Date();
         Date validity = new Date(System.currentTimeMillis() + accessExpiration);
