@@ -17,16 +17,19 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartNo;
 
-/*    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "productno", referencedColumnName = "productno")
+    @Column(name = "productno")
+    private Integer productNo;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "productno", referencedColumnName = "productno", insertable = false, updatable = false)
     private Product product;
 
+    /*
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memNo", referencedColumnName = "memNo")
     private Member member;*/
 
-    private Integer productNo;
-    private Long memberNo;
+    private Long userNo;
 
 
     private String name;
@@ -36,4 +39,3 @@ public class Cart {
     private int quantity;
 
 }
-

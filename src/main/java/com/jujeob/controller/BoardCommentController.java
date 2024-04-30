@@ -21,11 +21,13 @@ public class BoardCommentController {
 
     @GetMapping("/CommentData/{boardId}")
     public List<BoardCommentDto> getCommentsByBoardId(@PathVariable int boardId) {
+        System.out.println("컨트롤러에서 Comment 데이터 요청 받음");
         return boardCommentService.getCommentsByBoardId(boardId);
     }
 
     @PostMapping("/Write")
     public ResponseEntity<String> CommentAdd( @RequestBody BoardCommentDto boardCommentDto){
+        System.out.println("댓글 Write 응답 받았음");
         try{
             boardCommentService.Write(boardCommentDto);
             return ResponseEntity.ok("댓글 작성 완료.");

@@ -2,6 +2,7 @@ import './ProductList.css';
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
+import {getImageUrl} from "../common/ImageUrl";
 
 function ProductListRecommend() {
     const [productRecommendList, setProductRecommendList] = useState([]);
@@ -22,8 +23,10 @@ function ProductListRecommend() {
             <div className="ProductListRecommendItems">
                 {productRecommendList.map((recommendList)=> (
                     <Link to={`/ProductItemDetail/${recommendList.productNo}`} className="link" key={recommendList.productNo}>
-                        <div className="ProductRecommendItem" >
-                            <div className="ProductRecommendImg"><img src={recommendList.img}/></div>
+                        <div className="ProductRecommendItem">
+                            <div className="ProductRecommendImg">
+                                <img className="ProductRecommendImg" src={getImageUrl(recommendList.img)}
+                                     alt={recommendList.name}/></div>
                             <div className="ProductRecommendName">{recommendList.name}</div>
                         </div>
                     </Link>

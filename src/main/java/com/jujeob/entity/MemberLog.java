@@ -24,6 +24,6 @@ public class MemberLog {
     private String loginType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mem_no")
-    private Member member;
+    @JoinColumn(name = "user_no")
+    private User user;
 }

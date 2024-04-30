@@ -2,8 +2,8 @@ import Write from "../CommentComponent/Wirte";
 import List from "../CommentComponent/List";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {useAuth} from "../../member/Context";
 import Loading from "./Loading";
+import {useAuth} from "../../user/Context";
 function Comment ({ boardId }){
     const { payload } = useAuth();
     const [commentsList, setCommentsList] = useState([]);

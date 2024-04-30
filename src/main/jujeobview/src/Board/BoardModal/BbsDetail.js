@@ -7,7 +7,7 @@ import '../BbsStyle/bbsDetail.css'
 import BbsModifyModal from "./BbsModify";
 import BbsDeleteModal from "./BbsDelete";
 import Comment from "../Comment/Comment";
-import {useAuth} from "../../member/Context";
+import {useAuth} from "../../user/Context";
 import { FiEye } from "react-icons/fi";
 import DateAndTime from "../BoardComponent/DateAndTime";
 import { CgProfile } from "react-icons/cg";
@@ -50,7 +50,7 @@ function BbsDetail({ isOpen, onRequestClose, boardId }) {
 
     const openModifyModal = () => {
         setSelectedBoardIdForMenu(null);
-        if (payload.memberNo === board.memNo){
+        if (payload.userNo === board.userNo){
             setIsModifyModalOpen(true);
         }else{
             alert("자신의 게시물에만 수정이 가능합니다.")
@@ -64,7 +64,7 @@ function BbsDetail({ isOpen, onRequestClose, boardId }) {
 
     const openDeleteModal = ()=>{
         setSelectedBoardIdForMenu(null);
-        if (payload.memberNo === board.memNo){
+        if (payload.userNo === board.userNo){
             setIsDeleteModalOpen(true);
         }else{
             alert("자신의 게시물에만 삭제가 가능합니다.")
@@ -122,16 +122,12 @@ function BbsDetail({ isOpen, onRequestClose, boardId }) {
                             <div className="TitleAndContent TitleAndContent-Title"><h3>{board.boardTitle}</h3></div>
                             <div className="TitleAndContent TitleAndContent-Profile">
                                 <div className="Profile Profile-ProfileImg"><CgProfile/></div>
-                                <div className="Profile ProfileMemberNickname">{board.memNickname}</div>
+                                <div className="Profile ProfileMemberNickname">{board.Nickname}</div>
                                 <div className="Profile-Setting" onClick={()=>toggleMenu(board.boardId)}><SlOptions/></div>
                             </div>
                             <div className="TitleAndContent TitleAndContent-Content">{parse(board.boardContent)}</div>
                             <div className="TitleAndContent TitleAndContent-Img"><img alt="이미지"/></div>
                         </div>
-{/*                        <div className="Board-Detail-UpdateAndDelete">
-                            <div className="UpdateButton" onClick={() => openModifyModal(board.boardId)}>수정하기</div>
-                            <div className="DeleteButton" onClick={() => openDeleteModal(board.boardId)}>삭제하기</div>
-                        </div>*/}
                     </div>
                     <div className="de"></div>
                     <Comment boardId={boardId}/>

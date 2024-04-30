@@ -1,48 +1,30 @@
 package com.jujeob.controller;
 
-import com.jujeob.dto.ApiResponse;
-import com.jujeob.dto.PasswordVerificationDto;
-import com.jujeob.dto.RegisterDto;
-import com.jujeob.entity.LikeProduct;
-import com.jujeob.entity.Member;
-import com.jujeob.repository.MemberRepository;
-import com.jujeob.service.MemberService;
-import com.jujeob.service.MyPageService;
+import com.jujeob.dto.OrderDeliveriesDto;
+import com.jujeob.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class MyPageController {
 
     @Autowired
-    MyPageService myPageService;
+    OrderService orderService;
 
-    @Autowired
-    private MemberRepository memberRepository;
+    @GetMapping("/api/orderDeliveries/{userNo}")
+    public ResponseEntity<List<OrderDeliveriesDto>> getAllOrderDeliveriesWithItems(@PathVariable Long userNo){
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+        List<OrderDeliveriesDto> orderDeliveries = orderService.getAllOrderDeliveriesWithItems(userNo);
 
+        System.out.println("orderDeliveries:"+orderDeliveries);
 
-
-    // 토큰 해석(분리) 회원 정보조회
-    @GetMapping("/api/member/info")
-    public ResponseEntity<?> memberInfo(@RequestHeader("Authorization") String token) {
-        String memberInfo = myPageService.getMemberInfo(token);
-        return ResponseEntity.ok().body(memberInfo);
+        return ResponseEntity.ok(orderDeliveries);
     }
 
-    // 회원정보수정
-//    @GetMapping("/api/updateProfile")
-//    public List<RegisterDto> memberProfileInfo(){
-//        return myPageService.getMemberProfileInfo();
-//    }
-
-
 }
+

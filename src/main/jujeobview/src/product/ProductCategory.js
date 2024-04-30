@@ -94,6 +94,7 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
         axios.get('/api/productList')
             .then(response => {
                 setViewAllProductList(response.data);
+                console.log(response.data);
             })
             .catch(error => {
                 console.error('데이터 가져오기 실패:', error);
@@ -130,7 +131,7 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
             alcoholLevels: Object.keys(alcoholLevels).filter(key => alcoholLevels[key]),
             prices: Object.keys(prices).filter(key => prices[key])
         };
-         axios.post('/api/submitSelections', selections)
+        axios.post('/api/submitSelections', selections)
             .then(response => {
                 console.log(selections);
                 console.log('서버 응답:', response.data);
@@ -206,15 +207,15 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
 
     // 상품 정렬 클릭시 해당 데이터 조회
     const OrderByBtn = (orderByBtnType, selectedId) => {
-         const orderOptions = {
-             orderByBtnType: orderByBtnType,
-             selectedCategoryNo : selectedCategoryNo,
-             selectedSubCategoryName : selectedSubCategoryName,
-             mainType: currentMainType,
-             types: Object.keys(productTypes).filter(key => productTypes[key]),
-             alcoholLevels: Object.keys(alcoholLevels).filter(key => alcoholLevels[key]),
-             prices: Object.keys(prices).filter(key => prices[key])
-         }
+        const orderOptions = {
+            orderByBtnType: orderByBtnType,
+            selectedCategoryNo : selectedCategoryNo,
+            selectedSubCategoryName : selectedSubCategoryName,
+            mainType: currentMainType,
+            types: Object.keys(productTypes).filter(key => productTypes[key]),
+            alcoholLevels: Object.keys(alcoholLevels).filter(key => alcoholLevels[key]),
+            prices: Object.keys(prices).filter(key => prices[key])
+        }
         axios.post('api/productListByOrderBy', orderOptions )
             .then((productListByOrderBy) => {
                 if (selectedId === selectOptionId) {
@@ -323,7 +324,7 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
                 console.error('상품 조회 실패:', error);
             });
     };
-    
+
     // 가격 체크박스 상태 변화시 해당 하는 데이터 조회
     useEffect(()=>{
         const checkedPrices = Object.keys(prices).filter(key => prices[key]);

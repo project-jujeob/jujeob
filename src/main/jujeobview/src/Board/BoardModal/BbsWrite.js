@@ -4,7 +4,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import "../BbsStyle/bbsWrite.css"
 import Modal from "react-modal";
-import {useAuth} from "../../member/Context";
+import {useAuth} from "../../user/Context";
 
 function BbsWrite({ isOpen, onRequestClose }) {
     const { payload } = useAuth();
@@ -13,9 +13,9 @@ function BbsWrite({ isOpen, onRequestClose }) {
     Modal.setAppElement('#root');
 
 
-    let memNo = 0;
+    let userNo = 0;
     if (payload !== null) {
-        memNo = payload.memberNo;
+        userNo = payload.userNo;
     }
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,7 +25,7 @@ function BbsWrite({ isOpen, onRequestClose }) {
             return;
         }
         try {
-            const response = await axios.post('/board/Write', { memNo, boardTitle, boardContent});
+            const response = await axios.post('/board/Write', { userNo, boardTitle, boardContent});
             console.log(response.data);
             alert('게시물 작성 완료.')
             window.location.reload();

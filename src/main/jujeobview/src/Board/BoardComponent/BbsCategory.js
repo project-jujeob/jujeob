@@ -1,10 +1,8 @@
 import "../../MainPage.css";
 import "../BbsStyle/bbsCategory.css";
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import BbsDetailModal from "../BoardModal/BbsDetail";
+import React, { useState} from "react";
 import BbsWrite from "../BoardModal/BbsWrite";
-import {useAuth} from "../../member/Context";
+import {useAuth} from "../../user/Context";
 function BbsCategory() {
     const {payload} = useAuth();
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,7 +32,6 @@ function BbsCategory() {
             </div>
             <div className="DetailNavContainer">
                 <div className="DetailNavButtonArea">
-                    {/*   구조가 애매해서 스타일만 줄 것임*/}
                     <button className="DetailNavButton">카테고리</button>
                     <button className="DetailNavButton">정렬</button>
                     <button className="DetailNavButton">내 북마크 보기</button>

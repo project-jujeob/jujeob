@@ -1,7 +1,5 @@
 package com.jujeob.dto;
 
-import com.jujeob.entity.Board;
-import com.jujeob.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,8 +12,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BoardDto {
     private int BoardId;
-    private Long MemNo;
-    private String MemNickname;
+    private Long UserNo;
+    private String Nickname;
     private String BoardTitle;
     private String BoardContent;
     private LocalDateTime CreateDate;

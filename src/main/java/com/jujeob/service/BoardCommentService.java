@@ -19,7 +19,7 @@ public class BoardCommentService {
 
     public void Write(BoardCommentDto boardCommentDto) {
         BoardComment boardComment = new BoardComment();
-        boardComment.setMemNo(boardCommentDto.getMemNo());
+        boardComment.setUserNo(boardCommentDto.getUserNo());
         boardComment.setCommentContent(boardCommentDto.getCommentContent());
         boardComment.setCreateDate(LocalDateTime.now());
         boardComment.setBoardId(boardCommentDto.getBoardId());
@@ -42,9 +42,9 @@ public class BoardCommentService {
         for (BoardComment comment : comments) {
             if (comment.getIsDeleted() == 0) { // isDeleted가 0인 경우에만 처리
                 BoardCommentDto commentDto = mapCommentDto(comment);
-                String nickname = boardCommentRepository.findNicknameByMemNo(comment.getMemNo());
-                commentDto.setMemNickname(nickname);
-                commentDto.setMemNo(comment.getMemNo());
+                String nickname = boardCommentRepository.findNicknameByUserNo(comment.getUserNo());
+                commentDto.setNickname(nickname);
+                commentDto.setUserNo(comment.getUserNo());
                 commentDto.setCommentId(comment.getCommentId());
                 commentDto.setCommentParent(comment.getCommentParent());
                 commentDto.setIsDeleted(comment.getIsDeleted());
@@ -90,7 +90,7 @@ public class BoardCommentService {
             commentOrder = comments.get(comments.size() - 1).getCommentOrder() + 1;
         }
         BoardComment boardComment = new BoardComment();
-        boardComment.setMemNo(boardCommentDto.getMemNo());
+        boardComment.setUserNo(boardCommentDto.getUserNo());
         boardComment.setCommentContent(boardCommentDto.getCommentContent());
         boardComment.setCreateDate(LocalDateTime.now());
         boardComment.setBoardId(boardCommentDto.getBoardId());
@@ -118,7 +118,7 @@ public class BoardCommentService {
         dto.setCommentId(comment.getCommentId()); // 댓글 ID 설정
         dto.setCommentContent(comment.getCommentContent()); // 댓글 내용 설정
         dto.setCreateDate(comment.getCreateDate()); // 작성일 설정
-        dto.setMemNo(comment.getMemNo()); // 회원 번호 설정
+        dto.setUserNo(comment.getUserNo()); // 회원 번호 설정
         dto.setBoardId(comment.getBoardId()); // 게시글 ID 설정
         dto.setCommentParent(comment.getCommentParent()); // 부모 댓글 ID 설정
         dto.setCommentOrder(comment.getCommentOrder()); // 댓글 순서 설정
@@ -130,14 +130,14 @@ public class BoardCommentService {
                     .orElseThrow(() -> new BoardNotFoundException("부모 댓글을 찾을 수 없습니다."));
 
             // 부모 댓글의 작성자 회원 번호를 사용하여 닉네임을 가져옵니다.
-            Long parentCommentWriterMemNo = parentComment.getMemNo();
-            String parentCommentWriterNickname = boardCommentRepository.findNicknameByMemNo(parentCommentWriterMemNo);
+            Long parentCommentWriterUserNo = parentComment.getUserNo();
+            String parentCommentWriterNickname = boardCommentRepository.findNicknameByUserNo(parentCommentWriterUserNo);
             System.out.println("parentCommentWriterNickname: " + parentCommentWriterNickname);
             dto.setParentMemNickname(parentCommentWriterNickname); // 부모 댓글 작성자 닉네임 설정
         }
 
-        String nickname = boardCommentRepository.findNicknameByMemNo(comment.getMemNo());
-        dto.setMemNickname(nickname);
+        String nickname = boardCommentRepository.findNicknameByUserNo(comment.getUserNo());
+        dto.setNickname(nickname);
 
         return dto;
     }

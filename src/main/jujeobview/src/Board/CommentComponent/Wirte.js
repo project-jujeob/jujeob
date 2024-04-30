@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useAuth } from "../../member/Context";
+import {useAuth} from "../../user/Context";
 import { FiSend } from "react-icons/fi";
 function Write({ boardId, commentFetchData }) {
     const [commentContent, setCommentContent] = useState("");
     const { payload } = useAuth();
-    const memNo = payload.memberNo.toString();
+    const userNo = payload.userNo.toString();
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async (e) => {
@@ -14,12 +14,10 @@ function Write({ boardId, commentFetchData }) {
             alert("로그인한 사용자만 가능합니다!");
             return;
         }
-
         setIsSubmitting(true); // 버튼 비활성화
-
         try {
             const response = await axios.post(`/boardComment/Write`, {
-                memNo,
+                userNo,
                 boardId,
                 commentContent,
             });

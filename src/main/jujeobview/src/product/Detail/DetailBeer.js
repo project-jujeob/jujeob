@@ -4,15 +4,18 @@ import addToCart from "../Cart/addToCart";
 import React, {useRef, useState} from "react";
 import DetailScrollToTarget from "./DetailScrollToTarget";
 import ReviewPage from "./review/ReviewPage";
-import {useAuth} from "../../member/Context";
+import {useAuth} from "../../user/Context";
 import LikeBtnClick from "../Like/LikeBtnClick";
 import useCheckUserLikes from "../Like/useCheckUserLikes";
 import DetailScrollToTop from "./DetailScrollToTop";
+import {getImageUrl} from "../../common/ImageUrl";
 
 function DetailBeer({product}) {
     const { payload } = useAuth();
     const [cartQuantity, setCartQuantity] = useState(1); // 장바구니에 추가될 수량 상태
-    const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
+
+    const [likes, setLikes] = useCheckUserLikes(payload?.userNo);
+
 
     const handleQuantityChange = (newQuantity) => {
         setCartQuantity(newQuantity); // 수량 변경 시 장바구니에 추가될 수량 업데이트
@@ -20,7 +23,9 @@ function DetailBeer({product}) {
 
     const handleAddToCart = () => {
         console.log("카트수량"+cartQuantity);
-        addToCart(product,payload.memberNo,cartQuantity);
+
+        addToCart(product,payload.userNo,cartQuantity);
+
     };
 
     const contentTopRef = useRef(null);
@@ -32,7 +37,7 @@ function DetailBeer({product}) {
             <div className="detail">
                 <div className="detailTop">
                     <div>
-                        <img src={product.img} className="detailImgthumb" alt="술이미지"/>
+                        <img className="detailImgthumb" src={getImageUrl(product.img)} alt="술이미지"/>
                     </div>
                     <div className="detailRight">
                         <ProductType productId={product.productId}/>

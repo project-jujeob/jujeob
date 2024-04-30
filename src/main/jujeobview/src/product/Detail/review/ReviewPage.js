@@ -14,11 +14,7 @@ function ReviewPage({product}) {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [totalReviews, setTotalReviews] = useState(0);
-    const [modal, setModal] = useState(false);
 
-    const toggleModal = () => {
-        setModal(!modal);
-    };
 
     useEffect(() => {
         axios.get(`/api/Reviews/${product.productNo}`)
@@ -53,26 +49,11 @@ function ReviewPage({product}) {
         setCurrentPage(page); // 페이지 변경 시 현재 페이지 업데이트
     };
 
-    const handleReviewSubmitted = () => {
-        // 새로운 리뷰가 등록된 후 호출될 콜백 함수
-        loadReviews(); // 새로운 리뷰를 불러오는 작업 수행
-    };
-
     return (
         <div className="reviewContainer">
             <div className="reviewTop">
                 <h2>상품 후기</h2>
-                <div onClick={toggleModal}>리뷰 작성하기</div>
             </div>
-
-            {modal && (
-                <div className="modal">
-                <div className="modalContent">
-                        <span className="modalClose" onClick={toggleModal}>&times;</span>
-                        <ReviewWrite product={product} onReviewSubmitted={handleReviewSubmitted} closeModal={toggleModal}/>
-                    </div>
-                </div>
-            )}
             <div className="reviewContentList">
                 {reviews.length === 0 ? (
                     <div className="emptyReview">리뷰가 없습니다</div>
@@ -83,7 +64,7 @@ function ReviewPage({product}) {
                             <div key={review.reviewNo} className="reviewContent">
                                 <div className="reviewContentLeft">
                                     <div>
-                                        <span>{review.memNickname}</span>
+                                        <span>{review.nickname}</span>
                                     </div>
                                 </div>
                                 <article className="reviewContentRight">
@@ -94,7 +75,6 @@ function ReviewPage({product}) {
                                         ))}</div>
                                     <div>{new Date(review.reviewDate).toLocaleDateString()}</div>
                                 </article>
-
                             </div>
                         );
                     })

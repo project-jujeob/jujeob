@@ -1,0 +1,145 @@
+import {useAuth} from "../user/Context";
+import {useEffect, useState} from "react";
+import axios from "axios";
+
+
+function OrderDelivery() {
+
+    const {payload} = useAuth();
+    console.log("오더딜리버리페이로드:",payload);
+    const [orderDeliveries, setOrderDeliveries] = useState([]);
+    const [expandedOrderId, setExpandedOrderId] = useState(null);
+
+    // 클릭한 주문 번호를 기억하고 펼쳐지도록 설정
+    const toggleOrderDetails = (orderId) => {
+        if (expandedOrderId === orderId) {
+            setExpandedOrderId(null); // 이미 펼쳐져 있으면 닫기
+        } else {
+            setExpandedOrderId(orderId); // 펼치기
+        }
+    };
+
+    const cancelOrder = (orderId) =>{
+        //주문 취소 요청
+        axios.put(`/api/cancelOrder/${orderId}`)
+            .then(response => {
+                console.log("주문 취소 결과:",response.data);
+                console.log("orderId:",orderId);
+
+                //주문 취소가 성공하면 해당 주문을 업데이트
+                const updatedOrders = orderDeliveries.map(order => {
+                    if(order.orderId === orderId){
+                        return{ ...order, orderStatus:"N"};
+                    }
+                    return order;
+                });
+                setOrderDeliveries(updatedOrders);
+                alert("주문이 취소되었습니다");
+            })
+            .catch(error=>{
+                console.error("주문 취소 실패:",error);
+            });
+    };
+
+    useEffect(() => {
+        if(payload){
+            axios.get(`/api/orderDeliveries/${payload.userNo}`)
+                .then((response)=>{
+                    console.log("주문내역 가져온 값:",response.data);
+                    setOrderDeliveries(response.data);
+                })
+                .catch((error)=>{
+                    console.log('주문내역 가져오기 실패:',error);
+                })
+        }
+    }, [payload]);
+
+    return(
+        <div className="orderDeliveryContainer">
+            <div>
+                {orderDeliveries.map((order) => (
+                    <div key={order.orderId}>
+                        {/* 주문 번호를 클릭할 때 toggleOrderDetails 함수 호출 */}
+                        <div onClick={() => toggleOrderDetails(order.orderId)}
+                             className={`orderDeliveryTitle${expandedOrderId === order.orderId ? ' expanded' : ''}`}>
+                            <div className="orderDeliveryTitleIn">
+                                <div>
+                                    주문 번호: {order.orderId}
+                                </div>
+                                <div
+                                    className={`orderDeliveryCancelNotice${order.orderStatus !== 'Y' ? ' redText' : ''}`}>
+                                    {order.orderStatus === 'Y' ? '주문 완료' : '주문 취소'}
+                                </div>
+                            </div>
+                        </div>
+                        {/* 펼쳐진 주문의 세부 정보만 표시 */}
+                        {expandedOrderId === order.orderId && (
+                            <div className="orderDeliveryContent">
+                                <div className="orderDeliveryContent2">
+                                    <div>
+                                        {order.orderItems.map((item, index) => {
+                                            console.log("아이템:", item); // 주문 상품에 대한 로그 출력
+                                            return (
+                                                <div key={index} className="orderDeliveryItems">
+                                                    <div className="orderImgContainer">
+                                                        <img src={item.img} alt="주문내역상품이미지" className="orderImg"/>
+                                                    </div>
+                                                    <div className="orderDeliveryItemsDetail">
+                                                        <span>{item.productName}</span>
+                                                        <div className="orderDeliveryItemDetail2">
+                                                            <span>{item.price.toLocaleString()}원</span>&ensp;|&ensp;
+                                                            <span>{item.quantity}병</span>
+                                                        </div>
+                                                        <div className="orderDeliveryReview">
+                                                            <button>후기작성</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                    <div>
+                                        배송지: {order.address}
+                                    </div>
+                                    <div>
+                                        주문자: {order.memberName}
+                                    </div>
+                                    <div>
+                                        주문 상태: {order.orderStatus === 'Y' ? '주문 완료' : '주문 취소'}
+                                    </div>
+                                    <div>
+                                        결제 방법: {order.paymentMethod}
+                                    </div>
+                                    <div>
+                                        총 가격: {order.totalPrice}
+                                    </div>
+                                    <div>
+                                        배송 요청 사항: {order.deliveryRequest}
+                                    </div>
+                                    <div>
+                                        주문일시: {new Date(order.createdAt).toLocaleDateString('ko-KR', {
+                                        year: 'numeric',
+                                        month: '2-digit',
+                                        day: '2-digit',
+                                    })}
+                                        ({new Date(order.createdAt).toLocaleTimeString('ko-KR', {
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                    })})
+                                    </div>
+                                    <div>
+                                        {order.orderStatus === 'Y' ? <div onClick={() => cancelOrder(order.orderId)}
+                                                                          className="orderCancelBtn">주문 취소
+                                        </div> : null}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
+export default OrderDelivery;

@@ -1,0 +1,37 @@
+.MainContainer2 {
+    padding: 50px;
+    background-color: #fffcf8;
+}
+
+.PageInfo {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.pageInfoImg {
+    width: 50%;
+    height: auto;
+    padding: 50px;
+}
+
+.pageInfoImg img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px #ccc;
+}
+
+.pageInfoText {
+    width: 50%;
+    color: #333;
+    line-height: 2.2;
+    padding: 70px;
+}
+
+.pageInfoText p {
+    font-size: 1.1em;
+    font-weight: normal;
+}
+

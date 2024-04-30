@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Pagination from "../../common/Pagination";
 import BbsDetailModal from "../BoardModal/BbsDetail";
-import {useAuth} from "../../member/Context";
+import {useAuth} from "../../user/Context";
 import Loading from "../Comment/Loading";
 import { FaRegComment } from "react-icons/fa";
 import { FiEye } from "react-icons/fi";
@@ -80,6 +80,7 @@ function BbsListItem() {
     const closeModal = () => {
         setSelectedBoardId(null);
         setIsModalOpen(false);
+        window.location.reload();
     };
 
     const handleBoardClick = (boardId) => {
@@ -88,7 +89,7 @@ function BbsListItem() {
             return;
         }
 
-        const userId = payload.memberNo; // 사용자의 식별자를 가져옴
+        const userId = payload.userNo; // 사용자의 식별자를 가져옴
         const lastVisitTime = localStorage.getItem(`lastVisit_${userId}_${boardId}`);
         const currentTime = new Date().getTime();
 
@@ -134,7 +135,7 @@ function BbsListItem() {
                                 <h3>{board.boardTitle}</h3>
                             </div>
                             <div className="PostDetailBottom">
-                                <div className="PostDetailBottomItem PostDetailBottomAuthor">{board.memNickname}</div>
+                                <div className="PostDetailBottomItem PostDetailBottomAuthor">{board.Nickname}</div>
                                 <div className="PostDetailBottomItem PostDetailBottomCV">
                                     <div className="PostDetailBottomCVItem ReplyComment">
                                         <FaRegComment />

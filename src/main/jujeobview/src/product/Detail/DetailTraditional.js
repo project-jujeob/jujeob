@@ -5,38 +5,37 @@ import React, {useRef, useState} from "react";
 import DetailScrollToTarget from "./DetailScrollToTarget";
 import ReviewPage from "./review/ReviewPage";
 import DetailScrollToTop from "./DetailScrollToTop";
-import {useAuth} from "../../member/Context";
+import {useAuth} from "../../user/Context";
 import LikeBtnClick from "../Like/LikeBtnClick";
 import useCheckUserLikes from "../Like/useCheckUserLikes";
+import {getImageUrl} from "../../common/ImageUrl";
 
 
 function DetailTraditional({product}) {
     const { payload } = useAuth();
-    const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
 
+    const [likes, setLikes] = useCheckUserLikes(payload?.userNo);
     const [cartQuantity, setCartQuantity] = useState(1);
 
     const handleAddToCart = () => {
-        addToCart(product,cartQuantity);
+        addToCart(product, payload.userNo, cartQuantity);
+
     };
 
-    /* 이거 안쓰는건지 확인
     const handleQuantityChange = (newQuantity) => {
-        setCartQuantity(newQuantity);
-    }
-    */
+        setCartQuantity(newQuantity); // 수량 변경 시 장바구니에 추가될 수량 업데이트
+    };
 
     const contentTopRef = useRef(null);
     const bottomRef = useRef(null);
     const reviewRef = useRef(null);
-
 
     return(
         <>
             <div className="detail">
                 <div className="detailTop">
                     <div>
-                        <img src={product.img} className="detailImgthumb" alt="술이미지"/>
+                        <img className="detailImgthumb" src={getImageUrl(product.img)} alt="술이미지"/>
                     </div>
                     <div className="detailRight">
                         <ProductType productId={product.productId}/>
@@ -50,12 +49,15 @@ function DetailTraditional({product}) {
                             <p><span>용량&ensp;:&ensp;</span> {product.volume}</p>
                             <p><span>소비기한&ensp;:&ensp;</span> {product.expDate}</p>
                             <p><span>추천 검색어&ensp;:&ensp;</span> {product.keyword}</p>
-                            <p><span>구매수량 : &ensp;</span><QuantityCounter/></p>
+                            <p><span>구매수량 : &ensp;</span>
+                                <QuantityCounter initialQuantity={1} // 초기 수량 설정
+                                                 onQuantityChange={handleQuantityChange} // 수량 변경 시 addToCart 함수 호출
+                                /></p>
                         </div>
 
                         <div className="detailBtn">
                             <div>[예약]</div>
-                            <LikeBtnClick product={product} payload={payload} likes={likes} setLikes={setLikes} />
+                            <LikeBtnClick product={product} payload={payload} likes={likes} setLikes={setLikes}/>
                             <button className="cartBtn" onClick={handleAddToCart}>장바구니 담기</button>
                         </div>
                     </div>
@@ -67,14 +69,14 @@ function DetailTraditional({product}) {
                         reviewRef={reviewRef}
                     />
                     <div className="detailContentImg" ref={contentTopRef}>
-                        <img src={product.detailImg} alt="술디테일이미지"/>
+                        <img src={getImageUrl(product.detailImg)} alt="술디테일이미지"/>
                     </div>
                     <div className="detailContentTop">
                         <div>[전통주] {product.name}</div>
                         <p>{product.description}</p>
                     </div>
                     <div>
-                        <img src={product.tastingImg} alt="술테이스팅노트" className="tastingNote"/>
+                        <img src={getImageUrl(product.tastingImg)} alt="술테이스팅노트" className="tastingNote"/>
                     </div>
                     <div className="detailContentInfo">
                         <p><span>색&균질도 | </span>{product.colorAndHomogeneity}</p>
@@ -84,7 +86,7 @@ function DetailTraditional({product}) {
                     </div>
                 </div>
                 <div className="detailBottom" ref={bottomRef}>
-                    <img src={product.brandImg} alt="술브랜드이미지"/>
+                    <img src={getImageUrl(product.brandImg)} alt="술브랜드이미지"/>
                 </div>
             </div>
             <div ref={reviewRef}>

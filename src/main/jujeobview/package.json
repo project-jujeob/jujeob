@@ -14,18 +14,21 @@
     "axios": "^1.6.8",
     "buffer": "^6.0.3",
     "html-react-parser": "^5.1.10",
+    "iamport-react-native": "^2.0.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.1.0",
     "react-infinite-scroll-component": "^6.1.0",
-    "react-modal": "^3.16.1",
+    "react-native-webview": "^13.8.5",
     "react-router-dom": "^6.22.3",
+    "react-modal": "^3.16.1",
     "react-scripts": "5.0.1",
+    "redis": "^4.6.13",
     "web-vitals": "^2.1.4"
   },
   "proxy": "http://localhost:8080",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3000 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -47,5 +50,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "antd": "^5.16.2",
+    "styled-components": "^6.1.8"
   }
 }

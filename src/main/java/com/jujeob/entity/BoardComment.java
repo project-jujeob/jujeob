@@ -48,15 +48,16 @@ public class BoardComment {
     @Column(name = "board_id")
     private int boardId;
 
-    @Column(name = "mem_no")
-    private Long memNo;
+    @Column(name = "user_no")
+    private Long userNo;
+
 
     @ManyToOne
     @JoinColumn(name = "board_id", insertable = false, updatable = false)
     private Board board;
 
     @ManyToOne
-    @JoinColumn(name = "mem_no", insertable = false, updatable = false)
-    private Member member;
+    @JoinColumn(name = "user_no", insertable = false, updatable = false)
+    private User user;
 
 }

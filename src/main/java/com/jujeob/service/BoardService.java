@@ -7,11 +7,9 @@ import com.jujeob.entity.Board;
 import com.jujeob.entity.BoardComment;
 import com.jujeob.repository.BoardCommentRepository;
 import com.jujeob.repository.BoardRepository;
-import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
-
-import javax.xml.stream.events.Comment;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +31,7 @@ public class BoardService {
         dto.setBoardContent(entity.getBoardContent());
         dto.setBoardViews(entity.getBoardViews());
         dto.setCreateDate(entity.getCreateDate());
-        dto.setMemNickname(entity.getMember().getMemNickname());
+        dto.setNickname(entity.getUser().getNickname());
         dto.setCommentCount(boardCommentRepository.countByBoardId(entity.getBoardId()));
         System.out.println("댓글개수: "  + boardCommentRepository.countByBoardId(entity.getBoardId()));
         return dto;
@@ -52,7 +50,7 @@ public class BoardService {
     public void boardWrite(BoardDto boardDto) {
         // BoardDto를 이용하여 Board 객체를 생성
         Board board = new Board();
-        board.setMemNo(boardDto.getMemNo());
+        board.setUserNo(boardDto.getUserNo());
         board.setBoardTitle(boardDto.getBoardTitle());
         board.setBoardContent(boardDto.getBoardContent());
         board.setCreateDate(LocalDateTime.now()); // 현재 날짜 설정
@@ -65,16 +63,16 @@ public class BoardService {
         System.out.println("서비스에서 요청 받았어!!!!");
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
-        String nickname = board.getMember().getMemNickname();
+        String nickname = board.getUser().getNickname();
 
         // Board 엔티티에서 필요한 데이터를 추출하여 BoardDTO 객체로 변환
         System.out.println(board.getBoardId());
         BoardDto boardDto = new BoardDto();
-        boardDto.setMemNo(board.getMemNo());
+        boardDto.setUserNo(board.getUserNo());
         boardDto.setBoardId(board.getBoardId());
         boardDto.setBoardTitle(board.getBoardTitle());
         boardDto.setBoardContent(board.getBoardContent());
-        boardDto.setMemNickname(nickname);
+        boardDto.setNickname(nickname);
         boardDto.setBoardUpdate(board.getBoardUpdate());
         boardDto.setCreateDate(board.getCreateDate());
         boardDto.setBoardViews(board.getBoardViews());
@@ -95,7 +93,7 @@ public class BoardService {
         System.out.println("서비스입니다 입력된 내용은 : " + updatedBoardDto.getContent());*/
         Board existingBoard = boardRepository.findById(boardId)
                 .orElseThrow(() -> new BoardNotFoundException("게시물을 찾을 수 없습니다."));
-/*        System.out.println("서비스입니다 게시물의 아이디는 : " + existingBoard.getBoardId());*/
+        /*        System.out.println("서비스입니다 게시물의 아이디는 : " + existingBoard.getBoardId());*/
         existingBoard.setBoardTitle(updatedBoardDto.getTitle());
         existingBoard.setBoardContent(updatedBoardDto.getContent());
         existingBoard.setBoardUpdate(LocalDateTime.now());
@@ -118,8 +116,9 @@ public class BoardService {
         deleteBoard.setIsDeleted(1);
         boardRepository.save(deleteBoard);
     }
-    public void increaseViews(Integer boardId) throws NotFoundException {
-        Board board = boardRepository.findById(boardId).orElseThrow(() -> new NotFoundException("게시물을 찾을 수 없습니다."));
+    public void increaseViews(Integer boardId) throws ChangeSetPersister.NotFoundException {
+        Board board = boardRepository.findById(boardId)
+                .orElseThrow(ChangeSetPersister.NotFoundException::new);
         board.setBoardViews(board.getBoardViews() + 1); // 조회수 증가
         boardRepository.save(board); // 변경된 조회수를 데이터베이스에 저장
     }

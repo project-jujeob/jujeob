@@ -1,11 +1,11 @@
-# HS512 알고리즘의 시크릿키 : 512비트 (64바이트) 이상
-# https://passwords-generator.org/kr/
-# ✅ 위 사이트에서 길이:64 로 생성함.
-com:
-  jujeob:
-    secret-key: "|+<T%0h;[G97|I$5Lr?h]}`8rUX.7;0gw@bF<R/|\"-U0n:_6j={'.T'GHs~<AxU9"
+# Redis 호스트 및 포트
+spring:
+  data:
+    redis:
+      port: 6379
+      host: localhost
 
-#spring:
-#  redis:
-#    host: localhost
-#    port: 6379
+jwt:
+  secret: abcdefghijklmnopqrstuvffefefaefaefaefaefaefaefafefafeaefaefafefadfdasfadfafdfdaffafdasdfadfadfadfadsfasdfadfafdfasdf
+  accessExpiration: 86400000
+  refreshExpiration: 604800000

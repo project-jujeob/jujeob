@@ -2,6 +2,7 @@ package com.jujeob.dto;
 
 import lombok.*;
 
+@Data
 @Getter
 @Setter
 @AllArgsConstructor

@@ -29,7 +29,7 @@ function BbsSlideAndBestPost() {
                         <div>{board.boardTitle}</div>
                         <div>{board.boardContent}</div>
                         <div>{board.boardViews}</div>
-                        <div>{board.memNickname}</div>
+                        <div>{board.Nickname}</div>
                         <div>{board.commentCount}</div>
                     </div>
                 ))}

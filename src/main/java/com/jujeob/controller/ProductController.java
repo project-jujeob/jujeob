@@ -1,10 +1,7 @@
 package com.jujeob.controller;
 
 import com.jujeob.dto.ProductListDto;
-import com.jujeob.entity.LikeProduct;
 import com.jujeob.entity.Product;
-import com.jujeob.entity.SubCategory;
-import com.jujeob.repository.LikeProductRepository;
 import com.jujeob.service.CategoryService;
 import com.jujeob.service.ProductService;
 import com.jujeob.service.SubCategoryService;
@@ -12,7 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -88,7 +88,7 @@ public class ProductController {
     @PostMapping("/api/productListByType")
     public List<ProductListDto> showProductListByType(@RequestBody Map<String, List<String>> requestBody) {
         List<String> types = requestBody.get("types");
-       return productService.getProductListByType(types);
+        return productService.getProductListByType(types);
     }
 
     // 선택된 체크박스의 level로 해당 상품 찾아오기

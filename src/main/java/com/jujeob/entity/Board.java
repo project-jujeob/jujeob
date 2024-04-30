@@ -47,11 +47,11 @@ public class Board {
     @Column(name = "Board_isDeleted" )
     private int IsDeleted = 0; ;
 
-    @Column(name = "memNo")
-    private Long memNo;
+    @Column(name = "userNo")
+    private Long userNo;
 
     @ManyToOne
-    @JoinColumn(name = "memNo", insertable = false, updatable = false)
-    private Member member;
+    @JoinColumn(name = "userNo")
+    private User user;
 
 }
