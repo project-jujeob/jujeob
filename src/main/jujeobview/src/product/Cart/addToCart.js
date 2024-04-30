@@ -1,13 +1,14 @@
 import axios from "axios";
+import {useAuth} from "../../user/Context";
 
 const addToCart = (product, userNo, cartQuantity) => {
-    if (!product) {
-        alert('추가할 상품이 없습니다.');
+    if (!userNo) {
+        alert('사용자 정보를 가져올 수 없습니다.');
         return;
     }
 
-    if (!userNo) {
-        alert('사용자 정보를 가져올 수 없습니다.');
+    if (!product) {
+        alert('추가할 상품이 없습니다.');
         return;
     }
 

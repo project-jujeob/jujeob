@@ -168,7 +168,7 @@ function CustomerOrder() {
                                 <div className="orderInfoDetail">
                                     <div>
                                         <span>배송지</span>
-                                        {payload.address}
+                                        {payload && payload.address ? payload.address : '주소가 없습니다.'}
                                     </div>
                                     <div className="changeAddr">
                                         <span>배송지 변경</span>
