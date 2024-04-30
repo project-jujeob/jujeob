@@ -24,7 +24,7 @@ function MainPage() {
         if (accessToken) {
             try {
                 const [, payloadBase64] = accessToken.split(".");
-                const payloadString = atob(payloadBase64);
+                const payloadString = base64DecodeUnicode(payloadBase64);
                 const payload = JSON.parse(payloadString);
                 console.log("Access Token payload:", payload);
             } catch (error) {
@@ -128,3 +128,9 @@ function MainPage() {
 }
 
 export default MainPage;
+function base64DecodeUnicode(str) {
+    // Convert Base64 encoded bytes to percent-encoding, and then get the original string
+    return decodeURIComponent(atob(str).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
