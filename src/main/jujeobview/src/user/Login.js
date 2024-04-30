@@ -92,7 +92,7 @@ function Login() {
                     <br/>
 
                     <div>
-                        <Link to={"/RegisterAdult"}>
+                        <Link to={"/AdultVerification"}>
                                 <button>회원가입</button>
                         </Link>
                     </div>

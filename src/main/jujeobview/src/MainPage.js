@@ -47,33 +47,13 @@ function MainPage() {
                 console.log('Logout successful');
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
+                setTimeout(() => window.location.reload(), -100); // 새로고침이 일어나기 전에 로그아웃 상태 반영
                 setIsLoggedIn(false);
             })
             .catch(error => {
                 console.error('Error logging out:', error);
             });
     };
-    // const logoutAction = () => {
-    //     // 서버에 로그아웃 요청을 보냅니다.
-    //     // axios.delete('/api/logout')
-    //     axios.delete('/api/auth/logout')
-    //         .then(response => {
-    //             // 로그아웃이 성공하면 로컬 스토리지에 저장된 토큰을 삭제합니다.
-    //             localStorage.removeItem('token');
-    //             // 로그인 상태 업데이트
-    //             setIsLoggedIn(false);
-    //             console.log('Logout successful');
-    //
-    //             window.location.reload();
-    //
-    //             // 이전 페이지로 이동
-    //             navigate(-1)
-    //         })
-    //         .catch(error => {
-    //             console.error('Error logging out:', error);
-    //         });
-    // };
-
 
     return (
         <div className="Main">

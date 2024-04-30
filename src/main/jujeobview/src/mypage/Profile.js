@@ -62,6 +62,7 @@ function Profile() {
                     localStorage.removeItem('refreshToken');
                     setIsLoggedIn(false);
                     navigate("/");
+                    window.location.reload();
 
                     // 로그아웃 처리 등 추가 작업 가능
                 })

@@ -16,6 +16,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -47,11 +52,22 @@ public class SecurityConfig {
                 // 동일한 출처로 간주되어 웹 공격 방지 (localhost:8080 = localhost:XXXX)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
 
+                // CORS 설정 추가
+                .cors(cors -> cors.configurationSource(request -> {
+                    CorsConfiguration config = new CorsConfiguration();
+                    config.setAllowedOrigins(List.of("*"));
+                    config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                    config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Auth-Token"));
+                    config.setExposedHeaders(List.of("X-Auth-Token"));
+                    return config;
+                }))
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/user/**").permitAll()
-//                        .requestMatchers(PathRequest.toH2Console()).permitAll()
+                        .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/*").permitAll()
                         .requestMatchers("/admin").hasRole("admin") // admin페이지는 admin만
+//                      .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest().authenticated() // 모든 요청에 대해 인증된 사용자만 가능
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
