@@ -15,7 +15,7 @@ function CustomerOrder() {
     const [newAddress, setNewAddress] = useState('');
     const [totalPrice, setTotalPrice] = useState(0);
     const [paymentMethod, setPaymentMethod] = useState('BANK');
-    const [deliveryRequest, setDeliveryRequest] = useState('');
+    const [deliveryRequest, setDeliveryRequest] = useState('요청사항 없음');
     const [customDeliveryRequest, setCustomDeliveryRequest] = useState('');
     const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ function CustomerOrder() {
             }, 0);
 
             // 총 가격 설정
-            setTotalPrice(total);
+            setTotalPrice(total+5000);
         }
     }, [selectedItems]);
 
@@ -77,7 +77,7 @@ function CustomerOrder() {
                 orderStatus: "Y",
                 paymentMethod: paymentMethod,
                 totalPrice:totalPrice,
-                deliveryRequest: deliveryRequest === "기타" ? customDeliveryRequest : deliveryRequest,
+                deliveryRequest: deliveryRequest === "기타" ? customDeliveryRequest : deliveryRequest
             });
 
             // 선택된 항목들의 productNo를 추출하여 배열로 생성
@@ -152,11 +152,15 @@ function CustomerOrder() {
                                     <h2>주문자 정보</h2>
                                 </div>
                                 <div className="orderInfoDetail">
-
-                                    <div><span>받는 사람</span><p>{payload.name}</p></div>
-                                    <div><span>휴대폰</span><p>{payload.phone}</p></div>
-                                    <div><span>이메일</span><p>{payload.email}</p></div>
-
+                                    {payload ? (
+                                        <>
+                                            <div><span>받는 사람</span><p>{payload.name}</p></div>
+                                            <div><span>휴대폰</span><p>{payload.phone}</p></div>
+                                            <div><span>이메일</span><p>{payload.email}</p></div>
+                                        </>
+                                    ) : (
+                                        <p>주문자 정보를 불러오는 중 오류가 발생했습니다.</p>
+                                    )}
                                 </div>
                                 <div className="orderInfo">
                                     <h2>배송 정보</h2>
@@ -175,25 +179,27 @@ function CustomerOrder() {
                                     <div>
                                         <span>요청사항</span>
                                         <select value={deliveryRequest} onChange={handleDeliveryRequestChange}>
-                                            <option value="택배함에 넣어주세요" selected>택배함에 넣어주세요</option>
+                                            <option value="요청사항 없음">요청사항 없음</option>
+                                            <option value="택배함에 넣어주세요">택배함에 넣어주세요</option>
                                             <option value="배송 전 연락주세요">배송 전 연락주세요</option>
                                             <option value="문앞에 놓고 가주세요">문앞에 놓고 가주세요</option>
                                             <option value="기타">기타</option>
                                         </select>
                                         {deliveryRequest === "기타" && (
-                                            <input type="text" value={customDeliveryRequest} onChange={handleCustomDeliveryRequestChange} />
+                                            <input type="text" value={customDeliveryRequest}
+                                                   onChange={handleCustomDeliveryRequestChange}/>
                                         )}
                                     </div>
                                     <div>
-                                        <span>총 주문 금액:</span> {totalPrice.toLocaleString()}원
+                                        <span>총 주문 금액:</span> {totalPrice.toLocaleString()}원 (배송비 포함)
                                     </div>
                                     {/* 결제 방법 선택 */}
                                     <div>
                                         <span>결제 방법</span>
                                         <select value={paymentMethod} onChange={handlePaymentMethodChange}>
+                                            <option value="BANK">은행 송금</option>
                                             <option value="CARD">카드 결제</option>
                                             <option value="MOBILE">모바일 결제</option>
-                                            <option value="BANK" selected>은행 송금</option>
                                         </select>
                                     </div>
                                 </div>

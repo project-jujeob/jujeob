@@ -6,44 +6,74 @@ import axios from "axios";
 function MainPage() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate(); // useHistory 훅 추가
+    const accessToken = localStorage.getItem('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
 
+    console.log(accessToken);
     useEffect(() => {
         checkLoginStatus();
     }, []); // 컴포넌트가 마운트될 때 한 번만 실행
 
     // 로그인 상태 확인
     const checkLoginStatus = () => {
-        const token = JSON.parse(localStorage.getItem('token'));
-        setIsLoggedIn(token != null);
 
-        if (token != null) {
-            const [, payloadBase64] = token.split(".");
-            const payloadString = atob(payloadBase64);
-            const payload = JSON.parse(payloadString);
-            console.log(payload);
+        // 엑세스 토큰 또는 리프레시 토큰의 존재 여부로 로그인 상태 결정
+        setIsLoggedIn(!!accessToken || !!refreshToken);
+
+        if (accessToken) {
+            try {
+                const [, payloadBase64] = accessToken.split(".");
+                const payloadString = atob(payloadBase64);
+                const payload = JSON.parse(payloadString);
+                console.log("Access Token payload:", payload);
+            } catch (error) {
+                console.error('Error parsing access token:', error);
+            }
         }
     };
 
     // 로그아웃 처리
     const logoutAction = () => {
-        // 서버에 로그아웃 요청을 보냅니다.
-        axios.delete('/api/logout')
+
+        axios({
+            method: 'DELETE',
+            url: '/api/auth/logout',
+            data: {
+                accessToken,
+                refreshToken
+            }
+        })
             .then(response => {
-                // 로그아웃이 성공하면 로컬 스토리지에 저장된 토큰을 삭제합니다.
-                localStorage.removeItem('token');
-                // 로그인 상태 업데이트
-                setIsLoggedIn(false);
                 console.log('Logout successful');
-
-                window.location.reload();
-
-                // 이전 페이지로 이동
-                navigate(-1)
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
+                setIsLoggedIn(false);
             })
             .catch(error => {
                 console.error('Error logging out:', error);
             });
     };
+    // const logoutAction = () => {
+    //     // 서버에 로그아웃 요청을 보냅니다.
+    //     // axios.delete('/api/logout')
+    //     axios.delete('/api/auth/logout')
+    //         .then(response => {
+    //             // 로그아웃이 성공하면 로컬 스토리지에 저장된 토큰을 삭제합니다.
+    //             localStorage.removeItem('token');
+    //             // 로그인 상태 업데이트
+    //             setIsLoggedIn(false);
+    //             console.log('Logout successful');
+    //
+    //             window.location.reload();
+    //
+    //             // 이전 페이지로 이동
+    //             navigate(-1)
+    //         })
+    //         .catch(error => {
+    //             console.error('Error logging out:', error);
+    //         });
+    // };
+
 
     return (
         <div className="Main">
@@ -88,4 +118,3 @@ function MainPage() {
 }
 
 export default MainPage;
-

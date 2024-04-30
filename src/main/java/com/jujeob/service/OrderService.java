@@ -82,7 +82,7 @@ public class OrderService {
     }
 
     public List<OrderDeliveriesDto> getAllOrderDeliveriesWithItems(Long userNo) {
-        List<CustomerOrder> customerOrders = orderRepository.findCustomerOrdersByUserNoOrderByCreatedAt(userNo);
+        List<CustomerOrder> customerOrders = orderRepository.findCustomerOrdersByUserNoOrderByCreatedAtDesc(userNo);
 
         List<OrderDeliveriesDto> orderDeliveriesDtos = new ArrayList<>();
 

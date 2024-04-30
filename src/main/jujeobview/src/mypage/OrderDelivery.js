@@ -128,7 +128,7 @@ function OrderDelivery() {
                                             <span>배송지:</span> {order.address}
                                         </div>
                                         <div>
-                                            <span>주문자:</span> {order.memberName}
+                                            <span>주문자:</span> {order.name}
                                         </div>
                                         <div>
                                             <span>주문 상태:</span> {order.orderStatus === 'Y' ? '주문 완료' : '주문 취소'}
