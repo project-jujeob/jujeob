@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function MainPage() {
+    const [payload, setPayLoad] = useState();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate(); // useHistory 훅 추가
     const accessToken = localStorage.getItem('accessToken');
@@ -16,15 +17,16 @@ function MainPage() {
 
     // 로그인 상태 확인
     const checkLoginStatus = () => {
-
-        // 엑세스 토큰 또는 리프레시 토큰의 존재 여부로 로그인 상태 결정
         setIsLoggedIn(!!accessToken || !!refreshToken);
 
         if (accessToken) {
             try {
                 const [, payloadBase64] = accessToken.split(".");
-                const payloadString = atob(payloadBase64);
-                const payload = JSON.parse(payloadString);
+                // URL-safe Base64를 정규 Base64로 변환
+                const correctedBase64 = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
+                const payloadString = atob(correctedBase64);
+                const newPayload = JSON.parse(payloadString);
+                setPayLoad(newPayload);
                 console.log("Access Token payload:", payload);
             } catch (error) {
                 console.error('Error parsing access token:', error);
@@ -68,9 +70,19 @@ function MainPage() {
                         <Link to={"/Cart"}>
                             <button>장바구니</button>
                         </Link>
-                        {isLoggedIn ? (
+                        {isLoggedIn && payload.role === "ADMIN" ? (
                             <>
-                                <Link to="/MyPage">
+                                <Link to="/Admin">
+                                    <button>관리자</button>
+                                </Link>
+                                <button onClick={logoutAction}>로그아웃</button>
+                            </>
+                        ) : isLoggedIn && payload.role === "USER" ? (
+                            <>
+                                <Link to={'/Cart'}>
+                                    <button>장바구니</button>
+                                </Link>
+                                <Link to={'/MyPage'}>
                                     <button>마이페이지</button>
                                 </Link>
                                 <button onClick={logoutAction}>로그아웃</button>

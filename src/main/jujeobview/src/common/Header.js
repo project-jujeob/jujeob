@@ -113,8 +113,17 @@ function Header() {
 export default Header;
 
 function base64DecodeUnicode(str) {
-    // Convert Base64 encoded bytes to percent-encoding, and then get the original string
-    return decodeURIComponent(atob(str).split('').map(function (c) {
+    // URL-safe Base64 인코딩을 일반 Base64로 변환
+    let base64 = str.replace(/-/g, '+').replace(/_/g, '/');
+    // Base64 문자열의 길이가 4의 배수가 되도록 패딩을 추가
+    const padding = 4 - (base64.length % 4);
+    if (padding !== 4) {
+        base64 += '='.repeat(padding);
+    }
+
+    // 디코드된 데이터를 UTF-8 문자열로 변환
+    const bytes = atob(base64);
+    return decodeURIComponent(bytes.split('').map(c => {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
 }
