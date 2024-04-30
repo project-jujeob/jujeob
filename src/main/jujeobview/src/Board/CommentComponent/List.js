@@ -97,6 +97,7 @@ function List({ commentsList, commentFetchData, boardId }) {
                 commentFetchData();
             }else if(num === 1){
                 setEditMode({id: null, content: null});
+                setTriggerUpdate(!triggerUpdate);
             }
         }
     };

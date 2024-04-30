@@ -12,10 +12,9 @@ function Reply({ handleSave, parentCommentId, triggerUpdate, toggleMenu, selecte
     const [loading, setLoading] = useState(true);
     const [editMode, setEditMode] = useState({ id: null, content: '' });
     const inputRef = useRef(null);
-
     useEffect(() => {
         setLoading(true);
-        const fetchReplies = async () => {
+            const fetchReplies = async () => {
             try {
                 const response = await fetch(`/boardComment/ReplyData/${parentCommentId}?sort=desc`);
                 const data = await response.json();
@@ -47,32 +46,6 @@ function Reply({ handleSave, parentCommentId, triggerUpdate, toggleMenu, selecte
         setEditMode({ id: null, content: '' });
     };
 
-    const formatRelativeTime = (timestamp) => {
-        const now = Date.now();
-        const seconds = Math.floor((now - timestamp) / 1000);
-
-        if (seconds < 60) {
-            return "방금 전";
-        }
-        const minutes = Math.floor(seconds / 60);
-        if (minutes < 60) {
-            return `${minutes}분 전`;
-        }
-        const hours = Math.floor(minutes / 60);
-        if (hours < 24) {
-            return `${hours}시간 전`;
-        }
-        const days = Math.floor(hours / 24);
-        if (days < 30) {
-            return `${days}일 전`;
-        }
-        const months = Math.floor(days / 30);
-        if (months < 12) {
-            return `${months}달 전`;
-        }
-        const years = Math.floor(months / 12);
-        return `${years}년 전`;
-    };
     if (loading) {
         return (
             <div className="loading-container">
@@ -122,7 +95,8 @@ function Reply({ handleSave, parentCommentId, triggerUpdate, toggleMenu, selecte
                                         />
                                         <button className="Reply-UpdateCancel" onClick={() => cancel()}><SlClose/></button>
                                         <button className="Reply-UpdateSubmit"
-                                                onClick={() => handleSave(reply.commentId, editMode.content, reply.memNo, 1)}><SlCheck/>
+                                                onClick={() =>
+                                                    handleSave(reply.commentId, editMode.content, reply.memNo, 1)}><SlCheck/>
                                         </button>
                                     </div>
                                 ) :

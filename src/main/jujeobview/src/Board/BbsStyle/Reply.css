@@ -109,14 +109,15 @@
     border: none;
     font-size: 18px;
     margin-left: 5px;
-    color: rgba(44, 187, 44, 0.77);
+    color: rgba(218, 28, 28, 0.81);
+
 }
 .Reply-UpdateSubmit{
     background-color: rgba(0, 0, 0, 0);
     border: none;
     font-size: 18px;
     margin-left: 5px;
-    color: rgba(218, 28, 28, 0.81);
+    color: rgba(44, 187, 44, 0.77);
 }
 .Reply-UpdateComment{
     height: 35px;
