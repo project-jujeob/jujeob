@@ -48,13 +48,21 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
 
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/**", "/api/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/user/**").permitAll()
+                        .requestMatchers("/login/**").permitAll()
 //                        .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .requestMatchers("/admin").hasRole("admin") // admin페이지는 admin만
                         .anyRequest().authenticated() // 모든 요청에 대해 인증된 사용자만 가능
                 )
+
+                //== 소셜 로그인 설정 ==//
+//                .oauth2Login(oauth2 -> oauth2
+////                        .successHandler(oAuth2LoginSuccessHandler) // 동의하고 계속하기를 눌렀을 때 Handler 설정
+////                        .failureHandler(oAuth2LoginFailureHandler) // 소셜 로그인 실패 시 핸들러 설정
+//                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService)))
+
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build(); // 빌드되어서 SecurityFilterChain 반환

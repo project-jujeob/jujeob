@@ -55,6 +55,7 @@ public class JwtTokenProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
+
     public String createAccessToken(String userId) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(userId);
         CustomUserDetails customUserDetails = (CustomUserDetails) userDetails;
@@ -88,6 +89,7 @@ public class JwtTokenProvider {
                 .signWith(key, Jwts.SIG.HS512)
                 .compact();
 
+        //레디스에 추가
         tokenStorageService.storeToken(accessToken, "access", accessExpiration / 1000); // Store in Redis
         logger.info("JWT created for user ID: {}", userId);
         return accessToken;

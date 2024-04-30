@@ -37,7 +37,7 @@ public class UserController {
         }
     }
 
-/*
+
     @PatchMapping("/profileUpdate")
     public ResponseEntity<?> profileUpdate(@RequestBody ProfileUpdateRequest profileUpdateRequest) {
 
@@ -58,7 +58,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating profile");
         }
     }
-*/
+
 
     @PostMapping("/verify-password")
     @PreAuthorize("isAuthenticated()")
@@ -67,10 +67,7 @@ public class UserController {
         String currentUsername = authentication.getName(); // or get it from authentication principal
 
         boolean isPasswordCorrect = userService.verifyUserPassword(currentUsername, passwordVerifyRequest.getPassword());
-//            if (!userId.equals(Long.valueOf(authenticatedUserId)) && !authentication.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
-//                System.out.println("Unauthorized update attempt for user ID: " + userId);
-//                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You are not authorized to update this profile.");
-//            }
+
 
         if (isPasswordCorrect) {
             return ResponseEntity.ok().build();
