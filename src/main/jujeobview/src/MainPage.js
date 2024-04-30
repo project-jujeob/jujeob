@@ -1,31 +1,32 @@
-
 import './MainPage.css';
 import { Link, useNavigate } from "react-router-dom"; // useHistory 추가
 import { useState, useEffect } from "react";
 import axios from "axios";
+import {useAuth} from "./user/Context";
+import Header from "./common/Header";
 
 function MainPage() {
+    const { payload, setAuthPayload } = useAuth(); // Context에서 payload 및 setAuthPayload 가져오기
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate(); // useHistory 훅 추가
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
 
-    console.log(accessToken);
     useEffect(() => {
         checkLoginStatus();
     }, []); // 컴포넌트가 마운트될 때 한 번만 실행
 
     // 로그인 상태 확인
     const checkLoginStatus = () => {
-
         // 엑세스 토큰 또는 리프레시 토큰의 존재 여부로 로그인 상태 결정
         setIsLoggedIn(!!accessToken || !!refreshToken);
 
         if (accessToken) {
             try {
                 const [, payloadBase64] = accessToken.split(".");
-                const payloadString = atob(payloadBase64);
+                const payloadString = base64DecodeUnicode(payloadBase64);
                 const payload = JSON.parse(payloadString);
+                setAuthPayload(payload);
                 console.log("Access Token payload:", payload);
             } catch (error) {
                 console.error('Error parsing access token:', error);
@@ -49,6 +50,7 @@ function MainPage() {
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
                 setIsLoggedIn(false);
+                window.location.reload();
             })
             .catch(error => {
                 console.error('Error logging out:', error);
@@ -78,48 +80,49 @@ function MainPage() {
 
     return (
         <div className="Main">
-            <div className="MainContainer1">
-                <div className="MainContainer">
-                    <div className="MainHeader">
-                        <div className="MainMenu">
-                            <Link to="/ProductList">
-                                <button>술 정보</button>
-                            </Link>
-                            <Link to="/Info">
-                                <button>소개</button>
-                            </Link>
-                            <Link to={'/BbsList'}>
-                                <button>커뮤니티</button>
-                            </Link>
-                            <Link to={'/Announcement'}>
-                                <button>공지사항</button>
-                            </Link>
-                            <Link to={"/Cart"}>
-                                <button>장바구니</button>
-                            </Link>
-                            {isLoggedIn ? (
-                                <>
-                                    <Link to="/MyPage">
-                                        <button>마이페이지</button>
-                                    </Link>
-                                    <button onClick={logoutAction}>로그아웃</button>
-                                </>
-                            ) : (
-                                <Link to="/Login">
-                                    <button>로그인</button>
+            <div className="MainContainer">
+                <div className="MainHeader">
+                    <div className="MainMenu">
+                        <Link to="/ProductList">
+                            <button>술 정보</button>
+                        </Link>
+                        <button>커뮤니티</button>
+                        <button>공지사항</button>
+                        <Link to={"/Cart"}>
+                            <button>장바구니</button>
+                        </Link>
+                        {isLoggedIn && payload.role === "ADMIN" ? (
+                            <>
+                                <Link to="/Admin">
+                                    <button>관리자</button>
                                 </Link>
-                            )}
-                        </div>
-                    </div>
-                    <div className="MainContent">
-                        <div className="MainTitle">
-                            <h1>JU JEOB</h1>
-                        </div>
-                        <div className="MainBtn">
-                            <Link to="/ProductList">
-                                <button>오늘의 추천 주류</button>
+                                <button onClick={logoutAction}>로그아웃</button>
+                            </>
+                        ) : isLoggedIn && payload.role === "USER" ? (
+                            <>
+                                <Link to={'/Cart'}>
+                                    <button>장바구니</button>
+                                </Link>
+                                <Link to={'/MyPage'}>
+                                    <button>마이페이지</button>
+                                </Link>
+                                <button onClick={logoutAction}>로그아웃</button>
+                            </>
+                        ) : (
+                            <Link to="/Login">
+                                <button>로그인</button>
                             </Link>
-                        </div>
+                        )}
+                    </div>
+                </div>
+                <div className="MainContent">
+                    <div className="MainTitle">
+                        <h1>JU JEOB</h1>
+                    </div>
+                    <div className="MainBtn">
+                        <Link to="/ProductList">
+                            <button>오늘의 추천 주류</button>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -128,3 +131,10 @@ function MainPage() {
 }
 
 export default MainPage;
+
+function base64DecodeUnicode(str) {
+    // Convert Base64 encoded bytes to percent-encoding, and then get the original string
+    return decodeURIComponent(atob(str).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}

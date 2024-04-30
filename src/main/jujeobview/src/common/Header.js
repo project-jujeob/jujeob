@@ -53,7 +53,7 @@ function Header() {
                 setAuthPayload(null);
                 setIsLoggedIn(false);
                 // 현재 페이지가 "/MyPage"일 경우 홈으로 리디렉션
-                if (location.pathname === "/MyPage" || location.pathname === "/Cart" || location.pathname === "/CustomerOrder") {
+                if (location.pathname === "/MyPage" || location.pathname === "/Cart") {
                     navigation('/');
                 } else {
                     window.location.reload();
@@ -76,9 +76,6 @@ function Header() {
             <div className="HeaderMenu">
                 <Link to={'/ProductList'}>
                     <button>술 정보</button>
-                </Link>
-                <Link to="/Info">
-                    <button>소개</button>
                 </Link>
                 <Link to={'/BbsList'}>
                     <button>커뮤니티</button>
