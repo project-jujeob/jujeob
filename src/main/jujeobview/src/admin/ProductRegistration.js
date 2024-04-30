@@ -3,8 +3,11 @@ import axios from "axios";
 import './Admin.css';
 import {commonFields} from './commonFiled';
 import {renderingFields} from './renderingField';
+import {useNavigate} from "react-router-dom";
 
 const ProductRegistration = () => {
+    const navigate = useNavigate();
+
     const alcoholTypeNames = {
         1: '맥주',
         2: '전통주',
@@ -122,7 +125,7 @@ const ProductRegistration = () => {
         })
             .then((response)=>{
                 alert("상품 등록이 완료되었습니다.")
-                window.location.reload();
+                navigate('/admin');
             }).catch(error => {
             alert("상품 등록에 실패하였습니다.")
             console.log(error);

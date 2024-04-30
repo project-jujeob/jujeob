@@ -120,7 +120,7 @@ const ProductEdit = () => {
         })
             .then((response)=>{
                 alert("상품 수정이 완료되었습니다.")
-                window.location.reload();
+                navigate('/admin');
             }).catch(error => {
             alert("상품 수정에 실패하였습니다.")
             console.log(error);

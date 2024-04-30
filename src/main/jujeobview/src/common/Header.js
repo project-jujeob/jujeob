@@ -53,7 +53,7 @@ function Header() {
                 setAuthPayload(null);
                 setIsLoggedIn(false);
                 // 현재 페이지가 "/MyPage"일 경우 홈으로 리디렉션
-                if (location.pathname === "/MyPage" || location.pathname === "/Cart") {
+                if (location.pathname === "/MyPage" || location.pathname === "/Cart" || location.pathname === "/CustomerOrder") {
                     navigation('/');
                 } else {
                     window.location.reload();
