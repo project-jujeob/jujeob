@@ -80,6 +80,7 @@ function Profile() {
             .then(response => {
                 alert('프로필이 성공적으로 업데이트 되었습니다.');
                 setEditable(false);
+                setShowDeleteButton(false);
             })
             .catch(error => {
                 console.error('프로필 업데이트 오류:', error);

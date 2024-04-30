@@ -1,4 +1,3 @@
-
 import './App.css';
 import {Route, Routes, useNavigate} from "react-router-dom";
 import ProductList from "./product/ProductList";
@@ -23,7 +22,6 @@ import Announcement from "./Announcement/Announcement";
 import CustomerOrderComplete from "./product/Cart/CustomerOrderComplete";
 import ProductEdit from "./admin/ProductEdit";
 import PrivateRoute from "./PrivateRoute";
-import cors from "cors";
 
 function App() {
 

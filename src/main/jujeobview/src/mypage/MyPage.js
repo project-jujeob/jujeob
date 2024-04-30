@@ -13,20 +13,14 @@ import axios from "axios";
 
 function MyPage() {
 
-    const [passwordVerified, setPasswordVerified] = useState(false)
-    const [subTitleText, setSubTitleText] = useState("SubTitle")
+    const [subTitleText, setSubTitleText] = useState("주문 및 배송")
 
-    // 회원정보 수정 클릭시 비번검증 안하고 바로 수정페이지로(임시)
     const subTitleChange = (title) => {
-        setSubTitleText(title)  //클릭시 제목이 먼저 바뀌게 하기
-        if (title) {
-            //setShowPasswordCheck(true)
-            setPasswordVerified(true)
-        }
-    }
+        setSubTitleText(title);
+        console.log(`${title} 섹션이 활성화됩니다.`);
+    };
 
     const renderSubPage = () => {
-        if (!passwordVerified) return null;
 
         switch (subTitleText) {
             case "주문 및 배송":
@@ -64,7 +58,6 @@ function MyPage() {
                 <div className={"MyPageSubTitle"}>
                     <h1>{subTitleText}</h1>
                     <div className={"SubTitleDetail"}>
-                        {/*{subTitleText === "회원 정보 수정" && <PasswordCheck onSubmit={verifyPassword} />}*/}
                         {renderSubPage()}
                     </div>
                 </div>
@@ -72,7 +65,5 @@ function MyPage() {
         </div>
     )
 }
-
-
 
 export default MyPage;

@@ -52,7 +52,7 @@ const AdultVerification = () => {
     );
 };
 
-export default IdentityVerification;
+export default AdultVerification;
 
 // import React, { useEffect } from 'react';
 // import axios from 'axios';
