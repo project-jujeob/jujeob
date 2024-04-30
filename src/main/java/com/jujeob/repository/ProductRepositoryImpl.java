@@ -420,6 +420,25 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     }
 
     @Override
+    public List<ProductAdminDto> findProductListAndStockForAdminByKeyword(String keyword) {
+        QProduct qProduct = QProduct.product;
+        QStock qStock = QStock.stock;
+
+        return factory.select(Projections.constructor(
+                        ProductAdminDto.class,
+                        qProduct.productNo,
+                        qProduct.name,
+                        qProduct.img,
+                        qProduct.price,
+                        qStock.quantity
+                ))
+                .from(qProduct)
+                .leftJoin(qStock).on(qProduct.productNo.eq(qStock.productNo))
+                .where(qProduct.name.contains(keyword))
+                .fetch();
+    }
+
+    @Override
     public ProductEditDto findAllAndStockByProductNo(Integer productNo) {
         QProduct qProduct = QProduct.product;
         QStock qStock = QStock.stock;

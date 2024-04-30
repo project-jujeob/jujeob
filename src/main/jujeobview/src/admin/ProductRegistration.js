@@ -12,7 +12,7 @@ const ProductRegistration = () => {
         4: '위스키/기타',
     };
 
-    const [productDetails, setProductDetails] = useState({
+    const [productDetails,setProductDetails] = useState({
         name: '',
         img: '',
         price: '',
@@ -65,11 +65,13 @@ const ProductRegistration = () => {
     const [selectedMainType, setSelectedMainType] = useState(null);
 
     const handleChange = (name, value) => {
+        console.log('Handling change:', name, value);
         setProductDetails(prevDetails => ({
             ...prevDetails,
             [name]: value
         }));
     };
+
 
     const handleSubmitRegisterForm = (event) => {
         event.preventDefault();
@@ -113,13 +115,12 @@ const ProductRegistration = () => {
             finish : formData.get('finish'),
         }
         console.log(productInfo);
-        axios.post('api/registerProduct', productInfo, {
+        axios.post('api/admin/registerProduct', productInfo, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         })
             .then((response)=>{
-                console.log(response.data);
                 alert("상품 등록이 완료되었습니다.")
                 window.location.reload();
             }).catch(error => {
@@ -135,8 +136,9 @@ const ProductRegistration = () => {
                     <div className="MainTypeContainer">
                         <label htmlFor="MainType" className="MainType">주종 </label>
                         <div className="MainTypeButtons">
-                            {productMainType.map((mainType) => (
-                                <button type="button"
+                            {productMainType.map((mainType, index) => (
+                                <button key={index}
+                                        type="button"
                                         id="mainType"
                                         onClick={() => setSelectedMainType(mainType)}
                                         className={selectedMainType === mainType ? 'active' : ''}>

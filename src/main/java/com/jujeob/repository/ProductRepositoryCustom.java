@@ -36,4 +36,6 @@ public interface ProductRepositoryCustom {
     List<ProductAdminDto> findProductListAndStock();
 
     ProductEditDto findAllAndStockByProductNo(Integer productNo);
+
+    List<ProductAdminDto> findProductListAndStockForAdminByKeyword(String keyword);
 }

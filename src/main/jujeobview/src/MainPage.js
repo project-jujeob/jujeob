@@ -1,3 +1,4 @@
+
 import './MainPage.css';
 import { Link, useNavigate } from "react-router-dom"; // useHistory 추가
 import { useState, useEffect } from "react";
@@ -77,39 +78,48 @@ function MainPage() {
 
     return (
         <div className="Main">
-            <div className="MainContainer">
-                <div className="MainHeader">
-                    <div className="MainMenu">
-                        <Link to="/ProductList">
-                            <button>술 정보</button>
-                        </Link>
-                        <button>커뮤니티</button>
-                        <button>공지사항</button>
-                        <Link to={"/Cart"}>
-                            <button>장바구니</button>
-                        </Link>
-                        {isLoggedIn ? (
-                            <>
-                                <Link to="/MyPage">
-                                    <button>마이페이지</button>
-                                </Link>
-                                <button onClick={logoutAction}>로그아웃</button>
-                            </>
-                        ) : (
-                            <Link to="/Login">
-                                <button>로그인</button>
+            <div className="MainContainer1">
+                <div className="MainContainer">
+                    <div className="MainHeader">
+                        <div className="MainMenu">
+                            <Link to="/ProductList">
+                                <button>술 정보</button>
                             </Link>
-                        )}
+                            <Link to="/Info">
+                                <button>소개</button>
+                            </Link>
+                            <Link to={'/BbsList'}>
+                                <button>커뮤니티</button>
+                            </Link>
+                            <Link to={'/Announcement'}>
+                                <button>공지사항</button>
+                            </Link>
+                            <Link to={"/Cart"}>
+                                <button>장바구니</button>
+                            </Link>
+                            {isLoggedIn ? (
+                                <>
+                                    <Link to="/MyPage">
+                                        <button>마이페이지</button>
+                                    </Link>
+                                    <button onClick={logoutAction}>로그아웃</button>
+                                </>
+                            ) : (
+                                <Link to="/Login">
+                                    <button>로그인</button>
+                                </Link>
+                            )}
+                        </div>
                     </div>
-                </div>
-                <div className="MainContent">
-                    <div className="MainTitle">
-                        <h1>JU JEOB</h1>
-                    </div>
-                    <div className="MainBtn">
-                        <Link to="/ProductList">
-                            <button>오늘의 추천 주류</button>
-                        </Link>
+                    <div className="MainContent">
+                        <div className="MainTitle">
+                            <h1>JU JEOB</h1>
+                        </div>
+                        <div className="MainBtn">
+                            <Link to="/ProductList">
+                                <button>오늘의 추천 주류</button>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -331,4 +331,9 @@ public class ProductService {
 
         return product;
     }
+
+    public List<ProductAdminDto> findProductListAndStockForAdminByKeyword(String keyword) {
+
+        return productRepository.findProductListAndStockForAdminByKeyword(keyword);
+    }
 }

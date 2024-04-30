@@ -18,7 +18,6 @@ public class LikeProductController {
     // 상품 좋아요 버튼
     @PostMapping("/api/likeProduct")
     public ResponseEntity<String> likeProduct(@RequestBody LikeProduct likeProduct) {
-        System.out.println("ghkrdls"+likeProduct);
         return likeProductRepository
                 .findByUserNoAndProductId(likeProduct.getUserNo(), likeProduct.getProductId())
                 .map(existingLike -> {

@@ -25,7 +25,7 @@ const AnnouncementEdit = ({ announcement, closeModal, onAnnouncementUpdated }) =
 
     const handleSubmit = async () => {
         try {
-            const response = await axios.post('/api/AnnouncementUpdate', {
+            const response = await axios.post('/api/admin/AnnouncementUpdate', {
                 announcementNo: announcement.announcementNo,
 
                 announcementWriter : payload.userId,

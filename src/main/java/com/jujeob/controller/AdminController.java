@@ -1,11 +1,10 @@
 package com.jujeob.controller;
 
-import com.jujeob.dto.GetUsersDto;
-import com.jujeob.dto.ProductAdminDto;
-import com.jujeob.dto.ProductEditDto;
-import com.jujeob.dto.ProductRegisterDto;
+import com.jujeob.dto.*;
 import com.jujeob.entity.Announcement;
 import com.jujeob.entity.Product;
+import com.jujeob.service.MemberService;
+import com.jujeob.service.OrderService;
 import com.jujeob.entity.User;
 import com.jujeob.repository.AnnouncementRepository;
 import com.jujeob.repository.ProductRepository;
@@ -26,6 +25,9 @@ public class AdminController {
     @Autowired
     ProductService productService;
 
+    @Autowired
+    MemberService memberService;
+
    @Autowired
    UserRepository userRepository;
 
@@ -39,25 +41,36 @@ public class AdminController {
     @Autowired
     StockRepository stockRepository;
 
-    @PostMapping("api/registerProduct")
+   @Autowired
+    OrderService orderService;
+
+    @PostMapping("/api/admin/registerProduct")
     public Product registerProduct(@ModelAttribute ProductRegisterDto productRegisterDto) {
         return productService.registerProduct(productRegisterDto);
     }
 
-    @GetMapping("/api/showUserInfo")
+    @GetMapping("/api/admin/showUserInfo")
     public List<GetUsersDto> getUsers() {
         List<User> users = userRepository.findAll();
-        List<GetUsersDto> memberDto = new ArrayList<>();
+        List<GetUsersDto> userDto = new ArrayList<>();
         for (User user : users) {
             GetUsersDto dto = new GetUsersDto(user.getUserId(), user.getNickname(), user.getName(),
                     user.getEmail(), user.getPhone(), user.getAddress(),
                     user.getDeleted(), user.getCreateDate());
-            memberDto.add(dto);
+            userDto.add(dto);
         }
-        return memberDto;
+
+        return userDto;
+    }
+    
+    @PostMapping("/api/admin/userInfoBySearchOption")
+    public List<GetUsersDto> getUserInfoByKeyword(@RequestBody Map<String, String> requestBody) {
+        String searchType = requestBody.get("selectedSearchType");
+        String keyword = requestBody.get("keyword");
+        return memberService.getUserInfoByKeyword(searchType, keyword);
     }
 
-    @PostMapping("/api/AnnouncementWrite")
+    @PostMapping("/api/admin/AnnouncementWrite")
     public Announcement writeAnnouncement(@RequestBody Announcement announcement) {
         return announcementRepository.save(announcement);
     }
@@ -67,13 +80,13 @@ public class AdminController {
         return announcementRepository.findAll();
     }
 
-    @PostMapping("api/AnnouncementDelete")
+    @PostMapping("/api/AnnouncementDelete")
     public void deleteAnnouncement(@RequestBody Map<String, Integer> requestBody) {
         long announcementNo = requestBody.get("announcementNo");
         announcementRepository.deleteById(announcementNo);
     }
 
-    @PostMapping("/api/AnnouncementUpdate")
+    @PostMapping("/api/admin/AnnouncementUpdate")
     public Announcement editAnnouncement(@RequestBody Announcement announcement) {
         System.out.println(announcement);
         return announcementRepository.save(announcement);
@@ -84,7 +97,13 @@ public class AdminController {
         return productService.showAllProductListAndStock();
     }
 
-    @PostMapping("api/productDelete")
+    @PostMapping("/api/productListForAdminBySearchOption")
+    public List<ProductAdminDto> getProductListForAdminByKeyword(@RequestBody Map<String, String> requestbody) {
+        String keyword = requestbody.get("keyword");
+        return productService.findProductListAndStockForAdminByKeyword(keyword);
+    }
+
+    @PostMapping("/api/productDelete")
     @Transactional
     public void deleteProductListByAdmin(@RequestBody Map<String, Integer> requestBody) {
         Integer productNo = requestBody.get("productNo");
@@ -100,5 +119,17 @@ public class AdminController {
     @PostMapping("/api/updateProductDetails")
     public Product updateProductDetailsAndStock(@ModelAttribute ProductRegisterDto productRegisterDto) {
         return productService.updateProductDetail(productRegisterDto);
+    }
+
+    @GetMapping("/api/admin/orderListForAdmin")
+    public List<CheckOrderListDto> getOrderListByAdmin () {
+        return orderService.getOrderListByAdmin();
+    }
+
+    @PostMapping("/api/admin/orderListBySearchOption")
+    public List<CheckOrderListDto> getOrderListBySearchOption (@RequestBody Map<String, String> requestBody) {
+        String searchType = requestBody.get("selectedSearchType");
+        String keyword = requestBody.get("keyword");
+        return orderService.getOrderListBySearchOption(searchType, keyword);
     }
 }

@@ -47,16 +47,18 @@ public class SecurityConfig {
                 // 동일한 출처로 간주되어 웹 공격 방지 (localhost:8080 = localhost:XXXX)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
 
-//                .authorizeHttpRequests((auth) -> auth
-//                        .requestMatchers("/api/auth/**").permitAll()
-//                        .requestMatchers("/api/user/**").permitAll()
-//                        .requestMatchers("/api/*").permitAll()
-//                        .requestMatchers("/*").permitAll()
-////                        .requestMatchers(PathRequest.toH2Console()).permitAll()
-//                        .requestMatchers("/admin").hasRole("admin") // admin페이지는 admin만
-//                        .anyRequest().authenticated() // 모든 요청에 대해 인증된 사용자만 가능
-//                )
+
+                /*
+                .authorizeHttpRequests((auth) -> auth
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/*").permitAll()
+                        .requestMatchers("/api/user/**").permitAll()
+//                        .requestMatchers(PathRequest.toH2Console()).permitAll()
+                        .requestMatchers("/api/admin/**").hasRole("admin") // admin페이지는 admin만
+                        .anyRequest().authenticated() // 모든 요청에 대해 인증된 사용자만 가능
+                )  */
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
 
         return httpSecurity.build(); // 빌드되어서 SecurityFilterChain 반환
     }

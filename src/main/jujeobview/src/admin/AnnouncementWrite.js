@@ -20,7 +20,7 @@ const AnnouncementWrite = ({closeModal, onAnnouncementAdded}) => {
 
     const handleAnnouncementSubmit = async () => {
         try {
-            const response = await axios.post('/api/AnnouncementWrite', {
+            const response = await axios.post('/api/amin/AnnouncementWrite', {
                 announcementTitle: announcementTitle,
 
                 announcementWriter: payload.userId,
