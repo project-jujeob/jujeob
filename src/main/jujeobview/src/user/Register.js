@@ -272,9 +272,9 @@ function Register() {  //회원가입폼에 입력받을 데이터
                         <div className={"RegisterMemberAddr"}>
                             <div className={"RegisterMemberLabel"}><label htmlFor={"address"}>주소</label></div>
                             <div className={"RegisterMemberInput"}>
-                                {/*<input type={"text"} id={"address"} placeholder={"주소를 입력해주세요"} name={"address"}*/}
-                                {/*       onChange={registerDataChange} required={true}/><br/>*/}
-                                <button>주소 검색</button>
+                                <input type={"text"} id={"address"} placeholder={"주소를 입력해주세요"} name={"address"}
+                                       onChange={registerDataChange} required={true}/><br/>
+                                {/*<button>주소 검색</button>*/}
                             </div>
                         </div>
 

@@ -65,8 +65,15 @@ function MainPage() {
                         <Link to="/ProductList">
                             <button>술 정보</button>
                         </Link>
-                        <button>커뮤니티</button>
-                        <button>공지사항</button>
+                        <Link to="/Info">
+                            <button>소개</button>
+                        </Link>
+                        <Link to={'/BbsList'}>
+                            <button>커뮤니티</button>
+                        </Link>
+                        <Link to={'/Announcement'}>
+                            <button>공지사항</button>
+                        </Link>
                         <Link to={"/Cart"}>
                             <button>장바구니</button>
                         </Link>

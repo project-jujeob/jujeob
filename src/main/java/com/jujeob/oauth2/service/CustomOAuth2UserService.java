@@ -22,6 +22,7 @@
 //
 //    @Override
 //    public OAuth2User loadUser(OAuth2UserRequest request) throws OAuth2AuthenticationException {
+//
 //        OAuth2User oAuth2User = super.loadUser(request);
 //        // 사용자 정보 처리 로직 구현
 //        Map<String, Object> attributes = oAuth2User.getAttributes();

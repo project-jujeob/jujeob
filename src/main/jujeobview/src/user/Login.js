@@ -69,6 +69,7 @@ function Login() {
     }
 
 
+
     return (
         <div>
             <Header/>
@@ -80,27 +81,38 @@ function Login() {
                         <div className={"LoginInput"}>
                             <input type={"text"}
                                    placeholder={"아이디"}
-                                   // name={"memId"}
+                                // name={"memId"}
                                    name={"userId"}
-                                   // onChange={(e) => setMemId(e.target.value)}
+                                // onChange={(e) => setMemId(e.target.value)}
                                    onChange={(e) => setUserId(e.target.value)}
                             /><br/>
                             <input type={"password"}
                                    placeholder={"비밀번호"}
-                                   // name={"memPw"}
+                                // name={"memPw"}
                                    name={"password"}
                                    onChange={(e) => setPassword(e.target.value)}
                             />
                         </div>
                         <button id={"LoginBtn"} onClick={loginAction}>로그인</button>
                     </div>
-                    <div>
-                        <span className={"IdSave"}>
+
+
+                    <div className="loginOptionsContainer">
+                        <div className={"IdSave"}>
                             <input type={"checkbox"} id={"saveId"} name={"saveId"} value={"y"}/>
                             <label htmlFor="saveId" className={""}>아이디 저장</label>
-                        </span>
+                        </div>
                         {/*<p className="dn js_caution_msg1">아이디, 비밀번호가 일치하지 않습니다. 다시 입력해 주세요.</p>*/}
+
+                        <div className="linkContainer">
+                            <Link to="/find-id">아이디 찾기</Link>
+                            <span className="divider">|</span>
+                            <Link to="/find-password">비밀번호 찾기</Link>
+                            <span className="divider">|</span>
+                            <Link to="/register">회원가입</Link>
+                        </div>
                     </div>
+
 
 
                     <br/>
@@ -113,6 +125,7 @@ function Login() {
                                 <button>회원가입</button>
                             </Link>
                         </div>
+
                         <div>
                             <button onClick={handleGoogleButtonClick}>
                                 구글 로그인
