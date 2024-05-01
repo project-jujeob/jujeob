@@ -20,11 +20,11 @@ const AnnouncementWrite = ({closeModal, onAnnouncementAdded}) => {
 
     const handleAnnouncementSubmit = async () => {
         try {
-            const response = await axios.post('/api/AnnouncementWrite', {
+            const response = await axios.post('/api/admin/AnnouncementWrite', {
                 announcementTitle: announcementTitle,
+
                 announcementWriter: payload.userId,
-                // announcementWriter: payload.memberId,
-                announcementWriter: payload.userId,
+
                 announcementContent: announcementContent
             });
             if (response.status === 200 || response.status === 201) {
@@ -55,9 +55,9 @@ const AnnouncementWrite = ({closeModal, onAnnouncementAdded}) => {
                 </div>
                 <div className="AnnouncementWriteWriter">
                     <div className="AW1">작성자</div>
+
                     <div className="AW2">{payload.userId}</div>
-                    {/*<div className="AW2">{payload.memberId}</div>*/}
-                    <div className="AW2">{payload.userId}</div>
+
                 </div>
                 <div className="AnnouncementWriteContent">
                     <div className="AnnouncementTextarea">

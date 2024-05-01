@@ -206,10 +206,6 @@ a{
     margin-bottom: 70px;
 }
 
-.orderTitle{
-
-}
-
 .orderItem{
     padding-bottom: 10px;
     border-bottom: 1px solid #000;
@@ -222,19 +218,51 @@ a{
 }
 
 .orderInfoDetail{
+    width:100%;
     margin-top:15px;
-    background-color: red;
 }
 
 .orderInfoDetail span{
     font-weight: bold;
-    width:20%;
     margin:6px 0;
+    width:20%;
 }
 
 .orderInfoDetail div{
+    height: 40px;
     display: flex;
+    align-items: center;
 }
+
+.orderInfoDetail select{
+    height:30px;
+    border-radius: 5px;
+}
+
+.changeAddr input{
+    width: 50%;
+    height:30px;
+    border-radius: 5px;
+}
+
+.orderSubmitBtn{
+    text-align: center;
+}
+
+.orderSubmitBtn button{
+    margin-top:50px;
+    border:none;
+    box-shadow:none;
+    border-radius:5px;
+    padding:15px 25px;
+    overflow:visible;
+    cursor:pointer;
+    background-color: #FD4818;
+    color:#FFF;
+    font-weight: bold;
+    font-size: 15px;
+}
+
 
 /* CustomerOrderComplte*/
 .orderCompleteContainer{

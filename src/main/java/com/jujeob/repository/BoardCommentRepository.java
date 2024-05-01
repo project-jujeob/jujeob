@@ -18,3 +18,4 @@ public interface BoardCommentRepository extends JpaRepository<BoardComment, Inte
 
 }
 
+

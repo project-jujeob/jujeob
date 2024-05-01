@@ -55,6 +55,7 @@ public class BoardComment {
     @Column(name = "user_no")
     private Long userNo;
 
+
     @ManyToOne
     @JoinColumn(name = "board_id", insertable = false, updatable = false)
     private Board board;
@@ -66,4 +67,5 @@ public class BoardComment {
     @ManyToOne
     @JoinColumn(name = "user_no", insertable = false, updatable = false)
     private User user;
+
 }

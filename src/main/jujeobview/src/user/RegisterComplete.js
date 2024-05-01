@@ -13,7 +13,7 @@ function RegisterComplete(){
                 </Link>
             </div>
         </div>
-)
+    )
 
 }
 

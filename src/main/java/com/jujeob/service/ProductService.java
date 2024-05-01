@@ -193,7 +193,7 @@ public class ProductService {
         List<String> prices = (List<String>) orderOptions.get("prices");
 
         List<Product> products = productRepository.findProductListByOrderByOrderType(orderByBtnType, categoryNo, subCategoryName,
-                                                                                     mainTypes, types, alcoholLevels, prices);
+                mainTypes, types, alcoholLevels, prices);
         List<ProductListDto> productListByOrderByDtos = new ArrayList<>();
 
         for (Product entity : products) {
@@ -330,5 +330,10 @@ public class ProductService {
         stockRepository.save(stock);
 
         return product;
+    }
+
+    public List<ProductAdminDto> findProductListAndStockForAdminByKeyword(String keyword) {
+
+        return productRepository.findProductListAndStockForAdminByKeyword(keyword);
     }
 }

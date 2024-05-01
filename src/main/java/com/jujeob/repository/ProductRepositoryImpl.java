@@ -216,27 +216,27 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
 
         // 정렬 필터
         if (option != null && !option.isEmpty()) {
-                switch (option) {
-                    case "orderLike":
-                        query.leftJoin(qLikeProduct)
-                                .on(qProduct.productNo.eq(qLikeProduct.productId)
-                                        .and(qLikeProduct.likeStatus.eq("Y")))
-                                .groupBy(qProduct.productNo)
-                                .orderBy(qLikeProduct.count().desc().nullsLast());
-                        break;
-                    case "orderReview":
-                        query.leftJoin(qReview)
-                                .on(qProduct.productNo.eq(qReview.product.productNo))
-                                .groupBy(qProduct.productNo)
-                                .orderBy(qReview.count().desc().nullsLast());
-                        break;
-                    case "orderLowPrice":
-                        query.orderBy(qProduct.price.asc(), qProduct.name.asc());
-                        break;
-                    case "orderHighPrice":
-                        query.orderBy(qProduct.price.desc(), qProduct.name.asc());
-                        break;
-                }
+            switch (option) {
+                case "orderLike":
+                    query.leftJoin(qLikeProduct)
+                            .on(qProduct.productNo.eq(qLikeProduct.productId)
+                                    .and(qLikeProduct.likeStatus.eq("Y")))
+                            .groupBy(qProduct.productNo)
+                            .orderBy(qLikeProduct.count().desc().nullsLast());
+                    break;
+                case "orderReview":
+                    query.leftJoin(qReview)
+                            .on(qProduct.productNo.eq(qReview.product.productNo))
+                            .groupBy(qProduct.productNo)
+                            .orderBy(qReview.count().desc().nullsLast());
+                    break;
+                case "orderLowPrice":
+                    query.orderBy(qProduct.price.asc(), qProduct.name.asc());
+                    break;
+                case "orderHighPrice":
+                    query.orderBy(qProduct.price.desc(), qProduct.name.asc());
+                    break;
+            }
         }
 
         // 주종 필터
@@ -420,6 +420,25 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     }
 
     @Override
+    public List<ProductAdminDto> findProductListAndStockForAdminByKeyword(String keyword) {
+        QProduct qProduct = QProduct.product;
+        QStock qStock = QStock.stock;
+
+        return factory.select(Projections.constructor(
+                        ProductAdminDto.class,
+                        qProduct.productNo,
+                        qProduct.name,
+                        qProduct.img,
+                        qProduct.price,
+                        qStock.quantity
+                ))
+                .from(qProduct)
+                .leftJoin(qStock).on(qProduct.productNo.eq(qStock.productNo))
+                .where(qProduct.name.contains(keyword))
+                .fetch();
+    }
+
+    @Override
     public ProductEditDto findAllAndStockByProductNo(Integer productNo) {
         QProduct qProduct = QProduct.product;
         QStock qStock = QStock.stock;
@@ -470,5 +489,3 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
                 .fetchOne();
     }
 }
-
-

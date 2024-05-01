@@ -21,10 +21,6 @@ public class OrderItem {
     @JoinColumn(name = "order_id")
     private CustomerOrder customerOrder;
 
-   /* @ManyToOne // 수정
-    @JoinColumn(name = "productno", referencedColumnName = "productno") // 수정
-    private Product product; // 수정*/
-
     private Integer productNo;
     private int quantity;
     private double price;

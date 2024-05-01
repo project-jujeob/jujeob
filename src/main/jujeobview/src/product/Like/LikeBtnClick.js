@@ -18,8 +18,9 @@ const LikeBtnClick = ({ product, payload, likes, setLikes }) => {
         try {
             const likeData = {
                 productId: product.productNo,
-                // memberNo: payload.memberNo,
+
                 userNo: payload.userNo,
+
                 likeStatus: isLiked ? 'Y' : 'N'
             };
             const response = await axios.post('/api/likeProduct', likeData);

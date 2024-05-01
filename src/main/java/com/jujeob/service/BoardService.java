@@ -83,7 +83,7 @@ public class BoardService {
         System.out.println("서비스입니다 입력된 내용은 : " + updatedBoardDto.getContent());*/
         Board existingBoard = boardRepository.findById(boardId)
                 .orElseThrow(() -> new BoardNotFoundException("게시물을 찾을 수 없습니다."));
-/*        System.out.println("서비스입니다 게시물의 아이디는 : " + existingBoard.getBoardId());*/
+        /*        System.out.println("서비스입니다 게시물의 아이디는 : " + existingBoard.getBoardId());*/
         existingBoard.setBoardTitle(updatedBoardDto.getTitle());
         existingBoard.setBoardContent(updatedBoardDto.getContent());
         existingBoard.setBoardUpdate(LocalDateTime.now());

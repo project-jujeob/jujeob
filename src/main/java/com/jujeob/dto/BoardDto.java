@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 public class BoardDto {
     private int BoardId;
 
-    //    private Member Member;
     private User user;
     private String BoardTitle;
     private String BoardContent;

@@ -13,13 +13,17 @@ import {getImageUrl} from "../../common/ImageUrl";
 
 function DetailTraditional({product}) {
     const { payload } = useAuth();
-    // const [likes, setLikes] = useCheckUserLikes(payload?.memberNo);
+
     const [likes, setLikes] = useCheckUserLikes(payload?.userNo);
     const [cartQuantity, setCartQuantity] = useState(1);
 
     const handleAddToCart = () => {
-        // addToCart(product, payload.memberNo, cartQuantity);
+        if (!payload) {
+            alert("로그인한 사용자만 가능합니다!");
+            return;
+        }
         addToCart(product, payload.userNo, cartQuantity);
+
     };
 
     const handleQuantityChange = (newQuantity) => {

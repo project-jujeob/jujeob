@@ -1,6 +1,5 @@
 package com.jujeob.dto;
 
-import com.jujeob.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

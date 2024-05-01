@@ -13,7 +13,8 @@ const Admin = () => {
     const tabTitles = {
         userinfo: "주접 회원 목록",
         productRegistration: "🥂🍺상품 등록 페이지입니다🍷🍸",
-        productManagement: "상품 관리"
+        productManagement: "상품 관리",
+        orderListByAdmin: "주문내역 확인"
     };
 
     const renderComponent = () => {
@@ -23,7 +24,7 @@ const Admin = () => {
             case 'productRegistration':
                 return <ProductRegistration />;
             case 'productManagement':
-             return <ProductManagement />;
+                return <ProductManagement />;
             case 'orderListByAdmin':
                 return <OrderListByAdmin />;
         }

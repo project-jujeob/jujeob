@@ -28,8 +28,9 @@ public class Cart {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "memNo", referencedColumnName = "memNo")
     private Member member;*/
-//    private Long memberNo;
+
     private Long userNo;
+
 
     private String name;
     private Long price;
@@ -38,4 +39,3 @@ public class Cart {
     private int quantity;
 
 }
-

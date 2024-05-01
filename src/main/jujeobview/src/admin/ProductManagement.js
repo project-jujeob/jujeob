@@ -10,11 +10,11 @@ const PAGE_SIZE = 10;
 const ProductManagement = () => {
     const navigate = useNavigate(); // useNavigate 훅 사용
 
-
     const [totalProduct, setTotalProduct] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [productList, setProductList] = useState([]);
+    const [keyword, setKeyword] = useState('');
 
     useEffect(() => {
         axios.get('/api/getProductListForAdmin')
@@ -37,6 +37,7 @@ const ProductManagement = () => {
         axios.get('/api/getProductListForAdmin')
             .then((response) => {
                 setProductList(response.data.slice(startIndex, endIndex));
+
             })
             .catch((error) => {
                 console.error('데이터 가져오기 실패:', error);
@@ -62,9 +63,37 @@ const ProductManagement = () => {
         })
     }
 
+    const setSearchKeyword = (value) => {
+        setKeyword(value);
+    };
+
+    const handleSearch = () => {
+        axios.post('/api/productListForAdminBySearchOption',
+            { keyword })
+            .then((response) => {
+                setProductList(response.data);
+                setTotalProduct(response.data.length);
+                setTotalPages(Math.ceil(response.data.length / PAGE_SIZE));
+            }).catch((error) => {
+            console.log('검색 주문 내역 가져오기 실패', error);
+        });
+    }
+
     return (
         <div>
             <div className="ProductAdminContainer">
+                <div className="ProductAdminListSearchContainer">
+                    <div className="ProductAdminListSearch">
+                        <input
+                            type="text"
+                            placeholder="상품명을 입력해주세요"
+                            onChange={e => setSearchKeyword(e.target.value)}
+                        />
+                        <button onClick={handleSearch}>검 색</button>
+                    </div>
+                    <div className="ProductAdminListSearchResult"> 조회된 상품 수 : {totalProduct} 건</div>
+                </div>
+
                 <div className="ProductAdminList">
                     <div className="ProductAdminListHeader">
                         <div className="ProductAdminNo">NO.</div>

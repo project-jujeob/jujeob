@@ -8,7 +8,13 @@ import {getImageUrl} from "../common/ImageUrl";
 const ProductItem = ({ product, likes, setLikes, payload}) => {
     const handleClickAddToCart = (e, product,cartQuantity) => {
         e.preventDefault();
+        if (!payload) {
+            alert("로그인한 사용자만 가능합니다!");
+            return;
+        }
+
         addToCart(product,payload.userNo, cartQuantity);
+
     };
 
     return (

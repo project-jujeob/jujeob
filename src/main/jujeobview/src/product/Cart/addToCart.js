@@ -1,13 +1,14 @@
 import axios from "axios";
+import {useAuth} from "../../user/Context";
 
 const addToCart = (product, userNo, cartQuantity) => {
-    if (!product) {
-        alert('추가할 상품이 없습니다.');
+    if (!userNo) {
+        alert('사용자 정보를 가져올 수 없습니다.');
         return;
     }
 
-    if (!userNo) {
-        alert('사용자 정보를 가져올 수 없습니다.');
+    if (!product) {
+        alert('추가할 상품이 없습니다.');
         return;
     }
 
@@ -16,6 +17,7 @@ const addToCart = (product, userNo, cartQuantity) => {
 
 
     // 현재 로컬 스토리지에서 장바구니 정보를 가져옴
+
     const existingCart = localStorage.getItem(userNo);
 
     // 만약 장바구니가 비어있으면 새로운 배열을 생성
@@ -27,7 +29,9 @@ const addToCart = (product, userNo, cartQuantity) => {
 
     // 중복된 제품이 없으면 장바구니에 상품을 추가
     if (existingItemIndex === -1) {
+
         const newCart = { userNo, productNo, name, price, img, quantity: cartQuantity};
+
         cartItems.push(newCart);
         alert('상품이 장바구니에 추가되었습니다.');
     } else {
@@ -39,7 +43,9 @@ const addToCart = (product, userNo, cartQuantity) => {
     }
 
     // 수정된 장바구니 정보를 로컬 스토리지에 저장
+
     localStorage.setItem(userNo, JSON.stringify(cartItems));
+
 
     // 서버에 데이터 전송
     axios.post('/api/addToCart', cartItems)
@@ -50,7 +56,9 @@ const addToCart = (product, userNo, cartQuantity) => {
             console.error('Error adding to cart:', error);
         });
 
+
     console.log("userNo:",cartItems);
+
     /*axios.post('/api/addToCart', {
         cartItems: cartItems.map(item => ({
             userNo: item.userNo,

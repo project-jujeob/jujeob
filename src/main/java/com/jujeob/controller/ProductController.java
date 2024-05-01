@@ -88,7 +88,7 @@ public class ProductController {
     @PostMapping("/api/productListByType")
     public List<ProductListDto> showProductListByType(@RequestBody Map<String, List<String>> requestBody) {
         List<String> types = requestBody.get("types");
-       return productService.getProductListByType(types);
+        return productService.getProductListByType(types);
     }
 
     // 선택된 체크박스의 level로 해당 상품 찾아오기

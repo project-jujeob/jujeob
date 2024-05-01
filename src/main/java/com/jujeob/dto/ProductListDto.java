@@ -1,7 +1,5 @@
 package com.jujeob.dto;
 
-import com.querydsl.core.types.dsl.NumberPath;
-import com.querydsl.core.types.dsl.StringPath;
 import lombok.*;
 
 @Data

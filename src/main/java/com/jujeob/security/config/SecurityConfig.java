@@ -53,8 +53,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/user/**").permitAll()
                         .requestMatchers("/login/**").permitAll()
 //                        .requestMatchers(PathRequest.toH2Console()).permitAll()
-                        .requestMatchers("/admin").hasRole("admin") // admin페이지는 admin만
-                        .anyRequest().authenticated() // 모든 요청에 대해 인증된 사용자만 가능
+                                .requestMatchers("/admin").hasRole("admin") // admin페이지는 admin만
+                                .anyRequest().authenticated() // 모든 요청에 대해 인증된 사용자만 가능
                 )
 
                 //== 소셜 로그인 설정 ==//

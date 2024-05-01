@@ -2,7 +2,7 @@
 import Header from "../../common/Header";
 import {useLocation} from "react-router-dom";
 import React, {useState} from "react";
-import {useAuth} from "../../member/Context";
+import {useAuth} from "../../user/Context";
 
 function CustomerOrder() {
     const {payload} = useAuth();
@@ -53,7 +53,7 @@ function CustomerOrder() {
         const orderData = {
             orderItems: orderItems,
             address: addressToUse,
-            memberNo : payload.memberNo,
+            userNo : payload.userNo,
             memberName: payload.memberName,
             memberPhone: payload.memberPhone,
             memberEmail: payload.memberEmail,
