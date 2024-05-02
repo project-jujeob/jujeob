@@ -190,6 +190,14 @@
 }
 
 /* review page */
+.star-rating span{
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.star-rating .star {
+    color: #ff5c2f;
+}
 
 .reviewContainer{
     width:70%;

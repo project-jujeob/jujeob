@@ -22,6 +22,28 @@ export const AuthProvider = ({ children }) => {
     const updatePayloadFromToken = (token) => {
         try {
             const [, payloadBase64] = token.split(".");
+            const base64 = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
+            const decodedData = decodeURIComponent(escape(window.atob(base64)));
+            const newPayload = JSON.parse(decodedData);
+            setPayload(newPayload);
+        } catch (error) {
+            console.error('Error parsing access token:', error);
+            setPayload(null);
+        }
+    };
+        if (accessToken) {
+            updatePayloadFromToken(accessToken); // 토큰에서 payload 추출 및 설정
+            setIsLoggedIn(!!accessToken);
+        } else {
+            setIsLoggedIn(false);
+            setPayload(null); // 로그아웃 또는 토큰 없음 상태 처리
+        }
+    }, []);
+
+    // 토큰에서 payload 추출하여 상태 업데이트
+    const updatePayloadFromToken = (token) => {
+        try {
+            const [, payloadBase64] = token.split(".");
             const decodedData = base64.decode(payloadBase64);
             const newPayload = JSON.parse(decodedData);
             setPayload(newPayload);

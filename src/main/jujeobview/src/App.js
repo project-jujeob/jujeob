@@ -47,7 +47,7 @@ function App() {
                     <Route path='/RegisterComplete' element={<RegisterComplete />} />
                     <Route path='/BbsList' element={<BbsList />} />
                     <Route path='/MyPage' element={<MyPage />} />
-                    <Route path='/Cart' element={<PrivateRoute><CartPage/></PrivateRoute>} />
+                    <Route path='/Cart' element={<CartPage/>} />
                     <Route path='/ReviewWrite/:productNo' element={<ReviewWrite/>} />
                     <Route path='/Pagination' element={<Pagination />} />
                     <Route path='/CustomerOrder' element={<CustomerOrder />} />
