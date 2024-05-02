@@ -115,7 +115,6 @@ function BbsSlideAndBestPost() {
             />
         </div>
     );
-
 }
 
 export default BbsSlideAndBestPost;

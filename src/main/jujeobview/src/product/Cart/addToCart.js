@@ -6,11 +6,6 @@ const addToCart = (product, userNo, cartQuantity) => {
         return;
     }
 
-    if (!userNo) {
-        alert('사용자 정보를 가져올 수 없습니다.');
-        return;
-    }
-
     // 일부 정보만 추출하여 저장
     const { productNo, name, price, img } = product;
 

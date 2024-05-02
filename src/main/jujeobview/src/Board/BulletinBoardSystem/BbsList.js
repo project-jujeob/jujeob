@@ -17,7 +17,7 @@ function BbsList() {
                 </div>
 
                 <div className="NavContainer">
-                   <BbsCategory />
+                    <BbsCategory />
                 </div>
                 <div className="BoardListItem">
                     <BbsListItem />

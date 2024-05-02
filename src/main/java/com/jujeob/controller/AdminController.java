@@ -62,7 +62,7 @@ public class AdminController {
 
         return userDto;
     }
-    
+
     @PostMapping("/api/admin/userInfoBySearchOption")
     public List<GetUsersDto> getUserInfoByKeyword(@RequestBody Map<String, String> requestBody) {
         String searchType = requestBody.get("selectedSearchType");

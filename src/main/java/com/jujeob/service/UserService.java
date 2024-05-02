@@ -26,6 +26,20 @@ public class UserService {
         return passwordEncoder.matches(password, user.getPassword());
     }
 
+    public boolean changeUserPassword(String userId, String currentPassword, String newPassword) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + userId));
+
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            return false;  // 현재 비밀번호가 일치하지 않으면 false 반환
+        }
+
+        // 새 비밀번호로 업데이트
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        return true;
+    }
+
     public boolean deleteUser(String userId) {
         User user = userRepository.findByUserId(userId).orElse(null);
         if (user == null || "Y".equals(user.getDeleted())) {
@@ -36,6 +50,4 @@ public class UserService {
         userRepository.save(user);
         return true;
     }
-
-
 }

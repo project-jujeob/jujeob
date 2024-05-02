@@ -3,7 +3,7 @@ import Header from "../common/Header";
 import axios from "axios";
 import Pagination from "../common/Pagination";
 
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 10;
 
 const UserInfo = () => {
     const [totalUserInfo, setTotalUserInfo] = useState(0);

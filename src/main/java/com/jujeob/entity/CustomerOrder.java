@@ -34,6 +34,7 @@ public class CustomerOrder {
 
     private Long userNo;
 
+
     @Column(nullable = false)
     private String address;
 

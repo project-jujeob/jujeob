@@ -55,6 +55,7 @@ public class JwtTokenProvider {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
+
     public String createAccessToken(String userId) {
         UserDetails userDetails = userDetailsService.loadUserByUsername(userId);
         CustomUserDetails customUserDetails = (CustomUserDetails) userDetails;
@@ -88,6 +89,7 @@ public class JwtTokenProvider {
                 .signWith(key, Jwts.SIG.HS512)
                 .compact();
 
+        //레디스에 추가
         tokenStorageService.storeToken(accessToken, "access", accessExpiration / 1000); // Store in Redis
         logger.info("JWT created for user ID: {}", userId);
         return accessToken;
@@ -111,6 +113,7 @@ public class JwtTokenProvider {
         return refreshToken;
     }
 
+    // jwt 토큰 유효성 검사
     public boolean validateToken(String token) {
 
         // 토큰이 블랙리스트에 있으면 유효하지 않음
@@ -150,6 +153,7 @@ public class JwtTokenProvider {
                 .getSubject();
     }
 
+    // 토큰 남은시간 얻어오기
     public long getRemainingTime(String token) {
         try {
             Claims claims = Jwts.parser()

@@ -19,4 +19,6 @@ public interface BoardCommentRepository extends JpaRepository<BoardComment, Inte
 
     @Query("SELECT nickname FROM User WHERE userNo = :userNo")
     String findNicknameByUserNo(Long userNo);
+
+
 }

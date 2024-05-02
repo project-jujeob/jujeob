@@ -38,7 +38,7 @@ function CustomerOrderComplete() {
                         </div>
                         <div className="orderCompleteBtn">
                             <div className="orderCompleteHome"
-                                 onClick={goToMain}>
+                            onClick={goToMain}>
                                 홈으로 이동
                             </div>
                             <div className="orderCompleteDetail"

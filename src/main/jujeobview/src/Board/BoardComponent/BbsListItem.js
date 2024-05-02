@@ -158,7 +158,7 @@ function BbsListItem() {
                                 </div>
                             )}
                             <div className="bbsPostBackground" onClick={() => openModal(board.boardId)}>
-                            <div className="BoardListCreateDate">
+                                <div className="BoardListCreateDate">
                                     <DateAndTime createDate={board.createDate}/>
                                     <div>{board.boardCategory}</div>
                                 </div>

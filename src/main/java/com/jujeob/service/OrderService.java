@@ -152,37 +152,39 @@ public class OrderService {
                 .stream()
                 .collect(Collectors.toMap(CustomerOrder::getOrderId, order -> order));
 
-        return groupedItems.entrySet().stream().map(entry -> {
-            Long orderId = entry.getKey();
-            List<OrderItem> items = entry.getValue();
-            CustomerOrder co = customerOrderMap.get(orderId);
+        return groupedItems.entrySet().stream()
+                .sorted(Map.Entry.<Long, List<OrderItem>>comparingByKey().reversed())
+                .map(entry -> {
+                    Long orderId = entry.getKey();
+                    List<OrderItem> items = entry.getValue();
+                    CustomerOrder co = customerOrderMap.get(orderId);
 
-            Optional<User> user = userRepository.findMemIdByNameAndPhone(co.getName(), co.getPhone());
-            String userId = user.map(User::getUserId).orElse(null);
+                    Optional<User> user = userRepository.findMemIdByNameAndPhone(co.getName(), co.getPhone());
+                    String userId = user.map(User::getUserId).orElse(null);
 
-            List<CheckOrderItemDto> productInfos = items.stream().map(item -> {
-                Optional<Product> product = productRepository.findById(item.getProductNo());
-                return new CheckOrderItemDto(
-                        item.getProductNo(),
-                        product.map(Product::getName).orElse("Unknown"),
-                        item.getQuantity()
-                );
-            }).collect(Collectors.toList());
+                    List<CheckOrderItemDto> productInfos = items.stream().map(item -> {
+                        Optional<Product> product = productRepository.findById(item.getProductNo());
+                        return new CheckOrderItemDto(
+                                item.getProductNo(),
+                                product.map(Product::getName).orElse("Unknown"),
+                                item.getQuantity()
+                        );
+                    }).collect(Collectors.toList());
 
-            return new CheckOrderListDto(
-                    orderId,
-                    userId,
-                    co.getName(),
-                    co.getPhone(),
-                    co.getAddress(),
-                    co.getTotalPrice(),
-                    co.getOrderStatus(),
-                    co.getPaymentMethod(),
-                    items.stream().mapToInt(OrderItem::getQuantity).sum(),
-                    productInfos,
-                    co.getCreatedAt()
-            );
-        }).collect(Collectors.toList());
+                    return new CheckOrderListDto(
+                            orderId,
+                            userId,
+                            co.getName(),
+                            co.getPhone(),
+                            co.getAddress(),
+                            co.getTotalPrice(),
+                            co.getOrderStatus(),
+                            co.getPaymentMethod(),
+                            items.stream().mapToInt(OrderItem::getQuantity).sum(),
+                            productInfos,
+                            co.getCreatedAt()
+                    );
+                }).collect(Collectors.toList());
     }
 
     public List<CheckOrderListDto> getOrderListByAdmin() {

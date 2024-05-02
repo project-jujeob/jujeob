@@ -102,10 +102,9 @@ const Announcement = () => {
                 <div className="AnnouncementList">
                     <div className="AnnouncementListHeader">
                         <div className="AnnouncementNo">NO.</div>
-                        <div className="AnnouncementTitle">제목</div>
+                        <div className="AnnouncementTitle" >제목</div>
                         <div className="AnnouncementWriter">작성자</div>
                         <div className="AnnouncementCreateAt">작성일</div>
-                        <div className="AnnouncementDetail">+</div>
                         {payload && payload.role === "ADMIN" && (
                             <div className="AnnouncementBtn"></div>
                         )}
@@ -114,10 +113,9 @@ const Announcement = () => {
                         <div className="AnnouncementListContentContainer" key={index}>
                             <div className="AnnouncementListContent1">
                                 <div className="AnnouncementNo">{announcement.announcementNo}</div>
-                                <div className="AnnouncementTitle">{announcement.announcementTitle}</div>
+                                <div className="AnnouncementTitle" onClick={() => toggleContent(index)}>{announcement.announcementTitle}</div>
                                 <div className="AnnouncementWriter">{announcement.announcementWriter}</div>
                                 <div className="AnnouncementCreateAt">{formatDate(announcement.createdAt)}</div>
-                                <div className="AnnouncementDetail" onClick={() => toggleContent(index)}>+</div>
                                 {payload && payload.role === "ADMIN" && (
                                     <div className="AnnouncementBtn">
                                         <button onClick={() =>  showEditModal(announcement,index)}>[수정]</button>

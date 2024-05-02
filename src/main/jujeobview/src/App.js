@@ -1,8 +1,8 @@
 import './App.css';
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useNavigate} from "react-router-dom";
 import ProductList from "./product/ProductList";
 import Login from "./user/Login";
-import RegisterAdult from "./user/RegisterAdult";
+import AdultVerification from "./user/AdultVerification";
 import Register from "./user/Register";
 import RegisterComplete from "./user/RegisterComplete";
 import MyPage from "./mypage/MyPage";
@@ -22,7 +22,8 @@ import Announcement from "./Announcement/Announcement";
 import CustomerOrderComplete from "./product/Cart/CustomerOrderComplete";
 import ProductEdit from "./admin/ProductEdit";
 import Info from "./Info/Info";
-import PrivateRoute from "./PrivateRoute";
+
+import CustomerPayment from "./product/Cart/CustomerPayment"
 
 function App() {
 
@@ -40,7 +41,7 @@ function App() {
                     <Route path='/ProductList' element={<ProductList />}/>
                     <Route path='/ProductItemDetail/:productNo' element={<ProductItemDetail /> } />
                     <Route path='/Login' element={<Login />} />
-                    <Route path='/RegisterAdult' element={<RegisterAdult />} />
+                    <Route path='/AdultVerification' element={<AdultVerification />} />
                     <Route path='/Register' element={<Register />} />
                     <Route path='/RegisterComplete' element={<RegisterComplete />} />
                     <Route path='/BbsList' element={<BbsList />} />
@@ -49,6 +50,7 @@ function App() {
                     <Route path='/ReviewWrite/:productNo' element={<ReviewWrite/>} />
                     <Route path='/Pagination' element={<Pagination />} />
                     <Route path='/CustomerOrder' element={<CustomerOrder />} />
+                    <Route path='/CustomerPayment' element={<CustomerPayment />} />
                     <Route path='/CustomerOrderComplete' element={<CustomerOrderComplete />} />
                 </Routes>
             </div>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,9 @@ import java.util.Optional;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -76,6 +80,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     private void updateUserInfoFromRequest(User user, ProfileUpdateRequest request) {
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setNickname(request.getNickname());
         user.setName(request.getName());
         user.setPhone(request.getPhone());

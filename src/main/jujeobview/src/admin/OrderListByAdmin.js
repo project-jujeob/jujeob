@@ -13,6 +13,11 @@ const OrderListByAdmin = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
 
+    function formatPrice(value) {
+        return value.toLocaleString('ko-KR');
+    }
+
+
 
     useEffect(() => {
         axios.get('/api/admin/orderListForAdmin')
@@ -114,8 +119,8 @@ const OrderListByAdmin = () => {
                                 <td>{formatDate(order.createdAt)}</td>
                                 <td>{order.userId}</td>
                                 <td>{order.name}</td>
-                                <td>{order.phone}</td>
-                                <td className="OrderListAddress">{order.address}</td>
+                                <td className="OrderListPhone" title={order.phone}>{order.phone}</td>
+                                <td className="OrderListAddress" title={order.address}>{order.address}</td>
                                 <td>
                                     {order.products.map((product, idx) => (
                                         <div className="OrderListProductName" key={idx} title={product.productName}>{product.productName}</div>
@@ -127,20 +132,25 @@ const OrderListByAdmin = () => {
                                     ))}
                                 </td>
                                 <td>{order.quantity}</td>
-                                <td>{order.totalPrice}원</td>
+                                <td>{formatPrice(order.totalPrice)}원</td>
                                 <td>{order.orderStatus === 'Y' ? '주문 완료' : '주문 취소'}</td>
                                 <td>{order.paymentMethod}</td>
                             </tr>
                         ))}
                         <tr>
-                        <th colSpan={2}>총 건수</th>
+                            <th colSpan={2}>총 건수</th>
                             <th>{checkOrderList.length}건</th>
                             <th colSpan={3}>주문 총 합계</th>
-                            <th colSpan={2}>{checkOrderList.reduce((acc, order) => acc + order.totalPrice, 0)}원</th>
+                            <th colSpan={2}>{formatPrice(checkOrderList.reduce((acc, order) => acc + order.totalPrice, 0))}원</th>
                             <th>이체 합계</th>
-                            <th>{checkOrderList.filter(order => order.paymentMethod === 'BANK').reduce((acc, order) => acc + order.totalPrice, 0)}원</th>
+                            <th>
+                                {formatPrice(checkOrderList.filter(order => order.paymentMethod === 'BANK').reduce((acc, order) => acc + order.totalPrice, 0))}원
+                            </th>
                             <th>카드 합계</th>
-                            <th>{checkOrderList.filter(order => order.paymentMethod === 'CARD').reduce((acc, order) => acc + order.totalPrice, 0)}원</th>
+                            <th>
+                                {formatPrice(checkOrderList.filter(order => order.paymentMethod === 'CARD').reduce((acc, order) => acc + order.totalPrice, 0))}원
+                            </th>
+
                         </tr>
                         </tbody>
                     </table>

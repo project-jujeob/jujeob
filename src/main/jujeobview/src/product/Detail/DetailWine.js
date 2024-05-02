@@ -23,7 +23,10 @@ function DetailTraditional({product}) {
     };
 
     const handleAddToCart = () => {
-
+        if (!payload) {
+            alert("로그인한 사용자만 가능합니다!");
+            return;
+        }
         addToCart(product, payload.userNo, cartQuantity);
 
     };
