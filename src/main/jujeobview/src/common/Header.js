@@ -13,6 +13,7 @@ function Header() {
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
 
+    console.log(accessToken);
     useEffect(() => {
         checkLoginStatus();
     }, []); // 컴포넌트가 마운트될 때 한 번만 실행
@@ -26,9 +27,7 @@ function Header() {
         if (accessToken) {
             try {
                 const [, payloadBase64] = accessToken.split(".");
-                // URL-safe Base64를 정규 Base64로 변환
-                const correctedBase64 = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
-                const payloadString = atob(correctedBase64);
+                const payloadString = base64DecodeUnicode(payloadBase64);
                 const newPayload = JSON.parse(payloadString);
                 setAuthPayload(newPayload);
             } catch (error) {

@@ -237,7 +237,6 @@ export default MainPage;*/
                 console.log('Logout successful');
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
-                setTimeout(() => window.location.reload(), -100); // 새로고침이 일어나기 전에 로그아웃 상태 반영
                 setIsLoggedIn(false);
             })
             .catch(error => {
