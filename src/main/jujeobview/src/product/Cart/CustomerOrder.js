@@ -8,6 +8,7 @@ function CustomerOrder() {
     const {payload} = useAuth();
     console.log("오더페이로드",payload);
     const location = useLocation();
+    
     console.log(" 로케이션",location);
     const { selectedItems} = location.state;
     console.log("selectedItems:",selectedItems);

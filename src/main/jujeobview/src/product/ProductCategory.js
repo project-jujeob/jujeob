@@ -123,12 +123,13 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
     // update 파라미터 useEffect
     useEffect(() => {
         updateParams();
-    }, [selectedCategoryNo, selectedSubCategoryData]);
+    }, [selectedCategoryNo, selectedSubCategoryData, selectOptionId]);
 
     const updateParams = ( ) => {
         const params = {
             categoryNo : selectedCategoryNo ?? undefined,
-            subCategoryName : selectedSubCategoryName ?? undefined
+            subCategoryName : selectedSubCategoryName ?? undefined,
+            orderOptions : selectOptionId ?? undefined
         }
 
         const filterParams = Object.fromEntries(Object.entries(params).filter(([_,value])=> value !== undefined))
@@ -229,7 +230,7 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
             alcoholLevels: Object.keys(alcoholLevels).filter(key => alcoholLevels[key]),
             prices: Object.keys(prices).filter(key => prices[key])
         }
-        axios.post('api/productListByOrderBy', orderOptions )
+        axios.post('api/productListByOrderBy', { params: { orderOptions : orderOptions } } )
             .then((productListByOrderBy) => {
                 if (selectedId === selectOptionId) {
                     setSelectedOrderOption(null);
@@ -257,7 +258,6 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
         axios.post('api/selectedMainType', { mainType: newMainTypes })
             .then((response) => {
                 setSelectedMainType(response.data);
-
                 setProductTypes(prevProductTypes => {
                     const newProductTypes = {...prevProductTypes};
                     Object.values(response.data).flat().forEach(type => {
@@ -267,7 +267,7 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
                     });
                     return newProductTypes;
                 });
-                return axios.post('api/productListByMainType', { mainType : newMainTypes });
+                return axios.post('api/productListByMainType', {  mainType: newMainTypes });
             })
             .then((productListByMainType) => {
                 setCheckedMainType(productListByMainType.data);
