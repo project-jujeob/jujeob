@@ -24,6 +24,32 @@ function BbsSlideAndBestPost() {
     useEffect(() => {
         bestPostList();
     }, []);
+
+    const handleBoardClick = (boardId) => {
+        if (!payload) {
+            return;
+        }
+
+        const userId = payload.userNo;
+        const lastVisitTime = localStorage.getItem(`lastVisit_${userId}_${boardId}`);
+        const currentTime = new Date().getTime();
+
+        if (!lastVisitTime || currentTime - parseInt(lastVisitTime) > 12 * 60 * 60 * 1000) {
+            axios.post(`board/IncreaseViews/${boardId}`)
+                .then((response) => {
+                    localStorage.setItem(`lastVisit_${userId}_${boardId}`, currentTime.toString());
+                    openModal(boardId);
+                })
+                .catch((error) => {
+                    console.error("게시글 조회수 증가 실패:", error);
+                });
+        } else {
+            console.log("이미 조회한 게시물입니다.");
+            openModal(boardId);
+        }
+    };
+
+
     const openModal = (boardId) => {
         if (!payload) {
             alert("로그인된 유저만 접근 가능합니다.");
@@ -63,6 +89,7 @@ function BbsSlideAndBestPost() {
                         onClick={() => {
                             openModal(board.boardId);
                             setSelectedBoardId(board.boardId);
+                            handleBoardClick(board.boardId);
                         }}
                     >
                         <div className="BestTitle BestTitleDetail">{board.boardTitle}</div>
@@ -89,7 +116,6 @@ function BbsSlideAndBestPost() {
             />
         </div>
     );
-
 }
 
 export default BbsSlideAndBestPost;

@@ -13,6 +13,9 @@ function Header() {
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
 
+    console.log("헤더페이로드:",payload);
+    console.log("헤더페이로드2:",setAuthPayload);
+
     useEffect(() => {
         checkLoginStatus();
     }, []); // 컴포넌트가 마운트될 때 한 번만 실행

@@ -22,8 +22,6 @@ import Announcement from "./Announcement/Announcement";
 import CustomerOrderComplete from "./product/Cart/CustomerOrderComplete";
 import ProductEdit from "./admin/ProductEdit";
 import Info from "./Info/Info";
-import PrivateRoute from "./PrivateRoute";
-import Address from "./user/Address";
 
 import CustomerPayment from "./product/Cart/CustomerPayment"
 
@@ -54,7 +52,6 @@ function App() {
                     <Route path='/CustomerOrder' element={<CustomerOrder />} />
                     <Route path='/CustomerPayment' element={<CustomerPayment />} />
                     <Route path='/CustomerOrderComplete' element={<CustomerOrderComplete />} />
-                    <Route path='/Address' element={<Address />} />
                 </Routes>
             </div>
         </PaginationProvider>
