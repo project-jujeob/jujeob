@@ -5,11 +5,14 @@ import { FiSend } from "react-icons/fi";
 function Write({ boardId, commentFetchData }) {
     const [commentContent, setCommentContent] = useState("");
     const { payload } = useAuth();
-    const userNo = payload.userNo.toString();
+    const userNo = payload.userNo
     const [isSubmitting, setIsSubmitting] = useState(false);
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(payload.userNo+ "유저의 유저의!");
+        console.log(userNo + "유저의 유저의 ddddddddd!");
         if (!payload) {
             alert("로그인한 사용자만 가능합니다!");
             return;

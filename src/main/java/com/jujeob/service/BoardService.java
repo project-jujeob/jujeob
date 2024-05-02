@@ -33,6 +33,8 @@ public class BoardService {
         dto.setCreateDate(entity.getCreateDate());
         dto.setNickname(entity.getUser().getNickname());
         dto.setCommentCount(boardCommentRepository.countByBoardId(entity.getBoardId()));
+        dto.setBoardCategory(entity.getBoardCategory());
+        dto.setImageUrl(entity.getImageUrl());
         System.out.println("댓글개수: "  + boardCommentRepository.countByBoardId(entity.getBoardId()));
         return dto;
     }
@@ -47,6 +49,17 @@ public class BoardService {
 
         return BoardsDtos;
     }
+
+    public List<BoardDto> getAllBoardsByCategory(String category) {
+        List<Board> boards = boardRepository.findByBoardCategory(category);
+        List<BoardDto> boardDtos = new ArrayList<>();
+
+        for (Board entity : boards) {
+            boardDtos.add(mapBoardToDto(entity));
+        }
+
+        return boardDtos;
+    }
     public void boardWrite(BoardDto boardDto) {
         // BoardDto를 이용하여 Board 객체를 생성
         Board board = new Board();
@@ -54,17 +67,16 @@ public class BoardService {
         board.setBoardTitle(boardDto.getBoardTitle());
         board.setBoardContent(boardDto.getBoardContent());
         board.setCreateDate(LocalDateTime.now()); // 현재 날짜 설정
-
+        board.setBoardCategory(boardDto.getBoardCategory());
+        board.setImageUrl(boardDto.getImageUrl());
         // 게시글 저장
         boardRepository.save(board);
     }
     //    게시글용
     public BoardDto getBoardById(Integer boardId) {
-        System.out.println("서비스에서 요청 받았어!!!!");
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
         String nickname = board.getUser().getNickname();
-
         // Board 엔티티에서 필요한 데이터를 추출하여 BoardDTO 객체로 변환
         System.out.println(board.getBoardId());
         BoardDto boardDto = new BoardDto();
@@ -76,7 +88,7 @@ public class BoardService {
         boardDto.setBoardUpdate(board.getBoardUpdate());
         boardDto.setCreateDate(board.getCreateDate());
         boardDto.setBoardViews(board.getBoardViews());
-
+        boardDto.setImageUrl(board.getImageUrl());
         return boardDto;
     }
 

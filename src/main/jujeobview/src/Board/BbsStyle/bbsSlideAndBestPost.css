@@ -2,12 +2,67 @@
     display: flex;
     flex-direction: row;
 }
-.SlideArea{
-    border: 1px solid black;
-    margin-right: 20px;
-    text-align: center;
+/* 베스트 게시물 영역 */
+.BestPostArea {
+    width: 720px;
+    margin-top: 20px; /* 슬라이드 영역과의 간격 설정 */
 }
-.BestPostArea{
-    border: 1px solid black;
-    text-align: center;
+
+/* 베스트 게시물 헤더 */
+.BestPostDetail.Header {
+    display: flex;
+    background-color: #ffffff; /* 헤더 배경색 설정 */
+    font-weight: bold; /* 헤더 글꼴 두껍게 설정 */
 }
+
+/* 베스트 게시물 항목 */
+.BestPostDetail {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between; /* 내용을 좌우로 정렬 */
+    padding: 5px; /* 각 항목 주변에 간격 추가 */
+    border-bottom: 1px solid #e8e8e8; /* 항목 간에 구분선 추가 */
+    transition: transform 0.3s ease, background-color 0.9s ease;
+}
+.BestPostDetail div{
+    overflow: hidden; /* 너무 긴 텍스트를 자르고 넘칠 경우 가림 */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* 홀수 행 배경색 */
+.BestPostDetail.odd {
+    background-color: #ffffff;
+}
+.Best{
+    text-align: center;
+    font-weight: bolder;
+    margin-bottom: 10px;
+    font-size: 20px;
+}
+/* 짝수 행 배경색 */
+.BestPostDetail.even {
+    background-color: rgba(255, 255, 255, 0.16);
+}
+
+/* 각 항목들 (제목, 작성자, 조회수, 댓글 수, 작성일) */
+.BestPostDetail > div {
+    flex: 1; /* 모든 항목이 동일한 너비를 갖도록 설정 */
+    text-align: center; /* 각 항목 텍스트 가운데 정렬 */
+}
+
+/* 항목 헤더 스타일 */
+.BestPostDetail > div.BestTitle {
+    flex: 4; /* 제목이 더 많은 공간을 차지하도록 설정 */
+}
+.BestPostDetail > div.BestDate{
+    flex: 2.5;
+}
+    /* 마우스 오버시 행 배경색 */
+.BestPostDetail:hover {
+    background-color: rgba(255, 78, 34, 0.69);
+}
+.BestTitleDetail{
+    color: #ffc3a0;
+}
+

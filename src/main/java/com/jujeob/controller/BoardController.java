@@ -20,12 +20,20 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    @GetMapping("/boardData")
-    public List<BoardDto> getAllBoards() {
+    @GetMapping("/boardBest")
+    public List<BoardDto> getBest() {
         System.out.println("나 컨트롤러 인데 서비스 요청 받았어?");
         return boardService.getAllBoards();
     }
 
+    @GetMapping("/boardData")
+    public List<BoardDto> getAllBoards(@RequestParam(required = false) String category) {
+        if (category == null || category.isEmpty() || category.equals("전체")) {
+            return boardService.getAllBoards();
+        } else {
+            return boardService.getAllBoardsByCategory(category);
+        }
+    }
     @PostMapping("/Write")
     public ResponseEntity<String> boardWrite(@RequestBody BoardDto boardDto) {
         try {

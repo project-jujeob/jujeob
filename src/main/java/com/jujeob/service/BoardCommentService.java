@@ -40,7 +40,7 @@ public class BoardCommentService {
         List<BoardComment> comments = boardCommentRepository.findByBoardId(boardId);
         List<BoardCommentDto> commentDtoList = new ArrayList<>();
         for (BoardComment comment : comments) {
-            if (comment.getIsDeleted() == 0) { // isDeleted가 0인 경우에만 처리
+            if (comment.getIsDeleted() == 0) {
                 BoardCommentDto commentDto = mapCommentDto(comment);
                 String nickname = boardCommentRepository.findNicknameByUserNo(comment.getUserNo());
                 commentDto.setNickname(nickname);
@@ -48,10 +48,8 @@ public class BoardCommentService {
                 commentDto.setCommentId(comment.getCommentId());
                 commentDto.setCommentParent(comment.getCommentParent());
                 commentDto.setIsDeleted(comment.getIsDeleted());
-
                 long replyCount = boardCommentRepository.countByCommentParentAndIsDeleted(comment.getCommentId(), 0);
                 commentDto.setCommentCount((int) replyCount);
-
                 commentDtoList.add(commentDto);
             }
         }
@@ -133,7 +131,7 @@ public class BoardCommentService {
             Long parentCommentWriterUserNo = parentComment.getUserNo();
             String parentCommentWriterNickname = boardCommentRepository.findNicknameByUserNo(parentCommentWriterUserNo);
             System.out.println("parentCommentWriterNickname: " + parentCommentWriterNickname);
-            dto.setParentMemNickname(parentCommentWriterNickname); // 부모 댓글 작성자 닉네임 설정
+            dto.setParentNickname(parentCommentWriterNickname); // 부모 댓글 작성자 닉네임 설정
         }
 
         String nickname = boardCommentRepository.findNicknameByUserNo(comment.getUserNo());

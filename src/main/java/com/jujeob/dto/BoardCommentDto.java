@@ -17,7 +17,7 @@ public class BoardCommentDto {
     private int commentOrder;
     private int isDeleted;
     private int CommentCount;
-    private String parentMemNickname;
+    private String parentNickname;
     private Long userNo;
     private String nickname;
 }

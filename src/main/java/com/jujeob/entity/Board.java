@@ -23,7 +23,7 @@ public class Board {
 
 
     @Column(name = "Board_Category")
-    private String BoardCategory;
+    private String boardCategory;
 
 
     @Column(name = "Board_Title")
@@ -50,8 +50,10 @@ public class Board {
     @Column(name = "userNo")
     private Long userNo;
 
-    @ManyToOne
-    @JoinColumn(name = "userNo")
-    private User user;
+    @Column(name = "imageUrl")
+    private String imageUrl;
 
+    @ManyToOne
+    @JoinColumn(name = "userNo" , insertable = false, updatable = false)
+    private User user;
 }

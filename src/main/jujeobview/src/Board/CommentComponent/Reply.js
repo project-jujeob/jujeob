@@ -18,7 +18,6 @@ function Reply({ handleSave, parentCommentId, triggerUpdate, toggleMenu, selecte
             try {
                 const response = await fetch(`/boardComment/ReplyData/${parentCommentId}?sort=desc`);
                 const data = await response.json();
-                // Filter out replies with isDeleted === 0
                 const filteredReplies = data.filter(reply => reply.isDeleted === 0);
                 setReplies(filteredReplies.reverse());
                 setLoading(false);
@@ -33,13 +32,6 @@ function Reply({ handleSave, parentCommentId, triggerUpdate, toggleMenu, selecte
         }
     }, [parentCommentId, triggerUpdate]);
 
-/*    const handleSave = (commentId, content) => {
-        // 수정된 내용을 저장하는 로직을 여기에 구현합니다.
-        // 예시: 수정된 내용을 저장하기 위해 API를 호출합니다.
-        console.log(`댓글 ${commentId}에 대한 수정된 내용을 저장 중: ${content}`);
-        // 저장 후, 편집 모드를 재설정합니다.
-        setEditMode({ id: null, content: '' });
-    };*/
 
     const cancel = () => {
         // Reset editMode when cancel is clicked
@@ -75,7 +67,7 @@ function Reply({ handleSave, parentCommentId, triggerUpdate, toggleMenu, selecte
                                 <div className="Reply-ProfileImgAndAuthor">
                                     <div className="Reply-AuthorAndContent-ProfileImg"><CgProfile/></div>
                                     <div className="Reply-AuthorAndContent-Reply-Author">
-                                        <div>{reply.Nickname}</div>
+                                        <div>{reply.nickname}</div>
                                     </div>
                                     <div className="Reply-Options">
                                         <div className="Reply-dropdown-toggle" onClick={() => toggleMenu(reply.commentId)}>

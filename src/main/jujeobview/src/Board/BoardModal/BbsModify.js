@@ -96,6 +96,20 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
                                 editor={ClassicEditor}
                                 config={{
                                     placeholder: "내용을 입력하세요.",
+                                    toolbar: {
+                                        items: [
+                                            'heading',
+                                            '|',
+                                            'bold',
+                                            'italic',
+                                            'link',
+                                            'bulletedList',
+                                            'numberedList',
+                                            '|',
+                                            'undo',
+                                            'redo'
+                                        ]
+                                    }
                                 }}
                                 data={content}  // 기존 콘텐트 데이터를 CKEditor에 설정
                                 onChange={(event, editor) => {

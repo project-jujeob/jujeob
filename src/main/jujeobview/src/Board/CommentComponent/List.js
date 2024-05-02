@@ -32,6 +32,7 @@ function List({ commentsList, commentFetchData, boardId }) {
             if (payload.userNo === selectedCommentUserNo) {
                 setIsDeleteModalOpen(true);
             } else {
+                console.log("페이" + payload.userNo+ "로긴" + selectedCommentUserNo)
                 alert("자신의 댓글만 삭제할 수 있습니다.");
                 setSelectedCommentId(null);
                 setSelectedCommentUserNo(null);
@@ -59,7 +60,6 @@ function List({ commentsList, commentFetchData, boardId }) {
         setSelectedCommentUserNo(null);
     };
     const handleEdit = (commentId, commentContent, userNo) => {
-        console.log("Dㅑ호" +commentId+ "컨텐" + commentContent+ " 멤버 "+  userNo)
         setSelectedCommentIdForReply(null);
         setShowReplyInput(false);
         if (payload.userNo !== userNo) {
@@ -111,7 +111,7 @@ function List({ commentsList, commentFetchData, boardId }) {
         setIsMenuOpen(!isMenuOpen);
     };
 
-    const handleReply = (commentId, Nickname) => {
+    const handleReply = (commentId, nickname) => {
         setSelectedCommentIdForMenu(null);
         cancel();
         if (selectedCommentIdForReply === commentId) {
@@ -125,7 +125,7 @@ function List({ commentsList, commentFetchData, boardId }) {
             setShowReplyInput(commentId);
 
         }
-        setSelectedNickname(Nickname);
+        setSelectedNickname(nickname);
     };
 
     const submitReply = async (commentParent, userNo, commentContent) => {
@@ -167,7 +167,7 @@ function List({ commentsList, commentFetchData, boardId }) {
                         <div className="Comment-AuthorAndContent">
                             <div className="AuthorAndContent-ProfileImgAndAuthor">
                                 <div className="AuthorAndContent Comment-ProfileImg"><CgProfile/></div>
-                                <div className="AuthorAndContent Comment-Author">{comment.Nickname}</div>
+                                <div className="AuthorAndContent Comment-Author">{comment.nickname}</div>
                             </div>
                             {editMode.id === comment.commentId ? (
                                 <div>
@@ -185,9 +185,9 @@ function List({ commentsList, commentFetchData, boardId }) {
                     </div>
                     <div className="Comment-Detail-UpdateAndDelete">
                         {showReplyInput === comment.commentId ? (
-                            <div className="Comment-Reply" onClick={() =>handleReply(comment.commentId, comment.Nickname)}>답글 접기</div>
+                            <div className="Comment-Reply" onClick={() =>handleReply(comment.commentId, comment.nickname)}>답글 접기</div>
                         ) : (
-                            <div className="Comment-Reply" onClick={() => handleReply(comment.commentId, comment.Nickname)}>답글 달기({comment.commentCount})</div>
+                            <div className="Comment-Reply" onClick={() => handleReply(comment.commentId, comment.nickname)}>답글 달기({comment.commentCount})</div>
                         )}
                         <div className="dropdown-toggle" onClick={() => toggleMenu(comment.commentId)}>
                             <SlOptions />
@@ -217,7 +217,7 @@ function List({ commentsList, commentFetchData, boardId }) {
                                 }}
                             >
                                 <div className="Comment-Detail-Item Comment-Detail-DeleteButton"
-                                     onClick={() => openDeleteModal(comment.commentId, comment.uesrNo, comment.commentParent)}>
+                                     onClick={() => openDeleteModal(comment.commentId, comment.userNo, comment.commentParent)}>
                                     삭제
                                 </div>
                                 <div className="Comment-Detail-Item Comment-Detail-Divide"></div>

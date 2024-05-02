@@ -111,22 +111,45 @@ function BbsDetail({ isOpen, onRequestClose, boardId }) {
                     <div className="Board-Detail-Post-Container">
                         <div className="Board-Detail-Profile">
                             <div className="Profile Profile-Views">
-                                <FiEye />
+                                <FiEye/>
                                 <p>{board.boardViews}</p>
                             </div>
                             <div className="Board-Detail-Date">
-                                 <DateAndTime createDate={board.createDate}/>
+                                <DateAndTime createDate={board.createDate}/>
                             </div>
                         </div>
                         <div className="Board-Detail-TitleAndContent">
                             <div className="TitleAndContent TitleAndContent-Title"><h3>{board.boardTitle}</h3></div>
                             <div className="TitleAndContent TitleAndContent-Profile">
                                 <div className="Profile Profile-ProfileImg"><CgProfile/></div>
-                                <div className="Profile ProfileMemberNickname">{board.Nickname}</div>
-                                <div className="Profile-Setting" onClick={()=>toggleMenu(board.boardId)}><SlOptions/></div>
+                                <div className="Profile ProfileMemberNickname">{board.nickname}</div>
+                                <div className="Profile-Setting" onClick={() => toggleMenu(board.boardId)}><SlOptions/>
+                                </div>
                             </div>
-                            <div className="TitleAndContent TitleAndContent-Content">{parse(board.boardContent)}</div>
-                            <div className="TitleAndContent TitleAndContent-Img"><img alt="이미지"/></div>
+                            <div className="TitleAndContent">
+                                <div className="TitleAndContent-Content">
+                                    {parse(board.boardContent)}
+                                    {board.imageUrl ? (
+                                        <img className="imageArea-Img" src={`/public${board.imageUrl}`} alt="Uploaded Image"/>
+                                    ) : (
+                                        <img className="imageArea-Img" src="/public/boardImg/위스키귀엽쥬.png" alt="Default Image"/>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="CreateDateTime">
+                            <div>
+                                {new Date(board.createDate).toLocaleString("KR", {
+                                    year: "numeric",
+                                    month: "2-digit",
+                                    day: "2-digit",
+                                    hour: "2-digit",
+                                    minute: "2-digit"
+                                })}
+                            </div>
+                            <div className="Copyright">
+                                Copyrightⓒ 2024 by Ju Jeob
+                            </div>
                         </div>
                     </div>
                     <div className="de"></div>

@@ -8,6 +8,7 @@
     padding: 20px;
 }
 .bbsPost {
+    align-items: center;
     height: 240px;
     width: 100%;
     display: flex;
@@ -15,22 +16,27 @@
     border:2.5px solid rgba(159, 159, 159, 0.58);
     font-weight: bold;
     border-radius: 15px;
-    background-image: url('https://wimg.mk.co.kr/meet/neds/2019/04/image_readtop_2019_261362_15561720623725165.jpg');
+   /* background-image: url('https://wimg.mk.co.kr/meet/neds/2019/04/image_readtop_2019_261362_15561720623725165.jpg');*/
     background-size: 100%;
     max-height: 400px;
     max-width: 300px;
     justify-content: center;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.9s ease;
+}
+.bbsPost:hover {
+    background-color: rgba(255, 53, 8, 0.21); /* 마우스가 요소에 올라갔을 때 배경색 변경 */
 }
 .bbsPostBackground{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    width: 100%;
-    height: 80%;
-    background-color: rgba(255, 253, 253, 0.8);
+    width: 90%;
+    height: 90%;
     cursor: pointer;
+    background-size: cover;
+    background-position: center;
+    border-radius: 13px;
 }
 .bbsPost h3{
     overflow: hidden;
@@ -43,11 +49,6 @@
 }
 .PostDetailTop{
     text-align: center;
-}
-.PostDetailTop-CreateDate{
-    color: rgba(121, 121, 121, 0.94);
-    text-align: center;
-    font-size: 13px;
 }
 .PostDetailBottom{
     display: flex;
@@ -91,11 +92,17 @@
 .PostDetailBottomItem{
     margin-left: 25px;
 }
+.SearchAndCategory{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+}
 .DetailNavSearchArea{
     width: 97%;
     position: relative;
     text-align: right;
-    bottom: 50px;
 }
 .DetailNavSearchArea input{
     text-align: center;
@@ -107,6 +114,48 @@
 .DetailNavSearchArea input:focus {
     transform: scale(1.2);
 }
-/*.DetailNavSearchArea img{*/
-/*    height: 30px;*/
-/*}*/
+.BoardListCreateDate{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #9b9b9b;
+    padding: 0 20px;
+}
+.ListCategory-select{
+    margin-left: 30px;
+    display: flex;
+    flex-direction: row;
+}
+.ListCategory-selectItem{
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 50px;
+    color: #333;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+.ListCategory-selectItem:hover{
+    color: #555;
+}
+.ListCategory-selectItem.selected{
+    color: #FF7E5C;
+    transform: scale(1.3);
+}
+.loadingAndNothing{
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    padding: 80px;
+}
+.hoveredImageContainer{
+    background-size: cover; /* 이미지를 컨테이너에 맞게 조절 */
+    background-position: center; /* 이미지를 가운데 정렬 */
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    position: absolute;
+    margin-bottom: 125px;
+    margin-left: 180px;
+    opacity: 0.6;
+}
+

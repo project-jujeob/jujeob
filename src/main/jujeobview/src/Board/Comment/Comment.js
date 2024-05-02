@@ -1,9 +1,10 @@
 import Write from "../CommentComponent/Wirte";
 import List from "../CommentComponent/List";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Loading from "./Loading";
 import {useAuth} from "../../user/Context";
+import LikeBtnClick from "../../product/Like/LikeBtnClick";
 function Comment ({ boardId }){
     const { payload } = useAuth();
     const [commentsList, setCommentsList] = useState([]);
@@ -37,7 +38,7 @@ function Comment ({ boardId }){
                     ) : (
                 <>
                     <List commentsList={commentsList} boardId={boardId} commentFetchData={commentFetchData}  />
-                    <div className="Comment-LikeArea">하트</div>
+                    <div className="Comment-LikeArea">{/*<LikeBtnClick product={product} payload={payload} likes={likes} setLikes={setLikes}/>*/}</div>
                     <Write boardId={boardId} commentFetchData={commentFetchData} />
                 </>
             )}

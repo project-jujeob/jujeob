@@ -34,11 +34,6 @@ public class BoardComment {
     @Column(name = "Comment_Order")
     private int CommentOrder;
 
-
-    @Column(name = "Comment_depth")
-    private int CommentDepth;
-
-
     @Column(name = "Comment_isDeleted")
     private int isDeleted;
 

@@ -1,53 +1,7 @@
-
-.CategoriesNavContainer{
+.CategoryNewPost {
     display: flex;
-    justify-content: center;
+    flex-direction: row-reverse;
     padding: 20px;
-}
-.Categories{
-    display: flex;
-    justify-content: center;
-
-}
-.Category{
-    font-weight: bold;
-    text-align: center;
-    font-size: 20px;
-    margin-right: 85px;
-}
-.CategoryNewPost{
-    margin-left: 700px;
-
-}
-.NewPostDiv{
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    border: 1px solid rgba(128, 128, 128, 0.63);
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-}
-.NewPostDiv:hover{
-    transform: scale(1.05);
-}
-.DetailNavContainer{
-    width: 100%;
-    display: flex;
-    justify-content: left;
-}
-.DetailNavButtonArea{
-    display: flex;
-    padding: 15px;
-}
-.DetailNavButton{
-    background-color: white;
-    font-weight: bolder;
-    font-size: 16px;
-    width: 120px;
-    height: 35px;
-    margin-right: 80px;
-    border-radius: 10px;
-    border: 1px solid gray;
 }
 .NewPostDiv{
     line-height: 38px;
@@ -55,13 +9,16 @@
     font-size: 14px;
     width: 80px;
     height: 40px;
-    border-radius: 12px;
     cursor: pointer;
     border: 1px solid rgba(222, 222, 222, 0.78);
     background-color: #FF7E5C;
+    font-weight: bold;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
 }
-.NewPostDiv:hover{
+.NewPostDiv:hover {
     background-color: rgba(255, 78, 34, 0.86);
+    transform: scale(1.05);
 }
 .NewPostDiv:active{
     background-color: rgba(255, 163, 141, 0.86);
