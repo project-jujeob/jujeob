@@ -9,7 +9,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 80px;
+    padding: 60px;
+    overflow-y: auto;
 }
 
 .DetailNavSearchArea{
@@ -23,12 +24,47 @@
     width: 80%;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 .Profile{
-    margin-right: 10px;
+    width: 70px;
+    font-size: 14px;
+    margin-right: 5px;
 }
 .Profile-Setting{
+    color: #818181;
+    font-weight: bolder;
+    cursor: pointer;
+    font-size: 18px;
     margin-left: auto;
+}
+.Profile-Setting:hover{
+    color: #ababab;
+}
+.ProfileMemberNickname {
+    font-size: 16px;
+    width: auto;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.Profile-Views{
+    display: flex;
+    flex-direction: row;
+    color: rgba(121, 121, 121, 0.94);
+    font-size: 18px;
+}
+.Profile-Views p{
+    margin-right: 8px;
+    color: rgba(121, 121, 121, 0.94);
+    font-size: 14px;
+    margin-left: 5px;
+    font-weight: bolder;
+}
+.Profile-ProfileImg{
+    width: auto;
+    font-size: 22px;
+    color: rgba(253, 78, 38, 0.65);
 }
 /**/
 .Board-Detail-TitleAndContent{
@@ -40,15 +76,22 @@
     background-color: rgba(232, 232, 232, 0.35);
     margin-top: 20px;
 }
-
+.TitleAndContent-Profile{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 .TitleAndContent-Img{
     margin-bottom: 20px;
     height: 300px;
-    border: 1px solid black;
+    background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-yKpHDYUIhN2WMWZR-bgQNFLn3uEGCQ2mLA&s');
+    background-size: contain; /* 이미지가 영역 내에 잘리지 않고 전체가 보이도록 조절 */
+    background-repeat: no-repeat; /* 이미지 반복 제거 */
+    background-position: center;
 }
 .TitleAndContent-Content{
     margin-top: 30px;
-    height: 200px;
 }
 /**/
 
@@ -62,10 +105,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
 }
-
+.Board-Detail-Date{
+    color: rgba(121, 121, 121, 0.94);
+    font-size: 14px;
+    font-weight: bolder;
+}
 .Comment-List{
+    padding: 20px;
     width: 100%;
     height: 88%;
     overflow: auto;
@@ -80,7 +127,7 @@
     max-height: 700px;
 }
 .Comment-Content{
-    font-size: 12px;
+    font-size: 16px;
 }
 .Comment-Detail{
     display: flex;
@@ -88,6 +135,10 @@
     width: 100%;
     overflowY: auto;
     margin-bottom: 8px;
+}
+.Comment-ProfileImg{
+    font-size: 22px;
+    color: rgba(253, 78, 38, 0.65);
 }
 .Comment-AuthorAndContent{
     display: flex;
@@ -102,18 +153,24 @@
     margin-right: 5px;
 }
 .Comment-Author{
+    font-weight: bolder;
 }
 .Comment-Date{
     font-size: 11px;
+    font-weight: inherit;
+    color: rgba(129, 129, 129, 0.91);
+    margin-bottom: 5px;
 }
 .Comment-LikeArea{
     width: 100%;
     height: 5%;
 }
 .Comment-Write{
+    text-align: center;
     border-top: 1px solid rgba(157, 157, 157, 0.68);
     width: 100%;
     height: 7%;
+    margin-top: 15px;
 }
 .Comment-Write input{
     margin-top: 5px;
@@ -127,8 +184,48 @@
 }
 .Comment-Write button{
     cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.Comment-Write button:hover{
+    transform: scale(1.05);
+}
+.Comment-Detail-UpdateAndDelete{
+    display: flex;
+}
+.Comment-Detail-Item{
+    color: #555555;
+    margin: auto;
+    display: flex;
+    justify-content: center; /* 수평 가운데 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    font-weight: bolder;
+}
+.Comment-Detail-Divide{
+    border: 1px solid rgba(169, 169, 169, 0.73);
+    height: 1px;
+    width: 100%;
+}
+.Comment-Detail-UpdateButton{
+    cursor: pointer;
+    width: 100%;
+}
+.Comment-Detail-DeleteButton{
+    cursor: pointer;
+    width: 100%;
+    color: rgba(246, 18, 18, 0.63);
+}
+.Comment-Detail-Reply{
 }
 
+.Comment-Reply{
+    font-weight: bolder;
+    font-size: 12px;
+    color: rgba(128, 128, 128, 0.81);
+    display: flex;
+    flex-direction: row-reverse;
+    cursor: pointer;
+    margin-left: 55px;
+}
 .Board-Detail-UpdateAndDelete{
     display: flex;
     flex-direction: row;
@@ -136,12 +233,17 @@
     line-height: 38px;
 }
 .Comment-SubmitButton{
-    margin-top: 5px;
-    background-color: #FF7E5C;
+    color: rgba(253, 78, 38, 0.65);
+    background-color: rgba(255, 255, 255, 0);
+    height: 35px;
     border: none;
-    width: 50px;
-    height: 40px;
+    font-size: 35px;
     border-radius: 5px;
+    transition: transform 0.3s ease;
+    vertical-align: bottom;
+}
+.Comment-SubmitButton:disabled{
+    color: rgba(253, 78, 38, 0.25);
 }
 .UpdateButton{
     width: 80px;
@@ -150,9 +252,12 @@
     cursor: pointer;
     border: 1px solid rgba(222, 222, 222, 0.78);
     background-color: #FF7E5C;
+    transition: transform 0.3s ease;
+    margin-right: 5px;
 }
 .UpdateButton:hover{
     background-color: rgba(255, 78, 34, 0.86);
+    transform: scale(1.05);
 }
 .UpdateButton:active{
     background-color: rgba(255, 163, 141, 0.86);
@@ -163,10 +268,130 @@
     border-radius: 12px;
     cursor: pointer;
     border: 1px solid rgba(222, 222, 222, 0.78);
+    transition: transform 0.3s ease;
 }
 .DeleteButton:hover{
     background-color: #e0e0e0;
+    transform: scale(1.05);
 }
 .DeleteButton:active{
     background-color: #b0b0b0;
+}
+.ModalContent {
+    background-color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    outline: none;
+    border-radius: 35px ;
+}
+.ModalContent.open {
+    border: none;
+    opacity: 1;
+}
+.dropdown-toggle{
+    color: #818181;
+    font-weight: bolder;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: 10px;
+    display: none;
+}
+.dropdown-menu{
+    display: flex;
+    margin-right: 10px;
+
+/*    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: relative;
+    top: -10px; */
+}
+.dropdown-menu.open {
+/*    opacity: 1;
+    transform: translateY(0);
+    top: 0;*/
+}
+.Comment-Detail:hover .dropdown-toggle {
+    display: block;
+}
+.Comment-Detail:hover .Comment-Reply {
+    visibility: visible;
+}
+.Comment-ReplyInput{
+    width: 80%;
+    height: 35px;
+    font-size: 13px;
+    border: none;
+    border-bottom: 1px solid rgba(169, 169, 169, 0.82);
+}
+.Comment-ReplyInput:focus{
+    outline: none;
+}
+.Comment-ReplySubmitButton{
+    color: rgba(253, 78, 38, 0.65);
+    background-color: rgba(255, 255, 255, 0);
+    font-size: 30px;
+    border: none;
+    width: 40px;
+    height: 32px;
+    border-radius: 5px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    vertical-align: bottom;
+}
+.Comment-ReplySubmitButton:disabled{
+    color: rgba(253, 78, 38, 0.25);
+}
+.Comment-UpdateInput{
+    height: 35px;
+    font-size: 13px;
+    border: none;
+    border-bottom: 1px solid rgba(169, 169, 169, 0.82);
+}
+.Comment-UpdateInput:focus{
+    outline: none;
+}
+.Comment-ReplyArea{
+    padding: 10px;
+    margin-left: 20px;
+    width: 100%;
+}
+.Comment-UpdateSubmit{
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    font-size: 18px;
+    margin-left: 5px;
+    color: rgba(44, 187, 44, 0.77);
+}
+.Comment-UpdateCancel{
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    font-size: 18px;
+    margin-left: 5px;
+    color: rgba(218, 28, 28, 0.81);
+}
+.loading{
+    margin: auto;
+}
+.imageArea-Img {
+    width: 100%; /* 이미지의 폭을 200px로 설정 */
+    height: auto;
+}
+.CreateDateTime {
+    left: auto;
+    width: 80%;
+    color: rgba(173, 173, 173, 0.99);
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 5px;
+}
+.Copyright{
+    margin-top: 15px;
+    font-size: 12px;
 }

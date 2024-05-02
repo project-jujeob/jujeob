@@ -8,6 +8,7 @@ import BbsSlideAndBestPost from "../BoardComponent/BbsSlideAndBestPost";
 import {useAuth} from "../../user/Context";
 
 function BbsList() {
+    const {payload} = useAuth();
     return (
         <div>
             <Header />
@@ -17,7 +18,7 @@ function BbsList() {
                 </div>
 
                 <div className="NavContainer">
-                   <BbsCategory />
+                    <BbsCategory />
                 </div>
                 <div className="BoardListItem">
                     <BbsListItem />

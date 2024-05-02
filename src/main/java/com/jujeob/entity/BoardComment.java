@@ -16,7 +16,7 @@ public class BoardComment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Comment_Id")
-    private int Comment_Id;
+    private int CommentId;
 
 
     @Column(name = "Comment_CreateDate")
@@ -28,16 +28,11 @@ public class BoardComment {
 
 
     @Column(name = "Comment_Parent_No")
-    private int CommentOriginal;
+    private int commentParent;
 
 
     @Column(name = "Comment_Order")
     private int CommentOrder;
-
-
-    @Column(name = "Comment_depth")
-    private int CommentDepth;
-
 
     @Column(name = "Comment_isDeleted")
     private int isDeleted;
@@ -48,6 +43,10 @@ public class BoardComment {
     @Column(name = "board_id")
     private int boardId;
 
+
+//    @Column(name = "mem_no")
+//    private Long memNo;
+
     @Column(name = "user_no")
     private Long userNo;
 
@@ -55,6 +54,10 @@ public class BoardComment {
     @ManyToOne
     @JoinColumn(name = "board_id", insertable = false, updatable = false)
     private Board board;
+
+//    @ManyToOne
+//    @JoinColumn(name = "mem_no", insertable = false, updatable = false)
+//    private Member member;
 
     @ManyToOne
     @JoinColumn(name = "user_no", insertable = false, updatable = false)

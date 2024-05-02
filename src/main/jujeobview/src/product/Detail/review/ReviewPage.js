@@ -1,32 +1,28 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import ReviewWrite from "./ReviewWrite";
 import axios from "axios";
 import Pagination from "../../../common/Pagination";
 
 const PAGE_SIZE = 5;
 
-function ReviewPage({product}) {
+function ReviewPage({ product }) {
 
     const [reviews, setReviews] = useState([]);
-    console.log("리뷰",reviews);
-    /*const {payload} = useAuth();
-    console.log("페이로드", payload);*/
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
     const [totalReviews, setTotalReviews] = useState(0);
 
-
     useEffect(() => {
         axios.get(`/api/Reviews/${product.productNo}`)
             .then((response) => {
-                setReviews(response.data);
-                setTotalReviews(response.data.length);
-                setTotalPages(Math.ceil(response.data.length / PAGE_SIZE));
+                const fetchedReviews = response.data;
+                setReviews(fetchedReviews);
+                setTotalReviews(fetchedReviews.length);
+                setTotalPages(Math.ceil(fetchedReviews.length / PAGE_SIZE));
             })
             .catch((error) => {
                 console.error('데이터 가져오기 실패:', error);
             });
-
     }, []);
 
     useEffect(() => {
@@ -34,11 +30,12 @@ function ReviewPage({product}) {
     }, [currentPage]);
 
     const loadReviews = () => {
-        const startIndex = (currentPage - 1) * PAGE_SIZE; // 페이지의 시작 인덱스 계산
-        const endIndex = startIndex + PAGE_SIZE; // 페이지의 끝 인덱스 계산
+        const startIndex = (currentPage - 1) * PAGE_SIZE;
+        const endIndex = startIndex + PAGE_SIZE;
         axios.get(`/api/Reviews/${product.productNo}`)
             .then((response) => {
-                setReviews(response.data.slice(startIndex, endIndex));
+                const fetchedReviews = response.data.slice(startIndex, endIndex);
+                setReviews(fetchedReviews);
             })
             .catch((error) => {
                 console.error('데이터 가져오기 실패:', error);
@@ -46,7 +43,19 @@ function ReviewPage({product}) {
     };
 
     const handlePageChange = (page) => {
-        setCurrentPage(page); // 페이지 변경 시 현재 페이지 업데이트
+        setCurrentPage(page);
+    };
+
+    const getStarRating = (star) => {
+        // 리뷰의 별점에 따라 별표로 표현하기
+        const stars = '★'.repeat(star); // 별표를 해당 별점 수만큼 반복해서 생성
+        const emptyStars = '☆'.repeat(5 - star); // 남은 별표를 빈 별표로 채움
+        return (
+            <span className="star-rating">
+                <span className="star">{stars}</span>
+                <span>{emptyStars}</span>
+            </span>
+        );
     };
 
     return (
@@ -59,7 +68,6 @@ function ReviewPage({product}) {
                     <div className="emptyReview">리뷰가 없습니다</div>
                 ) : (
                     reviews.map((review) => {
-                        console.log("리뷰", review); // 여기로 이동됨
                         return (
                             <div key={review.reviewNo} className="reviewContent">
                                 <div className="reviewContentLeft">
@@ -73,6 +81,7 @@ function ReviewPage({product}) {
                                         .map((line, index) => (
                                             <div key={index}>{line}</div>
                                         ))}</div>
+                                    <div>{getStarRating(review.star)}</div> {/* 별점 표시 */}
                                     <div>{new Date(review.reviewDate).toLocaleDateString()}</div>
                                 </article>
                             </div>
@@ -82,12 +91,12 @@ function ReviewPage({product}) {
 
             </div>
             <Pagination
-                totalItems={totalReviews} // 전체 리뷰 개수
-                itemsPerPage={PAGE_SIZE} // 페이지 당 보여줄 리뷰 개수
-                pageCount={3} // Pagination에서 보여줄 페이지 버튼 개수
-                currentPage={currentPage} // 현재 페이지
-                totalPages={totalPages} // 전체 페이지 수
-                onPageChange={handlePageChange} // 페이지 변경 이벤트 핸들러
+                totalItems={totalReviews}
+                itemsPerPage={PAGE_SIZE}
+                pageCount={3}
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
             />
         </div>
     )

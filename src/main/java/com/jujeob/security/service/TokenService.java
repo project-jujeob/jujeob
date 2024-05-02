@@ -16,14 +16,17 @@ public class TokenService {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
+    // 엑세스토큰
     public String createAccessToken(String userId) {
         return jwtTokenProvider.createAccessToken(userId);
     }
 
+    // 리프레시토큰
     public String createRefreshToken(String userId) {
         return jwtTokenProvider.createRefreshToken(userId);
     }
 
+    // 토큰 재발급
     public TokenRefreshResponse refreshAccessToken(String refreshToken) {
         // 리프레시 토큰 유효성 검증
         if (!jwtTokenProvider.validateToken(refreshToken))

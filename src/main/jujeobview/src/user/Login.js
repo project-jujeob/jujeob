@@ -23,9 +23,7 @@ function Login() {
     const loginAction = () => {
         axios({
             method: "post",
-            // url: "/api/login",
             url: "/api/auth/login",
-            // data: JSON.stringify({ memId, memPw }),
             data: JSON.stringify({ userId, password }),
             headers: {
                 "Accept": "application/json, text/plain, */*",
@@ -54,19 +52,19 @@ function Login() {
     }
 
     // 구글
-    const handleGoogleButtonClick = () => {
-        window.location.href = 'http://localhost:8080/oauth2/code/google';
-        //window.location.href = 'http://localhost:8080/oauth2/authorization/google';
-        navigate('/')
-    }
-    // 네이버
-    const handleNaverButtonClick = () => {
-        window.location.href = 'http://localhost:8080/login/oauth2/jujeob/naver';
-    }
-    // 카카오
-    const handleKakaoButtonClick = () => {
-        window.location.href = 'http://localhost:8080/login/oauth2/jujeob/kakao';
-    }
+    // const handleGoogleButtonClick = () => {
+    //     window.location.href = 'http://localhost:8080/oauth2/code/google';
+    //     //window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    //     navigate('/')
+    // }
+    // // 네이버
+    // const handleNaverButtonClick = () => {
+    //     window.location.href = 'http://localhost:8080/login/oauth2/jujeob/naver';
+    // }
+    // // 카카오
+    // const handleKakaoButtonClick = () => {
+    //     window.location.href = 'http://localhost:8080/login/oauth2/jujeob/kakao';
+    // }
 
 
     return (
@@ -94,13 +92,24 @@ function Login() {
                         </div>
                         <button id={"LoginBtn"} onClick={loginAction}>로그인</button>
                     </div>
-                    <div>
-                        <span className={"IdSave"}>
+
+
+                    <div className="loginOptionsContainer">
+                        <div className={"IdSave"}>
                             <input type={"checkbox"} id={"saveId"} name={"saveId"} value={"y"}/>
                             <label htmlFor="saveId" className={""}>아이디 저장</label>
-                        </span>
+                        </div>
                         {/*<p className="dn js_caution_msg1">아이디, 비밀번호가 일치하지 않습니다. 다시 입력해 주세요.</p>*/}
+
+                        <div className="linkContainer">
+                            <Link to="/find-id">아이디 찾기</Link>
+                            <span className="divider">|</span>
+                            <Link to="/find-password">비밀번호 찾기</Link>
+                            <span className="divider">|</span>
+                            <Link to="/register">회원가입</Link>
+                        </div>
                     </div>
+
 
 
                     <br/>
@@ -108,30 +117,30 @@ function Login() {
                     <br/>
 
                     <div>
-                        <div>
-                            <Link to={"/RegisterAdult"}>
-                                <button>회원가입</button>
-                            </Link>
-                        </div>
-                        <div>
-                            <button onClick={handleGoogleButtonClick}>
-                                구글 로그인
-                            </button>
-                        </div>
-                        <div>
-                            <button onClick={handleNaverButtonClick}>
-                                네이버 로그인
-                            </button>
-                        </div>
-                        <div>
-                            <button onClick={handleKakaoButtonClick}>
-                                카카오 로그인
-                            </button>
-                        </div>
+                        <Link to={"/AdultVerification"}>
+                            <button>회원가입</button>
+                        </Link>
                     </div>
+
+                    {/*<div>*/}
+                    {/*    <button onClick={handleGoogleButtonClick}>*/}
+                    {/*        구글 로그인*/}
+                    {/*    </button>*/}
+                    {/*</div>*/}
+                    {/*<div>*/}
+                    {/*    <button onClick={handleNaverButtonClick}>*/}
+                    {/*        네이버 로그인*/}
+                    {/*    </button>*/}
+                    {/*</div>*/}
+                    {/*<div>*/}
+                    {/*    <button onClick={handleKakaoButtonClick}>*/}
+                    {/*        카카오 로그인*/}
+                    {/*    </button>*/}
+                    {/*</div>*/}
                 </div>
             </div>
         </div>
+
     )
 }
 

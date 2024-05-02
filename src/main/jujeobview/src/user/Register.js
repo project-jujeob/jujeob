@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Register.css';
 import axios from "axios";
 import Header from "../common/Header";
@@ -19,8 +19,13 @@ function Register() {  //회원가입폼에 입력받을 데이터
 
     // 중복검사 모달
     const [userIdCheck, setUserIdCheck] = useState(null);
+    const [emailCheck, setEmailCheck] = useState(null);
+    const [passwordMatch, setPasswordMatch] = useState(true)
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
+    const [passwordValid, setPasswordValid] = useState(true); // 비밀번호 유효성
+    const [emailValid, setEmailValid] = useState(true); // 이메일 유효성
+
 
     // 아이디 중복검사
     function checkUserId(e) {
@@ -29,57 +34,130 @@ function Register() {  //회원가입폼에 입력받을 데이터
             alert("아이디를 입력하세요.")
             return
         }
-
-        axios.get(`/api/checkUserId?userId=${registerData.userId}`)
+        axios.get(`/api/auth/checkUserId?userId=${registerData.userId}`)
             .then(response => {
-                setUserIdCheck(response.data.available)
-                if (response.data.available) {
-                    setModalMessage("사용 가능한 아이디입니다.")
-                } else {
-                    setModalMessage("이미 사용 중인 아이디입니다.")
-                }
+                const isAvailable = response.data.available; // 백엔드에서 "available" 속성을 포함한 응답을 받음
+                setUserIdCheck(isAvailable)     //isAvailable 값을 상태로 저장
+                setModalMessage(isAvailable ? "사용 가능한 아이디입니다." : "이미 사용 중인 아이디입니다.")    //// 모달 메시지 설정
                 setShowModal(true)
             })
             .catch(error => {
-                console.error("중복 확인 중 오류 발생", error)
-                setModalMessage("중복 확인 중 오류가 발생했습니다.")
+                console.error("중복 확인 중 오류 발생", error);
+                let message = "네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
+                if (error.response && error.response.status === 404) {
+                    message = "서버를 찾을 수 없습니다. 관리자에게 문의하세요.";
+                }
+                setModalMessage(message);
+                setShowModal(true);
+            })
+    }
+
+    // 이메일 중복검사
+    function checkUserEmail(e) {
+        e.preventDefault()
+        if (!registerData.email) {
+            alert("아이디를 입력하세요.")
+            return
+        }
+        axios.get(`/api/auth/checkUserEmail?email=${registerData.email}`)
+            .then(response => {
+                const isAvailable = response.data.available; // 백엔드에서 "available" 속성을 포함한 응답을 받음
+                setEmailCheck(isAvailable)     //isAvailable 값을 상태로 저장
+                setModalMessage(isAvailable ? "사용 가능한 이메일입니다." : "이미 사용 중인 이메일입니다.")    //// 모달 메시지 설정
                 setShowModal(true)
+            })
+            .catch(error => {
+                console.error("중복 확인 중 오류 발생", error);
+                let message = "네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
+                if (error.response && error.response.status === 404) {
+                    message = "서버를 찾을 수 없습니다. 관리자에게 문의하세요.";
+                }
+                setModalMessage(message);
+                setShowModal(true);
             })
     }
 
 
-    const [passwordMatch, setPasswordMatch] = useState(true)
-
     // 비번, 비번확인 유효성(실시간확인)
+    // useEffect(() => {
+    //     const passwordRegex = /(?=.*[a-zA-Z])(?=.*\d)(?=.*\W).{10,}/;
+    //     setPasswordMatch(registerData.password === registerData.passwordConfirm && passwordRegex.test(registerData.password));
+    // }, [registerData.password, registerData.passwordConfirm]);
+
+    // 유효성검사
     const registerDataChange = (e) => { //
         const { name, value } = e.target
 
         setRegisterData(prevState => ({
             ...prevState,
             [name]: value
-        }));
-
-        if (name === 'password' || name === 'passwordConfirm') {
-            // 비밀번호 또는 비밀번호 확인 필드가 변경되었을 때, 두 필드의 값이 일치하는지 검사
-            const newPassword = name === 'password' ? value : registerData.password;
-            const newPasswordConfirm = name === 'passwordConfirm' ? value : registerData.passwordConfirm;
-            setPasswordMatch(newPassword === newPasswordConfirm);
-        }
+        }))
 
         // 아이디 필드가 변경되면 중복 검사 결과를 초기화
         if (name === 'userId') {
-            setUserIdCheck(null);
+            setUserIdCheck(null)
         }
+
+        // 비밀번호 또는 비밀번호 확인 필드가 변경되었을 때, 두 필드의 값이 일치하는지 검사. 실시간
+        // if (name === 'password' || name === 'passwordConfirm') {
+        //     const newPassword = name === 'password' ? value : registerData.password
+        //     const newPasswordConfirm = name === 'passwordConfirm' ? value : registerData.passwordConfirm
+        //     setPasswordMatch(newPassword === newPasswordConfirm)
+        //
+        //     // 비밀번호 유효성 검사
+        //     const passwordRegex = /(?=.*[a-zA-Z])(?=.*\d)(?=.*\W).{10,}/;
+        //     setPasswordValid(passwordRegex.test(newPassword));
+        // }
+
+        //이메일 유효성
+        if (name === 'email') {
+            setEmailValid(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value));
+        }
+
     }
 
     //회원가입
     const registerAction = (e) => {
         e.preventDefault()
 
-        if (Object.values(registerData).some(value => !value)) {
-            alert("입력 필드를 모두 채워주세요.")
-            return; // 함수 종료
+        // 필수 입력 필드 확인
+        const requiredFields = [
+            registerData.userId, registerData.password, registerData.passwordConfirm, registerData.nickname, registerData.name, registerData.email
+        ];
+        if (requiredFields.some(value => !value)) {
+            alert("필수 입력 필드를 모두 채워주세요.");
+            return;
         }
+
+        if (userIdCheck === null) {
+            alert("아이디 중복 검사를 진행해주세요.");
+            return;
+        }
+        if (userIdCheck === false) {
+            alert("이미 사용 중인 아이디입니다. 다른 아이디를 사용해주세요.");
+            return;
+        }
+
+
+        if (!passwordValid || !passwordMatch) {
+            alert("비밀번호가 유효하지 않거나 일치하지 않습니다.");
+            return;
+        }
+
+        if (emailCheck === null) {
+            alert("이메일 중복 검사를 진행해주세요.");
+            return;
+        }
+        if (emailCheck === false) {
+            alert("이미 사용 중인 이메일입니다. 다른 이메일을 사용해주세요.");
+            return;
+        }
+        if (!emailValid) {
+            alert("이메일 형식이 올바르지 않습니다.");
+            return;
+        }
+
+
 
         axios({
             method: "post",
@@ -105,9 +183,11 @@ function Register() {  //회원가입폼에 입력받을 데이터
                         <h1>회원가입</h1><br/>
                         <div className={"hr"}></div>
                         <br/>
+
                         <div className={"RegisterMemberId"}>
-                            <RegisterModal isOpen={showModal} message={modalMessage} onClose={() => setShowModal(false)} />
-                            <div className={"RegisterMemberLabel"}><label htmlFor={"userId"}>아이디</label></div>
+                            <RegisterModal isOpen={showModal} message={modalMessage}
+                                           onClose={() => setShowModal(false)}/>
+                            <div className={"RegisterMemberLabel"}><label htmlFor={"userId"}>아이디<span className={"RegisterMemberIdSpan"}>*</span></label></div>
                             <div className={"RegisterMemberInput"}>
                                 <input type={"text"} id={"userId"} placeholder={"아이디를 입력해주세요"} name={"userId"}
                                        onChange={registerDataChange} required={true}/><br/>
@@ -119,10 +199,11 @@ function Register() {  //회원가입폼에 입력받을 데이터
 
                         <div className={"RegisterMemberPw"}>
 
-                            <div className={"RegisterMemberLabel"}><label htmlFor={"password"}>비밀번호</label></div>
+                            <div className={"RegisterMemberLabel"}><label htmlFor={"password"}>비밀번호<span className={"RegisterMemberPwSpan"}>*</span></label></div>
                             <div className={"RegisterMemberPwDiv"}>
                                 <div className={"RegisterMemberInput"}>
-                                    <input type={"password"} id={"password"} placeholder={"비밀번호를 입력해주세요"} name={"password"}
+                                    <input type={"password"} id={"password"} placeholder={"비밀번호를 입력해주세요"}
+                                           name={"password"}
                                            onChange={registerDataChange} required={true}/><br/>
                                 </div>
                                 <div className={"MemberPwRegister"}>
@@ -136,7 +217,8 @@ function Register() {  //회원가입폼에 입력받을 데이터
                             </div>
                         </div>
                         <div className={"RegisterMemberPwConfirm"}>
-                            <div className={"RegisterMemberLabel"}><label htmlFor={"passwordConfirm"}>비밀번호 확인</label></div>
+                            <div className={"RegisterMemberLabel"}><label htmlFor={"passwordConfirm"}>비밀번호 확인<span className={"RegisterMemberPwConfirmSpan"}>*</span></label>
+                            </div>
                             <div className={"RegisterMemberPwDiv"}>
                                 <div className={"RegisterMemberInput"}>
                                     <input type={"password"} id={"passwordConfirm"} placeholder={"비밀번호를 다시 입력해주세요"}
@@ -151,7 +233,7 @@ function Register() {  //회원가입폼에 입력받을 데이터
                         </div>
 
                         <div className={"RegisterMemberNickname"}>
-                            <div className={"RegisterMemberLabel"}><label htmlFor={"nickname"}>닉네임</label></div>
+                            <div className={"RegisterMemberLabel"}><label htmlFor={"nickname"}>닉네임<span className={"RegisterMemberIdSpan"}>*</span></label></div>
                             <div className={"RegisterMemberInput"}>
                                 <input type={"text"} id={"Nickname"} placeholder={"닉네임을 입력해주세요"} name={"nickname"}
                                        onChange={registerDataChange} required={true}/><br/>
@@ -159,10 +241,23 @@ function Register() {  //회원가입폼에 입력받을 데이터
                         </div>
 
                         <div className={"RegisterMemberName"}>
-                            <div className={"RegisterMemberLabel"}><label htmlFor={"name"}>이름</label></div>
+                            <div className={"RegisterMemberLabel"}><label htmlFor={"name"}>이름<span className={"RegisterMemberNameSpan"}>*</span></label></div>
                             <div className={"RegisterMemberInput"}>
                                 <input type={"text"} id={"name"} placeholder={"이름을 입력해주세요"} name={"name"}
                                        onChange={registerDataChange} required={true}/><br/>
+                            </div>
+                        </div>
+
+                        <div className={"RegisterMemberEmail"}>
+                            <RegisterModal isOpen={showModal} message={modalMessage}
+                                           onClose={() => setShowModal(false)}/>
+                            <div className={"RegisterMemberLabel"}><label htmlFor={"email"}>이메일<span className={"RegisterMemberIdSpan"}>*</span></label></div>
+                            <div className={"RegisterMemberInput"}>
+                                <input type={"email"} id={"email"} placeholder={"예: jujeob@ssada.com"} name={"email"}
+                                       onChange={registerDataChange} required={true}/><br/>
+                            </div>
+                            <div>
+                                <button onClick={checkUserEmail}>중복확인</button>
                             </div>
                         </div>
 
@@ -174,19 +269,12 @@ function Register() {  //회원가입폼에 입력받을 데이터
                             </div>
                         </div>
 
-                        <div className={"RegisterMemberEmail"}>
-                            <div className={"RegisterMemberLabel"}><label htmlFor={"email"}>이메일</label></div>
-                            <div className={"RegisterMemberInput"}>
-                                <input type={"email"} id={"email"} placeholder={"예: jujeob@ssada.com"} name={"email"}
-                                       onChange={registerDataChange} required={true}/><br/>
-                            </div>
-                        </div>
-
                         <div className={"RegisterMemberAddr"}>
                             <div className={"RegisterMemberLabel"}><label htmlFor={"address"}>주소</label></div>
                             <div className={"RegisterMemberInput"}>
                                 <input type={"text"} id={"address"} placeholder={"주소를 입력해주세요"} name={"address"}
                                        onChange={registerDataChange} required={true}/><br/>
+                                {/*<button>주소 검색</button>*/}
                             </div>
                         </div>
 

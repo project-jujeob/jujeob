@@ -11,8 +11,14 @@ import java.util.List;
 public interface BoardCommentRepository extends JpaRepository<BoardComment, Integer> {
     List<BoardComment> findByBoardId(int boardId);
 
+    int countByBoardId(int boardId);
+
+    List<BoardComment> findByCommentParent(int parentCommentId);
+
+    long countByCommentParentAndIsDeleted(int commentId, int isDeleted);
+
     @Query("SELECT nickname FROM User WHERE userNo = :userNo")
     String findNicknameByUserNo(Long userNo);
+
+
 }
-
-

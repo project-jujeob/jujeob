@@ -81,6 +81,27 @@ public class AuthController {
         }
     }
 
+    //아이디 중복검사
+    @GetMapping("/checkUserId")
+    public ResponseEntity<?> checkUserId(@RequestParam String userId) {
+        try {
+            boolean isAvailable = !authService.checkUserId(userId); // 사용가능하면 true, 아니면 false
+            return ResponseEntity.ok().body("{\"available\": " + isAvailable + "}");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Server error");
+        }
+    }
+    //이메일 중복검사
+    @GetMapping("/checkUserEmail")
+    public ResponseEntity<?> checkUserEmail(@RequestParam String email) {
+        try {
+            boolean isAvailable = !authService.checkUserEmail(email); // 사용가능하면 true, 아니면 false
+            return ResponseEntity.ok().body("{\"available\": " + isAvailable + "}");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Server error");
+        }
+    }
+
     @DeleteMapping("/logout")
     public ResponseEntity<?> logout(@RequestBody LogoutRequest logoutRequest) {
         authService.logout(logoutRequest.getAccessToken(), logoutRequest.getRefreshToken());

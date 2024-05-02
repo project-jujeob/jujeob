@@ -6,6 +6,7 @@ import '../BbsStyle/bbsWrite.css'
 function BbsModify({ isOpen, onRequestClose, boardId }) {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
     Modal.setAppElement('#root');
     /*console.log("아이디: " + boardId);
     console.log("제목 콘솔 1 :" + title + " 입니다 ");
@@ -13,6 +14,7 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
 
     useEffect( () => {
         const fetchData = async () => {
+
             try {
                 const response = await fetch(`/board/Detail/${boardId}`);
                 const data = await response.json();
@@ -22,7 +24,9 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
                 console.log("내용 콘솔 2 :" + content + " 입니다 ");*/
             } catch(error){
                 console.error("에러!" + error);
-                alert("게시물을 수정할 수 없습니다.")
+                alert("게시물을 수정할 수 없습니다.");
+            }finally {
+                setIsSubmitting(false); // 버튼 활성화
             }
         };
 
@@ -31,7 +35,7 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
+        setIsSubmitting(true);
         try{
             await fetch(`/board/Update/${boardId}`, {
                 method: 'PATCH',
@@ -58,6 +62,11 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
                 isOpen={isOpen}
                 onRequestClose={onRequestClose}
                 contentLabel="Bbs Modify Modal"
+                className={{
+                    base: 'ModalContent',
+                    afterOpen: 'ModalContent open',
+                    beforeClose: 'ModalContent'
+                }}
                 style={{
                     overlay: {
                         backgroundColor: 'rgba(0, 0, 0, 0.6)'
@@ -87,6 +96,20 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
                                 editor={ClassicEditor}
                                 config={{
                                     placeholder: "내용을 입력하세요.",
+                                    toolbar: {
+                                        items: [
+                                            'heading',
+                                            '|',
+                                            'bold',
+                                            'italic',
+                                            'link',
+                                            'bulletedList',
+                                            'numberedList',
+                                            '|',
+                                            'undo',
+                                            'redo'
+                                        ]
+                                    }
                                 }}
                                 data={content}  // 기존 콘텐트 데이터를 CKEditor에 설정
                                 onChange={(event, editor) => {
@@ -96,7 +119,7 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
                             />
                         </div>
                         <div className="ButtonArea">
-                            <button className="submitButton" type="submit">수정 완료</button>
+                            <button className="submitButton" type="submit" disabled={isSubmitting}>수정 완료</button>
                             <button className="goBackButton" onClick={onRequestClose}>닫기</button>
                         </div>
                     </form>
