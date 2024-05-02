@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
     const setAuthPayload = (newPayload) => {
         setPayload(newPayload);
-        setIsLoggedIn(true); // 로그인 상태를 true로 설정
+        setIsLoggedIn(!!newPayload); // 로그인 상태를 true로 설정
     };
 
     return (
