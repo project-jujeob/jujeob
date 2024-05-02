@@ -21,13 +21,11 @@ public class BoardCommentController {
 
     @GetMapping("/CommentData/{boardId}")
     public List<BoardCommentDto> getCommentsByBoardId(@PathVariable int boardId) {
-        System.out.println("컨트롤러에서 Comment 데이터 요청 받음");
         return boardCommentService.getCommentsByBoardId(boardId);
     }
 
     @PostMapping("/Write")
     public ResponseEntity<String> CommentAdd( @RequestBody BoardCommentDto boardCommentDto){
-        System.out.println("댓글 Write 응답 받았음");
         try{
             boardCommentService.Write(boardCommentDto);
             return ResponseEntity.ok("댓글 작성 완료.");
@@ -37,8 +35,6 @@ public class BoardCommentController {
     }
     @DeleteMapping("/Delete/{commentId}")
     public ResponseEntity<String> deleteBoard(@PathVariable int commentId){
-        /*        System.out.println( "컨트롤러에서 요청 받았습니다 아이디는 : " + boardId);*/
-        System.out.println("댓글의 아이디 컨트롤러에서는 : "  + commentId);
         try{
             boardCommentService.deleteComment(commentId);
             return ResponseEntity.ok("게시물이 삭제되었습니다.");

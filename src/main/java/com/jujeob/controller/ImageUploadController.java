@@ -10,9 +10,7 @@ import java.nio.file.Paths;
 @RestController
 @RequestMapping("/image")
 public class ImageUploadController {
-
     private static final String UPLOAD_DIR = "src/main/resources/static/public/boardImg";
-
     @PostMapping("/uploadImage")
     public ResponseEntity<String> uploadImage(@RequestParam("image") MultipartFile image) {
         try {

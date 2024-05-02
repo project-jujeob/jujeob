@@ -130,11 +130,11 @@ select {
     vertical-align: -1px;
 }
 .ImageUploadArea input[type="file"] {
-    background-color: #ffffff; /* 백그라운드 색상을 하얀색으로 설정 */
-    border: 1px solid #ccc; /* 테두리를 회색으로 설정 */
-    border-radius: 5px; /* 테두리를 둥글게 만듭니다 */
-    padding: 10px; /* 내부 여백을 추가하여 버튼이 더 크게 보이도록 합니다 */
-    cursor: pointer; /* 마우스 커서를 포인터로 변경하여 클릭 가능함을 나타냅니다 */
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    cursor: pointer;
     margin-bottom: 15px;
     margin-top: 15px;
 }

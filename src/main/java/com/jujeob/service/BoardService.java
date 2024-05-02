@@ -19,10 +19,8 @@ public class BoardService {
 
     @Autowired
     private BoardRepository boardRepository;
-
     @Autowired
     private BoardCommentRepository boardCommentRepository;
-
     private BoardDto mapBoardToDto(Board entity) {
         BoardDto dto = new BoardDto();
         dto.setIsDeleted(entity.getIsDeleted());
@@ -35,21 +33,17 @@ public class BoardService {
         dto.setCommentCount(boardCommentRepository.countByBoardId(entity.getBoardId()));
         dto.setBoardCategory(entity.getBoardCategory());
         dto.setImageUrl(entity.getImageUrl());
-        System.out.println("댓글개수: "  + boardCommentRepository.countByBoardId(entity.getBoardId()));
         return dto;
     }
-
     public List<BoardDto> getAllBoards() {
         List<Board> Boards = boardRepository.findAll();
         List<BoardDto> BoardsDtos = new ArrayList<>();
-        System.out.println("어 받았어 이제 Dto차례야");
         for (Board entity : Boards) {
             BoardsDtos.add(mapBoardToDto(entity));
         }
 
         return BoardsDtos;
     }
-
     public List<BoardDto> getAllBoardsByCategory(String category) {
         List<Board> boards = boardRepository.findByBoardCategory(category);
         List<BoardDto> boardDtos = new ArrayList<>();
@@ -61,23 +55,19 @@ public class BoardService {
         return boardDtos;
     }
     public void boardWrite(BoardDto boardDto) {
-        // BoardDto를 이용하여 Board 객체를 생성
         Board board = new Board();
         board.setUserNo(boardDto.getUserNo());
         board.setBoardTitle(boardDto.getBoardTitle());
         board.setBoardContent(boardDto.getBoardContent());
-        board.setCreateDate(LocalDateTime.now()); // 현재 날짜 설정
+        board.setCreateDate(LocalDateTime.now());
         board.setBoardCategory(boardDto.getBoardCategory());
         board.setImageUrl(boardDto.getImageUrl());
-        // 게시글 저장
         boardRepository.save(board);
     }
-    //    게시글용
     public BoardDto getBoardById(Integer boardId) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
         String nickname = board.getUser().getNickname();
-        // Board 엔티티에서 필요한 데이터를 추출하여 BoardDTO 객체로 변환
         System.out.println(board.getBoardId());
         BoardDto boardDto = new BoardDto();
         boardDto.setUserNo(board.getUserNo());
@@ -91,32 +81,20 @@ public class BoardService {
         boardDto.setImageUrl(board.getImageUrl());
         return boardDto;
     }
-
     public Board getBoardTitleAndContent(Integer boardId) {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(() -> new RuntimeException("게시글을 찾을 수 없습니다."));
         return boardRepository.save(board);
     }
-
-
     public void updateBoard(int boardId, UpdatedBoardDto updatedBoardDto) {
-/*        System.out.println("서비스입니다 아이디는 : "+ boardId);
-        System.out.println("서비스입니다 입력된 제목은 : " + updatedBoardDto.getTitle());
-        System.out.println("서비스입니다 입력된 내용은 : " + updatedBoardDto.getContent());*/
         Board existingBoard = boardRepository.findById(boardId)
                 .orElseThrow(() -> new BoardNotFoundException("게시물을 찾을 수 없습니다."));
-        /*        System.out.println("서비스입니다 게시물의 아이디는 : " + existingBoard.getBoardId());*/
         existingBoard.setBoardTitle(updatedBoardDto.getTitle());
         existingBoard.setBoardContent(updatedBoardDto.getContent());
         existingBoard.setBoardUpdate(LocalDateTime.now());
-
-        System.out.println("서비스입니다 저장된 제목은 : " + existingBoard.getBoardTitle());
         boardRepository.save(existingBoard);
     }
-
-
     public void deleteBoard(int boardId) {
-        // 게시물 찾기
         Board deleteBoard = boardRepository.findById(boardId)
                 .orElseThrow(() -> new BoardNotFoundException("게시물을 찾을 수 없습니다."));
 
@@ -131,8 +109,8 @@ public class BoardService {
     public void increaseViews(Integer boardId) throws ChangeSetPersister.NotFoundException {
         Board board = boardRepository.findById(boardId)
                 .orElseThrow(ChangeSetPersister.NotFoundException::new);
-        board.setBoardViews(board.getBoardViews() + 1); // 조회수 증가
-        boardRepository.save(board); // 변경된 조회수를 데이터베이스에 저장
+        board.setBoardViews(board.getBoardViews() + 1);
+        boardRepository.save(board);
     }
 
 }

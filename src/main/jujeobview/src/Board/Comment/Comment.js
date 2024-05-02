@@ -6,7 +6,6 @@ import Loading from "./Loading";
 import {useAuth} from "../../user/Context";
 import LikeBtnClick from "../../product/Like/LikeBtnClick";
 function Comment ({ boardId }){
-    const { payload } = useAuth();
     const [commentsList, setCommentsList] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
@@ -31,7 +30,7 @@ function Comment ({ boardId }){
     };
     return (
         <div className="Board-Detail-Comment-Container">
-            {loading ? ( // 로딩 중일 때는 로딩 화면을 표시
+            {loading ? (
                 <div className="loading">
                     <Loading />
                 </div>

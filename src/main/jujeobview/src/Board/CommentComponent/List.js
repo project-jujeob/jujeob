@@ -71,7 +71,6 @@ function List({ commentsList, commentFetchData, boardId }) {
     };
 
     useEffect(() => {
-        // 수정 모드가 되면 input 요소에 포커스를 줌
         if (editMode.id !== null) {
             const input = document.querySelector(".Comment-UpdateInput");
             input.focus();
@@ -115,12 +114,10 @@ function List({ commentsList, commentFetchData, boardId }) {
         setSelectedCommentIdForMenu(null);
         cancel();
         if (selectedCommentIdForReply === commentId) {
-            // 현재 선택한 댓글에 대한 답글 창이 열려 있는 경우 닫기
             setSelectedCommentIdForReply(null);
             setShowReplyInput(false);
             commentFetchData();
         } else {
-            // 선택한 댓글에 대한 답글 창이 열려 있지 않은 경우 열기
             setSelectedCommentIdForReply(commentId);
             setShowReplyInput(commentId);
 

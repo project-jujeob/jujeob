@@ -2,7 +2,6 @@
     width: 100%;
     display: flex;
 }
-/* 게시글 */
 .Board-Detail-Post-Container{
     width: 60%;
     height: 827px;
@@ -19,7 +18,6 @@
 .DetailNavSearchArea input{
     margin-right: 62px;
 }
-/**/
 .Board-Detail-Profile{
     width: 80%;
     display: flex;
@@ -66,7 +64,6 @@
     font-size: 22px;
     color: rgba(253, 78, 38, 0.65);
 }
-/**/
 .Board-Detail-TitleAndContent{
     width: 80%;
     text-align: left;
@@ -86,15 +83,13 @@
     margin-bottom: 20px;
     height: 300px;
     background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-yKpHDYUIhN2WMWZR-bgQNFLn3uEGCQ2mLA&s');
-    background-size: contain; /* 이미지가 영역 내에 잘리지 않고 전체가 보이도록 조절 */
-    background-repeat: no-repeat; /* 이미지 반복 제거 */
+    background-size: contain;
+    background-repeat: no-repeat;
     background-position: center;
 }
 .TitleAndContent-Content{
     margin-top: 30px;
 }
-/**/
-
 .de{
     width: 1px;
     background-color: #b4b4b4;
@@ -180,7 +175,7 @@
     border: none;
 }
 .Comment-Write input:focus {
-    outline: none; /* 포커스 시 발생하는 외곽선 제거 */
+    outline: none;
 }
 .Comment-Write button{
     cursor: pointer;
@@ -196,8 +191,8 @@
     color: #555555;
     margin: auto;
     display: flex;
-    justify-content: center; /* 수평 가운데 정렬 */
-    align-items: center; /* 수직 가운데 정렬 */
+    justify-content: center;
+    align-items: center;
     font-weight: bolder;
 }
 .Comment-Detail-Divide{
@@ -300,20 +295,11 @@
     margin-left: 10px;
     display: none;
 }
-.dropdown-menu{
+.dropdown-menu {
     display: flex;
     margin-right: 10px;
-
-/*    opacity: 0;
-    transform: translateY(-20px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    position: relative;
-    top: -10px; */
 }
 .dropdown-menu.open {
-/*    opacity: 1;
-    transform: translateY(0);
-    top: 0;*/
 }
 .Comment-Detail:hover .dropdown-toggle {
     display: block;
@@ -378,7 +364,7 @@
     margin: auto;
 }
 .imageArea-Img {
-    width: 100%; /* 이미지의 폭을 200px로 설정 */
+    width: 100%;
     height: auto;
 }
 .CreateDateTime {

@@ -10,7 +10,7 @@
     display: flex;
     flex-direction: column;
     width: 90%;
-    overflow-y: auto; /* overflowY가 아니라 overflow-y */
+    overflow-y: auto;
     margin-bottom: 20px;
     margin-left: auto;
 }
@@ -35,7 +35,7 @@
 }
 
 .Reply-Author {
-    margin-right: 5px; /* AuthorAndContent가 아니라 Reply-Author */
+    margin-right: 5px;
     font-weight: bolder;
 }
 

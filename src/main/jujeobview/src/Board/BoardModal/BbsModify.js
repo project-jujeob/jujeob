@@ -8,10 +8,6 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
     const [content, setContent] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     Modal.setAppElement('#root');
-    /*console.log("아이디: " + boardId);
-    console.log("제목 콘솔 1 :" + title + " 입니다 ");
-    console.log("내용 콘솔 1 :" + content + " 입니다 ");*/
-
     useEffect( () => {
         const fetchData = async () => {
 
@@ -20,13 +16,11 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
                 const data = await response.json();
                 setTitle(data.boardTitle);
                 setContent(data.boardContent);
-   /*             console.log("제목 콘솔 2 :" + title + " 입니다 ");
-                console.log("내용 콘솔 2 :" + content + " 입니다 ");*/
             } catch(error){
                 console.error("에러!" + error);
                 alert("게시물을 수정할 수 없습니다.");
             }finally {
-                setIsSubmitting(false); // 버튼 활성화
+                setIsSubmitting(false);
             }
         };
 
@@ -87,8 +81,8 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
                         <div className="TitleArea">
                             <input
                                 type="text"
-                                value={title}  // 수정된 title 상태를 value로 설정
-                                onChange={handlerTitleChange}  // title 변경 핸들러 연결
+                                value={title}
+                                onChange={handlerTitleChange}
                             />
                         </div>
                         <div className="ContentArea">
@@ -111,10 +105,10 @@ function BbsModify({ isOpen, onRequestClose, boardId }) {
                                         ]
                                     }
                                 }}
-                                data={content}  // 기존 콘텐트 데이터를 CKEditor에 설정
+                                data={content}
                                 onChange={(event, editor) => {
                                     const data = editor.getData();
-                                    setContent(data);  // 수정된 내용을 상태에 반영
+                                    setContent(data);
                                 }}
                             />
                         </div>

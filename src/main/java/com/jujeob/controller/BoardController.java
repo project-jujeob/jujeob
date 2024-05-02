@@ -22,7 +22,6 @@ public class BoardController {
 
     @GetMapping("/boardBest")
     public List<BoardDto> getBest() {
-        System.out.println("나 컨트롤러 인데 서비스 요청 받았어?");
         return boardService.getAllBoards();
     }
 
@@ -51,25 +50,16 @@ public class BoardController {
 
     @GetMapping("/Detail/{boardId}")
     public BoardDto getBoardDetail(@PathVariable  Integer boardId) {
-        System.out.println("요청 보냈다");
-        System.out.println("보드 아이디:" + boardId);
-
         return boardService.getBoardById(boardId);
     }
 
     @GetMapping("/TitleAndContent/{boardId}")
     public Board getBoardTitleAndContent(@PathVariable  Integer boardId) {
-        System.out.println("요청 보냈다");
-        System.out.println("보드 아이디:" + boardId);
-
         return boardService.getBoardTitleAndContent(boardId);
     }
 
     @PatchMapping("/Update/{boardId}")
     public ResponseEntity<String> updateBoard(@PathVariable int boardId, @RequestBody UpdatedBoardDto updatedBoardDto) {
- /*       System.out.println( "컨트롤러에서 요청 받았습니다 아이디는 : " + boardId);
-        System.out.println( "컨트롤러에서 요청 받았습니다 제목은 : " + updatedBoardDto.getTitle());
-        System.out.println( "컨트롤러에서 요청 받았습니다 내용은 : " + updatedBoardDto.getContent());*/
         try {
             boardService.updateBoard(boardId, updatedBoardDto);
             return ResponseEntity.ok("게시물이 성공적으로 업데이트되었습니다!");
@@ -81,7 +71,6 @@ public class BoardController {
     }
     @DeleteMapping("/Delete/{boardId}")
     public ResponseEntity<String> deleteBoard(@PathVariable int boardId){
-        /*        System.out.println( "컨트롤러에서 요청 받았습니다 아이디는 : " + boardId);*/
         try{
             boardService.deleteBoard(boardId);
             return ResponseEntity.ok("게시물이 삭제되었습니다.");
@@ -91,7 +80,6 @@ public class BoardController {
     }
     @PostMapping("/IncreaseViews/{boardId}")
     public ResponseEntity<String> increaseViews(@PathVariable("boardId") Integer boardId) {
-        System.out.println("뷰요청받음");
         try {
             boardService.increaseViews(boardId);
             return new ResponseEntity<>("조회수 증가 완료", HttpStatus.OK);

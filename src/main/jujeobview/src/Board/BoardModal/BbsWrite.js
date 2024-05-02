@@ -96,7 +96,6 @@ function BbsWrite({ isOpen, onRequestClose }) {
                     </div>
                     <div className="ContentArea">
                         <label htmlFor="ContentInput"><span>* </span>글 내용</label>
-                        {/* CKEditor를 사용하여 게시물 내용 입력 */}
                         <CKEditor
                             id="ContentInput"
                             editor={ClassicEditor}

@@ -4,25 +4,21 @@
     flex-direction: column;
     align-items: center;
 }
-/* 슬라이드 영역 */
 .SlideAndBestPost{
     width: 100%;
     display: flex;
     padding: 10px;
     justify-content: center;
 }
-/* 네비게이션 영역 */
-.NavContainer{
+.NavContainer {
     width: 71%;
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
-}/*
-/* 게시글 영역 */
+}
 .BoardListItem{
     width: 75%;
 }
-/* DIV 선*/
 .DivLine{
     width: 73%;
     height: 2px;

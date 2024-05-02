@@ -26,7 +26,6 @@ function Delete({ isOpen, onRequestClose, commentId ,  commentFetchData, onDelet
         }
     };
 
-
     return (
         <Modal
             isOpen={isOpen}

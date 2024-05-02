@@ -152,11 +152,9 @@ function BbsListItem() {
                         <div className="bbsPost bbsPostItem" onClick={() => handleBoardClick(board.boardId)} key={index}
                              onMouseEnter={() => setHoveredImage(board.boardId)}
                              onMouseLeave={() => setHoveredImage(null)}>
-                            {/*<Link to={`/BbsDetail/${board.boardId}`}>*/}
                             {hoveredImage === board.boardId && (
                                 <div className="hoveredImageContainer"
                                      style={{backgroundImage: `url(${board.imageUrl ? `/public/${board.imageUrl}` : '/public/boardImg/위스키귀엽쥬.png'})`}}>
-                                    {/* 이미지 또는 내용을 여기에 추가 */}
                                 </div>
                             )}
                             <div className="bbsPostBackground" onClick={() => openModal(board.boardId)}>

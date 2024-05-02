@@ -17,7 +17,7 @@ function Write({ boardId, commentFetchData }) {
             alert("로그인한 사용자만 가능합니다!");
             return;
         }
-        setIsSubmitting(true); // 버튼 비활성화
+        setIsSubmitting(true);
         try {
             const response = await axios.post(`/boardComment/Write`, {
                 userNo,
@@ -25,11 +25,11 @@ function Write({ boardId, commentFetchData }) {
                 commentContent,
             });
             commentFetchData();
-            setCommentContent(""); // 입력 칸 비움
+            setCommentContent("");
         } catch (error) {
             console.error("댓글 실패", error);
         } finally {
-            setIsSubmitting(false); // 버튼 활성화
+            setIsSubmitting(false);
         }
     };
 

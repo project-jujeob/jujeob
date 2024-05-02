@@ -34,7 +34,6 @@ function Reply({ handleSave, parentCommentId, triggerUpdate, toggleMenu, selecte
 
 
     const cancel = () => {
-        // Reset editMode when cancel is clicked
         setEditMode({ id: null, content: '' });
     };
 
