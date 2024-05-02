@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,7 +23,7 @@ public class Board {
 
 
     @Column(name = "Board_Category")
-    private String BoardCategory;
+    private String boardCategory;
 
 
     @Column(name = "Board_Title")
@@ -36,7 +38,7 @@ public class Board {
     private LocalDateTime CreateDate;
 
     @Column(name = "Board_Views")
-    private String BoardViews = "0";
+    private int BoardViews = 0;
 
     @Column(name = "Board_Update" )
     private LocalDateTime BoardUpdate;
@@ -45,12 +47,13 @@ public class Board {
     @Column(name = "Board_isDeleted" )
     private int IsDeleted = 0; ;
 
-//    @ManyToOne
-//    @JoinColumn(name = "memNo")
-//    private Member member;
+    @Column(name = "userNo")
+    private Long userNo;
+
+    @Column(name = "imageUrl")
+    private String imageUrl;
 
     @ManyToOne
-    @JoinColumn(name = "userNo")
+    @JoinColumn(name = "userNo" , insertable = false, updatable = false)
     private User user;
-
 }
