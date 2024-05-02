@@ -23,9 +23,7 @@ function Login() {
     const loginAction = () => {
         axios({
             method: "post",
-            // url: "/api/login",
             url: "/api/auth/login",
-            // data: JSON.stringify({ memId, memPw }),
             data: JSON.stringify({ userId, password }),
             headers: {
                 "Accept": "application/json, text/plain, */*",
@@ -34,7 +32,6 @@ function Login() {
         }). then((response) => {
             const { accessToken, refreshToken } = response.data;
 
-            // 여기서 추가된 부분: 탈퇴된 계정이거나 없는 계정일 경우의 처리
             if (accessToken === 'Y') {
                 alert('탈퇴된 계정입니다.');
                 return;

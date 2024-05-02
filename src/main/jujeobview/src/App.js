@@ -22,6 +22,7 @@ import Announcement from "./Announcement/Announcement";
 import CustomerOrderComplete from "./product/Cart/CustomerOrderComplete";
 import ProductEdit from "./admin/ProductEdit";
 import PrivateRoute from "./PrivateRoute";
+import CustomerPayment from "./product/Cart/CustomerPayment"
 
 function App() {
 
@@ -47,6 +48,7 @@ function App() {
                     <Route path='/ReviewWrite/:productNo' element={<ReviewWrite />} />
                     <Route path='/Pagination' element={<Pagination />} />
                     <Route path='/CustomerOrder' element={<CustomerOrder />} />
+                    <Route path='/CustomerPayment' element={<CustomerPayment />} />
                     <Route path='/CustomerOrderComplete' element={<CustomerOrderComplete />} />
                 </Routes>
             </div>

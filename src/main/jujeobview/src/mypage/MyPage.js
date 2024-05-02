@@ -7,8 +7,6 @@ import PurchaseReservation from "./PurchaseReservation";
 import DibsList from "./DibsList";
 import ReviewHistory from "./ReviewHistory";
 import MyPosts from "./MyPosts";
-import PasswordCheck from './PasswordCheck';
-import axios from "axios";
 
 
 function MyPage() {
@@ -34,8 +32,9 @@ function MyPage() {
             case "내가 쓴 게시글":
                 return <MyPosts />
             case "회원 정보":
-                return <Profile />
-            default: return null
+            case "회원 정보 수정":
+                return <Profile subTitleChange={subTitleChange} subTitleText={subTitleText} />
+            default: return null;
         }
     }
 

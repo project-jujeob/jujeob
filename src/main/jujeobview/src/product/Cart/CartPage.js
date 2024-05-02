@@ -257,6 +257,9 @@ function CartPage() {
                         <Link to={"/CustomerOrder"} state={{selectedItems: selectedItems}} className="link">
                             <div className="orderBtn">구매하기</div>
                         </Link>
+                        <Link to={"/CustomerPayment"} className="link">
+                            <div className="orderBtn">구매하기2</div>
+                        </Link>
                         {/*<Link to={{ pathname: "/CustomerOrder", state: selectedItems }}>구매하기</Link>*/}
                     </div>
                 </div>

@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+/*import React, { useEffect } from 'react';
 import {useNavigate} from "react-router-dom";
-import IdentityVerification from "./IdentityVerification";
 
 const AdultVerification = () => {
     const navigate = useNavigate();
@@ -52,51 +51,59 @@ const AdultVerification = () => {
     );
 };
 
-export default AdultVerification;
+export default AdultVerification;*/
 
-// import React, { useEffect } from 'react';
-// import axios from 'axios';
-//
-// const AdultVerification = () => {
-//     useEffect(() => {
-//         const loadScript = src => {
-//             const script = document.createElement('script');
-//             script.src = src;
-//             document.body.appendChild(script);
-//             return () => {
-//                 document.body.removeChild(script);
-//             };
-//         };
-//         loadScript("https://code.jquery.com/jquery-3.3.1.min.js");
-//         loadScript("https://cdn.iamport.kr/v1/iamport.js");
-//     }, []);
-//
-//     const handleCertification = () => {
-//         const { IMP } = window; // 아임포트 라이브러리 초기화
-//         IMP.init("imp81433431"); // 발급받은 키로 초기화
-//
-//         IMP.certification({
-//             pg: "inicis_unified",
-//             merchant_uid: `merchant_${new Date().getTime()}`,
-//             popup: true
-//         }, (response) => {
-//             if (response.success) {
-//                 // 서버로 인증 정보 전송
-//                 axios.post("/api/verify", { imp_uid: response.imp_uid })
-//                     .then(res => console.log('Server response:', res.data))
-//                     .catch(err => console.error('Error posting verification:', err));
-//             } else {
-//                 alert(`인증 실패: ${response.error_msg}`);
-//             }
-//         });
-//     };
-//
-//     return (
-//         <div>
-//             <h1>본인 인증</h1>
-//             <button onClick={handleCertification}>인증하기</button>
-//         </div>
-//     );
-// };
-//
-// export default AdultVerification;
+import React, { useEffect } from 'react';
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
+
+const AdultVerification = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const loadScript = src => {
+            const script = document.createElement('script');
+            script.src = src;
+            document.body.appendChild(script);
+            return () => {
+                document.body.removeChild(script);
+            };
+        };
+        loadScript("https://code.jquery.com/jquery-3.3.1.min.js");
+        loadScript("https://cdn.iamport.kr/v1/iamport.js");
+    }, []);
+
+    const handleCertification = () => {
+        const { IMP } = window; // 아임포트 라이브러리 초기화
+        IMP.init("imp81433431"); // 발급받은 키로 초기화
+
+        IMP.certification({
+            pg: "inicis_unified",
+            merchant_uid: `merchant_${new Date().getTime()}`,
+            popup: true
+        }, (response) => {
+            if (response.success) {
+                axios.post("/api/verify", { imp_uid: response.imp_uid })
+                    .then(res => {
+                        console.log('Server response:', res.data);
+                        // 나이 검증 후 19세 이상이면 등록 페이지로 리디렉션
+                        if (res.data.isAdult) {
+                            navigate("/Register");
+                        }
+                    })
+                    .catch(err => console.error('Error posting verification:', err));
+            } else {
+                alert(`인증 실패: ${response.error_msg}`);
+            }
+        });
+    };
+
+    return (
+        <div>
+            <h1>본인 인증</h1>
+            <button onClick={handleCertification}>인증하기</button>
+        </div>
+    );
+};
+
+export default AdultVerification;

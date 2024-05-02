@@ -27,12 +27,11 @@ import java.util.List;
 public class SecurityConfig {
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
     private UserDetailsService userDetailsService;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws  Exception {
 
@@ -80,7 +79,7 @@ public class SecurityConfig {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder
                 .userDetailsService(userDetailsService)
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(passwordEncoder);
 
         return authenticationManagerBuilder.build();
     }

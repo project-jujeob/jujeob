@@ -9,3 +9,7 @@ jwt:
   secret: abcdefghijklmnopqrstuvffefefaefaefaefaefaefaefafefafeaefaefafefadfdasfadfafdfdaffafdasdfadfadfadfadsfasdfadfafdfasdf
   accessExpiration: 86400000
   refreshExpiration: 604800000
+
+iamport:
+  key: 6625177213832842
+  secret: fQcJVhbwGTVi5EFHMnfmhS288WdJDgJ0U5yDHAmbos92MltOfSrBdBZQCWxexlCXK95oxdciZSEdOsId

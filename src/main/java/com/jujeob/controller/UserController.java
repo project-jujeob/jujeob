@@ -1,5 +1,6 @@
 package com.jujeob.controller;
 
+import com.jujeob.dto.PasswordChangeRequest;
 import com.jujeob.dto.PasswordVerifyRequest;
 import com.jujeob.dto.Profile;
 import com.jujeob.dto.ProfileUpdateRequest;
@@ -37,6 +38,39 @@ public class UserController {
         }
     }
 
+    @PostMapping("/verify-password")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> verifyPassword(@RequestBody PasswordVerifyRequest passwordVerifyRequest) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName(); // or get it from authentication principal
+
+        boolean isPasswordCorrect = userService.verifyUserPassword(currentUsername, passwordVerifyRequest.getPassword());
+
+        if (isPasswordCorrect) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("비밀번호가 일치하지 않습니다.");
+        }
+    }
+
+    @PostMapping("/change-password")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequest request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();  // 사용자 인증 정보에서 유저네임 가져오기
+
+        try {
+            if (userService.changeUserPassword(username, request.getCurrentPassword(), request.getNewPassword())) {
+                return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다.");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("현재 비밀번호가 일치하지 않습니다.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("비밀번호 변경 중 오류가 발생했습니다.");
+        }
+    }
+
+
     @PatchMapping("/profileUpdate")
     public ResponseEntity<?> profileUpdate(@RequestBody ProfileUpdateRequest profileUpdateRequest) {
 
@@ -58,20 +92,7 @@ public class UserController {
         }
     }
 
-    @PostMapping("/verify-password")
-    @PreAuthorize("isAuthenticated()")
-    public ResponseEntity<?> verifyPassword(@RequestBody PasswordVerifyRequest passwordVerifyRequest) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName(); // or get it from authentication principal
 
-        boolean isPasswordCorrect = userService.verifyUserPassword(currentUsername, passwordVerifyRequest.getPassword());
-
-        if (isPasswordCorrect) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("비밀번호가 일치하지 않습니다.");
-        }
-    }
 
 //    @PatchMapping("/{userId}")
 //    @PreAuthorize("hasAuthority('MEMBER') or hasAuthority('ADMIN')")
