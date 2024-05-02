@@ -232,5 +232,3 @@ function Profile({ subTitleChange }) {
 }
 
 export default Profile
-
-

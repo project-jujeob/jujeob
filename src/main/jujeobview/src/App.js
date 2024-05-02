@@ -23,7 +23,6 @@ import CustomerOrderComplete from "./product/Cart/CustomerOrderComplete";
 import ProductEdit from "./admin/ProductEdit";
 import Info from "./Info/Info";
 import PrivateRoute from "./PrivateRoute";
-import Address from "./user/Address";
 
 import CustomerPayment from "./product/Cart/CustomerPayment"
 
@@ -48,13 +47,12 @@ function App() {
                     <Route path='/RegisterComplete' element={<RegisterComplete />} />
                     <Route path='/BbsList' element={<BbsList />} />
                     <Route path='/MyPage' element={<MyPage />} />
-                    <Route path='/Cart' element={<CartPage/>} />
+                    <Route path='/Cart' element={<PrivateRoute><CartPage/></PrivateRoute>} />
                     <Route path='/ReviewWrite/:productNo' element={<ReviewWrite/>} />
                     <Route path='/Pagination' element={<Pagination />} />
                     <Route path='/CustomerOrder' element={<CustomerOrder />} />
                     <Route path='/CustomerPayment' element={<CustomerPayment />} />
                     <Route path='/CustomerOrderComplete' element={<CustomerOrderComplete />} />
-                    <Route path='/Address' element={<Address />} />
                 </Routes>
             </div>
         </PaginationProvider>

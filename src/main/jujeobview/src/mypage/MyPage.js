@@ -13,7 +13,6 @@ function MyPage() {
 
     const [subTitleText, setSubTitleText] = useState("주문 및 배송")
 
-    // 회원정보 수정 클릭시 비번검증 안하고 바로 수정페이지로(임시)
     const subTitleChange = (title) => {
         setSubTitleText(title);
         console.log(`${title} 섹션이 활성화됩니다.`);
