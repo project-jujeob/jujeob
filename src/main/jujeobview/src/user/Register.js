@@ -99,15 +99,15 @@ function Register() {  //회원가입폼에 입력받을 데이터
         }
 
         // 비밀번호 또는 비밀번호 확인 필드가 변경되었을 때, 두 필드의 값이 일치하는지 검사. 실시간
-        // if (name === 'password' || name === 'passwordConfirm') {
-        //     const newPassword = name === 'password' ? value : registerData.password
-        //     const newPasswordConfirm = name === 'passwordConfirm' ? value : registerData.passwordConfirm
-        //     setPasswordMatch(newPassword === newPasswordConfirm)
-        //
-        //     // 비밀번호 유효성 검사
-        //     const passwordRegex = /(?=.*[a-zA-Z])(?=.*\d)(?=.*\W).{10,}/;
-        //     setPasswordValid(passwordRegex.test(newPassword));
-        // }
+        if (name === 'password' || name === 'passwordConfirm') {
+            const newPassword = name === 'password' ? value : registerData.password
+            const newPasswordConfirm = name === 'passwordConfirm' ? value : registerData.passwordConfirm
+            setPasswordMatch(newPassword === newPasswordConfirm)
+
+            // 비밀번호 유효성 검사
+            const passwordRegex = /(?=.*[a-zA-Z])(?=.*\d)(?=.*\W).{10,}/;
+            setPasswordValid(passwordRegex.test(newPassword));
+        }
 
         //이메일 유효성
         if (name === 'email') {
