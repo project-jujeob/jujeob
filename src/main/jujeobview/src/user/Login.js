@@ -23,9 +23,7 @@ function Login() {
     const loginAction = () => {
         axios({
             method: "post",
-            // url: "/api/login",
             url: "/api/auth/login",
-            // data: JSON.stringify({ memId, memPw }),
             data: JSON.stringify({ userId, password }),
             headers: {
                 "Accept": "application/json, text/plain, */*",
@@ -54,19 +52,19 @@ function Login() {
     }
 
     // 구글
-    const handleGoogleButtonClick = () => {
-        window.location.href = 'http://localhost:8080/oauth2/code/google';
-        //window.location.href = 'http://localhost:8080/oauth2/authorization/google';
-        navigate('/')
-    }
-    // 네이버
-    const handleNaverButtonClick = () => {
-        window.location.href = 'http://localhost:8080/login/oauth2/jujeob/naver';
-    }
-    // 카카오
-    const handleKakaoButtonClick = () => {
-        window.location.href = 'http://localhost:8080/login/oauth2/jujeob/kakao';
-    }
+    // const handleGoogleButtonClick = () => {
+    //     window.location.href = 'http://localhost:8080/oauth2/code/google';
+    //     //window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    //     navigate('/')
+    // }
+    // // 네이버
+    // const handleNaverButtonClick = () => {
+    //     window.location.href = 'http://localhost:8080/login/oauth2/jujeob/naver';
+    // }
+    // // 카카오
+    // const handleKakaoButtonClick = () => {
+    //     window.location.href = 'http://localhost:8080/login/oauth2/jujeob/kakao';
+    // }
 
 
     return (
@@ -80,14 +78,14 @@ function Login() {
                         <div className={"LoginInput"}>
                             <input type={"text"}
                                    placeholder={"아이디"}
-                                // name={"memId"}
+                                   // name={"memId"}
                                    name={"userId"}
-                                // onChange={(e) => setMemId(e.target.value)}
+                                   // onChange={(e) => setMemId(e.target.value)}
                                    onChange={(e) => setUserId(e.target.value)}
                             /><br/>
                             <input type={"password"}
                                    placeholder={"비밀번호"}
-                                // name={"memPw"}
+                                   // name={"memPw"}
                                    name={"password"}
                                    onChange={(e) => setPassword(e.target.value)}
                             />
@@ -119,31 +117,30 @@ function Login() {
                     <br/>
 
                     <div>
-                        <div>
-                            <Link to={"/RegisterAdult"}>
+                        <Link to={"/AdultVerification"}>
                                 <button>회원가입</button>
                             </Link>
                         </div>
 
-                        <div>
-                            <button onClick={handleGoogleButtonClick}>
-                                구글 로그인
-                            </button>
-                        </div>
-                        <div>
-                            <button onClick={handleNaverButtonClick}>
-                                네이버 로그인
-                            </button>
-                        </div>
-                        <div>
-                            <button onClick={handleKakaoButtonClick}>
-                                카카오 로그인
-                            </button>
-                        </div>
+                        {/*<div>*/}
+                        {/*    <button onClick={handleGoogleButtonClick}>*/}
+                        {/*        구글 로그인*/}
+                        {/*    </button>*/}
+                        {/*</div>*/}
+                        {/*<div>*/}
+                        {/*    <button onClick={handleNaverButtonClick}>*/}
+                        {/*        네이버 로그인*/}
+                        {/*    </button>*/}
+                        {/*</div>*/}
+                        {/*<div>*/}
+                        {/*    <button onClick={handleKakaoButtonClick}>*/}
+                        {/*        카카오 로그인*/}
+                        {/*    </button>*/}
+                        {/*</div>*/}
                     </div>
                 </div>
             </div>
-        </div>
+
     )
 }
 

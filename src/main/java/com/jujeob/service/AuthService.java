@@ -60,6 +60,30 @@ public class AuthService {
     }
 
 
+//    @Transactional
+//    public User register(Register register) throws Exception {
+//        if (userRepository.existsByUserId(register.getUserId())) {
+//            throw new IllegalStateException("이미 있는 아이디입니다.");
+//        }
+//
+//        // Retrieve verification information
+//        UserVerification verification = verificationRepository.findByImpUid(register.getImpUid())
+//                .orElseThrow(() -> new IllegalStateException("No verification found."));
+//
+//        User newUser = User.builder()
+//                .userId(register.getUserId())
+//                .password(passwordEncoder.encode(register.getPassword()))
+//                .nickname(register.getNickname())
+//                .name(verification.getName()) // Use verified name
+//                .phone(verification.getPhoneNumber()) // Use verified phone number
+//                .email(register.getEmail())
+//                .address(register.getAddress())
+//                .role(Role.USER)
+//                .build();
+//
+//        return userRepository.save(newUser);
+//    }
+
     @Transactional
     public Authentication login(String userId, String password) {
         Authentication authentication = authenticationManager.authenticate(
