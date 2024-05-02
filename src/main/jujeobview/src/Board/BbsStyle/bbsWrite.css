@@ -17,8 +17,26 @@
 
 .ContentArea{
     width: 1000px;
+    position: relative;
 }
-
+.TitleArea{
+    position: relative;
+}
+.TitleArea label{
+    display: inline-block;
+    left: 5px;
+    position: absolute;
+    font-size: 11px;
+    color: #888;
+    font-weight: bold;
+    height: 18px;
+    border-radius: 15px;
+    top: -15px;
+}
+.TitleArea label span{
+    color: #da4841;
+    vertical-align: -1px;
+}
 .TitleArea input{
     width: 1000px;
     height: 40px;
@@ -31,6 +49,39 @@
     padding: 10px;
     font-size: 14px;
 }
+.ContentArea label{
+     display: inline-block;
+     left: 5px;
+     position: absolute;
+     font-size: 11px;
+     color: #888;
+     font-weight: bold;
+     height: 18px;
+     border-radius: 15px;
+     top: -15px;
+ }
+.ContentArea label span{
+    color: #da4841;
+    vertical-align: -1px;
+}
+.category-select{
+    position: relative;
+}
+.category-select label{
+    display: inline-block;
+    left: 5px;
+    position: absolute;
+    font-size: 11px;
+    color: #888;
+    font-weight: bold;
+    height: 18px;
+    border-radius: 15px;
+    top: -15px;
+}
+.category-select label span{
+    color: #da4841;
+    vertical-align: -1px;
+}
 .ButtonArea{
     display: flex;
 }
@@ -42,23 +93,51 @@
     cursor: pointer;
     border: 1px solid rgba(222, 222, 222, 0.78);
     background-color: #FF7E5C;
+    transition: transform 0.3s ease;
 }
 .submitButton:hover{
     background-color: rgba(255, 78, 34, 0.86);
+    transform: scale(1.05);
 }
 .submitButton:active{
     background-color: rgba(255, 163, 141, 0.86);
 }
-.goBackButton{
-    width: 80px;
-    height: 40px;
-    border-radius: 12px;
-    cursor: pointer;
-    border: 1px solid rgba(222, 222, 222, 0.78);
+.category-select {
+    margin-bottom: 10px;
 }
-.goBackButton:hover{
-    background-color: #e0e0e0;
+select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 16px;
 }
-.goBackButton:active{
-    background-color: #b0b0b0;
+.ImageUploadArea{
+    position: relative;
+}
+.ImageUploadArea label{
+    display: inline-block;
+    left: 5px;
+    position: absolute;
+    font-size: 11px;
+    color: #888;
+    font-weight: bold;
+    height: 18px;
+    border-radius: 15px;
+}
+.ImageUploadArea label span{
+    color: #da4841;
+    vertical-align: -1px;
+}
+.ImageUploadArea input[type="file"] {
+    background-color: #ffffff; /* 백그라운드 색상을 하얀색으로 설정 */
+    border: 1px solid #ccc; /* 테두리를 회색으로 설정 */
+    border-radius: 5px; /* 테두리를 둥글게 만듭니다 */
+    padding: 10px; /* 내부 여백을 추가하여 버튼이 더 크게 보이도록 합니다 */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경하여 클릭 가능함을 나타냅니다 */
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+.ImageUploadArea input[type="file"]::file-selector-button {
+    display: none;
 }

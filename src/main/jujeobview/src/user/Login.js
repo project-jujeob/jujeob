@@ -78,14 +78,14 @@ function Login() {
                         <div className={"LoginInput"}>
                             <input type={"text"}
                                    placeholder={"아이디"}
-                                   // name={"memId"}
+                                // name={"memId"}
                                    name={"userId"}
-                                   // onChange={(e) => setMemId(e.target.value)}
+                                // onChange={(e) => setMemId(e.target.value)}
                                    onChange={(e) => setUserId(e.target.value)}
                             /><br/>
                             <input type={"password"}
                                    placeholder={"비밀번호"}
-                                   // name={"memPw"}
+                                // name={"memPw"}
                                    name={"password"}
                                    onChange={(e) => setPassword(e.target.value)}
                             />
@@ -118,28 +118,28 @@ function Login() {
 
                     <div>
                         <Link to={"/AdultVerification"}>
-                                <button>회원가입</button>
-                            </Link>
-                        </div>
-
-                        {/*<div>*/}
-                        {/*    <button onClick={handleGoogleButtonClick}>*/}
-                        {/*        구글 로그인*/}
-                        {/*    </button>*/}
-                        {/*</div>*/}
-                        {/*<div>*/}
-                        {/*    <button onClick={handleNaverButtonClick}>*/}
-                        {/*        네이버 로그인*/}
-                        {/*    </button>*/}
-                        {/*</div>*/}
-                        {/*<div>*/}
-                        {/*    <button onClick={handleKakaoButtonClick}>*/}
-                        {/*        카카오 로그인*/}
-                        {/*    </button>*/}
-                        {/*</div>*/}
+                            <button>회원가입</button>
+                        </Link>
                     </div>
+
+                    {/*<div>*/}
+                    {/*    <button onClick={handleGoogleButtonClick}>*/}
+                    {/*        구글 로그인*/}
+                    {/*    </button>*/}
+                    {/*</div>*/}
+                    {/*<div>*/}
+                    {/*    <button onClick={handleNaverButtonClick}>*/}
+                    {/*        네이버 로그인*/}
+                    {/*    </button>*/}
+                    {/*</div>*/}
+                    {/*<div>*/}
+                    {/*    <button onClick={handleKakaoButtonClick}>*/}
+                    {/*        카카오 로그인*/}
+                    {/*    </button>*/}
+                    {/*</div>*/}
                 </div>
             </div>
+        </div>
 
     )
 }

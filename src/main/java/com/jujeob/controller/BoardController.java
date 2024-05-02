@@ -20,12 +20,20 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    @GetMapping("/boardData")
-    public List<BoardDto> getAllBoards() {
+    @GetMapping("/boardBest")
+    public List<BoardDto> getBest() {
         System.out.println("나 컨트롤러 인데 서비스 요청 받았어?");
         return boardService.getAllBoards();
     }
 
+    @GetMapping("/boardData")
+    public List<BoardDto> getAllBoards(@RequestParam(required = false) String category) {
+        if (category == null || category.isEmpty() || category.equals("전체")) {
+            return boardService.getAllBoards();
+        } else {
+            return boardService.getAllBoardsByCategory(category);
+        }
+    }
     @PostMapping("/Write")
     public ResponseEntity<String> boardWrite(@RequestBody BoardDto boardDto) {
         try {
@@ -42,7 +50,7 @@ public class BoardController {
     }
 
     @GetMapping("/Detail/{boardId}")
-    public Board getBoardDetail(@PathVariable  Integer boardId) {
+    public BoardDto getBoardDetail(@PathVariable  Integer boardId) {
         System.out.println("요청 보냈다");
         System.out.println("보드 아이디:" + boardId);
 
@@ -79,6 +87,16 @@ public class BoardController {
             return ResponseEntity.ok("게시물이 삭제되었습니다.");
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("게시물 삭제 중 오류가 발생했습니다.");
+        }
+    }
+    @PostMapping("/IncreaseViews/{boardId}")
+    public ResponseEntity<String> increaseViews(@PathVariable("boardId") Integer boardId) {
+        System.out.println("뷰요청받음");
+        try {
+            boardService.increaseViews(boardId);
+            return new ResponseEntity<>("조회수 증가 완료", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("조회수 증가 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
