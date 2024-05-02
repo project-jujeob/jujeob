@@ -2,31 +2,31 @@ import './MainPage.css';
 import { Link, useNavigate } from "react-router-dom"; // useHistory 추가
 import { useState, useEffect } from "react";
 import axios from "axios";
-import {useAuth} from "./user/Context";
-import Header from "./common/Header";
 
 function MainPage() {
-    const { payload, setAuthPayload } = useAuth(); // Context에서 payload 및 setAuthPayload 가져오기
+    const [payload, setPayLoad] = useState();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate(); // useHistory 훅 추가
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
 
+    console.log(accessToken);
     useEffect(() => {
         checkLoginStatus();
     }, []); // 컴포넌트가 마운트될 때 한 번만 실행
 
     // 로그인 상태 확인
     const checkLoginStatus = () => {
-        // 엑세스 토큰 또는 리프레시 토큰의 존재 여부로 로그인 상태 결정
         setIsLoggedIn(!!accessToken || !!refreshToken);
 
         if (accessToken) {
             try {
                 const [, payloadBase64] = accessToken.split(".");
-                const payloadString = base64DecodeUnicode(payloadBase64);
-                const payload = JSON.parse(payloadString);
-                setAuthPayload(payload);
+                // URL-safe Base64를 정규 Base64로 변환
+                const correctedBase64 = payloadBase64.replace(/-/g, '+').replace(/_/g, '/');
+                const payloadString = atob(correctedBase64);
+                const newPayload = JSON.parse(payloadString);
+                setPayLoad(newPayload);
                 console.log("Access Token payload:", payload);
             } catch (error) {
                 console.error('Error parsing access token:', error);
@@ -49,34 +49,13 @@ function MainPage() {
                 console.log('Logout successful');
                 localStorage.removeItem('accessToken');
                 localStorage.removeItem('refreshToken');
+                setTimeout(() => window.location.reload(), -100); // 새로고침이 일어나기 전에 로그아웃 상태 반영
                 setIsLoggedIn(false);
-                window.location.reload();
             })
             .catch(error => {
                 console.error('Error logging out:', error);
             });
     };
-    // const logoutAction = () => {
-    //     // 서버에 로그아웃 요청을 보냅니다.
-    //     // axios.delete('/api/logout')
-    //     axios.delete('/api/auth/logout')
-    //         .then(response => {
-    //             // 로그아웃이 성공하면 로컬 스토리지에 저장된 토큰을 삭제합니다.
-    //             localStorage.removeItem('token');
-    //             // 로그인 상태 업데이트
-    //             setIsLoggedIn(false);
-    //             console.log('Logout successful');
-    //
-    //             window.location.reload();
-    //
-    //             // 이전 페이지로 이동
-    //             navigate(-1)
-    //         })
-    //         .catch(error => {
-    //             console.error('Error logging out:', error);
-    //         });
-    // };
-
 
     return (
         <div className="Main">
@@ -86,10 +65,14 @@ function MainPage() {
                         <Link to="/ProductList">
                             <button>술 정보</button>
                         </Link>
-                        <button>커뮤니티</button>
-                        <button>공지사항</button>
-                        <Link to={"/Cart"}>
-                            <button>장바구니</button>
+                        <Link to="/Info">
+                            <button>소개</button>
+                        </Link>
+                        <Link to={'/BbsList'}>
+                            <button>커뮤니티</button>
+                        </Link>
+                        <Link to={'/Announcement'}>
+                            <button>공지사항</button>
                         </Link>
                         {isLoggedIn && payload.role === "ADMIN" ? (
                             <>
@@ -131,10 +114,3 @@ function MainPage() {
 }
 
 export default MainPage;
-
-function base64DecodeUnicode(str) {
-    // Convert Base64 encoded bytes to percent-encoding, and then get the original string
-    return decodeURIComponent(atob(str).split('').map(function (c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-}

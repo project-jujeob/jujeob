@@ -151,14 +151,10 @@ public class ProductRepositoryImpl implements ProductRepositoryCustom {
     }
 
     @Override
-    public List<Product> findProductListByFilterOptions(List<String> searchKeyword,
-                                                        List<String> categoryNo,
-                                                        List<String> subCategoryName,
-                                                        List<String> orderOption,
-                                                        List<String> mainTypes,
-                                                        List<String> types,
-                                                        List<String> alcoholLevels,
-                                                        List<String> prices) {
+    public List<Product> findProductListByFilterOptions
+            (List<String> searchKeyword, List<String> categoryNo, List<String> subCategoryName,
+             List<String> orderOption, List<String> mainTypes, List<String> types,
+             List<String> alcoholLevels, List<String> prices) {
 
         QProduct qProduct = QProduct.product;
         QLikeProduct qLikeProduct = QLikeProduct.likeProduct;

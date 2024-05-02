@@ -12,7 +12,7 @@ const Admin = () => {
 
     const tabTitles = {
         userinfo: "주접 회원 목록",
-        productRegistration: "🥂🍺상품 등록 페이지입니다🍷🍸",
+        productRegistration: "상품 등록",
         productManagement: "상품 관리",
         orderListByAdmin: "주문내역 확인"
     };
@@ -67,7 +67,7 @@ const Admin = () => {
                         <button
                             className={`AdminWorkBtn4 ${selectedTab === 'orderListByAdmin' ? 'selected' : ''}`}
                             onClick={() => setSelectedTab('orderListByAdmin')}>
-                            주문 확인
+                            주문 내역 확인
                         </button>
                         <button
                             className={`AdminWorkBtn5 ${selectedTab === 'announcementWrite' ? 'selected' : ''}`}

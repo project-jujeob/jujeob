@@ -3,8 +3,11 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import ProductListShow from "./ProductListShow";
 import resetIcon from '../img/icon/resetIcon.png';
+import {useSearchParams} from "react-router-dom";
 
 function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
+    let [searchParams, setSearchParams] = useSearchParams();
+
     const [viewAllProductList, setViewAllProductList] = useState(0);
     const [viewAllBtn, setViewAllBtn] = useState(false);
     const [productCategory, setProductCategory] = useState([]);
@@ -94,7 +97,6 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
         axios.get('/api/productList')
             .then(response => {
                 setViewAllProductList(response.data);
-                console.log(response.data);
             })
             .catch(error => {
                 console.error('데이터 가져오기 실패:', error);
@@ -118,6 +120,20 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
         setSelectedSubCategoryName(null);
     }, [searchResult]);
 
+    // update 파라미터 useEffect
+    useEffect(() => {
+        updateParams();
+    }, [selectedCategoryNo, selectedSubCategoryData]);
+
+    const updateParams = ( ) => {
+        const params = {
+            categoryNo : selectedCategoryNo ?? undefined,
+            subCategoryName : selectedSubCategoryName ?? undefined
+        }
+
+        const filterParams = Object.fromEntries(Object.entries(params).filter(([_,value])=> value !== undefined))
+        setSearchParams(filterParams);
+    }
 
     // 필터링 상품조회
     const submitAllSelections = () => {
@@ -133,11 +149,8 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
         };
         axios.post('/api/submitSelections', selections)
             .then(response => {
-                console.log(selections);
-                console.log('서버 응답:', response.data);
                 setProductListByFilterOption(response.data);
                 setSearchKeyword('');
-                // 추가적인 처리 작업 진행
             })
             .catch(error => {
                 console.error('서버 전송 실패:', error);
@@ -160,7 +173,7 @@ function ProductCategory({searchResult, searchKeyword, setSearchKeyword}) {
 
     // 상위 카테고리 데이터를 불러오는 함수
     const fetchCategoryData = (categoryNo) => {
-        axios.post('api/selectedCategoryNo', { categoryNo })
+        axios.get(`/api/selectedCategoryNo`,{ params : { categoryNo: categoryNo } })
             .then((response) => {
                 setSelectedCategoryData(response.data);
                 // 하위 카테고리 데이터 가져오기

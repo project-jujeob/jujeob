@@ -152,10 +152,12 @@ public class OrderService {
                 .stream()
                 .collect(Collectors.toMap(CustomerOrder::getOrderId, order -> order));
 
-        return groupedItems.entrySet().stream().map(entry -> {
-            Long orderId = entry.getKey();
-            List<OrderItem> items = entry.getValue();
-            CustomerOrder co = customerOrderMap.get(orderId);
+        return groupedItems.entrySet().stream()
+                .sorted(Map.Entry.<Long, List<OrderItem>>comparingByKey().reversed())
+                .map(entry -> {
+                    Long orderId = entry.getKey();
+                    List<OrderItem> items = entry.getValue();
+                    CustomerOrder co = customerOrderMap.get(orderId);
 
             Optional<User> user = userRepository.findMemIdByNameAndPhone(co.getName(), co.getPhone());
             String userId = user.map(User::getUserId).orElse(null);
@@ -200,10 +202,10 @@ public class OrderService {
             return true;
         }
         keyword = keyword.toLowerCase();
-        switch (searchType) {
-            case "all":
+        return switch (searchType) {
+            case "all" -> {
                 String finalKeyword = keyword;
-                return (dto.getOrderId() != null && dto.getOrderId().toString().contains(keyword)) ||
+                yield (dto.getOrderId() != null && dto.getOrderId().toString().contains(keyword)) ||
                         (dto.getUserId() != null && dto.getUserId().contains(keyword)) ||
                         (dto.getName() != null && dto.getName().toLowerCase().contains(keyword)) ||
                         (dto.getPhone() != null && dto.getPhone().contains(keyword)) ||
@@ -211,15 +213,11 @@ public class OrderService {
                         (dto.getOrderStatus() != null && dto.getOrderStatus().toLowerCase().contains(keyword)) ||
                         (dto.getPaymentMethod() != null && dto.getPaymentMethod().toLowerCase().contains(keyword)) ||
                         (dto.getProducts().stream().anyMatch(p -> p.getProductName().toLowerCase().contains(finalKeyword)));
-            case "orderId":
-                return dto.getOrderId() != null && dto.getOrderId().toString().contains(keyword);
-            case "memberId":
-                return dto.getUserId() != null && dto.getUserId().contains(keyword);
-            case "memberName":
-                return dto.getName() != null && dto.getName().toLowerCase().contains(keyword);
-            default:
-                return false;
-        }
+            }
+            case "orderId" -> dto.getOrderId() != null && dto.getOrderId().toString().contains(keyword);
+            case "memberId" -> dto.getUserId() != null && dto.getUserId().contains(keyword);
+            case "memberName" -> dto.getName() != null && dto.getName().toLowerCase().contains(keyword);
+            default -> false;
+        };
     }
-
 }

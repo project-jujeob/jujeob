@@ -33,7 +33,6 @@ public class ProductController {
         return productService.showAllProductList();
     }
 
-
     // 오늘의 추천 주류 조회
     @GetMapping("/api/todayRecommend")
     public List<ProductListDto> showTodayRecommend() {
@@ -41,14 +40,11 @@ public class ProductController {
     }
 
     // 카테고리별 주류 조회
-    @PostMapping("/api/selectedCategoryNo")
-    public List<ProductListDto> showProductListByCategory (@RequestBody Map<String, Object> requestBody) {
-        Integer categoryNoObject = (Integer) requestBody.get("categoryNo");
-        if (categoryNoObject == null) {// categoryNo가 없을 경우에 대한 처리 -> 빈 목록 반환
-            return Collections.emptyList();
-        }
-        int categoryNo = categoryNoObject;
+    @GetMapping("/api/selectedCategoryNo")
+    public List<ProductListDto> showProductListByCategory (@RequestParam Integer categoryNo) {
+        System.out.println("카테고리번호" + categoryNo);
         List<String> subCategories = subCategoryService.findCategoryNameByCategoryNo(categoryNo);
+        System.out.println("서브카테고리들 " + subCategories);
         return productService.findProductListBySubCategories(subCategories);
     }
 
@@ -108,7 +104,6 @@ public class ProductController {
     // 필터링 조건에 따라 사용자가 원하는 상품 찾아오기
     @PostMapping("/api/submitSelections")
     public ResponseEntity<List<ProductListDto>> showProductListByFiltering(@RequestBody Map<String, List<String>> filters) {
-        System.out.println(filters);
         List<ProductListDto> products = productService.getProductListByFilterOption(filters);
         return ResponseEntity.ok(products);
     }
@@ -123,7 +118,6 @@ public class ProductController {
     // 사용자가 누른 정렬 버튼에 해당하는 상품 찾아오기
     @PostMapping("api/productListByOrderBy")
     public List<ProductListDto> showProductListByOrderBy (@RequestBody Map<String, Object> orderOptions) {
-
         return productService.getProductListByOrderByOrderType(orderOptions);
     }
 }

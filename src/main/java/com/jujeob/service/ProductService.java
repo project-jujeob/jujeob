@@ -168,7 +168,10 @@ public class ProductService {
         List<String> alcoholLevels = filters.get("alcoholLevels");
         List<String> prices = filters.get("prices");
 
-        List<Product> productsListByFilterOption = productRepository.findProductListByFilterOptions(searchKeyword, categoryNo, subCategoryName, orderOption, mainTypes, types, alcoholLevels, prices);
+        List<Product> productsListByFilterOption
+                = productRepository.findProductListByFilterOptions(searchKeyword, categoryNo,
+                                                                    subCategoryName, orderOption, mainTypes,
+                                                                    types, alcoholLevels, prices);
 
         return productsListByFilterOption.stream().map(this::mapProductToDto).collect(Collectors.toList());
     }
